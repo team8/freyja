@@ -50,10 +50,21 @@ Drivetrain::Drivetrain() :
 	leftBottomController.SetInputRange(-9999, 9999);
 	rightBottomController.SetInputRange(-9999, 9999);
 
+	//Sets the output ranges for pid controllers
+	leftTopController.SetOutputRange(-0.7, 0.7);
+	rightTopController.SetOutputRange(-0.7, 0.7);
+	leftBottomController.SetOutputRange(-0.7, 0.7);
+	rightBottomController.SetOutputRange(-0.7, 0.7);
+
 //	leftTopTurn.SetInputRange(-9999, 9999);
 //	leftBottomTurn.SetInputRange(-9999, 9999);
 //	rightTopTurn.SetInputRange(-9999, 9999);
 //	rightBottomTurn.SetInputRange(-9999, 9999);
+
+//	leftTopTurn.SetOutputRange(-0.7, 0.7);
+//	rightTopTurn.SetOutputRange(-0.7, 0.7);
+//	leftBottomTurn.SetOutputRange(-0.7, 0.7);
+//	rightBottomTurn.SetOutputRange(-0.7, 0.7);
 
 	//Sets the max period for stopped detection
 	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
