@@ -91,7 +91,6 @@ void Drivetrain::init() {
 	stopTalons();
 	//driveDistance(100);
 	//rotateAngle(90);
-	std::cout << "Gyro done" << std::endl;
 }
 
 //Disables the drivetrain

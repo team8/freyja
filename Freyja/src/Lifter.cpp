@@ -2,7 +2,7 @@
 #include <iostream>
 Lifter::Lifter() :
 		victor((uint32_t) PORT_LIFT_VIC), liftEncoder((uint32_t) LIFT_ENCODER_PORT_A,
-				(uint32_t) LIFT_ENCODER_PORT_B, false),
+				(uint32_t) LIFT_ENCODER_PORT_B, true),
 		digitalInput((uint32_t) LIMIT_SWITCH_TOP),
 		digitalInput2((uint32_t) LIMIT_SWITCH_BOT),
 		controller(0.12, 0.f, 0.1, &liftEncoder, &victor),
@@ -25,8 +25,6 @@ void Lifter::init() {
 //Operates lifter according to current state
 void Lifter::update() {
 //	std::cout << "Lift Encoder: " << liftEncoder.Get() << std::endl;
-	std::cout << "bottom switch is: " << checkSensorHit(false) << std::endl;
-	std::cout << "top switch is: " << checkSensorHit(true) << std::endl;
 	switch (state) {
 	case MOVING:
 //		std::cout << "Desired lifter speed: " << targetSpeed << std::endl;
