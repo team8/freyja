@@ -44,6 +44,7 @@ public:
 	void zeroLifter();
 	double getLevel();
 	void setLifter(double speed);
+	void liftDist(double dist);
 };
 
 #endif /* ROBOT_H */

@@ -27,9 +27,9 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 	}
 	case CMD_AUTO_DRIVE:
 	{
-		std::cout << "CMD_AUTO_DRIVE start" << std::endl;
+		//std::cout << "CMD_AUTO_DRIVE start" << std::endl;
 		drive(YELLOW_AUTO_DISTANCE);
-		std::cout << "CMD_AUTO_DRIVE end" << std::endl;
+	//	std::cout << "CMD_AUTO_DRIVE end" << std::endl;
 		break;
 	}
 	case CMD_LIFT:
@@ -129,8 +129,8 @@ void AutonomousExecutor::toteScore() {
 	std::list<AutoCommand> toteScoreSet;
 	toteScoreSet.push_back(CMD_TOTE_LIFT);
 	toteScoreSet.push_back(CMD_AUTO_DRIVE);
-	toteScoreSet.push_back(CMD_DROP);
-	toteScoreSet.push_back(CMD_OPEN);
+	//toteScoreSet.push_back(CMD_DROP);
+	//toteScoreSet.push_back(CMD_OPEN);
 
 	comIt = commandSet->begin();
 	advance(comIt, 1);
@@ -187,7 +187,7 @@ void AutonomousExecutor::drive(int dist) {
 // BASE: lifts a tote
 void AutonomousExecutor::lift() {
 	//Pid version
-	robot->setLifterLevel(1);
+	robot->liftDist(LIFT_DISTANCE);
 
 }
 

@@ -102,3 +102,7 @@ void Robot::liftCan() {
 void Robot::setLifter(double speed) {
 	lifter.setSpeed(speed);
 }
+
+void Robot::liftDist(double dist) {
+	lifter.lift(dist);
+}
