@@ -219,7 +219,7 @@ void AutonomousExecutor::close() {
 // MACRO: lifts a tote
 void AutonomousExecutor::toteLift() {
 	std::list<AutoCommand> toteLiftSet;
-	toteLiftSet.push_back(CMD_CLOSE);
+	toteLiftSet.push_back(CMD_OPEN);
 	toteLiftSet.push_back(CMD_LIFT);
 
 	comIt = commandSet->begin();
