@@ -16,13 +16,17 @@ void Lifter::init() {
 	liftEncoder.Reset();
 	controller.Reset();
 	controller.Enable();
+
+	liftEncoder.SetDistancePerPulse(LIFTER_DPP);
+	controller.SetInputRange(-9999, 9999);
+	liftEncoder.SetMaxPeriod(1);
 }
 
 //Operates lifter according to current state
 void Lifter::update() {
 //	std::cout << "bottom switch is: " << checkSensorHit(false) << std::endl;
 //	std::cout << "top switch is: " << checkSensorHit(true) << std::endl;
-	//std::cout << "Lifter encoder" << liftEncoder.Get() << std::endl;
+	std::cout << "Lifter encoder" << liftEncoder.Get() << std::endl;
 	switch (state) {
 	case MOVING:
 //		std::cout << "Desired lifter speed: " << targetSpeed << std::endl;

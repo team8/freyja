@@ -57,6 +57,9 @@
 //Distance per pulse for drivetrain
 #define RIGHT_DPP 0.018258776354
 #define LEFT_DPP 0.012808296080
+
+#define LIFTER_DPP 0.001
+
 //Murphy
 //#define RIGHT_DPP 0.01294599
 //#define LEFT_DPP 0.01290522
