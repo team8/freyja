@@ -31,11 +31,14 @@ public:
 	void setPistonState(PistonState state);
 	void setCompressorState(CompressorState state);
 	bool getCompressor();
+	PistonState getState();
 	//Inherited Methods from subsystem
 	void init();
 	void update();
 	void disable();
 private:
+	Timer timer;
+
 	Compressor compressor;
 	DoubleSolenoid solenoid1;
 	//DoubleSolenoid solenoid2;

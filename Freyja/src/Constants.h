@@ -60,6 +60,8 @@
 
 #define LIFTER_DPP 0.019165
 
+#define ARM_EXTEND_TIME 0.75
+
 //Murphy
 //#define RIGHT_DPP 0.01294599
 //#define LEFT_DPP 0.01290522
