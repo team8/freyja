@@ -115,6 +115,16 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 		visionAccumulate();
 		break;
 	}
+	case CMD_BACK_OUT:
+	{
+		drive(BACK_OUT_DISTANCE);
+		break;
+	}
+	case CMD_FRONT_IN:
+	{
+		drive(FRONT_IN_DISTANCE);
+		break;
+	}
 	default:
 	{
 		// default states only occurs when illegal command is called

@@ -16,7 +16,7 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 //dial((uint32_t) PORT_AUTO_DIAL)
 {
 	//path = (Path) dial.GetValue();
-	path = DRIVE;
+	path = TOTE_SCORE;
 	//initial command
 	command = CMD_STOP;
 	executing = false;
@@ -144,9 +144,9 @@ void AutonomousController::canScore() {
 
 // goes to the landfill zone, accumulates gray totes and ends in auto zone
 void AutonomousController::accumulateGray() {
-	commandSet.push_back(CMD_LANDFILL_DRIVE);
-	commandSet.push_back(CMD_GRAY_TO_GRAY);
-	commandSet.push_back(CMD_GRAY_TO_GRAY);
+	commandSet.push_back(CMD_FRONT_IN);
+	commandSet.push_back(CMD_CLOSE);
+	commandSet.push_back(CMD_BACK_OUT);
 	commandSet.push_back(CMD_HALF_ROTATE);
 	commandSet.push_back(CMD_DRIVE_LANDFILL_AUTO);
 	commandSet.push_back(CMD_STOP);
