@@ -58,7 +58,7 @@
 #define RIGHT_DPP 0.018258776354
 #define LEFT_DPP 0.012808296080
 
-#define LIFTER_DPP 0.001
+#define LIFTER_DPP 1
 
 //Murphy
 //#define RIGHT_DPP 0.01294599

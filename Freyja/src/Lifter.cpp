@@ -5,10 +5,9 @@ Lifter::Lifter() :
 				(uint32_t) LIFT_ENCODER_PORT_B),
 				digitalInput((uint32_t) LIMIT_SWITCH_TOP),
 				digitalInput2((uint32_t) LIMIT_SWITCH_BOT),
-				controller(0.f, 0.f, 0.f,&liftEncoder, &victor), targetSpeed(0) {
+				controller(0.12, 0.f, 0.1,&liftEncoder, &victor), targetSpeed(0) {
 	currentLevel = 0;
 	state = IDLE;
-
 }
 
 //Initializes lifter to be ready to operate
