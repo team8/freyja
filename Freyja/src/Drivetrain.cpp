@@ -90,7 +90,8 @@ void Drivetrain::init() {
 	//Stops robot motion
 	stopTalons();
 	//driveDistance(100);
-//	rotateAngle(180);
+	rotateAngle(90);
+	std::cout << "Gyro done" << std::endl;
 }
 
 //Disables the drivetrain
@@ -102,6 +103,7 @@ void Drivetrain::disable() {
 //Updates the drivetrain based on state machine
 void Drivetrain::update() {
 	//std::cout << "State: " << state << std::endl;
+	std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
 	switch (state) {
 	case IDLE:
 		stopControl();
@@ -121,7 +123,7 @@ void Drivetrain::update() {
 		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopGyroController.GetError() < 1) {
 			state = IDLE;
 		}
-		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
+//		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
 		break;
 	case DRIVING_TELEOP:
 	{
