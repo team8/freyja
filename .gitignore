@@ -1,3 +1,16 @@
+# Eclipse specific #
+*/.settings/
+.settings
+*/bin/
+*/build/
+*/resources/
+*.txt
+.metadata/*
+/bin
+*/Debug/
+build.properties
+build.xml
+
 # Compiled Object files
 *.slo
 *.lo
