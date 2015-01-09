@@ -14,7 +14,7 @@ Drivetrain::Drivetrain() :
 			leftBottomTalon((uint32_t) 8),
 			rightTopTalon((uint32_t) 8),
 			rightMiddleTalon((uint32_t) 8),
-			tBottomTalon((uint32_t) 8)
+			rightBottomTalon((uint32_t) 8)
 
 {
 
