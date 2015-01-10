@@ -10,7 +10,7 @@
 #ifndef SRC_DRIVETRAIN_H_
 #define SRC_DRIVETRAIN_H_
 
-class Drivetrain {
+class Drivetrain : public Subsys {
 private:
 	//Talons
 	Talon topLeftTalon;
@@ -30,6 +30,10 @@ public:
 	Drivetrain();
 	virtual ~Drivetrain();
 
+	void init();
+	
+	void disable();
+	
 	void update();
 
 	void stopTalons();
