@@ -5,7 +5,7 @@
  *      Author: liam
  */
 
-#include <Drivetrain.h>
+#include "Drivetrain.h"
 
 Drivetrain::Drivetrain() :
 
@@ -36,6 +36,14 @@ void Drivetrain::update(){
 	rightMiddleTalon.Set(rightSpeed);
 	rightBottomTalon.Set(rightSpeed);
 
+}
+
+void Drivetrain::init() {
+	
+}
+
+void Drivetrain::disable() {
+	
 }
 
 
