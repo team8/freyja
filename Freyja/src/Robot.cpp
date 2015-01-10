@@ -1,14 +1,19 @@
-/*
- * HumanController.cpp
- *
- *  Created on: Jan 8, 2015
- *      Author: Robotics Team 8
- */
-
 #include <Robot.h>
 
 Robot::Robot() :
-	DriveTrain(),
-	{
-	std::printf("Robot constructor\n")
-	}
+	driveTrain()
+{
+	std::cout << "Robot constructor";
+}
+
+void Robot::init() {
+	driveTrain.init();
+}
+
+void Robot::update() {
+	driveTrain.update();
+}
+
+void Robot::disable() {
+	driveTrain.disable();
+}
