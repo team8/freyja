@@ -6,9 +6,10 @@
  *      Author: liam
  */
 
-#include <WPILib.h>
+
 #ifndef SRC_DRIVETRAIN_H_
 #define SRC_DRIVETRAIN_H_
+#include <WPILib.h>
 
 class Drivetrain : public Subsys {
 private:

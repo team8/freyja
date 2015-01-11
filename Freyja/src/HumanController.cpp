@@ -5,11 +5,11 @@
  *      Author: EngTechP7
  */
 
-#include <HumanController.h>
+#include "HumanController.h"
 
 HumanController::HumanController() :
-	moveJoystick( PORT_SPEED),
-	turnJoystick( PORT_TURN)
+	moveJoystick(PORT_SPEED),
+	turnJoystick(PORT_TURN)
 	{
 
 	}

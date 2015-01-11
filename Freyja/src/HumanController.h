@@ -7,6 +7,7 @@
 
 #ifndef FREYJA_SRC_HUMANCONTROLLER_H_
 #define FREYJA_SRC_HUMANCONTROLLER_H_
+#include "Constants.h"
 #include <WPIlib.h>
 
 class HumanController {
