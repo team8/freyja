@@ -86,4 +86,10 @@ void Drivetrain::stopTalons(){
 Drivetrain::~Drivetrain() {
 	// TODO Auto-generated destructor stub
 }
+void Drivetrain::move(double Y, double X){
+	targetSpeed = Y;
+	rotateSpeed = X;
+
+}
+
 

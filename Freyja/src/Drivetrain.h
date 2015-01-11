@@ -44,6 +44,8 @@ public:
 
 	void rotateAngle(double angle);
 
+	void move(double Y, double X);
+
 	typedef enum DriveState
 	{
 		Stop_Talons,

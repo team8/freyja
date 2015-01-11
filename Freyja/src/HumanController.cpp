@@ -27,4 +27,5 @@ void HumanController::update(Robot *robotPointer) {
 	else{
 		//assign getY to drivetrain turnspeed
 	}
+	robotPointer -> move(moveJoystick.GetY(),turnJoystick.GetX());
 }
