@@ -4,7 +4,7 @@
 
 class Robot {
 	private:
-		Drivetrain *driveTrain;
+		Drivetrain driveTrain;
 	public:
 		Robot();
 		void init();
