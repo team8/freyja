@@ -6,26 +6,26 @@
  */
 
 #include <HumanController.h>
-#include <WPIlib.h>
 
-HumanController::HumanController(Robot *robotPointer) :
+HumanController::HumanController() :
 	moveJoystick( PORT_SPEED),
 	turnJoystick( PORT_TURN)
 	{
 
 	}
 
-void HumanController::update() {
-	if (abs(moveJoystick.getY())<0.1){
+void HumanController::update(Robot *robotPointer) {
+	if (abs(moveJoystick.GetY())<0.1){
 		//set drivetrain forwardspeed to 0
 	}
 	else{
 		//assign getX to drivetrain forwardspeed
 	}
-	if (abs(turnJoystick.getX())<0.1){
+	if (abs(turnJoystick.GetX())<0.1){
 		//set drivetrain turnspeed to 0
 	}
 	else{
 		//assign getY to drivetrain turnspeed
 	}
+	robotPointer -> move(moveJoystick.GetY(),turnJoystick.GetX());
 }
