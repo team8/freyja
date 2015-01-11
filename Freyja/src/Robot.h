@@ -1,10 +1,10 @@
 #ifndef SRC_ROBOT_H_
 #define SRC_ROBOT_H_
-#include "DriveTrain.h"
+#include "Drivetrain.h"
 
 class Robot {
 	private:
-		DriveTrain driveTrain;
+		Drivetrain driveTrain;
 	public:
 		Robot();
 		void init();
