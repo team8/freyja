@@ -10,21 +10,23 @@
 #ifndef SRC_DRIVETRAIN_H_
 #define SRC_DRIVETRAIN_H_
 #include <WPILib.h>
+#include <algorithm>
+#include "Subsys.h"
 
 class Drivetrain : public Subsys {
 private:
 	//Talons
-	Talon topLeftTalon;
-	Talon middleLeftTalon;
-	Talon bottomLeftTalon;
-	Talon topRightTalon;
-	Talon middleRightTalon;
-	Talon bottomRightTalon;
+	Talon leftTopTalon;
+	Talon leftMiddleTalon;
+	Talon leftBottomTalon;
+	Talon rightTopTalon;
+	Talon rightMiddleTalon;
+	Talon rightBottomTalon;
 
 	double targetSpeed;
 	double rotateSpeed;
-	double rotateAngel;
-
+	double leftSpeed;
+	double rightSpeed;
 
 public:
 
@@ -39,18 +41,11 @@ public:
 
 	void stopTalons();
 
-	void runCommand();
-
 	void setSpeed(double spd);
 
 	void rotateAngle(double angle);
 
 	void move(double Y, double X);
-
-	typedef enum DriveState
-	{
-		Stop_Talons,
-	};
 };
 
 #endif /* SRC_DRIVETRAIN_H_ */
