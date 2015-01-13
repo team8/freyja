@@ -46,7 +46,6 @@ void Drivetrain::disable() {
 	stopTalons();
 }
 
-
 void Drivetrain::stopTalons(){
 	leftTopTalon.Set(0.0);
 	leftMiddleTalon.Set(0.0);
