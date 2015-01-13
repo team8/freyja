@@ -47,33 +47,6 @@ void Drivetrain::disable() {
 }
 
 
-//void Drivetrain::turnRight(){
-//	leftTopTalon.Set(0.5);
-//	leftMiddleTalon.Set(0.5);
-//	leftBottomTalon.Set(0.5);
-//	rightTopTalon.Set(0.25);
-//	rightMiddleTalon.Set(0.25);
-//	rightBottomTalon.Set(0.25);
-//}
-//
-//void Drivetrain::turnLeft(){
-//	leftTopTalon.Set(0.25);
-//	leftMiddleTalon.Set(0.25);
-//	leftBottomTalon.Set(0.25);
-//	rightTopTalon.Set(0.5);
-//	rightMiddleTalon.Set(0.5);
-//	rightBottomTalon.Set(0.5);
-//}
-//
-//void Drivetrain::moveForwardOrBackwards(double spd){
-//	leftTopTalon.Set(spd);
-//	leftMiddleTalon.Set(spd);
-//	leftBottomTalon.Set(spd);
-//	rightTopTalon.Set(spd);
-//	rightMiddleTalon.Set(spd);
-//	rightBottomTalon.Set(spd);
-//}
-
 void Drivetrain::stopTalons(){
 	leftTopTalon.Set(0.0);
 	leftMiddleTalon.Set(0.0);
