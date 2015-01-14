@@ -8,18 +8,20 @@
 #ifndef FREYJA_SRC_HUMANCONTROLLER_H_
 #define FREYJA_SRC_HUMANCONTROLLER_H_
 #include "Constants.h"
-#include <WPIlib.h>
+#include <WPILib.h>
+#include "Robot.h"
 
 class HumanController {
+private:
+	Joystick moveJoystick;
+	Joystick turnJoystick;
+	Joystick operatorJoystick;
+	
 public:
 	HumanController();
 	virtual ~HumanController();
 	void update(Robot *robotPointer);
-private:
-
-	Joystick moveJoystick;
-	Joystick turnJoystick;
-	Joystick operatorJoystick;
 };
+
 
 #endif /* FREYJA_SRC_HUMANCONTROLLER_H_ */

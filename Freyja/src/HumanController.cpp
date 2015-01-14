@@ -8,8 +8,9 @@
 #include "HumanController.h"
 
 HumanController::HumanController() :
-	moveJoystick(PORT_SPEED),
-	turnJoystick(PORT_TURN)
+	moveJoystick((uint32_t)PORT_SPEED),
+	turnJoystick((uint32_t)PORT_TURN),
+	operatorJoystick((uint32_t) PORT_OPERATOR)
 	{
 
 	}

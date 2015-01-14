@@ -1,6 +1,5 @@
 #ifndef FREYJA_SRC_CONSTANTS_H_
 #define FREYJA_SRC_CONSTANTS_H_
-#define Joystick
 
 //ports for drive train victors (currently fenrir)
 #define PORT_DRIVE_VIC_LEFT_FRONT 5

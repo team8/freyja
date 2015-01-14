@@ -12,16 +12,17 @@
 #include <WPILib.h>
 #include <algorithm>
 #include "Subsys.h"
+#include "Constants.h"
 
 class Drivetrain : public Subsys {
 private:
 	//Talons
-	Talon leftTopTalon;
-	Talon leftMiddleTalon;
-	Talon leftBottomTalon;
-	Talon rightTopTalon;
-	Talon rightMiddleTalon;
-	Talon rightBottomTalon;
+	Victor leftTopTalon;
+	//Victor leftMiddleTalon;
+	Victor leftBottomTalon;
+	Victor rightTopTalon;
+	//Victor rightMiddleTalon;
+	Victor rightBottomTalon;
 
 	double targetSpeed;
 	double rotateSpeed;
