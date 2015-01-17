@@ -28,45 +28,44 @@ public:
 };
 
 Freyja :: Freyja():
-		robot(),
-		humanController()
-{
+	robot(),
+	humanController()
+	{
+
+	}
+
+void Freyja::RobotInit(){
+	robot.init();
 
 }
 
-	void Freyja::RobotInit(){
-		robot.init();
+void Freyja::DisabledInit(){
+	robot.disable();
 
-	}
+}
 
-	void Freyja::DisabledInit(){
-		robot.disable();
+void Freyja::DisabledPeriodic(){
+	robot.disable();
+	robot.update();
 
-	}
+}
 
-	void Freyja::DisabledPeriodic(){
-		robot.disable();
-		robot.update();
+void Freyja::TeleopInit(){
+	robot.init();
 
-	}
+}
 
-	void Freyja::TeleopInit(){
-		robot.init();
+void Freyja::TeleopPeriodic(){
+	humanController.update(&robot);
+	robot.update();
 
-	}
+}
 
-	void Freyja::TeleopPeriodic(){
-		humanController.update(&robot);
-		robot.update();
+void Freyja::TeleopDisabled(){
+	robot.disable();
+	robot.update();
+}
 
-	}
-
-	void Freyja::TeleopDisabled(){
-		robot.disable();
-		robot.update();
-
-	}
-
-
+START_ROBOT_CLASS(Freyja);
 
 

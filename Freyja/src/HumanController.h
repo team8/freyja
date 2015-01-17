@@ -19,7 +19,6 @@ private:
 	
 public:
 	HumanController();
-	virtual ~HumanController();
 	void update(Robot *robotPointer);
 };
 
