@@ -29,15 +29,12 @@ void Arm::update()
 	switch(state)
 	{
 		case EXTENDING: 
-			compressor.Start();
 			solenoid.Set(DoubleSolenoid::Value::kForward);
 			break;
 		case RETRACTING:
-			compressor.Start();
 			solenoid.Set(DoubleSolenoid::Value::kReverse);
 			break;
 		case IDLE:
-			compressor.Stop();
 			solenoid.Set(DoubleSolenoid::Value::kOff);
 			break;
 	}
