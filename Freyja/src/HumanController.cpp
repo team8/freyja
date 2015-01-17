@@ -17,4 +17,5 @@ HumanController::HumanController() :
 
 void HumanController::update(Robot *robotPointer) {
 	robotPointer -> move(moveJoystick.GetY(),turnJoystick.GetX());
+	robotPointer -> changeArmState(operatorJoyStick.getRawButton());
 }
