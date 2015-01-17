@@ -5,6 +5,7 @@
 class Robot {
 	private:
 		Drivetrain driveTrain;
+		Arm arm;
 	public:
 		Robot();
 		void init();
