@@ -19,7 +19,7 @@ void Robot::update() {
 
 void Robot::disable() {
 	driveTrain.disable();
-	arm();
+	arm.disable();
 }
 void Robot::move(double Y, double X) {
 	driveTrain.move(Y, X);
