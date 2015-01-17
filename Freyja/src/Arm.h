@@ -4,14 +4,14 @@
 #include <WPILib.h>
 #include <iostream>
 
-class Arm {
+class Arm : public subsys{
 public:
 	enum State {
 		EXTENDING, RETRACTING, IDLE
 	};
 
 	Arm();
-
+	virtual ~Arm();
 	void setState(State state);
 	void init();
 	void update();
