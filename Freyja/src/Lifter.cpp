@@ -8,9 +8,11 @@
  *
  */
 
-#include <Lifter.h>
+#include "Lifter.h"
 
-Lifter::Lifter() {
+Lifter::Lifter():
+motor1((uint32_t) )
+{
 
 }
 
@@ -19,8 +21,8 @@ Lifter::~Lifter() {
 }
 
 void Lifter::init() {
-	motor1 = new Talon(0);
-	motor2 = new Talon(0);
+	motor1 = new Talon((uint32_t) 0);
+	motor2 = new Talon((uint32_t) 0);
 	encoder.Reset();
 }
 

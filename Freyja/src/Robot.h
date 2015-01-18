@@ -1,6 +1,8 @@
 #ifndef SRC_ROBOT_H_
 #define SRC_ROBOT_H_
 #include "Drivetrain.h"
+#include "Arm.h"
+#include "Lifter.h"
 
 class Robot {
 	private:

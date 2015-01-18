@@ -3,8 +3,9 @@
 
 #include <WPILib.h>
 #include <iostream>
+#include "Subsys.h"
 
-class Arm : public subsys{
+class Arm : public Subsys {
 public:
 	enum State {
 		EXTENDING, RETRACTING, IDLE

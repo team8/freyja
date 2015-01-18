@@ -13,34 +13,29 @@ Arm::~Arm() {
 	// TODO Auto-generated destructor stub
 }
 
-void Arm::setState(State state)
-{
+void Arm::setState(State state) {
 	this -> state = state;
 }
 
-void Arm::disable()
-{
+void Arm::disable() {
 	setState(IDLE);
 }
 
-void Arm::update()
-{
+void Arm::update() {
 
-	switch(state)
-	{
-		case EXTENDING: 
-			solenoid.Set(DoubleSolenoid::Value::kForward);
-			break;
-		case RETRACTING:
-			solenoid.Set(DoubleSolenoid::Value::kReverse);
-			break;
-		case IDLE:
-			solenoid.Set(DoubleSolenoid::Value::kOff);
-			break;
+	switch(state) {
+	case EXTENDING:
+		solenoid.Set(DoubleSolenoid::Value::kForward);
+		break;
+	case RETRACTING:
+		solenoid.Set(DoubleSolenoid::Value::kReverse);
+		break;
+	case IDLE:
+		solenoid.Set(DoubleSolenoid::Value::kOff);
+		break;
 	}
 }
 
-void Arm::init()
-{
+void Arm::init() {
 	setState(IDLE);
 }

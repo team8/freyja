@@ -19,15 +19,12 @@ public:
 	//unimplemented
 	void runPIDLoop();
 
-
-
 private:
 	Talon motor1;
 	Talon motor2;
 	Encoder encoder;
 	DigitalInput digitalInput;
 	PIDController sensor;
-
 };
 
 #endif /* SRC_LIFTER_H_ */
