@@ -5,6 +5,7 @@
  *      Author: liam
  */
 
+#include "AutonomousController.h"
 #include "HumanController.h"
 #include "Robot.h"
 #include <WPILib.h>
@@ -14,7 +15,7 @@ class Freyja : public IterativeRobot {
 private:
 	Robot robot;
 	HumanController humanController;
-
+	AutonomousController autoController;
 public:
 	Freyja();
 
@@ -29,7 +30,8 @@ public:
 
 Freyja :: Freyja():
 	robot(),
-	humanController()
+	humanController(),
+	autoController()
 	{
 
 	}

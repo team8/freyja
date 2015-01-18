@@ -1,6 +1,5 @@
 #include "Arm.h"
-#include <WPILib.h>
-#include <iostream>
+
 
 Arm::Arm():
 	compressor(),

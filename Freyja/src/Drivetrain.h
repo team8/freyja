@@ -10,6 +10,7 @@
 #ifndef SRC_DRIVETRAIN_H_
 #define SRC_DRIVETRAIN_H_
 #include <WPILib.h>
+#include <iostream>
 #include "Subsys.h"
 #include "Constants.h"
 

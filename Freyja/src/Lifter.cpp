@@ -51,10 +51,7 @@ void Lifter::moveDown() {
 
 
 bool Lifter::checkSensorHit() {
-	if(digitalInput.Get() == 1) {
-		return true;
-	}
-	return false;
+	return (digitalInput.Get() == 1);
 }
 
 double Lifter::getDistance() {
