@@ -11,7 +11,8 @@
 #include "Lifter.h"
 
 Lifter::Lifter():
-motor1((uint32_t) )
+motor1((uint32_t) 0),
+motor2((uint32_t) 0)
 {
 
 }
@@ -21,8 +22,6 @@ Lifter::~Lifter() {
 }
 
 void Lifter::init() {
-	motor1 = new Talon((uint32_t) 0);
-	motor2 = new Talon((uint32_t) 0);
 	encoder.Reset();
 }
 
@@ -43,11 +42,11 @@ void Lifter::disable() {
 }
 
 void Lifter::moveUp() {
-	motor1.Set(1.0);
+	motor1.SetSpeed(1.0);
 }
 
 void Lifter::moveDown() {
-	motor1.Set(-1.0);
+	motor1.SetSpeed(-1.0);
 }
 
 

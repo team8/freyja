@@ -15,6 +15,7 @@ class Robot {
 		void update();
 		void disable();
 		void move(double y, double x);
+		void changeArmState((uint32_t) button);
 };
 
 #endif /* SRC_ROBOT_H_ */
