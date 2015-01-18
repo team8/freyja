@@ -67,5 +67,3 @@ void Freyja::TeleopDisabled(){
 }
 
 START_ROBOT_CLASS(Freyja);
-
-
