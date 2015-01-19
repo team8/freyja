@@ -129,6 +129,8 @@ void AutonomousController::toteScoreTriple() {
 	// robot.drive(dist);
 	// pickup();
 	// robot.rotate(90);
+	// drive();
+	// robot.drive();
 }
 
 void AutonomousController::canScore() {
