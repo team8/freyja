@@ -28,6 +28,6 @@ void Robot::move(double Y, double X) {
 
 
 void Robot::changeArmState(State state){
-		robot.setArmState(Arm::state);
+		arm.setArmState(Arm::state);
 }
 
