@@ -32,6 +32,9 @@ void Arm::update() {
 	case IDLE:
 		solenoid.Set(DoubleSolenoid::Value::kOff);
 		break;
+	case OFF:
+		compressor.off();
+		break;
 	}
 }
 
