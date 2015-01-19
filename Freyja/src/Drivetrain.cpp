@@ -17,24 +17,11 @@ Drivetrain::Drivetrain() :
 			rightBottomTalon((uint32_t) PORT_DRIVE_VIC_RIGHT_BACK)
 
 {
-
-	rotateSpeed = 0;
 	targetSpeed = 0;
-	leftSpeed = 0;
-	rightSpeed = 0;
-
+	rotateSpeed = 0;
 }
 
-void Drivetrain::update(){
-	leftSpeed = std::max(std::min(targetSpeed-rotateSpeed, 1.0), -1.0);
-	rightSpeed = std::max(std::min(targetSpeed+rotateSpeed, 1.0), -1.0);
-
-	leftTopTalon.Set(leftSpeed);
-	//leftMiddleTalon.Set(leftSpeed);
-	leftBottomTalon.Set(leftSpeed);
-	rightTopTalon.Set(rightSpeed);
-	//rightMiddleTalon.Set(rightSpeed);
-	rightBottomTalon.Set(rightSpeed);
+Drivetrain::~Drivetrain() {
 
 }
 
@@ -46,6 +33,19 @@ void Drivetrain::disable() {
 	stopTalons();
 }
 
+void Drivetrain::update(){
+	double leftSpeed = std::max(std::min(targetSpeed-rotateSpeed, 1.0), -1.0);
+	double rightSpeed = std::max(std::min(targetSpeed+rotateSpeed, 1.0), -1.0);
+
+	leftTopTalon.Set(leftSpeed);
+	//leftMiddleTalon.Set(leftSpeed);
+	leftBottomTalon.Set(leftSpeed);
+	rightTopTalon.Set(rightSpeed);
+	//rightMiddleTalon.Set(rightSpeed);
+	rightBottomTalon.Set(rightSpeed);
+
+}
+
 void Drivetrain::stopTalons(){
 	leftTopTalon.Set(0.0);
 	//leftMiddleTalon.Set(0.0);
@@ -55,13 +55,24 @@ void Drivetrain::stopTalons(){
 	rightBottomTalon.Set(0.0);
 }
 
-Drivetrain::~Drivetrain() {
-	// TODO Auto-generated destructor stub
-}
-void Drivetrain::move(double Y, double X){
-	targetSpeed = Y;
-	rotateSpeed = X;
 
+void Drivetrain::move(double targetSpeed, double rotateSpeed){
+	setTargetSpeed(targetSpeed);
+	setRotateSpeed(rotateSpeed);
 }
 
+void Drivetrain::setTargetSpeed(double speed){
+	this -> targetSpeed = speed;
+}
 
+void Drivetrain::setRotateSpeed(double speed){
+	this -> rotateSpeed = speed;
+}
+
+void Drivetrain::rotateAngle(double angle){
+
+}
+
+void Drivetrain::driveDistance(double distance){
+
+}

@@ -26,8 +26,6 @@ private:
 
 	double targetSpeed;
 	double rotateSpeed;
-	double leftSpeed;
-	double rightSpeed;
 
 public:
 
@@ -42,11 +40,14 @@ public:
 
 	void stopTalons();
 
-	void setSpeed(double spd);
+	void move(double targetSpeed, double rotateSpeed);
+
+	void setTargetSpeed(double speed);
+	void setRotateSpeed(double speed);
 
 	void rotateAngle(double angle);
 
-	void move(double Y, double X);
+	void driveDistance(double distance);
 };
 
 #endif /* SRC_DRIVETRAIN_H_ */
