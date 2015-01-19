@@ -1,12 +1,15 @@
 /*
- * Version 2
- * 1/18/15 at 1446
+ * Version 3
+ * 1/19/15 at 1500
+ * Jonathan Zwiebel
  */
+
 
 #ifndef SRC_AUTONOMOUSCONTROLLER_H_
 #define SRC_AUTONOMOUSCONTROLLER_H_
 #define PATH 0
 #define DEFAULT_DRIVE_DISTANCE 20
+#include <WPILib.h>
 #include "Robot.h"
 #include "Timer.h"
 
@@ -19,7 +22,7 @@ class AutonomousController {
 		Timer time;
 		Robot* robot;
 		void stop();
-		void drive(int dist);
+		void drive();
 		void toteScore();
 		void toteScoreAccumulate();
 		void toteScoreDoubleLeft();
@@ -32,6 +35,8 @@ class AutonomousController {
 		void accumulate();
 		void accumulateDouble();
 		void accumulateTriple();
+		void accumulateFromScore();
+		void toteToTote(bool isRight);
 		void accumulateFromScore();
 	};
 

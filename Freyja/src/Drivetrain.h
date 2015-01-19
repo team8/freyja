@@ -4,6 +4,7 @@
  *
  *  Created on: Jan 6, 2015
  *      Author: liam
+ *      Author: Benjamin Cohen-Wang
  */
 
 
@@ -16,18 +17,30 @@
 
 class Drivetrain : public Subsys {
 private:
-	//Talons
+
 	Victor leftTopTalon;
-	//Victor leftMiddleTalon;
+//	Victor leftMiddleTalon;
 	Victor leftBottomTalon;
+
 	Victor rightTopTalon;
-	//Victor rightMiddleTalon;
+//	Victor rightMiddleTalon;
 	Victor rightBottomTalon;
 
 	double targetSpeed;
 	double rotateSpeed;
-	double leftSpeed;
-	double rightSpeed;
+
+	Encoder leftEncoder;
+	Encoder rightEncoder;
+
+	Gyro gyro;
+
+	PIDController leftTopController;
+//	PIDController leftMiddleController;
+	PIDController leftBottomController;
+
+	PIDController rightTopController;
+//	PIDController rightMiddleController;
+	PIDController rightBottomController;
 
 public:
 
@@ -42,11 +55,14 @@ public:
 
 	void stopTalons();
 
-	void setSpeed(double spd);
+	void setSpeed(double targetSpeed, double rotateSpeed);
+
+	void setTargetSpeed(double speed);
+	void setRotateSpeed(double speed);
 
 	void rotateAngle(double angle);
 
-	void move(double Y, double X);
+	void driveDistance(double distance);
 };
 
 #endif /* SRC_DRIVETRAIN_H_ */

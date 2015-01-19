@@ -1,6 +1,7 @@
 /*
- * Version 2
- * 1/18/15 at 1446
+ * Version 3
+ * 1/19/15 at 1500
+ * Jonathan Zwiebel
  */
 
 #include "AutonomousController.h"
@@ -24,13 +25,18 @@ enum path {
 };
 
 AutonomousController::AutonomousController(Robot *robotPointer) {
+	this->robot = robotPointer;
+	std::cout <- "AutonomousController constructed";
+
 	path = PATH;
+	std::cout <- "Path " + path + " called";
+
 	switch(path) {
 	case STOP:
 		stop();
 		break;
 	case DRIVE:
-		drive(DEFAULT_DRIVE_DISTANCE);
+		drive();
 		break;
 	case TOTE_SCORE:
 		toteScore();
@@ -78,64 +84,51 @@ void AutonomousController::stop() {
 
 }
 
-void AutonomousController::drive(int dist) {
-	// robot.drive(dist);
-	// stop();
+void AutonomousController::drive() {
+	// robot.drive(DEFAULT_DRIVE_DISTANCE);
 }
 
 void AutonomousController::toteScore() {
 	// robot.pickup();
-	// robot.drive(dist);
 	// robot.drive();
-	// stop();
+	// robot.drop();
 }
 
 void AutonomousController::toteScoreAccumulate() {
 	// toteScore();
-	// robot.drive(-1);
-	// robot.rotate(-90);
-	// robot.drive(1);
-	// robot.rotate(90);
-	// robot.drive(30);
-	// robot.pickup();
-	// robot.rotate(180);
-	// robot.drive(30);
+	accumulateFromScore();
 }
 
 void AutonomousController::toteScoreDoubleLeft() {
 	// pickup
-	// robot.drive(-1);
-	// robot.rotate(-90);
-	// robot.drive(15);
-	// robot.rotate(90);
-	// toteScore()
+	toteToTote(false);
+	toteScore();
 }
 
 void AutonomousController::toteScoreDoubleRight() {
 	// pickup
-	// robot.drive(-1);
-	// robot.rotate(90);
-	// robot.drive(15);
-	// robot.rotate(90);
-	// toteScore()
-
+	toteToTote(true);
+	toteScore();
 }
 
 void AutonomousController::toteScoreDoubleLeftAccumulate() {
-	// pickup
-	// robot.drive(-1);
-	// robot.rotate(-90);
-	// robot.drive(15);
-	// robot.rotate(90);
-	// toteScore()
+	toteScoreDoubleLeft();
+	accumulateFromScore();
 }
 
 void AutonomousController::toteScoreDoubleRightAccumulate() {
-
+	toteScoreDoubleRight();
+	accumulateFromScore();
 }
 
 void AutonomousController::toteScoreTriple() {
-
+	// robot.drive(dist);
+	// pickup();
+	// robot.drive(dist);
+	// pickup();
+	// robot.drive(dist);
+	// pickup();
+	// robot.rotate(90);
 }
 
 void AutonomousController::canScore() {
@@ -143,7 +136,7 @@ void AutonomousController::canScore() {
 }
 
 void AutonomousController::canScoreAccumulate() {
-
+	accumulateFromScore();
 }
 
 void AutonomousController::accumulate() {
@@ -158,7 +151,27 @@ void accumulateTriple() {
 
 }
 
-void accumulateFromScore() {
+void toteToTote(bool isRight) {
+	if(isRight) {
+		// robot.drive(-1);
+	}
+	else {
+		// robot.drive(1);
+	}
+	// robot.rotate(90);
+	// robot.drive(15);
+	// robot.rotate(90);
+	// toteScore()
+}
 
+void accumulateFromScore() {
+	// robot.drive(-1);
+	// robot.rotate(-90);
+	// robot.drive(1);
+	// robot.rotate(90);
+	// robot.drive(30);
+	// robot.pickup();
+	// robot.rotate(180);
+	// robot.drive(30);
 }
 
