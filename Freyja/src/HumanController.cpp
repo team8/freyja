@@ -19,16 +19,16 @@ void HumanController::update(Robot *robotPointer) {
 	robotPointer -> move(moveJoystick.GetY(),turnJoystick.GetX());
 
 	if(operatorJoystick.GetRawButton(1);){
-		robotPointer -> changeArmState(EXTENDING)
+		robotPointer -> changeArmState(Arm::State::EXTENDING)
 	}
 	if(operatorJoystick.GetRawButton(2);){
-		robotPointer -> changeArmState(RETRACTING)
+		robotPointer -> changeArmState(Arm::State::RETRACTING)
 	}
 	if(operatorJoystick.GetRawButton(3);){
-		robotPointer -> changeArmState(IDLE)
+		robotPointer -> changeArmState(Arm::State:IDLE)
 	}
 	if(operatorJoystick.GetRawButton(4);){
-		robotPointer -> changeArmState(OFF)
+		robotPointer -> changeArmState(Arm::State::OFF)
 	}
 	//robotPointer -> changeArmState(operatorJoystick.GetRawButton());
 }
