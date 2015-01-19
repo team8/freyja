@@ -1,7 +1,8 @@
 #ifndef SRC_LIFTER_H_
 #define SRC_LIFTER_H_
-#include "Subsys.h"
+
 #include <WPILib.h>
+#include "Subsys.h"
 
 
 class Lifter : public Subsys {

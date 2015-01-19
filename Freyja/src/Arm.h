@@ -1,9 +1,8 @@
 #ifndef ARM_H
 #define ARM_H
 
-#include <iostream>
-#include "Subsys.h"
 #include <WPILib.h>
+#include "Subsys.h"
 
 class Arm : public Subsys {
 public:

@@ -5,10 +5,10 @@
  *      Author: liam
  */
 
+#include <WPILib.h>
 #include "AutonomousController.h"
 #include "HumanController.h"
 #include "Robot.h"
-#include <WPILib.h>
 
 
 class Freyja : public IterativeRobot {
