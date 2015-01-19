@@ -7,7 +7,7 @@
 class Arm : public Subsys {
 public:
 	enum State {
-		EXTENDING, RETRACTING, IDLE
+		EXTENDING, RETRACTING, IDLE, OFF
 	};
 
 	Arm();
