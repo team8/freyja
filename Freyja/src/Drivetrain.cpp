@@ -6,6 +6,7 @@
  */
 
 #include "Drivetrain.h"
+#include "Constants.h"
 
 Drivetrain::Drivetrain() :
 
@@ -14,11 +15,23 @@ Drivetrain::Drivetrain() :
 			leftBottomTalon((uint32_t) PORT_DRIVE_VIC_LEFT_BACK),
 			rightTopTalon((uint32_t) PORT_DRIVE_VIC_RIGHT_FRONT),
 			//rightMiddleTalon((uint32_t) 8),
-			rightBottomTalon((uint32_t) PORT_DRIVE_VIC_RIGHT_BACK)
+			rightBottomTalon((uint32_t) PORT_DRIVE_VIC_RIGHT_BACK),
 
+			leftEncoder((uint32_t) PORT_ENCODER_LEFT_A, (uint32_t) PORT_ENCODER_LEFT_B, true),
+			rightEncoder((uint32_t) PORT_ENCODER_RIGHT_A, (uint32_t) PORT_ENCODER_RIGHT_B, false),
+
+			gyro(PORT_GYRO),
+
+			leftTopController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &leftEncoder, &leftTopTalon),
+			leftBottomController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &leftEncoder, &leftBottomTalon),
+			rightTopController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &rightEncoder, &rightTopTalon),
+			rightBottomController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &rightEncoder, &rightBottomTalon)
 {
 	targetSpeed = 0;
 	rotateSpeed = 0;
+
+	leftEncoder.SetDistancePerPulse(LEFT_DPP);
+	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
 }
 
 Drivetrain::~Drivetrain() {
@@ -56,7 +69,7 @@ void Drivetrain::stopTalons(){
 }
 
 
-void Drivetrain::move(double targetSpeed, double rotateSpeed){
+void Drivetrain::setSpeed(double targetSpeed, double rotateSpeed){
 	setTargetSpeed(targetSpeed);
 	setRotateSpeed(rotateSpeed);
 }

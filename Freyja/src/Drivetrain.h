@@ -16,16 +16,30 @@
 
 class Drivetrain : public Subsys {
 private:
-	//Talons
+
 	Victor leftTopTalon;
-	//Victor leftMiddleTalon;
+//	Victor leftMiddleTalon;
 	Victor leftBottomTalon;
+
 	Victor rightTopTalon;
-	//Victor rightMiddleTalon;
+//	Victor rightMiddleTalon;
 	Victor rightBottomTalon;
 
 	double targetSpeed;
 	double rotateSpeed;
+
+	Encoder leftEncoder;
+	Encoder rightEncoder;
+
+	Gyro gyro;
+
+	PIDController leftTopController;
+//	PIDController leftMiddleController;
+	PIDController leftBottomController;
+
+	PIDController rightTopController;
+//	PIDController rightMiddleController;
+	PIDController rightBottomController;
 
 public:
 
@@ -40,7 +54,7 @@ public:
 
 	void stopTalons();
 
-	void move(double targetSpeed, double rotateSpeed);
+	void setSpeed(double targetSpeed, double rotateSpeed);
 
 	void setTargetSpeed(double speed);
 	void setRotateSpeed(double speed);
