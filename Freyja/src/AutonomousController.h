@@ -6,6 +6,9 @@
 #ifndef SRC_AUTONOMOUSCONTROLLER_H_
 #define SRC_AUTONOMOUSCONTROLLER_H_
 #define PATH 0
+#define DEFAULT_DRIVE_DISTANCE 20
+#include "Robot.h"
+#include "Timer.h"
 
 class AutonomousController {
 	public:
@@ -13,8 +16,10 @@ class AutonomousController {
 		virtual ~AutonomousController();
 		int path;
 	private:
+		Timer time;
+		Robot* robot;
 		void stop();
-		void drive();
+		void drive(int dist);
 		void toteScore();
 		void toteScoreAccumulate();
 		void toteScoreDoubleLeft();
@@ -27,6 +32,7 @@ class AutonomousController {
 		void accumulate();
 		void accumulateDouble();
 		void accumulateTriple();
+		void accumulateFromScore();
 	};
 
 #endif

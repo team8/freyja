@@ -27,32 +27,46 @@ AutonomousController::AutonomousController(Robot *robotPointer) {
 	path = PATH;
 	switch(path) {
 	case STOP:
+		stop();
 		break;
 	case DRIVE:
+		drive(DEFAULT_DRIVE_DISTANCE);
 		break;
 	case TOTE_SCORE:
+		toteScore();
 		break;
 	case TOTE_SCORE_ACCUMULATE:
+		toteScoreAccumulate();
 		break;
 	case TOTE_SCORE_DOUBLE_LEFT:
+		toteScoreDoubleLeft();
 		break;
 	case TOTE_SCORE_DOUBLE_RIGHT:
+		toteScoreDoubleRight();
 		break;
 	case TOTE_SCORE_DOUBLE_LEFT_ACCUMULATE:
+		toteScoreDoubleLeftAccumulate();
 		break;
 	case TOTE_SCORE_DOUBLE_RIGHT_ACCUMULATE:
+		toteScoreDoubleRightAccumulate();
 		break;
 	case TOTE_SCORE_TRIPLE:
+		toteScoreTriple();
 		break;
 	case CAN_SCORE:
+		canScore();
 		break;
 	case CAN_SCORE_ACCUMULATE:
+		canScoreAccumulate();
 		break;
 	case ACCUMULATE:
+		accumulate();
 		break;
 	case ACCUMULATE_DOUBLE:
+		accumulateDouble();
 		break;
 	case ACCUMULATE_TRIPLE:
+		accumulateTriple();
 		break;
 	}
 }
@@ -64,54 +78,87 @@ void AutonomousController::stop() {
 
 }
 
-void drive() {
+void AutonomousController::drive(int dist) {
+	// robot.drive(dist);
+	// stop();
+}
+
+void AutonomousController::toteScore() {
+	// robot.pickup();
+	// robot.drive(dist);
+	// robot.drive();
+	// stop();
+}
+
+void AutonomousController::toteScoreAccumulate() {
+	// toteScore();
+	// robot.drive(-1);
+	// robot.rotate(-90);
+	// robot.drive(1);
+	// robot.rotate(90);
+	// robot.drive(30);
+	// robot.pickup();
+	// robot.rotate(180);
+	// robot.drive(30);
+}
+
+void AutonomousController::toteScoreDoubleLeft() {
+	// pickup
+	// robot.drive(-1);
+	// robot.rotate(-90);
+	// robot.drive(15);
+	// robot.rotate(90);
+	// toteScore()
+}
+
+void AutonomousController::toteScoreDoubleRight() {
+	// pickup
+	// robot.drive(-1);
+	// robot.rotate(90);
+	// robot.drive(15);
+	// robot.rotate(90);
+	// toteScore()
 
 }
 
-void toteScore() {
-
-}
-void toteScoreAccumulate() {
-
-}
-
-void toteScoreDoubleLeft() {
-
+void AutonomousController::toteScoreDoubleLeftAccumulate() {
+	// pickup
+	// robot.drive(-1);
+	// robot.rotate(-90);
+	// robot.drive(15);
+	// robot.rotate(90);
+	// toteScore()
 }
 
-void toteScoreDoubleRight() {
+void AutonomousController::toteScoreDoubleRightAccumulate() {
 
 }
 
-void toteScoreDoubleLeftAccumulate() {
+void AutonomousController::toteScoreTriple() {
 
 }
 
-void toteScoreDoubleRightAccumulate() {
+void AutonomousController::canScore() {
 
 }
 
-void toteScoreTriple() {
+void AutonomousController::canScoreAccumulate() {
 
 }
 
-void canScore() {
+void AutonomousController::accumulate() {
 
 }
 
-void canScoreAccumulate() {
-
-}
-
-void accumulate() {
-
-}
-
-void accumulateDouble() {
+void AutonomousController::accumulateDouble() {
 
 }
 
 void accumulateTriple() {
+
+}
+
+void accumulateFromScore() {
 
 }
 
