@@ -12,7 +12,10 @@
 
 Lifter::Lifter():
 motor1((uint32_t) 0),
-motor2((uint32_t) 0)
+motor2((uint32_t) 0),
+encoder((uint32_t) 0, (uint32_t) 0),
+digitalInput((uint32_t) 0)
+//sensor(0.f, 0.f, 0.f, encoder, motor1)
 {
 
 }

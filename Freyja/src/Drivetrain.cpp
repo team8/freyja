@@ -26,8 +26,8 @@ Drivetrain::Drivetrain() :
 }
 
 void Drivetrain::update(){
-	leftSpeed = max(min(targetSpeed-rotateSpeed, 1.0), -1.0);
-	rightSpeed = max(min(targetSpeed+rotateSpeed, 1.0), -1.0);
+	leftSpeed = std::max(std::min(targetSpeed-rotateSpeed, 1.0), -1.0);
+	rightSpeed = std::max(std::min(targetSpeed+rotateSpeed, 1.0), -1.0);
 
 	leftTopTalon.Set(leftSpeed);
 	//leftMiddleTalon.Set(leftSpeed);

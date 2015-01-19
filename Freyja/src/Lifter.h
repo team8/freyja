@@ -25,7 +25,7 @@ private:
 	Talon motor2;
 	Encoder encoder;
 	DigitalInput digitalInput;
-	PIDController sensor;
+	//PIDController sensor;		//need to figure out constructor
 };
 
 #endif /* SRC_LIFTER_H_ */
