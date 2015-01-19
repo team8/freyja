@@ -22,7 +22,7 @@ void Robot::disable() {
 	arm.disable();
 }
 void Robot::move(double Y, double X) {
-	driveTrain.move(Y, X);
+	driveTrain.setSpeed(Y, X);
 
 }
 
