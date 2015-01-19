@@ -2,13 +2,12 @@
 #define ARM_H
 
 #include <WPILib.h>
-#include <iostream>
 #include "Subsys.h"
 
 class Arm : public Subsys {
 public:
 	enum State {
-		EXTENDING, RETRACTING, IDLE
+		EXTENDING, RETRACTING, IDLE, OFF
 	};
 
 	Arm();

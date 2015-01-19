@@ -1,6 +1,5 @@
 #include "Arm.h"
-#include <WPILib.h>
-#include <iostream>
+
 
 Arm::Arm():
 	compressor(),
@@ -32,6 +31,9 @@ void Arm::update() {
 		break;
 	case IDLE:
 		solenoid.Set(DoubleSolenoid::Value::kOff);
+		break;
+	case OFF:
+		compressor.Stop();
 		break;
 	}
 }

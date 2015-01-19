@@ -1,7 +1,8 @@
 #ifndef SRC_LIFTER_H_
 #define SRC_LIFTER_H_
-#include "Subsys.h"
+
 #include <WPILib.h>
+#include "Subsys.h"
 
 
 class Lifter : public Subsys {
@@ -24,7 +25,7 @@ private:
 	Talon motor2;
 	Encoder encoder;
 	DigitalInput digitalInput;
-	PIDController sensor;
+	PIDController sensor;		//need to figure out constructor
 };
 
 #endif /* SRC_LIFTER_H_ */

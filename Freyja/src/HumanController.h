@@ -7,8 +7,8 @@
 
 #ifndef FREYJA_SRC_HUMANCONTROLLER_H_
 #define FREYJA_SRC_HUMANCONTROLLER_H_
-#include "Constants.h"
 #include <WPILib.h>
+#include "Constants.h"
 #include "Robot.h"
 
 class HumanController {

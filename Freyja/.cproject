@@ -146,4 +146,5 @@
 			<resource resourceType="PROJECT" workspacePath="/Freyja"/>
 		</configuration>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>
