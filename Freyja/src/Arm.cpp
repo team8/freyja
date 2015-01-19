@@ -33,7 +33,7 @@ void Arm::update() {
 		solenoid.Set(DoubleSolenoid::Value::kOff);
 		break;
 	case OFF:
-		compressor.off();
+		compressor.Stop();
 		break;
 	}
 }
