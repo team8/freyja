@@ -1,6 +1,6 @@
 /*
- * Version 3
- * 1/19/15 at 1500
+ * Version 4
+ * 1/19/15 at 2300
  * Jonathan Zwiebel
  */
 
@@ -85,12 +85,12 @@ void AutonomousController::stop() {
 }
 
 void AutonomousController::drive() {
-	// robot.drive(DEFAULT_DRIVE_DISTANCE);
+	// robot.driveDist(DEFAULT_DRIVE_DISTANCE);
 }
 
 void AutonomousController::toteScore() {
 	// robot.pickup();
-	// robot.drive();
+	// robot.driveDist();
 	// robot.drop();
 }
 
@@ -134,23 +134,50 @@ void AutonomousController::toteScoreTriple() {
 }
 
 void AutonomousController::canScore() {
-
+    // robot.pickupCan();
+	// robot.drive();
+	// robot.drop();
 }
 
 void AutonomousController::canScoreAccumulate() {
+	canScore();
 	accumulateFromScore();
 }
 
 void AutonomousController::accumulate() {
-
+   // robot.drive();
+   // robot.pickup();
+   // robot.rotate(180);
+   // robot.drive();
+   // robot.drop();
 }
 
 void AutonomousController::accumulateDouble() {
-
+	   // robot.drive();
+	   // robot.pickup();
+	   // robot.rotate(90);
+	   // robot.drive();
+	   // robot.rotate(-90);
+	   // robot.pickup();
+	   // robot.rotate(180);
+	   // robot.drive();
+	   // robot.drop();
 }
 
 void accumulateTriple() {
-
+	   // robot.drive();
+	   // robot.pickup();
+	   // robot.rotate(90);
+	   // robot.drive();
+	   // robot.rotate(-90);
+	   // robot.pickup();
+	   // robot.rotate(90);
+	   // robot.drive();
+	   // robot.rotate(-90);
+	   // robot.pickup()
+	   // robot.rotate(180);
+	   // robot.drive();
+	   // robot.drop();
 }
 
 void toteToTote(bool isRight) {
