@@ -22,6 +22,8 @@ void Arm::disable() {
 
 void Arm::update() {
 
+	//There are a couple of semantic errors with this code, first off, you can't actually start compressing... Also, you can't compress and do something else at the same time
+	//If you were able to compress while the user is extending or retracting that would be extremely useful
 	switch(state) {
 	case EXTENDING:
 		solenoid.Set(DoubleSolenoid::Value::kForward);
