@@ -8,25 +8,41 @@ Robot::Robot() :
 }
 
 void Robot::init() {
-	driveTrain.init();
+	drivetrain.init();
 	arm.init();
 }
 
 void Robot::update() {
-	driveTrain.update();
+	drivetrain.update();
 	arm.update();
 }
 
 void Robot::disable() {
-	driveTrain.disable();
+	drivetrain.disable();
 	arm.disable();
 }
+
 void Robot::move(double Y, double X) {
-	driveTrain.setSpeed(Y, X);
+	drivetrain.setSpeed(Y, X);
 
 }
 
-void Robot::changeArmState(Arm::State state){
+void Robot::changeArmState(Arm::State state) {
 	arm.setState(state);
 }
 
+void Robot::driveDistance(double distance) {
+	drivetrain.driveDistance(distance);
+}
+
+void Robot::rotateAngle(double angle) {
+	drivetrain.rotateAngle(angle);	
+}
+
+void Robot::lift(double distance) {
+	lifter.lift(distance);	
+}
+}
+
+
+}
