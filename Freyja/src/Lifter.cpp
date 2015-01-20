@@ -52,6 +52,9 @@ void Lifter::moveDown() {
 	motor1.SetSpeed(-1.0);
 }
 
+void Lifter::lift(double distance) {
+	
+}
 
 bool Lifter::checkSensorHit() {
 	return (digitalInput.Get() == 1);
