@@ -6,7 +6,10 @@
 
 class Arm : public Subsys {
 public:
-	enum State {
+	enum CompressorState {
+		ON, OFF
+	};
+	enum PistonState {
 		EXTENDING, RETRACTING, IDLE, OFF
 	};
 
