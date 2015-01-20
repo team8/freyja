@@ -6,19 +6,23 @@ Arm::Arm():
 	solenoid((uint32_t) 0, (uint32_t) 1)
 {
 	compressor.Start();
-	setState(IDLE);
+	setPistonState(IDLE);
 }
 
 Arm::~Arm() {
 	// TODO Auto-generated destructor stub
 }
 
-void Arm::setState(State state) {
-	this -> state = state;
+void Arm::setCompressorState(CompressorState state) {
+	this -> compressorState = state;
+}
+void Arm::setPistonState(PistonState state) {
+	this -> PistonState = state;
 }
 
 void Arm::disable() {
-	setState(IDLE);
+	setCompressorState(ON);
+	setPistonState(IDLE);
 }
 
 void Arm::update() {
@@ -33,25 +37,28 @@ void Arm::update() {
 	//so if we can have valves that open and close we should be fine to do this at the same time.
 	
 	
-	switch(state) {
+	switch(pistonState){
 	case EXTENDING:
-		compressor.Start();
 		solenoid.Set(DoubleSolenoid::Value::kForward);
 		break;
 	case RETRACTING:
-		compressor.Start();
 		solenoid.Set(DoubleSolenoid::Value::kReverse);
 		break;
 	case IDLE:
-		compressor.Start();
 		solenoid.Set(DoubleSolenoid::Value::kOff);
 		break;
-	case OFF:
+	}
+	switch(compressorState){
+		case ON:
+		compressor.Start();
+		break;
+		Case OFF:
 		compressor.Stop();
 		break;
 	}
 }
 
 void Arm::init() {
-	setState(IDLE);
+	setCompressorState(ON);
+	setPistonState(IDLE);
 }
