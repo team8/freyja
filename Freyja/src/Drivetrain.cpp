@@ -40,23 +40,6 @@ Drivetrain::Drivetrain() :
 	rightBottomController.SetInputRange(-1,1);
 }
 
-<<<<<<< HEAD
-void Drivetrain::update(){
-	leftSpeed = max(min(targetSpeed-rotateSpeed, 1.0), -1.0);
-	rightSpeed = max(min(targetSpeed+rotateSpeed, 1.0), -1.0);
-
-	leftTopTalon.Set(leftSpeed);
-	//leftMiddleTalon.Set(leftSpeed);
-	leftBottomTalon.Set(leftSpeed);
-	rightTopTalon.Set(rightSpeed);
-	//rightMiddleTalon.Set(rightSpeed);
-	rightBottomTalon.Set(rightSpeed);
-=======
-Drivetrain::~Drivetrain() {
->>>>>>> 8b7a74b6d556837901b52490a1d7f075e1630b56
-
-}
-
 void Drivetrain::init() {
 	leftEncoder.Reset();
 	rightEncoder.Reset();
