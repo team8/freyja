@@ -26,10 +26,10 @@ enum path {
 
 AutonomousController::AutonomousController(Robot *robotPointer) {
 	this->robot = robotPointer;
-	std::cout <- "AutonomousController constructed";
+	std::cout << "AutonomousController constructed";
 
 	path = PATH;
-	std::cout <- "Path " + path + " called";
+	std::cout << "Path " + path + " called";
 
 	switch(path) {
 	case STOP:
