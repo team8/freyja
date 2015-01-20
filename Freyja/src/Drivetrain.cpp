@@ -33,6 +33,11 @@ Drivetrain::Drivetrain() :
 
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
 	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
+
+	leftTopController.SetInputRange(-1, 1);
+	rightTopController.SetInputRange(-1,1);
+	leftBottomController.SetInputRange(-1,1);
+	rightBottomController.SetInputRange(-1,1);
 }
 
 Drivetrain::~Drivetrain() {
@@ -40,7 +45,8 @@ Drivetrain::~Drivetrain() {
 }
 
 void Drivetrain::init() {
-
+	leftEncoder.Reset();
+	rightEncoder.Reset();
 }
 
 void Drivetrain::disable() {
@@ -48,6 +54,11 @@ void Drivetrain::disable() {
 }
 
 void Drivetrain::update(){
+	if(leftTopController.IsEnabled() || leftBottomController.IsEnabled() || rightTopController.IsEnabled() || rightBottomController.IsEnabled())
+	{
+
+	}
+
 	double leftSpeed = std::max(std::min(targetSpeed-rotateSpeed, 1.0), -1.0);
 	double rightSpeed = std::max(std::min(targetSpeed+rotateSpeed, 1.0), -1.0);
 
@@ -57,7 +68,6 @@ void Drivetrain::update(){
 	rightTopTalon.Set(rightSpeed);
 	//rightMiddleTalon.Set(rightSpeed);
 	rightBottomTalon.Set(rightSpeed);
-
 }
 
 void Drivetrain::stopTalons(){
@@ -88,5 +98,16 @@ void Drivetrain::rotateAngle(double angle){
 }
 
 void Drivetrain::driveDistance(double distance){
+	leftEncoder.Reset();
+	rightEncoder.Reset();
 
+	leftTopController.SetSetpoint(distance);
+	leftBottomController.SetSetpoint(distance);
+	rightTopController.SetSetpoint(distance);
+	rightBottomController.SetSetpoint(distance);
+
+	leftTopController.Enable();
+	leftBottomController.Enable();
+	rightTopController.Enable();
+	rightBottomController.Enable();
 }
