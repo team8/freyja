@@ -27,8 +27,11 @@ void Robot::move(double Y, double X) {
 
 }
 
-void Robot::changeArmState(Arm::State state) {
-	arm.setState(state);
+void Robot::changePistonState(Arm::PistonState state) {
+	arm.setPistonState(state);
+}
+void Robot::changeCompressorState(Arm::CompressorState state) {
+	arm.setCompressorState(state);
 }
 
 void Robot::driveDistance(double distance) {
