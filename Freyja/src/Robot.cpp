@@ -26,8 +26,7 @@ void Robot::move(double Y, double X) {
 
 }
 
-
 void Robot::changeArmState(Arm::State state){
-		arm.setState(state);
+	arm.setState(state);
 }
 
