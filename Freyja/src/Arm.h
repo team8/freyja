@@ -24,7 +24,8 @@ private:
 	Compressor compressor;
 	DoubleSolenoid solenoid;
 
-	State state;
+	CompressorState compressorState;
+	PistonState pistonState;
 };
 
 #endif
