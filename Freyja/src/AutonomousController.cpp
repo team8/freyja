@@ -1,11 +1,16 @@
 /*
- * Version 4
- * 1/19/15 at 2300
+ * Version 5
+ * 1/20/15 at 2100
  * Jonathan Zwiebel
  */
 
 #include "AutonomousController.h"
-#define PATH 0;
+#define PATH 0
+#define YELLOW_AUTO_DISTANCE 20
+#define AUTO_GRAY_DISTANCE 20
+#define GRAY_GRAY_DISTANCE 5
+#define YELLOW_YELLOW_DISTANCE 15
+#define LIFT_DISTANCE 5
 
 enum path {
 	STOP = 0,
@@ -29,7 +34,6 @@ AutonomousController::AutonomousController(Robot *robotPointer) {
 	std::cout << "AutonomousController constructed";
 
 	path = PATH;
-	std::cout << "Path " + path + " called";
 
 	switch(path) {
 	case STOP:
@@ -85,28 +89,28 @@ void AutonomousController::stop() {
 }
 
 void AutonomousController::drive() {
-	// robot.driveDist(DEFAULT_DRIVE_DISTANCE);
+	robot->driveDistance(YELLOW_AUTO_DISTANCE);
 }
 
 void AutonomousController::toteScore() {
-	// robot.pickup();
-	// robot.driveDist();
-	// robot.drop();
+	robot->lift(LIFT_DISTANCE);
+	robot->driveDistance(YELLOW_AUTO_DISTANCE);
+	//robot->drop();
 }
 
 void AutonomousController::toteScoreAccumulate() {
-	// toteScore();
+	toteScore();
 	accumulateFromScore();
 }
 
 void AutonomousController::toteScoreDoubleLeft() {
-	// pickup
+	robot->lift(LIFT_DISTANCE);
 	toteToTote(false);
 	toteScore();
 }
 
 void AutonomousController::toteScoreDoubleRight() {
-	// pickup
+	robot->lift(LIFT_DISTANCE);
 	toteToTote(true);
 	toteScore();
 }
@@ -122,21 +126,13 @@ void AutonomousController::toteScoreDoubleRightAccumulate() {
 }
 
 void AutonomousController::toteScoreTriple() {
-	// robot.drive(dist);
-	// pickup();
-	// robot.drive(dist);
-	// pickup();
-	// robot.drive(dist);
-	// pickup();
-	// robot.rotate(90);
-	// drive();
-	// robot.drive();
+	// magic
 }
 
 void AutonomousController::canScore() {
-    // robot.pickupCan();
-	// robot.drive();
-	// robot.drop();
+    // robot->liftCan();
+	robot->driveDistance(YELLOW_AUTO_DISTANCE);
+	// robot->drop();
 }
 
 void AutonomousController::canScoreAccumulate() {
@@ -145,62 +141,61 @@ void AutonomousController::canScoreAccumulate() {
 }
 
 void AutonomousController::accumulate() {
-   // robot.drive();
-   // robot.pickup();
-   // robot.rotate(180);
-   // robot.drive();
-   // robot.drop();
+   robot->driveDistance(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
+   robot->lift(LIFT_DISTANCE);
+   robot->rotateAngle(180);
+   robot->driveDistance(AUTO_GRAY_DISTANCE);
+   // robot->drop();
 }
 
 void AutonomousController::accumulateDouble() {
-	   // robot.drive();
-	   // robot.pickup();
-	   // robot.rotate(90);
-	   // robot.drive();
-	   // robot.rotate(-90);
-	   // robot.pickup();
-	   // robot.rotate(180);
-	   // robot.drive();
-	   // robot.drop();
+	   robot->driveDistance(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
+	   robot->lift(LIFT_DISTANCE);
+	   robot->rotateAngle(90);
+	   robot->driveDistance(GRAY_GRAY_DISTANCE);
+	   robot->rotateAngle(-90);
+	   robot->lift(LIFT_DISTANCE);
+	   robot->rotateAngle(180);
+	   robot->driveDistance(AUTO_GRAY_DISTANCE);
+	   // robot->drop();
 }
 
-void accumulateTriple() {
-	   // robot.drive();
-	   // robot.pickup();
-	   // robot.rotate(90);
-	   // robot.drive();
-	   // robot.rotate(-90);
-	   // robot.pickup();
-	   // robot.rotate(90);
-	   // robot.drive();
-	   // robot.rotate(-90);
-	   // robot.pickup()
-	   // robot.rotate(180);
-	   // robot.drive();
-	   // robot.drop();
+void AutonomousController::accumulateTriple() {
+	   robot->driveDistance(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
+	   robot->lift(LIFT_DISTANCE);
+	   robot->rotateAngle(90);
+	   robot->driveDistance(GRAY_GRAY_DISTANCE);
+	   robot->rotateAngle(-90);
+	   robot->lift(LIFT_DISTANCE);	   robot->rotateAngle(90);
+	   robot->driveDistance(GRAY_GRAY_DISTANCE);
+	   robot->rotateAngle(-90);
+	   robot->lift(LIFT_DISTANCE);
+	   robot->rotateAngle(180);
+	   robot->driveDistance(AUTO_GRAY_DISTANCE);
+	   // robot->drop();
 }
 
-void toteToTote(bool isRight) {
+void AutonomousController::toteToTote(bool isRight) {
 	if(isRight) {
-		// robot.drive(-1);
+		robot->rotateAngle(90);
+		robot->driveDistance(YELLOW_YELLOW_DISTANCE);
+		robot->rotateAngle(-90);
 	}
 	else {
-		// robot.drive(1);
+		robot->rotateAngle(-90);
+		robot->driveDistance(YELLOW_YELLOW_DISTANCE);
+		robot->rotateAngle(90);
 	}
-	// robot.rotate(90);
-	// robot.drive(15);
-	// robot.rotate(90);
-	// toteScore()
 }
 
-void accumulateFromScore() {
-	// robot.drive(-1);
-	// robot.rotate(-90);
-	// robot.drive(1);
-	// robot.rotate(90);
-	// robot.drive(30);
-	// robot.pickup();
-	// robot.rotate(180);
-	// robot.drive(30);
+void AutonomousController::accumulateFromScore() {
+	robot->driveDistance(-1);
+	robot->rotateAngle(-90);
+	robot->driveDistance(1);
+	robot->rotateAngle(90);
+	robot->driveDistance(1 + AUTO_GRAY_DISTANCE);
+	robot->lift(LIFT_DISTANCE);
+	robot->rotateAngle(180);
+	robot->driveDistance(AUTO_GRAY_DISTANCE);
 }
 

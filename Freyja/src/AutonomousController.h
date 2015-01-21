@@ -1,17 +1,12 @@
-<<<<<<< HEAD
 /*
- * Version 4
- * 1/19/15 at 2300
+ * Version 5
+ * 1/20/15 at 2100
  * Jonathan Zwiebel
  */
 
-
-=======
->>>>>>> efbd541dc2ea1328fd6c8dece73a3504a64343b7
 #ifndef SRC_AUTONOMOUSCONTROLLER_H_
 #define SRC_AUTONOMOUSCONTROLLER_H_
 #define PATH 0
-#define DEFAULT_DRIVE_DISTANCE 20
 #include <WPILib.h>
 #include "Robot.h"
 #include "Timer.h"
@@ -40,7 +35,6 @@ class AutonomousController {
 		void accumulateTriple();
 		void accumulateFromScore();
 		void toteToTote(bool isRight);
-		void accumulateFromScore();
 	};
 
 #endif

@@ -39,5 +39,5 @@ void Robot::rotateAngle(double angle) {
 }
 
 void Robot::lift(double distance) {
-	lifter.lift(distance);	
+	lifter.lift(distance);
 }
