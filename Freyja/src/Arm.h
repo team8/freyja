@@ -10,7 +10,7 @@ public:
 		ON, OFF
 	};
 	enum PistonState {
-		EXTENDING, RETRACTING, IDLE, OFF
+		EXTENDING, RETRACTING, IDLE
 	};
 
 	Arm();
