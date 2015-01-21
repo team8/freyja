@@ -15,7 +15,7 @@ class Robot {
 		void init();
 		void update();
 		void disable();
-		void move(double y, double x);
+		void move(double targetSpeed, double rotateSpeed);
 		void changeArmState(Arm::State state);
 		void driveDistance(double distance);
 		void rotateAngle(double angle);
