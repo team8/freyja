@@ -21,7 +21,7 @@ void Arm::setPistonState(PistonState state) {
 }
 
 void Arm::disable() {
-	setCompressorState(ON);
+	setCompressorState(OFF);
 	setPistonState(IDLE);
 }
 
