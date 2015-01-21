@@ -1,7 +1,7 @@
 #include "Robot.h"
 
 Robot::Robot() :
-	driveTrain(),
+	drivetrain(),
 	arm()
 {
 
@@ -22,9 +22,8 @@ void Robot::disable() {
 	arm.disable();
 }
 
-void Robot::move(double Y, double X) {
-	drivetrain.setSpeed(Y, X);
-
+void Robot::move(double targetSpeed, double rotateSpeed) {
+	drivetrain.setSpeed(targetSpeed, rotateSpeed);
 }
 
 void Robot::changeArmState(Arm::State state) {
@@ -41,8 +40,4 @@ void Robot::rotateAngle(double angle) {
 
 void Robot::lift(double distance) {
 	lifter.lift(distance);	
-}
-}
-
-
 }

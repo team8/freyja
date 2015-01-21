@@ -16,7 +16,7 @@ class Robot {
 		void update();
 		void disable();
 		void move(double y, double x);
-		//void changeArmState(uint32_t button);
+		void changeArmState(Arm::State state);
 		void driveDistance(double distance);
 		void rotateAngle(double angle);
 		void lift(double distance);

@@ -1,10 +1,3 @@
-/*
- * Freyja.cpp
- *
- *  Created on: Jan 11, 2015
- *      Author: liam
- */
-
 #include <WPILib.h>
 #include "AutonomousController.h"
 #include "HumanController.h"
