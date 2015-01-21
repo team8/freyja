@@ -15,7 +15,8 @@ public:
 
 	Arm();
 	virtual ~Arm();
-	void setState(State state);
+	void setPistonState(PistonState state);
+	void setCompressorState(CompressorState state);
 	void init();
 	void update();
 	void disable();
