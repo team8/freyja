@@ -33,6 +33,5 @@ void HumanController::update(Robot *robotPointer) {
 	if(operatorJoystick.GetRawButton(5)){
 		robotPointer -> changeCompressorState(Arm::State::ON);
 	}
-	
-	//robotPointer -> changeArmState(operatorJoystick.GetRawButton());
+
 }
