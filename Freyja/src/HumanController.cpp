@@ -1,10 +1,3 @@
-/*
- * HumanController.cpp
- *
- *  Created on: Jan 6, 2015
- *      Author: EngTechP7
- */
-
 #include "HumanController.h"
 
 HumanController::HumanController() :
@@ -25,7 +18,7 @@ void HumanController::update(Robot *robotPointer) {
 		robotPointer -> changeArmState(Arm::State::RETRACTING);
 	}
 	if(operatorJoystick.GetRawButton(3)){
-		robotPointer -> changeArmState(Arm::State:IDLE);
+		robotPointer -> changeArmState(Arm::State::IDLE);
 	}
 	if(operatorJoystick.GetRawButton(4)){
 		robotPointer -> changeArmState(Arm::State::OFF);

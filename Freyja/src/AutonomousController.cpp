@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Version 4
  * 1/19/15 at 2300
@@ -6,6 +7,9 @@
 
 #include "AutonomousController.h"
 #define PATH 0;
+=======
+#include <AutonomousController.h>
+>>>>>>> efbd541dc2ea1328fd6c8dece73a3504a64343b7
 
 enum path {
 	STOP = 0,

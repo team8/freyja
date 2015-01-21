@@ -7,7 +7,7 @@
 
 class Robot {
 	private:
-		Drivetrain driveTrain;
+		Drivetrain drivetrain;
 		Arm arm;
 		Lifter lifter;
 	public:
@@ -16,9 +16,10 @@ class Robot {
 		void update();
 		void disable();
 		void move(double y, double x);
-		//void changeArmState(uint32_t button);
-
-
+		void changeArmState(Arm::State state);
+		void driveDistance(double distance);
+		void rotateAngle(double angle);
+		void lift(double distance);
 };
 
 #endif /* SRC_ROBOT_H_ */

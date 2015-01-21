@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Version 4
  * 1/19/15 at 2300
@@ -5,6 +6,8 @@
  */
 
 
+=======
+>>>>>>> efbd541dc2ea1328fd6c8dece73a3504a64343b7
 #ifndef SRC_AUTONOMOUSCONTROLLER_H_
 #define SRC_AUTONOMOUSCONTROLLER_H_
 #define PATH 0

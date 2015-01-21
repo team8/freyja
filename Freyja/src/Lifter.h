@@ -14,6 +14,7 @@ public:
 	void disable();
 	void moveUp();
 	void moveDown();
+	void lift(double distance);
 	bool checkSensorHit();
 	double getDistance(); //uses encoder
 

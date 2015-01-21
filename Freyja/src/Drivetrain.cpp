@@ -1,11 +1,3 @@
-/*
- * Drivetrain.cpp
- *
- *  Created on: Jan 6, 2015
- *      Author: liam
- *      Author: Benjamin Cohen-Wang
- */
-
 #include "Drivetrain.h"
 #include "Constants.h"
 
@@ -48,24 +40,18 @@ void Drivetrain::disable() {
 	stopTalons();
 }
 
-void Drivetrain::update(){
-	if(leftTopController.IsEnabled() || leftBottomController.IsEnabled() || rightTopController.IsEnabled() || rightBottomController.IsEnabled())
-	{
-
-	}
-
+void Drivetrain::update() {
 	double leftSpeed = std::max(std::min(targetSpeed-rotateSpeed, 1.0), -1.0);
 	double rightSpeed = std::max(std::min(targetSpeed+rotateSpeed, 1.0), -1.0);
 
+	std::cout<<"update dt" <<std::endl;
 	leftTopTalon.Set(leftSpeed);
-	//leftMiddleTalon.Set(leftSpeed);
 	leftBottomTalon.Set(leftSpeed);
 	rightTopTalon.Set(rightSpeed);
-	//rightMiddleTalon.Set(rightSpeed);
 	rightBottomTalon.Set(rightSpeed);
 }
 
-void Drivetrain::stopTalons(){
+void Drivetrain::stopTalons() {
 	leftTopTalon.Set(0.0);
 	//leftMiddleTalon.Set(0.0);
 	leftBottomTalon.Set(0.0);
@@ -75,24 +61,24 @@ void Drivetrain::stopTalons(){
 }
 
 
-void Drivetrain::setSpeed(double targetSpeed, double rotateSpeed){
+void Drivetrain::setSpeed(double targetSpeed, double rotateSpeed) {
 	setTargetSpeed(targetSpeed);
 	setRotateSpeed(rotateSpeed);
 }
 
-void Drivetrain::setTargetSpeed(double speed){
+void Drivetrain::setTargetSpeed(double speed) {
 	this -> targetSpeed = speed;
 }
 
-void Drivetrain::setRotateSpeed(double speed){
+void Drivetrain::setRotateSpeed(double speed) {
 	this -> rotateSpeed = speed;
 }
 
-void Drivetrain::rotateAngle(double angle){
+void Drivetrain::rotateAngle(double angle) {
 
 }
 
-void Drivetrain::driveDistance(double distance){
+void Drivetrain::driveDistance(double distance) {
 	leftEncoder.Reset();
 	rightEncoder.Reset();
 
