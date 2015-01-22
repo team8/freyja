@@ -1,8 +1,14 @@
+/*
+ * Joystick value -> encoder -> pid object -> talon
+ *
+ * PIDController
+ *
+ */
+
 #ifndef SRC_LIFTER_H_
 #define SRC_LIFTER_H_
-
-#include <WPILib.h>
 #include "Subsys.h"
+#include <WPILib.h>
 
 
 class Lifter : public Subsys {
@@ -12,21 +18,21 @@ public:
 	void init();
 	void update();
 	void disable();
-	void moveUp();
-	void moveDown();
-	void lift(double distance);
+	void setSpeed(double speed);
 	bool checkSensorHit();
 	double getDistance(); //uses encoder
 
-	//unimplemented
-	void runPIDLoop();
 
 private:
-	Talon motor1;
-	Talon motor2;
+	Talon motor;
 	Encoder encoder;
 	DigitalInput digitalInput;
-	PIDController sensor;		//need to figure out constructor
+	PIDController controller;
+
+	int upSpeed = 1;
+	int downSpeed = 0;
+	int distanceToTote = 2; //arbitrary number
+
 };
 
 #endif /* SRC_LIFTER_H_ */
