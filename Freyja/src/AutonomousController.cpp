@@ -5,6 +5,9 @@
  */
 
 #include "AutonomousController.h"
+#include "Constants.h"
+#include <WPILib.h>
+#include <AnalogInput.h>
 #define PATH 0
 #define YELLOW_AUTO_DISTANCE 20
 #define AUTO_GRAY_DISTANCE 20
@@ -29,11 +32,13 @@ enum path {
 	ACCUMULATE_TRIPLE = 13
 };
 
-AutonomousController::AutonomousController(Robot *robotPointer) {
+AutonomousController::AutonomousController(Robot *robotPointer) :
+	AnalogInput((uint32_t) PORT_AUTO_DIAL)
+	{
 	this->robot = robotPointer;
 	std::cout << "AutonomousController constructed";
 
-	path = PATH;
+	path = dial.GetValue();
 
 	switch(path) {
 	case STOP:

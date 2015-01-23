@@ -19,6 +19,7 @@ class AutonomousController {
 	private:
 		Timer time;
 		Robot* robot;
+		AnalogInput dial;
 		void stop();
 		void drive();
 		void toteScore();

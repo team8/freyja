@@ -17,6 +17,8 @@
 #define PORT_ENCODER_LEFT_A 5
 #define PORT_ENCODER_LEFT_B 6
 
+#define PORT_AUTO_DIAL 9
+
 #define PORT_GYRO 0
 
 #define PROPORTIONAL 0.5
