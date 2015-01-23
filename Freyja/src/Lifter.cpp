@@ -19,10 +19,6 @@ controller(0.f, 0.f, 0.f, &encoder, &motor)
 
 }
 
-Lifter::~Lifter() {
-	// TODO Auto-generated destructor stub
-}
-
 void Lifter::init() {
 	encoder.Reset();
 	controller.Reset();
@@ -66,3 +62,6 @@ bool Lifter::checkSensorHit() {
 double Lifter::getDistance() {
 	return encoder.GetDistance();
 }
+
+//Empty destructor
+Lifter::~Lifter() {}

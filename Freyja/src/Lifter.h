@@ -22,7 +22,6 @@ public:
 	bool checkSensorHit();
 	double getDistance(); //uses encoder
 
-
 private:
 	Talon motor;
 	Encoder encoder;

@@ -33,7 +33,7 @@ enum path {
 };
 
 AutonomousController::AutonomousController(Robot *robotPointer) :
-	AnalogInput((uint32_t) PORT_AUTO_DIAL)
+	dial((uint32_t) PORT_AUTO_DIAL)
 	{
 	this->robot = robotPointer;
 	std::cout << "AutonomousController constructed";
@@ -84,9 +84,6 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 		accumulateTriple();
 		break;
 	}
-}
-
-AutonomousController::~AutonomousController() {
 }
 
 void AutonomousController::stop() {
@@ -204,3 +201,6 @@ void AutonomousController::accumulateFromScore() {
 	robot->driveDistance(AUTO_GRAY_DISTANCE);
 }
 
+//Empty destructor
+AutonomousController::~AutonomousController() {
+}
