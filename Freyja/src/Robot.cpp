@@ -39,5 +39,6 @@ void Robot::rotateAngle(double angle) {
 }
 
 void Robot::lift(double distance) {
-	lifter.lift(distance);	
+	//This method does not exist yet
+	//lifter.lift(distance);
 }
