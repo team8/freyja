@@ -25,15 +25,10 @@ Drivetrain::Drivetrain() :
 
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
 	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
-
 	leftTopController.SetInputRange(-1, 1);
 	rightTopController.SetInputRange(-1,1);
 	leftBottomController.SetInputRange(-1,1);
 	rightBottomController.SetInputRange(-1,1);
-}
-
-Drivetrain::~Drivetrain() {
-
 }
 
 void Drivetrain::init() {
