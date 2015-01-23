@@ -53,10 +53,8 @@ void Drivetrain::update() {
 
 void Drivetrain::stopTalons() {
 	leftTopTalon.Set(0.0);
-	//leftMiddleTalon.Set(0.0);
 	leftBottomTalon.Set(0.0);
 	rightTopTalon.Set(0.0);
-	//rightMiddleTalon.Set(0.0);
 	rightBottomTalon.Set(0.0);
 }
 
@@ -75,7 +73,7 @@ void Drivetrain::setRotateSpeed(double speed) {
 }
 
 void Drivetrain::rotateAngle(double angle) {
-
+	//TODO Implement gyros and this method correctly
 }
 
 void Drivetrain::driveDistance(double distance) {
@@ -92,3 +90,6 @@ void Drivetrain::driveDistance(double distance) {
 	rightTopController.Enable();
 	rightBottomController.Enable();
 }
+
+//Empty destructor
+Drivetrain::~Drivetrain() {}

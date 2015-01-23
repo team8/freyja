@@ -1,9 +1,3 @@
-/*
- * Version 5
- * 1/20/15 at 2100
- * Jonathan Zwiebel
- */
-
 #ifndef SRC_AUTONOMOUSCONTROLLER_H_
 #define SRC_AUTONOMOUSCONTROLLER_H_
 #define PATH 0
@@ -16,10 +10,13 @@ class AutonomousController {
 		AutonomousController(Robot *robotPointer);
 		virtual ~AutonomousController();
 		int path;
+
 	private:
 		Timer time;
 		Robot* robot;
 		AnalogInput dial;
+
+		//Various drive paths
 		void stop();
 		void drive();
 		void toteScore();

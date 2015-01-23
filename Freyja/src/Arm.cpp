@@ -1,16 +1,11 @@
 #include "Arm.h"
 
-
 Arm::Arm():
 	compressor(),
 	solenoid((uint32_t) 0, (uint32_t) 1)
 {
 	compressor.Start();
 	setState(IDLE);
-}
-
-Arm::~Arm() {
-	// TODO Auto-generated destructor stub
 }
 
 void Arm::setState(State state) {
@@ -55,3 +50,6 @@ void Arm::update() {
 void Arm::init() {
 	setState(IDLE);
 }
+
+//Empty destructor
+Arm::~Arm() {}
