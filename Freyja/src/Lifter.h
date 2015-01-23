@@ -21,7 +21,7 @@ public:
 	void setSpeed(double speed);
 	bool checkSensorHit();
 	double getDistance(); //uses encoder
-
+	void lift(double distance);
 
 private:
 	Talon motor;
