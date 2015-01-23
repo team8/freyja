@@ -17,7 +17,7 @@ void Arm::setCompressorState(CompressorState state) {
 	this -> compressorState = state;
 }
 void Arm::setPistonState(PistonState state) {
-	this -> PistonState = state;
+	this -> pistonState = state;
 }
 
 void Arm::disable() {
@@ -52,7 +52,7 @@ void Arm::update() {
 		case ON:
 		compressor.Start();
 		break;
-		Case OFF:
+		case OFF:
 		compressor.Stop();
 		break;
 	}

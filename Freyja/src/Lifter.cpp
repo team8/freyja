@@ -11,11 +11,10 @@
 #include "Lifter.h"
 
 Lifter::Lifter():
-motor1((uint32_t) 0),
-motor2((uint32_t) 0),
+motor((uint32_t) 0),
 encoder((uint32_t) 0, (uint32_t) 0),
 digitalInput((uint32_t) 0),
-sensor(0.f, 0.f, 0.f, &encoder, &motor1)
+controller(0.f, 0.f, 0.f, &encoder, &motor)
 {
 
 }
@@ -26,38 +25,42 @@ Lifter::~Lifter() {
 
 void Lifter::init() {
 	encoder.Reset();
+	controller.Reset();
+	controller.Enable();
+
 }
 
 void Lifter::update() {
+
 	if(!checkSensorHit()) {
-		moveUp();
+		//if(upButton is Pressed)
+			setSpeed(upSpeed);
+		//else
+			//setSpeed(downSpeed);
 	}
 
 	else {
-		//not sure
+		setSpeed(0.0);
 	}
 }
 
 void Lifter::disable() {
-	motor1.Disable();
-	motor2.Disable();
+	motor.Disable();
+	encoder.Reset();
+	controller.Disable();
 
 }
 
-void Lifter::moveUp() {
-	motor1.SetSpeed(1.0);
+void Lifter::setSpeed(double speed) {
+	motor.Set(speed);
 }
 
-void Lifter::moveDown() {
-	motor1.SetSpeed(-1.0);
-}
-
-void Lifter::lift(double distance) {
-	
-}
 
 bool Lifter::checkSensorHit() {
-	return (digitalInput.Get() == 1);
+	if(digitalInput.Get() == 1) {
+		return true;
+	}
+	return false;
 }
 
 double Lifter::getDistance() {

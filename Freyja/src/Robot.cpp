@@ -22,9 +22,8 @@ void Robot::disable() {
 	arm.disable();
 }
 
-void Robot::move(double Y, double X) {
-	drivetrain.setSpeed(Y, X);
-
+void Robot::move(double targetSpeed, double rotateSpeed) {
+	drivetrain.setSpeed(targetSpeed, rotateSpeed);
 }
 
 void Robot::changePistonState(Arm::PistonState state) {
@@ -43,5 +42,5 @@ void Robot::rotateAngle(double angle) {
 }
 
 void Robot::lift(double distance) {
-	lifter.lift(distance);	
+	//lifter.lift(distance);
 }

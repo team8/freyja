@@ -1,13 +1,3 @@
-/*
- * Drivetrain.h
-
- *
- *  Created on: Jan 6, 2015
- *      Author: liam
- *      Author: Benjamin Cohen-Wang
- */
-
-
 #ifndef SRC_DRIVETRAIN_H_
 #define SRC_DRIVETRAIN_H_
 #include <WPILib.h>
