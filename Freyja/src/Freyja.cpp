@@ -24,7 +24,7 @@ public:
 Freyja :: Freyja():
 	robot(),
 	humanController(),
-	autoController()
+	autoController(&robot)
 	{
 
 	}

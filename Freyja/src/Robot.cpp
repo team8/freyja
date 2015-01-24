@@ -1,3 +1,4 @@
+
 #include "Robot.h"
 
 Robot::Robot() :
@@ -39,5 +40,6 @@ void Robot::rotateAngle(double angle) {
 }
 
 void Robot::lift(double distance) {
+	//This method does not exist yet
 	//lifter.lift(distance);
 }
