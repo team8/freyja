@@ -5,9 +5,7 @@
  */
 
 #include "AutonomousController.h"
-#include "Constants.h"
-#include <WPILib.h>
-#include <AnalogInput.h>
+
 #define PATH 0
 #define YELLOW_AUTO_DISTANCE 20
 #define AUTO_GRAY_DISTANCE 20
@@ -34,9 +32,9 @@ enum path {
 
 AutonomousController::AutonomousController(Robot *robotPointer) :
 	dial((uint32_t) PORT_AUTO_DIAL)
-	{
+{
 	this->robot = robotPointer;
-	std::cout << "AutonomousController constructed";
+	std::cout << "AutonomousController constructed" << std::endl;
 
 	path = dial.GetValue();
 
@@ -132,7 +130,7 @@ void AutonomousController::toteScoreTriple() {
 }
 
 void AutonomousController::canScore() {
-    // robot->liftCan();
+	// robot->liftCan();
 	robot->driveDistance(YELLOW_AUTO_DISTANCE);
 	// robot->drop();
 }
@@ -143,38 +141,39 @@ void AutonomousController::canScoreAccumulate() {
 }
 
 void AutonomousController::accumulate() {
-   robot->driveDistance(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
-   robot->lift(LIFT_DISTANCE);
-   robot->rotateAngle(180);
-   robot->driveDistance(AUTO_GRAY_DISTANCE);
-   // robot->drop();
+	robot->driveDistance(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
+	robot->lift(LIFT_DISTANCE);
+	robot->rotateAngle(180);
+	robot->driveDistance(AUTO_GRAY_DISTANCE);
+	// robot->drop();
 }
 
 void AutonomousController::accumulateDouble() {
-	   robot->driveDistance(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
-	   robot->lift(LIFT_DISTANCE);
-	   robot->rotateAngle(90);
-	   robot->driveDistance(GRAY_GRAY_DISTANCE);
-	   robot->rotateAngle(-90);
-	   robot->lift(LIFT_DISTANCE);
-	   robot->rotateAngle(180);
-	   robot->driveDistance(AUTO_GRAY_DISTANCE);
-	   // robot->drop();
+	robot->driveDistance(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
+	robot->lift(LIFT_DISTANCE);
+	robot->rotateAngle(90);
+	robot->driveDistance(GRAY_GRAY_DISTANCE);
+	robot->rotateAngle(-90);
+	robot->lift(LIFT_DISTANCE);
+	robot->rotateAngle(180);
+	robot->driveDistance(AUTO_GRAY_DISTANCE);
+		// robot->drop();
 }
 
 void AutonomousController::accumulateTriple() {
-	   robot->driveDistance(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
-	   robot->lift(LIFT_DISTANCE);
-	   robot->rotateAngle(90);
-	   robot->driveDistance(GRAY_GRAY_DISTANCE);
-	   robot->rotateAngle(-90);
-	   robot->lift(LIFT_DISTANCE);	   robot->rotateAngle(90);
-	   robot->driveDistance(GRAY_GRAY_DISTANCE);
-	   robot->rotateAngle(-90);
-	   robot->lift(LIFT_DISTANCE);
-	   robot->rotateAngle(180);
-	   robot->driveDistance(AUTO_GRAY_DISTANCE);
-	   // robot->drop();
+	robot->driveDistance(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
+	robot->lift(LIFT_DISTANCE);
+	robot->rotateAngle(90);
+	robot->driveDistance(GRAY_GRAY_DISTANCE);
+	robot->rotateAngle(-90);
+	robot->lift(LIFT_DISTANCE);
+	robot->rotateAngle(90);
+	robot->driveDistance(GRAY_GRAY_DISTANCE);
+	robot->rotateAngle(-90);
+	robot->lift(LIFT_DISTANCE);
+	robot->rotateAngle(180);
+	robot->driveDistance(AUTO_GRAY_DISTANCE);
+	// robot->drop();
 }
 
 void AutonomousController::toteToTote(bool isRight) {
@@ -202,5 +201,4 @@ void AutonomousController::accumulateFromScore() {
 }
 
 //Empty destructor
-AutonomousController::~AutonomousController() {
-}
+AutonomousController::~AutonomousController() {}

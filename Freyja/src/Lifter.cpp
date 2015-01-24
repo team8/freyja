@@ -1,11 +1,10 @@
 /* Brief and Probably Incorrect Description:
  *
- * -Victors power the motors to move the lift up or down
- * -the lifter will keep moving up until it hits a sensor, represented by a DigitalInput object
- * -each time it hits a sensor, it reaches a certain level of totes
- * -we have to measure how far up or down the lift is using an encoder
- * -using a PID Loop, minimize the error of the lift
- *
+ * -Victors control the motors to move the lift up or down
+ * -The lifter will keep moving up until it hits a sensor, represented by a DigitalInput object
+ * -Each time it hits a sensor, it reaches a certain level of totes
+ * -We have to measure how far up or down the lift is using an encoder
+ * -Using a PID Loop, minimize the error of the lift
  */
 
 #include "Lifter.h"
@@ -23,19 +22,15 @@ void Lifter::init() {
 	encoder.Reset();
 	controller.Reset();
 	controller.Enable();
-
 }
 
 void Lifter::update() {
-
 	if(!checkSensorHit()) {
 		//if(upButton is Pressed)
 			setSpeed(upSpeed);
 		//else
 			//setSpeed(downSpeed);
-	}
-
-	else {
+	} else {
 		setSpeed(0.0);
 	}
 }
@@ -44,7 +39,6 @@ void Lifter::disable() {
 	motor.Disable();
 	encoder.Reset();
 	controller.Disable();
-
 }
 
 void Lifter::setSpeed(double speed) {

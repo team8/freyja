@@ -1,24 +1,22 @@
 #include "Drivetrain.h"
-#include "Constants.h"
 
 Drivetrain::Drivetrain() :
+	leftTopTalon((uint32_t) PORT_DRIVE_VIC_LEFT_FRONT),
+//	leftMiddleTalon((uint32_t) 8),
+	leftBottomTalon((uint32_t) PORT_DRIVE_VIC_LEFT_BACK),
+	rightTopTalon((uint32_t) PORT_DRIVE_VIC_RIGHT_FRONT),
+//	rightMiddleTalon((uint32_t) 8),
+	rightBottomTalon((uint32_t) PORT_DRIVE_VIC_RIGHT_BACK),
 
-			leftTopTalon((uint32_t) PORT_DRIVE_VIC_LEFT_FRONT),
-			//leftMiddleTalon((uint32_t) 8),
-			leftBottomTalon((uint32_t) PORT_DRIVE_VIC_LEFT_BACK),
-			rightTopTalon((uint32_t) PORT_DRIVE_VIC_RIGHT_FRONT),
-			//rightMiddleTalon((uint32_t) 8),
-			rightBottomTalon((uint32_t) PORT_DRIVE_VIC_RIGHT_BACK),
+	leftEncoder((uint32_t) PORT_ENCODER_LEFT_A, (uint32_t) PORT_ENCODER_LEFT_B, true),
+	rightEncoder((uint32_t) PORT_ENCODER_RIGHT_A, (uint32_t) PORT_ENCODER_RIGHT_B, false),
 
-			leftEncoder((uint32_t) PORT_ENCODER_LEFT_A, (uint32_t) PORT_ENCODER_LEFT_B, true),
-			rightEncoder((uint32_t) PORT_ENCODER_RIGHT_A, (uint32_t) PORT_ENCODER_RIGHT_B, false),
+	gyro(PORT_GYRO),
 
-			gyro(PORT_GYRO),
-
-			leftTopController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &leftEncoder, &leftTopTalon),
-			leftBottomController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &leftEncoder, &leftBottomTalon),
-			rightTopController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &rightEncoder, &rightTopTalon),
-			rightBottomController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &rightEncoder, &rightBottomTalon)
+	leftTopController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &leftEncoder, &leftTopTalon),
+	leftBottomController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &leftEncoder, &leftBottomTalon),
+	rightTopController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &rightEncoder, &rightTopTalon),
+	rightBottomController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &rightEncoder, &rightBottomTalon)
 {
 	targetSpeed = 0;
 	rotateSpeed = 0;
@@ -26,9 +24,9 @@ Drivetrain::Drivetrain() :
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
 	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
 	leftTopController.SetInputRange(-1, 1);
-	rightTopController.SetInputRange(-1,1);
-	leftBottomController.SetInputRange(-1,1);
-	rightBottomController.SetInputRange(-1,1);
+	rightTopController.SetInputRange(-1, 1);
+	leftBottomController.SetInputRange(-1, 1);
+	rightBottomController.SetInputRange(-1, 1);
 }
 
 void Drivetrain::init() {
@@ -41,10 +39,10 @@ void Drivetrain::disable() {
 }
 
 void Drivetrain::update() {
-	double leftSpeed = std::max(std::min(targetSpeed-rotateSpeed, 1.0), -1.0);
-	double rightSpeed = std::max(std::min(targetSpeed+rotateSpeed, 1.0), -1.0);
+	double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
+	double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
 
-	std::cout<<"update dt" <<std::endl;
+	std::cout<<"update drivetrain" <<std::endl;
 	leftTopTalon.Set(leftSpeed);
 	leftBottomTalon.Set(leftSpeed);
 	rightTopTalon.Set(rightSpeed);
@@ -65,11 +63,11 @@ void Drivetrain::setSpeed(double targetSpeed, double rotateSpeed) {
 }
 
 void Drivetrain::setTargetSpeed(double speed) {
-	this -> targetSpeed = speed;
+	this->targetSpeed = speed;
 }
 
 void Drivetrain::setRotateSpeed(double speed) {
-	this -> rotateSpeed = speed;
+	this->rotateSpeed = speed;
 }
 
 void Drivetrain::rotateAngle(double angle) {

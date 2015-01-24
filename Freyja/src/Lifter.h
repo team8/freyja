@@ -2,11 +2,11 @@
  * Joystick value -> encoder -> pid object -> talon
  *
  * PIDController
- *
  */
 
-#ifndef SRC_LIFTER_H_
-#define SRC_LIFTER_H_
+#ifndef LIFTER_H
+#define LIFTER_H
+
 #include "Subsys.h"
 #include <WPILib.h>
 
@@ -34,4 +34,4 @@ private:
 
 };
 
-#endif /* SRC_LIFTER_H_ */
+#endif /* LIFTER_H */

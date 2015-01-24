@@ -1,27 +1,31 @@
 #include "HumanController.h"
 
-HumanController::HumanController() :
+HumanController::HumanController(Robot *robotPointer) :
 	moveJoystick((uint32_t)PORT_SPEED),
 	turnJoystick((uint32_t)PORT_TURN),
 	operatorJoystick((uint32_t) PORT_OPERATOR)
 {
-
+	this->robot = robotPointer;
 }
 
-void HumanController::update(Robot *robotPointer) {
-	robotPointer -> move(moveJoystick.GetY(),turnJoystick.GetX());
+void HumanController::update() {
+	robot->move(moveJoystick.GetY(),turnJoystick.GetX());
 
 	if(operatorJoystick.GetRawButton(1)) {
-		robotPointer -> changeArmState(Arm::State::EXTENDING);
+		robot->changeArmState(Arm::State::EXTENDING);
 	}
+
 	if(operatorJoystick.GetRawButton(2)) {
-		robotPointer -> changeArmState(Arm::State::RETRACTING);
+		robot->changeArmState(Arm::State::RETRACTING);
 	}
+
 	if(operatorJoystick.GetRawButton(3)) {
-		robotPointer -> changeArmState(Arm::State::IDLE);
+		robot->changeArmState(Arm::State::IDLE);
 	}
+
 	if(operatorJoystick.GetRawButton(4)) {
-		robotPointer -> changeArmState(Arm::State::OFF);
+		robot->changeArmState(Arm::State::OFF);
 	}
-	//robotPointer -> changeArmState(operatorJoystick.GetRawButton());
+
+	//robot->changeArmState(operatorJoystick.GetRawButton());
 }

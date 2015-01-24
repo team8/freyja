@@ -4,10 +4,14 @@
 #include <WPILib.h>
 #include "Subsys.h"
 
+
 class Arm : public Subsys {
 public:
 	enum State {
-		EXTENDING, RETRACTING, IDLE, OFF
+		EXTENDING,
+		RETRACTING,
+		IDLE,
+		OFF
 	};
 
 	Arm();
@@ -24,4 +28,4 @@ private:
 	State state;
 };
 
-#endif
+#endif /* ARM_H */

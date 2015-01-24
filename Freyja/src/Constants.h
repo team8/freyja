@@ -1,5 +1,5 @@
-#ifndef FREYJA_SRC_CONSTANTS_H_
-#define FREYJA_SRC_CONSTANTS_H_
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
 //ports for drive train victors (currently fenrir), needs to be changed to talons
 #define PORT_DRIVE_VIC_LEFT_FRONT 5
@@ -28,4 +28,4 @@
 #define LEFT_DPP 0
 #define RIGHT_DPP 0
 
-#endif
+#endif /* CONSTANTS_H */
