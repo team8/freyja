@@ -17,9 +17,6 @@ void HumanController::update(Robot *robotPointer) {
 	if(operatorJoystick.GetRawButton(2)){
 		robotPointer -> changePistonState(Arm::PistonState::RETRACTING);
 	}
-	if(operatorJoystick.GetRawButton(3)){
-		robotPointer -> changePistonState(Arm::PistonState::IDLE);
-	}
 	if(operatorJoystick.GetRawButton(4)){
 		robotPointer -> changeCompressorState(Arm::CompressorState::OFF);
 	}
