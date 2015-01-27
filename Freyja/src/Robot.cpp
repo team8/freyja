@@ -38,6 +38,10 @@ void Robot::rotateAngle(double angle) {
 	drivetrain.rotateAngle(angle);	
 }
 
+void Robot::setLifterLevel(int level) {
+	lifter.setLevel(level);
+}
+
 void Robot::lift(double distance) {
 	//This method does not exist yet
 	//lifter.lift(distance);
