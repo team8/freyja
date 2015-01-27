@@ -1,3 +1,4 @@
+
 #include "HumanController.h"
 
 HumanController::HumanController() :
@@ -23,5 +24,8 @@ void HumanController::update(Robot *robotPointer) {
 	if(operatorJoystick.GetRawButton(5)){
 		robotPointer -> changeCompressorState(Arm::CompressorState::ON);
 	}
+        if(operatorJoystick.GetRawButton(3)){
+                robotPointer -> changePistonState(Arm::PistonState::IDLE);
+        }
 
 }

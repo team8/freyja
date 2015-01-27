@@ -1,7 +1,7 @@
-#ifndef FREYJA_SRC_CONSTANTS_H_
-#define FREYJA_SRC_CONSTANTS_H_
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
-//ports for drive train victors (currently fenrir)
+//ports for drive train victors (currently fenrir), needs to be changed to talons
 #define PORT_DRIVE_VIC_LEFT_FRONT 5
 #define PORT_DRIVE_VIC_LEFT_BACK 6
 #define PORT_DRIVE_VIC_RIGHT_FRONT 1
@@ -17,6 +17,8 @@
 #define PORT_ENCODER_LEFT_A 5
 #define PORT_ENCODER_LEFT_B 6
 
+#define PORT_AUTO_DIAL 9
+
 #define PORT_GYRO 0
 
 #define PROPORTIONAL 0.5
@@ -26,4 +28,4 @@
 #define LEFT_DPP 0
 #define RIGHT_DPP 0
 
-#endif
+#endif /* CONSTANTS_H */

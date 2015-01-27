@@ -1,9 +1,10 @@
-#ifndef SRC_ROBOT_H_
-#define SRC_ROBOT_H_
+#ifndef ROBOT_H
+#define ROBOT_H
 
 #include "Drivetrain.h"
 #include "Arm.h"
 #include "Lifter.h"
+
 
 class Robot {
 	private:
@@ -23,4 +24,4 @@ class Robot {
 		void lift(double distance);
 };
 
-#endif /* SRC_ROBOT_H_ */
+#endif /* ROBOT_H */

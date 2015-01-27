@@ -23,8 +23,8 @@ public:
 
 Freyja :: Freyja():
 	robot(),
-	humanController(),
-	autoController()
+	humanController(&robot),
+	autoController(&robot)
 	{
 
 	}
@@ -51,7 +51,7 @@ void Freyja::TeleopInit(){
 }
 
 void Freyja::TeleopPeriodic(){
-	humanController.update(&robot);
+	humanController.update();
 	robot.update();
 
 }

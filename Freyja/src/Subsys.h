@@ -1,7 +1,8 @@
 //Subsystem Interface
 
-#ifndef SRC_SUBSYS_H_
-#define SRC_SUBSYS_H_
+#ifndef SUBSYS_H
+#define SUBSYS_H
+
 
 class Subsys {
 public:
@@ -11,4 +12,4 @@ public:
 	virtual ~Subsys() {};
 };
 
-#endif /* SRC_SUBSYS_H_ */
+#endif /* SUBSYS_H */

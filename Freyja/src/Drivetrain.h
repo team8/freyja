@@ -1,13 +1,14 @@
-#ifndef SRC_DRIVETRAIN_H_
-#define SRC_DRIVETRAIN_H_
+#ifndef DRIVETRAIN_H
+#define DRIVETRAIN_H
+
 #include <WPILib.h>
 #include <algorithm>
 #include "Subsys.h"
 #include "Constants.h"
 
+
 class Drivetrain : public Subsys {
 private:
-
 	Victor leftTopTalon;
 //	Victor leftMiddleTalon;
 	Victor leftBottomTalon;
@@ -33,7 +34,6 @@ private:
 	PIDController rightBottomController;
 
 public:
-
 	Drivetrain();
 	virtual ~Drivetrain();
 
@@ -55,4 +55,4 @@ public:
 	void driveDistance(double distance);
 };
 
-#endif /* SRC_DRIVETRAIN_H_ */
+#endif /* DRIVETRAIN_H */

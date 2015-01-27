@@ -41,6 +41,6 @@ void Robot::rotateAngle(double angle) {
 	drivetrain.rotateAngle(angle);	
 }
 
-void Robot::lift(double distance) {
-	//lifter.lift(distance);
+void Robot::lift(double distance){
+ lifter.lift(distance);
 }

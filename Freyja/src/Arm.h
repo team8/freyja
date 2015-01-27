@@ -4,6 +4,7 @@
 #include <WPILib.h>
 #include "Subsys.h"
 
+
 class Arm : public Subsys {
 public:
 	enum CompressorState {
@@ -29,4 +30,4 @@ private:
 	PistonState pistonState;
 };
 
-#endif
+#endif /* ARM_H */
