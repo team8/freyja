@@ -22,6 +22,7 @@ class Robot {
 		void driveDistance(double distance);
 		void rotateAngle(double angle);
 		void lift(double distance);
+		void setLifterLevel(int level);
 };
 
 #endif /* ROBOT_H */

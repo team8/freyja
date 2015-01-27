@@ -1,4 +1,3 @@
-
 #include "HumanController.h"
 
 HumanController::HumanController() :
