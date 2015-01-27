@@ -7,16 +7,17 @@
 
 class Arm : public Subsys {
 public:
-	enum State {
-		EXTENDING,
-		RETRACTING,
-		IDLE,
-		OFF
+	enum CompressorState {
+		ON, OFF
+	};
+	enum PistonState {
+		EXTENDING, RETRACTING, IDLE
 	};
 
 	Arm();
 	virtual ~Arm();
-	void setState(State state);
+	void setPistonState(PistonState state);
+	void setCompressorState(CompressorState state);
 	void init();
 	void update();
 	void disable();
@@ -25,7 +26,8 @@ private:
 	Compressor compressor;
 	DoubleSolenoid solenoid;
 
-	State state;
+	CompressorState compressorState;
+	PistonState pistonState;
 };
 
 #endif /* ARM_H */

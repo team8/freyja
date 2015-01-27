@@ -1,22 +1,32 @@
 #include "Arm.h"
 
+
 Arm::Arm():
 	compressor(),
 	solenoid((uint32_t) 0, (uint32_t) 1)
 {
 	compressor.Start();
-	setState(IDLE);
+	setPistonState(IDLE);
 }
 
-void Arm::setState(State state) {
-	this->state = state;
+Arm::~Arm() {
+	// TODO Auto-generated destructor stub
+}
+
+void Arm::setCompressorState(CompressorState state) {
+	this -> compressorState = state;
+}
+void Arm::setPistonState(PistonState state) {
+	this -> pistonState = state;
 }
 
 void Arm::disable() {
-	setState(IDLE);
+	setCompressorState(OFF);
+	setPistonState(IDLE);
 }
 
 void Arm::update() {
+
 	//There are a couple of semantic errors with this code, first off, you can't actually start compressing... Also, you can't compress and do something else at the same time
 	//If you were able to compress while the user is extending or retracting that would be extremely useful
 	
@@ -26,28 +36,29 @@ void Arm::update() {
 	//does is pressurize air, the only issue with extending and compressing at the same time is that we lose all the compressed air,
 	//so if we can have valves that open and close we should be fine to do this at the same time.
 	
-	switch(state) {
+	
+	switch(pistonState){
 	case EXTENDING:
-		compressor.Start();
 		solenoid.Set(DoubleSolenoid::Value::kForward);
 		break;
 	case RETRACTING:
-		compressor.Start();
 		solenoid.Set(DoubleSolenoid::Value::kReverse);
 		break;
 	case IDLE:
-		compressor.Start();
 		solenoid.Set(DoubleSolenoid::Value::kOff);
 		break;
-	case OFF:
+	}
+	switch(compressorState){
+		case ON:
+		compressor.Start();
+		break;
+		case OFF:
 		compressor.Stop();
 		break;
 	}
 }
 
 void Arm::init() {
-	setState(IDLE);
+	setCompressorState(ON);
+	setPistonState(IDLE);
 }
-
-//Empty destructor
-Arm::~Arm() {}
