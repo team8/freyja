@@ -27,5 +27,23 @@ void HumanController::update() {
 		robot->changeArmState(Arm::State::OFF);
 	}
 
+	if(operatorJoystick.getRawButton(5)) {
+		robot->setLifterLevel(1);
+	}
+	
+	if(operatorJoystick.getRawButton(6)) {
+		robot->setLifterLevel(2);
+	}
+	
+	if(operatorJoystick.getRawButton(7)) {
+		robot->setLifterLevel(3);
+	}
+	
+	if(operatorJoystick.getRawButton(8)) {
+		robot->setLifterLevel(4);
+	}
+	
+
 	//robot->changeArmState(operatorJoystick.GetRawButton());
 }
+
