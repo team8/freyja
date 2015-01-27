@@ -1,12 +1,5 @@
-/*
- * Joystick value -> encoder -> pid object -> talon
- *
- * PIDController
- */
-
-#ifndef LIFTER_H
-#define LIFTER_H
-
+#ifndef SRC_LIFTER_H_
+#define SRC_LIFTER_H_
 #include "Subsys.h"
 #include <WPILib.h>
 
@@ -21,6 +14,9 @@ public:
 	void setSpeed(double speed);
 	bool checkSensorHit();
 	double getDistance(); //uses encoder
+	void setLevel(int level);
+	void moveToGroundLevel();
+
 
 private:
 	Talon motor;
@@ -28,10 +24,9 @@ private:
 	DigitalInput digitalInput;
 	PIDController controller;
 
-	int upSpeed = 1;
-	int downSpeed = 0;
-	int distanceToTote = 2; //arbitrary number
+	int downSpeed = -0.5;
+	int distanceToLevel = 0; //arbitrary number
 
 };
 
-#endif /* LIFTER_H */
+#endif /* SRC_LIFTER_H_ */
