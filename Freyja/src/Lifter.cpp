@@ -1,12 +1,3 @@
-/* Brief and Probably Incorrect Description:
- *
- * -Victors control the motors to move the lift up or down
- * -The lifter will keep moving up until it hits a sensor, represented by a DigitalInput object
- * -Each time it hits a sensor, it reaches a certain level of totes
- * -We have to measure how far up or down the lift is using an encoder
- * -Using a PID Loop, minimize the error of the lift
- */
-
 #include "Lifter.h"
 
 Lifter::Lifter():
@@ -18,27 +9,55 @@ controller(0.f, 0.f, 0.f, &encoder, &motor)
 
 }
 
+Lifter::~Lifter() {
+	// TODO Auto-generated destructor stub
+}
+
 void Lifter::init() {
 	encoder.Reset();
 	controller.Reset();
 	controller.Enable();
+
 }
 
 void Lifter::update() {
-	if(!checkSensorHit()) {
-		//if(upButton is Pressed)
-			setSpeed(upSpeed);
-		//else
-			//setSpeed(downSpeed);
+
+	//this bit of code won't be used once we find distance between levels
+//	if(ButtonPressed == 1 && checkSensorHit()) {
+//		distanceToLevel = abs(getDistance());
+//	}
+
+//	if(downButton is Pressed){
+//		moveToGroundLevel();
+//	}
+
+	//have not set up joystick for lifter yet
+	//setLevel(HumanController Button Number);
+
+	if (abs(getDistance() - distanceToLevel) > 1) {
+		setSpeed(controller.Get());
 	} else {
 		setSpeed(0.0);
 	}
+
+
 }
 
 void Lifter::disable() {
 	motor.Disable();
 	encoder.Reset();
 	controller.Disable();
+
+}
+
+void Lifter::setLevel(int level) {
+	distanceToLevel*=level;
+	controller.SetSetpoint(distanceToLevel);
+}
+
+void Lifter::moveToGroundLevel() {
+	setSpeed(downSpeed);
+	init();
 }
 
 void Lifter::setSpeed(double speed) {
@@ -56,6 +75,3 @@ bool Lifter::checkSensorHit() {
 double Lifter::getDistance() {
 	return encoder.GetDistance();
 }
-
-//Empty destructor
-Lifter::~Lifter() {}
