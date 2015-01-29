@@ -10,6 +10,11 @@ class Robot {
 		Drivetrain drivetrain;
 		Arm arm;
 		Lifter lifter;
+
+		enum state{
+			TELEOP,
+			AUTONOMOUS
+		};
 	public:
 		Robot();
 		void init();
