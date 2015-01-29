@@ -5,7 +5,6 @@
 #include "Arm.h"
 #include "Lifter.h"
 
-
 class Robot {
 	private:
 		Drivetrain drivetrain;

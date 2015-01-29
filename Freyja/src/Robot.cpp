@@ -1,9 +1,7 @@
 #include "Robot.h"
 
 Robot::Robot() :
-	drivetrain(),
-	arm()
-{
+		drivetrain(), arm() {
 
 }
 
@@ -38,11 +36,11 @@ void Robot::driveDistance(double distance) {
 }
 
 void Robot::rotateAngle(double angle) {
-	drivetrain.rotateAngle(angle);	
+	drivetrain.rotateAngle(angle);
 }
 
-void Robot::lift(double distance){
- lifter.lift(distance);
+void Robot::lift(double distance) {
+	//lifter.lift(distance);
 }
 void Robot::setLifterLevel(int level) {
 	lifter.setLevel(level);

@@ -3,8 +3,7 @@
 #include "Subsys.h"
 #include <WPILib.h>
 
-
-class Lifter : public Subsys {
+class Lifter: public Subsys {
 public:
 	Lifter();
 	virtual ~Lifter();
@@ -16,7 +15,6 @@ public:
 	double getDistance(); //uses encoder
 	void setLevel(int level);
 	void moveToGroundLevel();
-
 
 private:
 	Talon motor;

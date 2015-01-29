@@ -1,11 +1,7 @@
 #include "Lifter.h"
 
-Lifter::Lifter():
-motor((uint32_t) 0),
-encoder((uint32_t) 0, (uint32_t) 0),
-digitalInput((uint32_t) 0),
-controller(0.f, 0.f, 0.f, &encoder, &motor)
-{
+Lifter::Lifter() :
+		motor((uint32_t) 0), encoder((uint32_t) 0, (uint32_t) 0), digitalInput((uint32_t) 0), controller(0.f, 0.f, 0.f, &encoder, &motor) {
 
 }
 
@@ -31,15 +27,14 @@ void Lifter::update() {
 //		moveToGroundLevel();
 //	}
 
-	//have not set up joystick for lifter yet
-	//setLevel(HumanController Button Number);
+//have not set up joystick for lifter yet
+//setLevel(HumanController Button Number);
 
-	if (abs(getDistance() - distanceToLevel) > 1) {
+	if(abs(getDistance() - distanceToLevel) > 1) {
 		setSpeed(controller.Get());
 	} else {
 		setSpeed(0.0);
 	}
-
 
 }
 
@@ -51,7 +46,7 @@ void Lifter::disable() {
 }
 
 void Lifter::setLevel(int level) {
-	distanceToLevel*=level;
+	distanceToLevel *= level;
 	controller.SetSetpoint(distanceToLevel);
 }
 
@@ -63,7 +58,6 @@ void Lifter::moveToGroundLevel() {
 void Lifter::setSpeed(double speed) {
 	motor.Set(speed);
 }
-
 
 bool Lifter::checkSensorHit() {
 	if(digitalInput.Get() == 1) {

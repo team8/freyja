@@ -5,18 +5,16 @@
 #include "Constants.h"
 #include "Robot.h"
 
-
 class HumanController {
 private:
 	Joystick moveJoystick;
 	Joystick turnJoystick;
 	Joystick operatorJoystick;
 	
-	Robot *robot;
-
+	Robot *robotPointer;
 public:
 	HumanController(Robot *robotPointer);
 	void update();
 };
 
-#endif /* HUMAN_CONTROLLER_H */
+#endif

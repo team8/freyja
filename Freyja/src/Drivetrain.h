@@ -6,8 +6,7 @@
 #include "Subsys.h"
 #include "Constants.h"
 
-
-class Drivetrain : public Subsys {
+class Drivetrain: public Subsys {
 private:
 	Victor leftTopTalon;
 //	Victor leftMiddleTalon;
@@ -38,9 +37,9 @@ public:
 	virtual ~Drivetrain();
 
 	void init();
-	
+
 	void disable();
-	
+
 	void update();
 
 	void stopTalons();

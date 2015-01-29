@@ -4,8 +4,7 @@
 #include <WPILib.h>
 #include "Subsys.h"
 
-
-class Arm : public Subsys {
+class Arm: public Subsys {
 public:
 	enum CompressorState {
 		ON, OFF
