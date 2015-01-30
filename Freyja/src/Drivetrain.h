@@ -19,6 +19,9 @@ private:
 	double targetSpeed;
 	double rotateSpeed;
 
+	double leftEncoderVal;
+	double rightEncoderVal;
+
 	Encoder leftEncoder;
 	Encoder rightEncoder;
 
@@ -32,15 +35,17 @@ private:
 //	PIDController rightMiddleController;
 	PIDController rightBottomController;
 
-	enum state
+public:
+	typedef enum State
 	{
 		IDLE,
 		DRIVING_DIST,
 		ROTATING_ANGLE,
 		DRIVING_TELEOP
-	};
+	} State;
 
-public:
+	State state;
+
 	Drivetrain();
 	virtual ~Drivetrain();
 
@@ -60,6 +65,8 @@ public:
 	void rotateAngle(double angle);
 
 	void driveDistance(double distance);
+
+	State getState();
 };
 
 #endif /* DRIVETRAIN_H */

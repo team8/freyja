@@ -29,6 +29,8 @@
 #define RIGHT_INTEGRAL 0.0
 #define RIGHT_DERIVATIVE 0.1
 
+#define STOPPED_DRIVE_DIFF 0.1
+
 #define LEFT_DPP 0
 #define RIGHT_DPP 0
 

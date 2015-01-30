@@ -21,6 +21,9 @@ Drivetrain::Drivetrain() :
 	targetSpeed = 0;
 	rotateSpeed = 0;
 
+	leftEncoder = 0;
+	rightEncoder = 0;
+
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
 	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
 
@@ -52,13 +55,19 @@ void Drivetrain::update() {
 	}
 	case DRIVING_DIST:
 	{
-		//IF change condition : disable
+		if(std::abs(leftEncoderVal - leftEncoder.GetDistance()) < STOPPED_DRIVE_DIFF && std::abs(rightEncoderVal - rightEncoder.GetDistance()) < STOPPED_DRIVE_DIFF) {
+			state = IDLE;
+			leftTopController.Disable();
+			rightTopController.Disable();
+			leftBottomController.Disable();
+			rightBottomController.Disable();
+		}
 
 		break;
 	}
 	case ROTATING_ANGLE:
 	{
-		//IF change condition : disable
+		//IF change condition : disable and set state to idle
 
 		break;
 	}
@@ -77,6 +86,9 @@ void Drivetrain::update() {
 		break;
 	}
 	}
+
+	leftEncoderVal = leftEncoder.GetDistance();
+	rightEncoderVal = rightEncoder.GetDistance();
 }
 
 void Drivetrain::stopTalons() {
@@ -120,6 +132,10 @@ void Drivetrain::driveDistance(double distance) {
 	leftBottomController.Enable();
 	rightTopController.Enable();
 	rightBottomController.Enable();
+}
+
+Drivetrain::State Drivetrain::getState() {
+	return state;
 }
 
 //Empty destructor
