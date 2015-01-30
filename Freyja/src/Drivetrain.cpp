@@ -33,14 +33,37 @@ void Drivetrain::disable() {
 }
 
 void Drivetrain::update() {
-	double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
-	double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
+	switch(state)
+	{
+	case IDLE:
+	{
+		stopTalons();
 
-	std::cout << "update drivetrain" << std::endl;
-	leftTopTalon.Set(leftSpeed);
-	leftBottomTalon.Set(leftSpeed);
-	rightTopTalon.Set(rightSpeed);
-	rightBottomTalon.Set(rightSpeed);
+		break;
+	}
+	case DRIVING_DIST:
+	{
+
+		break;
+	}
+	case ROTATING_ANGLE:
+	{
+
+		break;
+	}
+	case DRIVING_TELEOP:
+	{
+		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
+		double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
+
+		leftTopTalon.Set(leftSpeed);
+		leftBottomTalon.Set(leftSpeed);
+		rightTopTalon.Set(rightSpeed);
+		rightBottomTalon.Set(rightSpeed);
+
+		break;
+	}
+	}
 }
 
 void Drivetrain::stopTalons() {
@@ -64,10 +87,14 @@ void Drivetrain::setRotateSpeed(double speed) {
 }
 
 void Drivetrain::rotateAngle(double angle) {
+	state = ROTATING_ANGLE;
+
 	//TODO Implement gyros and this method correctly
 }
 
 void Drivetrain::driveDistance(double distance) {
+	state = DRIVING_DIST;
+
 	leftEncoder.Reset();
 	rightEncoder.Reset();
 
@@ -84,4 +111,5 @@ void Drivetrain::driveDistance(double distance) {
 
 //Empty destructor
 Drivetrain::~Drivetrain() {
+
 }

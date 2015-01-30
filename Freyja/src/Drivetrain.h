@@ -32,6 +32,14 @@ private:
 //	PIDController rightMiddleController;
 	PIDController rightBottomController;
 
+	enum state
+	{
+		IDLE,
+		DRIVING_DIST,
+		ROTATING_ANGLE,
+		DRIVING_TELEOP
+	};
+
 public:
 	Drivetrain();
 	virtual ~Drivetrain();
