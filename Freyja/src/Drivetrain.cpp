@@ -21,8 +21,8 @@ Drivetrain::Drivetrain() :
 	targetSpeed = 0;
 	rotateSpeed = 0;
 
-	leftEncoder = 0;
-	rightEncoder = 0;
+	leftEncoderVal = 0;
+	rightEncoderVal = 0;
 
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
 	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
