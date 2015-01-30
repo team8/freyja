@@ -3,24 +3,31 @@
 Drivetrain::Drivetrain() :
 		leftTopTalon((uint32_t) PORT_DRIVE_VIC_LEFT_FRONT),
 //	leftMiddleTalon((uint32_t) 8),
-		leftBottomTalon((uint32_t) PORT_DRIVE_VIC_LEFT_BACK), rightTopTalon((uint32_t) PORT_DRIVE_VIC_RIGHT_FRONT),
+		leftBottomTalon((uint32_t) PORT_DRIVE_VIC_LEFT_BACK),
+		rightTopTalon((uint32_t) PORT_DRIVE_VIC_RIGHT_FRONT),
 //	rightMiddleTalon((uint32_t) 8),
 		rightBottomTalon((uint32_t) PORT_DRIVE_VIC_RIGHT_BACK),
 
-		leftEncoder((uint32_t) PORT_ENCODER_LEFT_A, (uint32_t) PORT_ENCODER_LEFT_B, true), rightEncoder((uint32_t) PORT_ENCODER_RIGHT_A, (uint32_t) PORT_ENCODER_RIGHT_B, false),
+		leftEncoder((uint32_t) PORT_ENCODER_LEFT_A, (uint32_t) PORT_ENCODER_LEFT_B, true),
+		rightEncoder((uint32_t) PORT_ENCODER_RIGHT_A, (uint32_t) PORT_ENCODER_RIGHT_B, false),
 
 		gyro(PORT_GYRO),
 
-		leftTopController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &leftEncoder, &leftTopTalon), leftBottomController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &leftEncoder, &leftBottomTalon), rightTopController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &rightEncoder, &rightTopTalon), rightBottomController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &rightEncoder, &rightBottomTalon) {
+		leftTopController(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftTopTalon),
+		leftBottomController(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftBottomTalon),
+		rightTopController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightTopTalon),
+		rightBottomController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightBottomTalon)
+{
 	targetSpeed = 0;
 	rotateSpeed = 0;
 
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
 	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
-	leftTopController.SetInputRange(-1, 1);
-	rightTopController.SetInputRange(-1, 1);
-	leftBottomController.SetInputRange(-1, 1);
-	rightBottomController.SetInputRange(-1, 1);
+
+	leftTopController.SetInputRange(-9999, 9999);
+	rightTopController.SetInputRange(-9999, 9999);
+	leftBottomController.SetInputRange(-9999, 9999);
+	rightBottomController.SetInputRange(-9999, 9999);
 }
 
 void Drivetrain::init() {
@@ -37,22 +44,28 @@ void Drivetrain::update() {
 	{
 	case IDLE:
 	{
+		//Disable controllers
+
 		stopTalons();
 
 		break;
 	}
 	case DRIVING_DIST:
 	{
+		//IF change condition : disable
 
 		break;
 	}
 	case ROTATING_ANGLE:
 	{
+		//IF change condition : disable
 
 		break;
 	}
 	case DRIVING_TELEOP:
 	{
+		//Disable controllers
+
 		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 		double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
 

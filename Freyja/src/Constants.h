@@ -21,9 +21,13 @@
 
 #define PORT_GYRO 0
 
-#define PROPORTIONAL 0.5
-#define INTEGRAL 0.5
-#define DERIVATIVE 0.5
+#define LEFT_PROPORTIONAL 0.12
+#define LEFT_INTEGRAL 0.0
+#define LEFT_DERIVATIVE 0.1
+
+#define RIGHT_PROPORTIONAL 0.12
+#define RIGHT_INTEGRAL 0.0
+#define RIGHT_DERIVATIVE 0.1
 
 #define LEFT_DPP 0
 #define RIGHT_DPP 0
