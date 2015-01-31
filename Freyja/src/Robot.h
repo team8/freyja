@@ -27,6 +27,10 @@ class Robot {
 		void rotateAngle(double angle);
 		void lift(double distance);
 		void setLifterLevel(int level);
+
+		Drivetrain::State getDrivetrainState();
+		Lifter::State getLifterState();
+		Arm::State getArmState();
 };
 
 #endif /* ROBOT_H */

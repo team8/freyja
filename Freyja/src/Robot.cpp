@@ -42,7 +42,20 @@ void Robot::rotateAngle(double angle) {
 void Robot::lift(double distance) {
 	//lifter.lift(distance);
 }
+
 void Robot::setLifterLevel(int level) {
 	lifter.setLevel(level);
+}
+
+Drivetrain::State Robot::getDrivetrainState() {
+	return drivetrain.getState();
+}
+
+Lifter::State Robot::getLifterState() {
+	return drivetrain.getState();
+}
+
+Arm::State Robot::getArmState() {
+	return drivetrain.getState();
 }
 
