@@ -30,8 +30,6 @@ enum path {
 	ACCUMULATE_TRIPLE = 13
 };
 
-
-
 AutonomousController::AutonomousController(Robot *robotPointer) :
 	dial((uint32_t) PORT_AUTO_DIAL)
 {
@@ -84,6 +82,14 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 		accumulateTriple();
 		break;
 	}
+}
+
+void AutonomousController::update() {
+
+}
+
+void AutonomousController::executeCommand(AutonomousCommand command) {
+	(this -> currentCommand) = command;
 }
 
 void AutonomousController::stop() {

@@ -20,6 +20,10 @@ class AutonomousController {
 		Timer time;
 		Robot* robot;
 		AnalogInput dial;
+		AutonomousCommand currentCommand;
+
+		void update();
+		void executeCommand(AutonomousCommand command);
 
 		//Various drive paths
 		void stop();
