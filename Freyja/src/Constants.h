@@ -34,4 +34,6 @@
 #define LEFT_DPP 0
 #define RIGHT_DPP 0
 
+#define LIFT_SPEED 0.5
+
 #endif /* CONSTANTS_H */

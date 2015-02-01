@@ -31,6 +31,8 @@ Drivetrain::Drivetrain() :
 	rightTopController.SetInputRange(-9999, 9999);
 	leftBottomController.SetInputRange(-9999, 9999);
 	rightBottomController.SetInputRange(-9999, 9999);
+
+	state = IDLE;
 }
 
 void Drivetrain::init() {
