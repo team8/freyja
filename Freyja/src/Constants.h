@@ -38,4 +38,6 @@
 
 #define LIFT_SPEED 0.5
 
+#define LIFT_SPEED 0.5
+
 #endif /* CONSTANTS_H */
