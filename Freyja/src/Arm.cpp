@@ -45,7 +45,8 @@ void Arm::update() {
 		break;
 	case PUSH:
 		solenoid.Set(DoubleSolenoid::Value::kForward);
-		Sleep(200);
+		//CHECK THIS VALUE LATER
+		Wait(0.2);
 		setPistonState(IDLE);
 		break;
 	default:
