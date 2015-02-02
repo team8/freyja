@@ -43,6 +43,14 @@ void Arm::update() {
 	case IDLE:
 		solenoid.Set(DoubleSolenoid::Value::kOff);
 		break;
+	case PUSH:
+		solenoid.Set(DoubleSolenoid::Value::kForward);
+		Sleep(200);
+		setPistonState(IDLE);
+		break;
+	default:
+		setPistonState(IDLE);
+		break;
 	}
 	switch(compressorState) {
 	case ON:
@@ -50,6 +58,9 @@ void Arm::update() {
 		break;
 	case OFF:
 		compressor.Stop();
+		break;
+	default:
+		setCompressorState(OFF);
 		break;
 	}
 }
