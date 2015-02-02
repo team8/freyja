@@ -23,15 +23,15 @@ Drivetrain::Drivetrain() :
 
 	leftEncoderVal = 0;
 	rightEncoderVal = 0;
-
+//Sets the distance per pulse, which is used for encoders
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
 	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
-
+//Sets the input range for pid controllers
 	leftTopController.SetInputRange(-9999, 9999);
 	rightTopController.SetInputRange(-9999, 9999);
 	leftBottomController.SetInputRange(-9999, 9999);
 	rightBottomController.SetInputRange(-9999, 9999);
-
+//the state of the robot starts of idle
 	state = IDLE;
 }
 
@@ -56,9 +56,9 @@ void Drivetrain::update() {
 		break;
 	}
 	case DRIVING_DIST:
-	{
+	{//'if' statement checks to see if the robot is at the destination
 		if(std::abs(leftEncoderVal - leftEncoder.GetDistance()) < STOPPED_DRIVE_DIFF && std::abs(rightEncoderVal - rightEncoder.GetDistance()) < STOPPED_DRIVE_DIFF) {
-			state = IDLE;
+			state = IDLE;        //sets state to idle if robot is at the destination
 			leftTopController.Disable();
 			rightTopController.Disable();
 			leftBottomController.Disable();
@@ -75,11 +75,11 @@ void Drivetrain::update() {
 	}
 	case DRIVING_TELEOP:
 	{
-		//Disable controllers
+		//sets leftspeed and rightspeed
 
 		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 		double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
-
+//sets the talons to leftspeed and rightspeed
 		leftTopTalon.Set(leftSpeed);
 		leftBottomTalon.Set(leftSpeed);
 		rightTopTalon.Set(rightSpeed);
@@ -121,15 +121,15 @@ void Drivetrain::rotateAngle(double angle) {
 
 void Drivetrain::driveDistance(double distance) {
 	state = DRIVING_DIST;
-
+//resets the encoders before it drives
 	leftEncoder.Reset();
 	rightEncoder.Reset();
-
+//drives the robot to a certain distance
 	leftTopController.SetSetpoint(distance);
 	leftBottomController.SetSetpoint(distance);
 	rightTopController.SetSetpoint(distance);
 	rightBottomController.SetSetpoint(distance);
-
+//starts the controllers
 	leftTopController.Enable();
 	leftBottomController.Enable();
 	rightTopController.Enable();
