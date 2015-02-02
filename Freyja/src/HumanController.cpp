@@ -22,4 +22,7 @@ void HumanController::update() {
 	if(operatorJoystick.GetRawButton(3)) {
 		robotPointer->changePistonState(Arm::PistonState::IDLE);
 	}
+	if(operatorJoystick.GetRawButton(6)) {
+		robotPointer->changePistonState(Arm::PistonState::PUSH);
+	}
 }
