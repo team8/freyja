@@ -1,32 +1,33 @@
 #include "Arm.h"
 
+
 Arm::Arm() :
-		compressor(), solenoid((uint32_t) 0, (uint32_t) 1) {
+//Compressor which initializes the compressor with no arguments, and gives the solenoids their ports
+	compressor(), solenoid((uint32_t) 0, (uint32_t) 1) {
 	compressor.Start();
 	setPistonState(IDLE);
 }
 
 Arm::~Arm() {
-	// TODO Auto-generated destructor stub
+	// TODO Auto-generated destructor stub, not sure what needs to be added here
 }
 
 void Arm::setCompressorState(CompressorState state) {
+	//Simply changes the enum CompressorState. This method is called as a wrapping function in robot.
 	this->compressorState = state;
 }
 void Arm::setPistonState(PistonState state) {
+	//Does the same thing as setCompressorState, except changes the state of the piston
 	this->pistonState = state;
 }
 
 void Arm::disable() {
+	//Turns everything off just in case
 	setCompressorState(OFF);
 	setPistonState(IDLE);
 }
 
 void Arm::update() {
-
-	//There are a couple of semantic errors with this code, first off, you can't actually start compressing... Also, you can't compress and do something else at the same time
-	//If you were able to compress while the user is extending or retracting that would be extremely useful
-
 	//I understand that you can't actually start compressing, and I will add that.
 	//As for whether we can compress and extend and retract at the same time, I think we can do that, as long as we hook the
 	//Compressor up to tanks and then to the solenoid. This will allow for a more stable air pressure, since all the compressor
@@ -35,38 +36,47 @@ void Arm::update() {
 
 	switch(pistonState) {
 	case EXTENDING:
+	//If the piston is extending, it puts air in the chamber behind the piston, pushing it forward
 		solenoid.Set(DoubleSolenoid::Value::kForward);
 		break;
 	case RETRACTING:
+	//If the piston is retracting, it puts air in front of the disc, expelling the air out of the solenoid.
 		solenoid.Set(DoubleSolenoid::Value::kReverse);
 		break;
 	case IDLE:
+	//Locks the solenoid, no actuation
 		solenoid.Set(DoubleSolenoid::Value::kOff);
 		break;
 	case PUSH:
+	//Pushes the piston a little.
 		solenoid.Set(DoubleSolenoid::Value::kForward);
-		//CHECK THIS VALUE LATER
+		//CHECK THIS VALUE LATER, it can still fully actuate possibly.
 		Wait(0.2);
 		setPistonState(IDLE);
 		break;
 	default:
+	//In case stuff hits the fan
 		setPistonState(IDLE);
 		break;
 	}
 	switch(compressorState) {
 	case ON:
+	//Starts the compressor from an off state.
 		compressor.Start();
 		break;
 	case OFF:
+	//Turns the compressor Off
 		compressor.Stop();
 		break;
 	default:
+	//In case stuff hits the fan
 		setCompressorState(OFF);
 		break;
 	}
 }
 
 void Arm::init() {
+	//Turns everything off when we start the robot.
 	setCompressorState(ON);
 	setPistonState(IDLE);
 }
