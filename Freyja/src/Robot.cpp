@@ -1,18 +1,20 @@
 #include "Robot.h"
 
 Robot::Robot() :
-		drivetrain(), arm() {
+		drivetrain(), arm(), lifter() {
 
 }
 
 void Robot::init() {
 	drivetrain.init();
 	arm.init();
+	lifter.init();
 }
 
 void Robot::update() {
 	drivetrain.update();
 	arm.update();
+	lifter.update();
 }
 
 void Robot::disable() {
