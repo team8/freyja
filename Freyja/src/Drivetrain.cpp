@@ -37,8 +37,8 @@ Drivetrain::Drivetrain() :
 	rightBottomController.SetInputRange(-9999, 9999);
 	
 	//Sets the max period for stopped detection
-	leftEncoder.setMaxPeriod(ENCODER_MAX_PERIOD);
-	rightEncoder.setMaxPeriod(ENCODER_MAX_PERIOD);
+	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
+	rightEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 	
 	//Sets the inital robot state to idle
 	state = IDLE;
@@ -51,7 +51,7 @@ void Drivetrain::init() {
 	rightEncoder.Reset();
 	
 	//Stops robot motion
-	stopAllTalons();
+	stopTalons();
 }
 
 //Disables the drivetrain
@@ -148,15 +148,18 @@ void Drivetrain::rotateAngle(double angle) {
 //Drives the given distance
 void Drivetrain::driveDistance(double distance) {
 	state = DRIVING_DIST;
-//resets the encoders before it drives
+
+	//Resets encoders
 	leftEncoder.Reset();
 	rightEncoder.Reset();
-//drives the robot to a certain distance
+
+	//Sets controller setpoint to given distance
 	leftTopController.SetSetpoint(distance);
 	leftBottomController.SetSetpoint(distance);
 	rightTopController.SetSetpoint(distance);
 	rightBottomController.SetSetpoint(distance);
-//starts the controllers
+
+	//Enables pid controllers
 	leftTopController.Enable();
 	leftBottomController.Enable();
 	rightTopController.Enable();
