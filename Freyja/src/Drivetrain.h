@@ -30,10 +30,6 @@ private:
 	Encoder leftEncoder;
 	Encoder rightEncoder;
 	
-	//The values recorded by the two drivetrain encoders the last update
-	double leftEncoderVal;
-	double rightEncoderVal;
-	
 	//The gyroscope, or orientation sensor, of the drivetrain
 	Gyro gyro;
 	
