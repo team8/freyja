@@ -37,8 +37,8 @@ Drivetrain::Drivetrain() :
 	rightBottomController.SetInputRange(-9999, 9999);
 	
 	//Sets the max period for stopped detection
-	leftEncoder.setMaxPeriod(ENCODER_MAX_PERIOD);
-	rightEncoder.setMaxPeriod(ENCODER_MAX_PERIOD);
+	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
+	rightEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 	
 	//Sets the inital robot state to idle
 	state = IDLE;
@@ -51,7 +51,7 @@ void Drivetrain::init() {
 	rightEncoder.Reset();
 	
 	//Stops robot motion
-	stopAllTalons();
+	stopTalons();
 }
 
 //Disables the drivetrain
