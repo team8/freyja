@@ -11,7 +11,7 @@ The arm is a subsytem of the robot(and is also kind of a subsystem of the whole 
 comprised of a solenoid, that controls the direction that the piston actuates, and a compressor, which gives the piston
 air to actuate. The code for them is simple, since it's all direction based, and the compressor outputs a given number of psi
 per second, thus, the code isn't too complex. The wrapper functions just check if the operatorJoystick button has been pressed,
-and changes an enum based on that.
+and changes an enum based on that. (The compressor outputs .88 Cubic Feet Per Minute)
 
 For more information, check the wiki, or consult the programmers referenced on the wiki.
 */
