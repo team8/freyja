@@ -1,5 +1,5 @@
 /*
- * Version 6
+ * Version 7
  * 2/3/15
  * Jonathan Zwiebel
  */
@@ -11,9 +11,9 @@ using namespace std;
 AutonomousController::AutonomousController(Robot *robotPointer) :
 	dial((uint32_t) PORT_AUTO_DIAL)
 {
-	this->robot = robotPointer;
 	path = (Path) dial.GetValue();
 	command = CMD_STOP;
+	executor = new executor(*robotPointer, & commandStack);
 	executing = false;
 }
 
@@ -54,9 +54,9 @@ void AutonomousController::init() {
 
 void AutonomousController::update() {
 	if(!executing) {
-		command = commandStack.top();
-		commandStack.pop();
-		// execute command
+		command = commandStack.top(); //fetch
+		executor->executeCommand(command); // execute
+		commandStack.pop(); // increment
 	}
 }
 

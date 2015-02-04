@@ -1,5 +1,5 @@
 /*
- * Version 6
+ * Version 7
  * 2/3/15
  * Jonathan Zwiebel
  */
@@ -9,13 +9,12 @@
 
 
 #include <WPILib.h>
-#include <iostream>
 #include <stack>
 #include "Robot.h"
 #include "Constants.h"
+#include "AutonomousExecutor.h"
 
 // Distance constants used specifically for autonomous
-// Placeholder values, may be moved to Constants.h
 #define YELLOW_AUTO_DISTANCE 0 // y: front of yellow tote to auto zone
 #define AUTO_GRAY_DISTANCE 0 // y: auto zone to landfill tote
 #define GRAY_GRAY_DISTANCE 0 // x: between totes in landfill zone
@@ -46,7 +45,7 @@ class AutonomousController {
 
 		bool executing;
 
-		Robot* robot;
+		AutonomousExecutor* executor;
 		AnalogInput dial;
 
 		void update();
