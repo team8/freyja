@@ -57,6 +57,7 @@ void AutonomousController::update() {
 		command = commandStack.top(); //fetch
 		executor->executeCommand(command); // execute
 		commandStack.pop(); // increment
+		executing = true;
 	}
 }
 
@@ -126,7 +127,7 @@ void AutonomousController::canScoreAccumulate() {
 void AutonomousController::accumulateGray() {
 	commandStack.push(CMD_STOP);
 	commandStack.push(CMD_DRIVE_LANDFILL_AUTO);
-	commandStack.push(CMD_ROTATE);
+	commandStack.push(CMD_HALF_ROTATE);
 	commandStack.push(CMD_GRAY_FROM_GRAY);
 	commandStack.push(CMD_GRAY_FROM_GRAY);
 	commandStack.push(CMD_LANDFILL_DRIVE);

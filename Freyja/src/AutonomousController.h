@@ -14,13 +14,6 @@
 #include "Constants.h"
 #include "AutonomousExecutor.h"
 
-// Distance constants used specifically for autonomous
-#define YELLOW_AUTO_DISTANCE 0 // y: front of yellow tote to auto zone
-#define AUTO_GRAY_DISTANCE 0 // y: auto zone to landfill tote
-#define GRAY_GRAY_DISTANCE 0 // x: between totes in landfill zone
-#define YELLOW_YELLOW_DISTANCE 0 // x: between yellow auto totes
-#define LIFT_DISTANCE 0 // z: lift distance
-
 class AutonomousController {
 	public:
 		AutonomousController(Robot *robotPointer);
@@ -37,7 +30,7 @@ class AutonomousController {
 		// The current command that is being executed on the robot, this will change throughout auto
 		enum AutoCommand {
 			CMD_STOP, CMD_FORWARD_DRIVE, CMD_LIFT, CMD_DROP, CMD_TOTE_SCORE, CMD_ACCUMULATE_FROM_AUTO, CMD_TOTE_TO_TOTE_LEFT,
-			CMD_TOTE_TO_TOTE_RIGHT, CMD_CAN_SCORE, CMD_DRIVE_LANDFILL_AUTO, CMD_GRAY_FROM_GRAY, CMD_ROTATE, CMD_LANDFILL_DRIVE
+			CMD_TOTE_TO_TOTE_RIGHT, CMD_CAN_SCORE, CMD_DRIVE_LANDFILL_AUTO, CMD_GRAY_FROM_GRAY, CMD_HALF_ROTATE, CMD_LANDFILL_DRIVE
 		} command;
 
 	private:
