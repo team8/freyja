@@ -18,7 +18,6 @@ class AutonomousCommand {
 		virtual ~AutonomousCommand();
 
 		void add(void (*operation)(double));
-
 		std::queue<void (double)> getOperations();
 };
 

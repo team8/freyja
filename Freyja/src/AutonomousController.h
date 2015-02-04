@@ -1,76 +1,56 @@
 /*
  * Version 6
- * 1/29/15
+ * 2/3/15
  * Jonathan Zwiebel
  */
 
 #ifndef AUTONOMOUS_CONTROLLER_H
 #define AUTONOMOUS_CONTROLLER_H
 
-#define PATH 0
 
 #include <WPILib.h>
+#include <iostream>
+#include <stack>
 #include "Robot.h"
-#include "Timer.h"
 #include "Constants.h"
-#include <AnalogInput.h>
 
+// Distance constants used specifically for autonomous
+// Placeholder values, may be moved to Constants.h
+#define YELLOW_AUTO_DISTANCE 0 // y: front of yellow tote to auto zone
+#define AUTO_GRAY_DISTANCE 0 // y: auto zone to landfill tote
+#define GRAY_GRAY_DISTANCE 0 // x: between totes in landfill zone
+#define YELLOW_YELLOW_DISTANCE 0 // x: between yellow auto totes
+#define LIFT_DISTANCE 0 // z: lift distance
 
 class AutonomousController {
 	public:
 		AutonomousController(Robot *robotPointer);
 		virtual ~AutonomousController();
 
-	private:
+		// The separate paths that can be run during autonomous, delegated by dial value, will remain constant
+		// for entire auto period
 		enum Path {
-			STOP = 0,
-			DRIVE = 1,
-			TOTE_SCORE = 2,
-			TOTE_SCORE_ACCUMULATE = 3,
-			TOTE_SCORE_DOUBLE_LEFT = 4,
-			TOTE_SCORE_DOUBLE_RIGHT = 5,
-			TOTE_SCORE_DOUBLE_LEFT_ACCUMULATE = 6,
-			TOTE_SCORE_DOUBLE_RIGHT_ACCUMULATE = 7,
-			TOTE_SCORE_TRIPLE = 8,
-			CAN_SCORE = 9,
-			CAN_SCORE_ACCUMULATE = 10,
-			ACCUMULATE = 11,
-			ACCUMULATE_DOUBLE = 12,
-			ACCUMULATE_TRIPLE = 13,
+			STOP, DRIVE, TOTE_SCORE, TOTE_SCORE_ACCUMULATE, TOTE_SCORE_DOUBLE_LEFT, TOTE_SCORE_DOUBLE_RIGHT,
+			TOTE_SCORE_DOUBLE_LEFT_ACCUMULATE, TOTE_SCORE_DOUBLE_RIGHT_ACCUMULATE, CAN_SCORE,
+			CAN_SCORE_ACCUMULATE, ACCUMULATE_GRAY
 		} path;
 
-
+		// The current command that is being executed on the robot, this will change throughout auto
 		enum AutoCommand {
-			CMD_STOP = 0,
-			CMD_DRIVE = 1,
-			CMD_TOTE_SCORE = 2,
-			CMD_TOTE_SCORE_ACCUMULATE = 3,
-			CMD_TOTE_SCORE_DOUBLE_LEFT = 4,
-			CMD_TOTE_SCORE_DOUBLE_RIGHT = 5,
-			CMD_TOTE_SCORE_DOUBLE_LEFT_ACCUMULATE = 6,
-			CMD_TOTE_SCORE_DOUBLE_RIGHT_ACCUMULATE = 7,
-			CMD_TOTE_SCORE_TRIPLE = 8,
-			CMD_CAN_SCORE = 9,
-			CMD_CAN_SCORE_ACCUMULATE = 10,
-			CMD_ACCUMULATE = 11,
-			CMD_ACCUMULATE_DOUBLE = 12,
-			CMD_ACCUMULATE_TRIPLE = 13,
-			CMD_ACCUMULATE_FROM_SCORE = 14,
-			CMD_TOTE_TO_TOTE_RIGHT = 15,
-			CMD_TOTE_TO_TOTE_LEFT = 16,
+			CMD_STOP, CMD_FORWARD_DRIVE, CMD_LIFT, CMD_DROP, CMD_TOTE_SCORE, CMD_ACCUMULATE_FROM_AUTO, CMD_TOTE_TO_TOTE_LEFT,
+			CMD_TOTE_TO_TOTE_RIGHT, CMD_CAN_SCORE, CMD_DRIVE_LANDFILL_AUTO, CMD_GRAY_FROM_GRAY, CMD_ROTATE, CMD_LANDFILL_DRIVE
 		} command;
 
-		Timer time;
+	private:
+		std::stack<AutoCommand> commandStack;
+
+		bool executing;
+
 		Robot* robot;
 		AnalogInput dial;
-		AutonomousCommand currentCommand;
 
 		void update();
-		void executeCommand(AutonomousCommand command);
-
 		void init();
-		void init(int p);
-		void update();
 		void callCommand(AutoCommand nc);
 
 		void stop();
@@ -81,14 +61,9 @@ class AutonomousController {
 		void toteScoreDoubleRight();
 		void toteScoreDoubleLeftAccumulate();
 		void toteScoreDoubleRightAccumulate();
-		void toteScoreTriple();
 		void canScore();
 		void canScoreAccumulate();
-		void accumulate();
-		void accumulateDouble();
-		void accumulateTriple();
-		void accumulateFromScore();
-		void toteToTote(bool isRight);
+		void accumulateGray();
 };
 
 #endif /* AUTONOMOUS_CONTROLLER_H */
