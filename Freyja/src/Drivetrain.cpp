@@ -148,15 +148,18 @@ void Drivetrain::rotateAngle(double angle) {
 //Drives the given distance
 void Drivetrain::driveDistance(double distance) {
 	state = DRIVING_DIST;
-//resets the encoders before it drives
+
+	//Resets encoders
 	leftEncoder.Reset();
 	rightEncoder.Reset();
-//drives the robot to a certain distance
+
+	//Sets controller setpoint to given distance
 	leftTopController.SetSetpoint(distance);
 	leftBottomController.SetSetpoint(distance);
 	rightTopController.SetSetpoint(distance);
 	rightBottomController.SetSetpoint(distance);
-//starts the controllers
+
+	//Enables pid controllers
 	leftTopController.Enable();
 	leftBottomController.Enable();
 	rightTopController.Enable();
