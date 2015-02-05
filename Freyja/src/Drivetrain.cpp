@@ -73,7 +73,17 @@ void Drivetrain::setRotateSpeed(double speed) {
 }
 
 void Drivetrain::rotateAngle(double angle) {
-	//TODO Implement gyros and this method correctly
+	gyro.Reset();
+
+	leftTopGyroController.SetSetpoint(angle);
+	leftBottomGyroController.SetSetpoint(angle);
+	rightTopGyroController.SetSetpoint(angle);
+	rightBottomGyroController.SetSetpoint(angle);
+
+	leftTopGyroController.Enable();
+	leftBottomGyroController.Enable();
+	rightTopGyroController.Enable();
+	rightBottomGyroController.Enable();
 }
 
 void Drivetrain::driveDistance(double distance) {
