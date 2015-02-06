@@ -39,6 +39,7 @@ Drivetrain::Drivetrain() :
 void Drivetrain::init() {
 	leftEncoder.Reset();
 	rightEncoder.Reset();
+	gyro.Reset();
 }
 
 void Drivetrain::disable() {
