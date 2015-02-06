@@ -18,7 +18,12 @@ Drivetrain::Drivetrain() :
 			leftTopController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &leftEncoder, &leftTopTalon),
 			leftBottomController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &leftEncoder, &leftBottomTalon),
 			rightTopController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &rightEncoder, &rightTopTalon),
-			rightBottomController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &rightEncoder, &rightBottomTalon)
+			rightBottomController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &rightEncoder, &rightBottomTalon),
+			
+			leftTopGyroController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &leftEncoder, &leftTopTalon),
+			leftBottomGyroController(PROPORTIONAL, INTEGRAL, DERIVATIVE, &leftEncoder, &leftBottomTalon),
+			rightTopGyroController(-PROPORTIONAL, -INTEGRAL, -DERIVATIVE, &rightEncoder, &rightTopTalon),
+			rightBottomGyroController(-PROPORTIONAL, -INTEGRAL, -DERIVATIVE, &rightEncoder, &rightBottomTalon)
 {
 	targetSpeed = 0;
 	rotateSpeed = 0;
