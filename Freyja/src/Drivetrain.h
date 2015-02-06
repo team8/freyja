@@ -31,6 +31,12 @@ private:
 	PIDController rightTopController;
 //	PIDController rightMiddleController;
 	PIDController rightBottomController;
+	
+	PIDController leftTopGyroController;
+	PIDController leftBottomGyroController;
+
+	PIDController rightTopGyroController;
+	PIDController rightBottomGyroController;
 
 public:
 
