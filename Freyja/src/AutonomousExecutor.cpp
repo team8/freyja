@@ -68,23 +68,17 @@ void AutonomousExecutor::executeCommand(AutonomousController::AutoCommand comman
 		drive(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
 		break;
 	}
+	case AutonomousController:CMD_CAN_LIFT: {
+		canLift();
+		break;
+	}
 	}
 }
 
-void AutonomousExecutor::drive(int dist) {
-
-}
-
-void AutonomousExecutor::lift() {
-
-}
-
-void AutonomousExecutor::drop() {
-
-}
-
 void AutonomousExecutor::toteScore() {
-
+	commandStack->push(AutonomousController::CMD_DROP);
+	commandStack->push(AutonomousController::CMD_FORWARD_DRIVE);
+	commandStack->push(AutonomousController::CMD_LIFT);
 }
 
 void AutonomousExecutor::accumulateFromAuto() {
@@ -96,7 +90,9 @@ void AutonomousExecutor::toteToTote(bool isLeft) {
 }
 
 void AutonomousExecutor::canScore() {
-
+	commandStack->push(AutonomousController::CMD_DROP);
+	commandStack->push(AutonomousController::CMD_FORWARD_DRIVE);
+	commandStack->push(AutonomousController::CMD_CAN_LIFT);
 }
 
 void AutonomousExecutor::grayToGray() {
@@ -104,7 +100,23 @@ void AutonomousExecutor::grayToGray() {
 }
 
 void AutonomousExecutor::rotate(int angle) {
+	robot->rotateAngle(180);
+}
 
+void AutonomousExecutor::canLift() {
+	robot->canLift();
+}
+
+void AutonomousExecutor::drive(int dist) {
+	robot->driveDistance(dist);
+}
+
+void AutonomousExecutor::lift() {
+	robot->lift();
+}
+
+void AutonomousExecutor::drop() {
+	robot->drop();
 }
 
 AutonomousExecutor::~AutonomousExecutor() {

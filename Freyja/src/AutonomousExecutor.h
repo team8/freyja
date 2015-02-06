@@ -37,6 +37,7 @@ private:
 	void canScore();
 	void grayToGray();
 	void rotate(int angle);
+	void canLift();
 };
 
 #endif /* SRC_AUTONOMOUSEXECUTOR_H_ */

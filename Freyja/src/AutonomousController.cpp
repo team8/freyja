@@ -13,7 +13,7 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 {
 	path = (Path) dial.GetValue();
 	command = CMD_STOP;
-	executor = new executor(*robotPointer, & commandStack);
+	executor = new AutonomousExecutor(*robotPointer, & commandStack);
 	executing = false;
 }
 

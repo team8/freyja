@@ -45,7 +45,9 @@ class Robot {
 		void rotateAngle(double angle);
 
 		/** Wrapper method for lifting a specified distance */
-		void lift(double distance);
+		void lift();
+		void drop();
+		void canLift();
 
 		/** Wrapper method for setting the lifter level */
 		void setLifterLevel(int level);
