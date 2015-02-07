@@ -1,6 +1,6 @@
 /*
- * Version 7
- * 2/3/15
+ * Version 8
+ * 2/6/15
  * Jonathan Zwiebel
  */
 #include "AutonomousExecutor.h"
@@ -20,7 +20,7 @@ void AutonomousExecutor::executeCommand(AutonomousController::AutoCommand comman
 	case AutonomousController::CMD_STOP: {
 		break;
 	}
-	case AutonomousController::CMD_FORWARD_DRIVE: {
+	case AutonomousController::CMD_AUTO_DRIVE: {
 		drive(YELLOW_AUTO_DISTANCE);
 		break;
 	}
@@ -56,7 +56,7 @@ void AutonomousExecutor::executeCommand(AutonomousController::AutoCommand comman
 		drive(AUTO_GRAY_DISTANCE);
 		break;
 	}
-	case AutonomousController::CMD_GRAY_FROM_GRAY: {
+	case AutonomousController::CMD_GRAY_TO_GRAY: {
 		grayToGray();
 		break;
 	}
@@ -68,7 +68,7 @@ void AutonomousExecutor::executeCommand(AutonomousController::AutoCommand comman
 		drive(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
 		break;
 	}
-	case AutonomousController:CMD_CAN_LIFT: {
+	case AutonomousController::CMD_CAN_LIFT: {
 		canLift();
 		break;
 	}
@@ -77,7 +77,7 @@ void AutonomousExecutor::executeCommand(AutonomousController::AutoCommand comman
 
 void AutonomousExecutor::toteScore() {
 	commandStack->push(AutonomousController::CMD_DROP);
-	commandStack->push(AutonomousController::CMD_FORWARD_DRIVE);
+	commandStack->push(AutonomousController::CMD_AUTO_DRIVE);
 	commandStack->push(AutonomousController::CMD_LIFT);
 }
 
@@ -91,7 +91,7 @@ void AutonomousExecutor::toteToTote(bool isLeft) {
 
 void AutonomousExecutor::canScore() {
 	commandStack->push(AutonomousController::CMD_DROP);
-	commandStack->push(AutonomousController::CMD_FORWARD_DRIVE);
+	commandStack->push(AutonomousController::CMD_AUTO_DRIVE);
 	commandStack->push(AutonomousController::CMD_CAN_LIFT);
 }
 
