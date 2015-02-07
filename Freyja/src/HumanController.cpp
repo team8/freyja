@@ -1,4 +1,7 @@
 #include "HumanController.h"
+#include <iostream>
+#include <stdio.h>
+using namespace std;
 
 HumanController::HumanController(Robot *robot) :
 		moveJoystick((uint32_t) PORT_SPEED), turnJoystick((uint32_t) PORT_TURN), operatorJoystick((uint32_t) PORT_OPERATOR), robotPointer(robot) {
