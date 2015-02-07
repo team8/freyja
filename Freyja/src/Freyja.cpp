@@ -3,8 +3,7 @@
 #include "HumanController.h"
 #include "Robot.h"
 
-
-class Freyja : public IterativeRobot {
+class Freyja: public IterativeRobot {
 private:
 	Robot robot;
 	HumanController humanController;
@@ -18,45 +17,35 @@ public:
 	void TeleopInit();
 	void TeleopPeriodic();
 	void TeleopDisabled();
-
 };
 
-Freyja :: Freyja():
-	robot(),
-	humanController(),
-	autoController(&robot)
-	{
+Freyja::Freyja() :
+		robot(), humanController(&robot), autoController(&robot) {
+}
 
-	}
-
-void Freyja::RobotInit(){
+void Freyja::RobotInit() {
 	robot.init();
-
 }
 
-void Freyja::DisabledInit(){
+void Freyja::DisabledInit() {
 	robot.disable();
-
 }
 
-void Freyja::DisabledPeriodic(){
+void Freyja::DisabledPeriodic() {
 	robot.disable();
 	robot.update();
-
 }
 
-void Freyja::TeleopInit(){
+void Freyja::TeleopInit() {
 	robot.init();
-
 }
 
-void Freyja::TeleopPeriodic(){
-	humanController.update(&robot);
+void Freyja::TeleopPeriodic() {
+	humanController.update();
 	robot.update();
-
 }
 
-void Freyja::TeleopDisabled(){
+void Freyja::TeleopDisabled() {
 	robot.disable();
 	robot.update();
 }

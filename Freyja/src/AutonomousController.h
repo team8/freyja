@@ -1,9 +1,14 @@
-#ifndef SRC_AUTONOMOUSCONTROLLER_H_
-#define SRC_AUTONOMOUSCONTROLLER_H_
+#ifndef AUTONOMOUS_CONTROLLER_H
+#define AUTONOMOUS_CONTROLLER_H
+
 #define PATH 0
+
 #include <WPILib.h>
 #include "Robot.h"
 #include "Timer.h"
+#include "Constants.h"
+#include <AnalogInput.h>
+
 
 class AutonomousController {
 	public:
@@ -35,4 +40,4 @@ class AutonomousController {
 		void toteToTote(bool isRight);
 	};
 
-#endif
+#endif /* AUTONOMOUS_CONTROLLER_H */

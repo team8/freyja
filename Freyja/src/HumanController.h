@@ -1,5 +1,6 @@
-#ifndef FREYJA_SRC_HUMANCONTROLLER_H_
-#define FREYJA_SRC_HUMANCONTROLLER_H_
+#ifndef HUMAN_CONTROLLER_H
+#define HUMAN_CONTROLLER_H
+
 #include <WPILib.h>
 #include "Constants.h"
 #include "Robot.h"
@@ -10,10 +11,10 @@ private:
 	Joystick turnJoystick;
 	Joystick operatorJoystick;
 	
+	Robot *robotPointer;
 public:
-	HumanController();
-	void update(Robot *robotPointer);
+	HumanController(Robot *robotPointer);
+	void update();
 };
 
-
-#endif /* FREYJA_SRC_HUMANCONTROLLER_H_ */
+#endif
