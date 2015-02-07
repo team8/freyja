@@ -29,13 +29,14 @@ void Lifter::update() {
 	}
 
 	case IDLE:{
-
+	liftEncoder.reset();
 	break;
 	}
 	case ZEROING: {
 		if(checkSensorHit()) {
 			setLevel(0);
 		}
+		liftEncoder.Reset();
 		break;
 	}
 
