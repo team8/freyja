@@ -25,4 +25,24 @@ void HumanController::update() {
 	if(operatorJoystick.GetRawButton(6)) {
 		robotPointer->changePistonState(Arm::PistonState::PUSH);
 	}
+	//Lifter Controls
+	if(operatorJoystick.GetRawButton(11)) {
+		robotPointer -> setLifterLevel(1);
+	}
+
+	if(operatorJoystick.GetRawButton(7)) {
+		robotPointer -> setLifterLevel(2);
+	}
+
+	if(operatorJoystick.GetRawButton(8)) {
+		robotPointer -> setLifterLevel(3);
+	}
+
+	if(operatorJoystick.GetRawButton(9)) {
+		robotPointer -> setLifterLevel(4);
+	}
+
+	if(operatorJoystick.GetRawButton(10)) {
+		robotPointer -> moveLifterDown();
+	}
 }
