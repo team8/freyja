@@ -41,8 +41,8 @@ void HumanController::update() {
 	if(operatorJoystick.GetRawButton(9)) {
 		robotPointer -> setLifterLevel(4);
 	}
-
-	if(operatorJoystick.GetRawButton(10)) {
-		robotPointer -> moveLifterDown();
-	}
+//TODO I don't know what this method is supposed to represent since there isn't documentation in this class
+//	if(operatorJoystick.GetRawButton(10)) {
+//		robotPointer -> moveLifterDown();
+//	}
 }

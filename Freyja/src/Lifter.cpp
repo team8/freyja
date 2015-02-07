@@ -1,11 +1,8 @@
 #include "Lifter.h"
 
 Lifter::Lifter() :
-		motor((uint32_t) 0),
-		liftEncoder((uint32_t) 0, (uint32_t) 0),
-		digitalInput((uint32_t) 0),
-		controller(0.f, 0.f, 0.f, &liftEncoder, &motor)
-{
+		motor((uint32_t) 0), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput(
+				(uint32_t) 0), controller(0.f, 0.f, 0.f, &liftEncoder, &motor) {
 	state = IDLE;
 }
 
@@ -21,28 +18,27 @@ void Lifter::init() {
 
 void Lifter::update() {
 
-	switch(state) {
-
-	case MOVING: {
-
+	switch (state) {
+	case MOVING:
+	{
 		break;
 	}
-
-	case IDLE:{
-	liftEncoder.reset();
-	break;
+	case IDLE:
+	{
+		liftEncoder.Reset();
+		break;
 	}
-	case ZEROING: {
-		if(checkSensorHit()) {
+	case ZEROING:
+	{
+		if (checkSensorHit()) {
 			setLevel(0);
 		}
 		liftEncoder.Reset();
 		break;
 	}
-
 	}
 }
-	//this bit of code won't be used once we find distance between levels
+//this bit of code won't be used once we find distance between levels
 //	if(ButtonPressed == 1 && checkSensorHit()) {
 //		distanceToLevel = abs(getDistance());
 //	}
@@ -72,28 +68,25 @@ void Lifter::disable() {
 //this method relies on not being called until after the PID is done
 void Lifter::setLevel(double level) {
 	controller.SetSetpoint(level);
-
 	/*
 	 * The following condition should be changed
 	 *
 	 * Consider a the belt zooming past the set point
 	 */
-	if(controller.GetError() < 0.5 && controller.GetError() > -0.5) {
+	if (controller.GetError() < 0.5 && controller.GetError() > -0.5) {
 		state = IDLE;
 	}
-
 	else {
 		state = MOVING;
 	}
 }
-
 
 //void Lifter::setSpeed(double speed) {
 //	motor.Set(speed);
 //}
 
 bool Lifter::checkSensorHit() {
-	if(digitalInput.Get() == 1) {
+	if (digitalInput.Get() == 1) {
 		return true;
 	}
 	return false;
