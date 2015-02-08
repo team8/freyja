@@ -16,7 +16,6 @@ public:
 	void DisabledPeriodic();
 	void TeleopInit();
 	void TeleopPeriodic();
-	void TeleopDisabled();
 };
 
 Freyja::Freyja() :
@@ -42,11 +41,6 @@ void Freyja::TeleopInit() {
 
 void Freyja::TeleopPeriodic() {
 	humanController.update();
-	robot.update();
-}
-
-void Freyja::TeleopDisabled() {
-	robot.disable();
 	robot.update();
 }
 
