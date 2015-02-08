@@ -13,6 +13,8 @@ public:
 	void disable();
 	bool checkSensorHit();
 	void setLevel(double level);
+	void zeroing();
+	double getLevel();
 
 	typedef enum State{
 		MOVING,

@@ -26,23 +26,15 @@ void HumanController::update() {
 		robotPointer->changePistonState(Arm::PistonState::PUSH);
 	}
 	//Lifter Controls
-	if(operatorJoystick.GetRawButton(11)) {
-		robotPointer -> setLifterLevel(1);
-	}
-
 	if(operatorJoystick.GetRawButton(7)) {
-		robotPointer -> setLifterLevel(2);
+		robotPointer -> setLifterLevel(robotPointer -> getLevel() + 1);
 	}
 
 	if(operatorJoystick.GetRawButton(8)) {
-		robotPointer -> setLifterLevel(3);
+		robotPointer -> setLifterLevel(robotPointer -> getLevel() - 1);
 	}
 
-	if(operatorJoystick.GetRawButton(9)) {
-		robotPointer -> setLifterLevel(4);
+	if(operatorJoystick.GetRawButton(10)) {
+		robotPointer -> zeroLifter();
 	}
-//TODO I don't know what this method is supposed to represent since there isn't documentation in this class
-//	if(operatorJoystick.GetRawButton(10)) {
-//		robotPointer -> moveLifterDown();
-//	}
 }

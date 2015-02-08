@@ -48,7 +48,14 @@ class Robot {
 		void lift(double distance);
 
 		/** Wrapper method for setting the lifter level */
-		void setLifterLevel(int level);
+		void setLifterLevel(double level);
+
+		/**Wrapper method for zeroing the lifter level **/
+		void zeroLifter();
+
+		double getLevel();
+
+
 };
 
 #endif /* ROBOT_H */

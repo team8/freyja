@@ -44,7 +44,16 @@ void Robot::rotateAngle(double angle) {
 void Robot::lift(double distance) {
 	//lifter.lift(distance);
 }
-void Robot::setLifterLevel(int level) {
+void Robot::setLifterLevel(double level) {
 	lifter.setLevel(level);
 }
+
+double Robot::getLevel() {
+	lifter.getLevel();
+}
+
+void Robot::zeroLifter() {
+	lifter.zeroing();
+}
+
 

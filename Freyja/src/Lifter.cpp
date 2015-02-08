@@ -30,10 +30,10 @@ void Lifter::update() {
 	}
 	case ZEROING:
 	{
-		if (checkSensorHit()) {
-			setLevel(0);
+		if(checkSensorHit()) {
+				setLevel(0);
+				liftEncoder.Reset();
 		}
-		liftEncoder.Reset();
 		break;
 	}
 	}
@@ -73,6 +73,7 @@ void Lifter::setLevel(double level) {
 	 *
 	 * Consider a the belt zooming past the set point
 	 */
+
 	if (controller.GetError() < 0.5 && controller.GetError() > -0.5) {
 		state = IDLE;
 	}
@@ -80,6 +81,12 @@ void Lifter::setLevel(double level) {
 		state = MOVING;
 	}
 }
+
+	void Lifter::zeroing() {
+		motor.Set(-.2);
+		state = ZEROING;
+
+	}
 
 //void Lifter::setSpeed(double speed) {
 //	motor.Set(speed);
@@ -94,4 +101,8 @@ bool Lifter::checkSensorHit() {
 
 Lifter::State Lifter::getState() {
 	return state;
+}
+
+double Lifter::getLevel() {
+
 }
