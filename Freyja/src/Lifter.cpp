@@ -59,7 +59,7 @@ void Lifter::setLevel(double level) {
 	 * if it has, it reverts to idle state
 	 * otherwise, it keeps moving.
 	 */
-
+	currentLevel = level;
 	if (controller.GetError() < 0.5 && controller.GetError() > -0.5) {
 		state = IDLE;
 	}
@@ -94,5 +94,5 @@ Lifter::State Lifter::getState() {
 
 //will return the current level of the lifter once it is complete.
 double Lifter::getLevel() {
-
+	return currentLevel;
 }

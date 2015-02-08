@@ -15,6 +15,7 @@ public:
 	void setLevel(double level);
 	void zeroing();
 	double getLevel();
+	double currentLevel;
 
 	typedef enum State{
 		MOVING,
