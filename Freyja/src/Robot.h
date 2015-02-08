@@ -52,7 +52,7 @@ class Robot {
 
 		/**Wrapper method for zeroing the lifter level **/
 		void zeroLifter();
-
+		/**Wrapper method for getting the current level of the lifter**/
 		double getLevel();
 
 
