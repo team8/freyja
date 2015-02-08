@@ -12,6 +12,8 @@ public:
 	void update();
 	void disable();
 	bool checkSensorHit();
+	double getDistance(); //uses encoder
+	void lift(double distance);
 	void setLevel(double level);
 	void zeroing();
 	double getLevel();

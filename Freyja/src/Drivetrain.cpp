@@ -20,7 +20,13 @@ Drivetrain::Drivetrain() :
 		leftTopController(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftTopTalon),
 		leftBottomController(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftBottomTalon),
 		rightTopController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightTopTalon),
-		rightBottomController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightBottomTalon)
+		rightBottomController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightBottomTalon),
+
+
+		leftTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTopTalon),
+		leftBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftBottomTalon),
+		rightTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTopTalon),
+		rightBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightBottomTalon)
 {
 	//Initializes the target and rotate speeds to zero
 	targetSpeed = 0;
@@ -62,20 +68,17 @@ void Drivetrain::disable() {
 
 //Updates the drivetrain
 void Drivetrain::update() {
+	std::cout << "Left Encoder: " + leftEncoder.Get() << std::endl;
+	std::cout << "Right Encoder: " + rightEncoder.Get() << std::endl;
+	std::cout << std::endl;
+
 	//State machine for various states in update
 	switch(state)
 	{
 	//Updates for the idle state
 	case IDLE:
 	{
-		//Stops all robot motion
-		stopTalons();
-
-		//Disables pid controllers
-		leftTopController.Disable();
-		rightTopController.Disable();
-		leftBottomController.Disable();
-		rightBottomController.Disable();
+		stopControl();
 
 		break;
 	}
@@ -102,7 +105,7 @@ void Drivetrain::update() {
 		//Determines the appropriate left and right speed
 		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 		double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
-		
+
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(leftSpeed);
 		leftBottomTalon.Set(leftSpeed);
@@ -112,6 +115,26 @@ void Drivetrain::update() {
 		break;
 	}
 	}
+}
+
+//Stops robot motion and control loops
+void Drivetrain::stopControl() {
+	//Stops all robot motion
+	stopTalons();
+
+	//Sets teleop speeds to idle
+	setSpeed(0, 0);
+
+	//Disables pid controllers
+	leftTopController.Disable();
+	rightTopController.Disable();
+	leftBottomController.Disable();
+	rightBottomController.Disable();
+
+	leftTopGyroController.Disable();
+	rightTopGyroController.Disable();
+	leftBottomGyroController.Disable();
+	rightBottomGyroController.Disable();
 }
 
 //Stops all drivetrain motion
@@ -130,23 +153,41 @@ void Drivetrain::setSpeed(double targetSpeed, double rotateSpeed) {
 
 //Sets drivetrain teleop target speed
 void Drivetrain::setTargetSpeed(double speed) {
+	state = DRIVING_TELEOP;
+
 	this->targetSpeed = speed;
 }
 
 //Sets drivetrain teleop rotate speed
 void Drivetrain::setRotateSpeed(double speed) {
+	state = DRIVING_TELEOP;
+
 	this->rotateSpeed = speed;
 }
 
 //Rotates the given angle
 void Drivetrain::rotateAngle(double angle) {
+	stopControl();
+
 	state = ROTATING_ANGLE;
 
-	//TODO Implement gyros and this method correctly
+	gyro.Reset();
+
+	leftTopGyroController.SetSetpoint(angle);
+	leftBottomGyroController.SetSetpoint(angle);
+	rightTopGyroController.SetSetpoint(angle);
+	rightBottomGyroController.SetSetpoint(angle);
+
+	leftTopGyroController.Enable();
+	leftBottomGyroController.Enable();
+	rightTopGyroController.Enable();
+	rightBottomGyroController.Enable();
 }
 
 //Drives the given distance
 void Drivetrain::driveDistance(double distance) {
+	stopControl();
+
 	state = DRIVING_DIST;
 
 	//Resets encoders
