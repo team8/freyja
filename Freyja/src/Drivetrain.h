@@ -33,12 +33,19 @@ private:
 	//The gyroscope, or orientation sensor, of the drivetrain
 	Gyro gyro;
 	
-	//The PID Controllers of the robot, control loops allowing highly precise and efficient movement
+	//The PID Controllers of the drivetrain, control loops allowing highly precise and efficient movement
 	PIDController leftTopController;
 	PIDController leftBottomController;
 
 	PIDController rightTopController;
 	PIDController rightBottomController;
+
+	//The PID Controllers of the drivetrin's rotation, cotrol loops allowing the rotation of a desired angle
+	PIDController leftTopGyroController;
+	PIDController leftBottomGyroController;
+
+	PIDController rightTopGyroController;
+	PIDController rightBottomGyroController;
 
 public:
 	//An enum type definition for the state the robot is in

@@ -20,7 +20,13 @@ Drivetrain::Drivetrain() :
 		leftTopController(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftTopTalon),
 		leftBottomController(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftBottomTalon),
 		rightTopController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightTopTalon),
-		rightBottomController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightBottomTalon)
+		rightBottomController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightBottomTalon),
+
+
+		leftTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTopTalon),
+		leftBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftBottomTalon),
+		rightTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTopTalon),
+		rightBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightBottomTalon)
 {
 	//Initializes the target and rotate speeds to zero
 	targetSpeed = 0;
@@ -124,6 +130,11 @@ void Drivetrain::stopControl() {
 	rightTopController.Disable();
 	leftBottomController.Disable();
 	rightBottomController.Disable();
+
+	leftTopGyroController.Disable();
+	rightTopGyroController.Disable();
+	leftBottomGyroController.Disable();
+	rightBottomGyroController.Disable();
 }
 
 //Stops all drivetrain motion
@@ -160,7 +171,17 @@ void Drivetrain::rotateAngle(double angle) {
 
 	state = ROTATING_ANGLE;
 
-	//TODO Implement gyros and this method correctly
+	gyro.Reset();
+
+	leftTopGyroController.SetSetpoint(angle);
+	leftBottomGyroController.SetSetpoint(angle);
+	rightTopGyroController.SetSetpoint(angle);
+	rightBottomGyroController.SetSetpoint(angle);
+
+	leftTopGyroController.Enable();
+	leftBottomGyroController.Enable();
+	rightTopGyroController.Enable();
+	rightBottomGyroController.Enable();
 }
 
 //Drives the given distance
