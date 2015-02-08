@@ -72,6 +72,9 @@ public:
 	//Updates the drivetrain and fields
 	void update();
 
+	//Stops robot motion and controler output
+	void stopControl();
+
 	//Stops all drivetrain motion
 	void stopTalons();
 

@@ -62,20 +62,17 @@ void Drivetrain::disable() {
 
 //Updates the drivetrain
 void Drivetrain::update() {
+	std::cout << "Left Encoder: " + leftEncoder.Get() << std::endl;
+	std::cout << "Right Encoder: " + rightEncoder.Get() << std::endl;
+	std::cout << std::endl;
+
 	//State machine for various states in update
 	switch(state)
 	{
 	//Updates for the idle state
 	case IDLE:
 	{
-		//Stops all robot motion
-		stopTalons();
-
-		//Disables pid controllers
-		leftTopController.Disable();
-		rightTopController.Disable();
-		leftBottomController.Disable();
-		rightBottomController.Disable();
+		stopControl();
 
 		break;
 	}
@@ -102,7 +99,7 @@ void Drivetrain::update() {
 		//Determines the appropriate left and right speed
 		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 		double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
-		
+
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(leftSpeed);
 		leftBottomTalon.Set(leftSpeed);
@@ -112,6 +109,21 @@ void Drivetrain::update() {
 		break;
 	}
 	}
+}
+
+//Stops robot motion and control loops
+void Drivetrain::stopControl() {
+	//Stops all robot motion
+	stopTalons();
+
+	//Sets teleop speeds to idle
+	setSpeed(0, 0);
+
+	//Disables pid controllers
+	leftTopController.Disable();
+	rightTopController.Disable();
+	leftBottomController.Disable();
+	rightBottomController.Disable();
 }
 
 //Stops all drivetrain motion
@@ -130,16 +142,22 @@ void Drivetrain::setSpeed(double targetSpeed, double rotateSpeed) {
 
 //Sets drivetrain teleop target speed
 void Drivetrain::setTargetSpeed(double speed) {
+	state = DRIVING_TELEOP;
+
 	this->targetSpeed = speed;
 }
 
 //Sets drivetrain teleop rotate speed
 void Drivetrain::setRotateSpeed(double speed) {
+	state = DRIVING_TELEOP;
+
 	this->rotateSpeed = speed;
 }
 
 //Rotates the given angle
 void Drivetrain::rotateAngle(double angle) {
+	stopControl();
+
 	state = ROTATING_ANGLE;
 
 	//TODO Implement gyros and this method correctly
@@ -147,6 +165,8 @@ void Drivetrain::rotateAngle(double angle) {
 
 //Drives the given distance
 void Drivetrain::driveDistance(double distance) {
+	stopControl();
+
 	state = DRIVING_DIST;
 
 	//Resets encoders
