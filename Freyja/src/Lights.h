@@ -8,7 +8,7 @@
 class Lights:public Subsys{
 public:
   enum LightState{
-    ENABLED, DISABLED, TELEOPERATED, AUTONOMOUS
+    ENABLED, DISABLED, TELEOPERATED, AUTONOMOUS,  LIGHTSOFF
   };
   Lights();
   virtual ~Lights();

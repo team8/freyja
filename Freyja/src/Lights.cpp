@@ -29,6 +29,9 @@ void Lights::update(){
  case AUTONOMOUS:
  //Does something else undecided
  break;
+ case LIGHTSOFF:
+ //Turns light off
+ break;
  default:
  setLightState(DISABLED);
  //When we flat out break
