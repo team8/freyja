@@ -7,7 +7,7 @@
 
 class Lights:public Subsys{
 public:
-  enum lightState{
+  enum LightState{
     ENABLED, DISABLED, TELEOPERATED, AUTONOMOUS
   };
   Lights();
@@ -16,8 +16,9 @@ public:
   void init();
   void update();
   void disable(); 
-  private;
-  };
+private:
+  LightState lightState;
+};
   
   
 #endif
