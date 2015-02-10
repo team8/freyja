@@ -5,7 +5,7 @@
 #include <WPILIB.h>
 #include <wiringPi.h>
 
-class Lights:public Subsys{
+class Lights{
 public:
   enum LightState{
     ENABLED, DISABLED, TELEOPERATED, AUTONOMOUS,  LIGHTSOFF
@@ -13,9 +13,7 @@ public:
   Lights();
   virtual ~Lights();
   void setLightState();
-  void init();
   void update();
-  void disable(); 
 private:
   LightState lightState;
 };
