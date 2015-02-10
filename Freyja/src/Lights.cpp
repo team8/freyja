@@ -34,6 +34,7 @@ void Lights::update(){
                 for(int i = 0; i < 26; i ++){
                 digitalWrite(i, LOW);
                 }
+                lightsOn = false;
                 break;
                 default:
                 setLightState(DISABLED);
@@ -47,4 +48,10 @@ int Lights::main(){
         delay(10000);
         digitalWrite(0,  LOW);
         return 0;
+        /*
+        while(lightsOn){
+        update();
+        }
+        return 0;
+        */
 }
