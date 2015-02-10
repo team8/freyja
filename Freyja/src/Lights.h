@@ -8,7 +8,7 @@
 class Lights{
 public:
   enum LightState{
-    ENABLED, DISABLED, TELEOPERATED, AUTONOMOUS,  LIGHTSOFF
+    ENABLED, DISABLED, AUTONOMOUS,  LIGHTSOFF
   };
   Lights();
   virtual ~Lights();
