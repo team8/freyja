@@ -15,10 +15,6 @@ Lights:~Lights(){
 void Lights::setLightState(LightState state){
         this->lightState = state;
 }
-void init(){
- //Nothing necessary here, since we should start updating the lights immediately
- //
-}
 void Lights::update(){
  switch(lightState){
  case ENABLED:
@@ -41,7 +37,5 @@ void Lights::update(){
  //When we flat out break
  break;
  }
- void Lights::disable(){
-   //Flips lights off
- }
+
 }
