@@ -18,10 +18,14 @@ void Lights::setLightState(LightState state){
 void Lights::update(){
  switch(lightState){
  case ENABLED:
- //Turns lights green
+ for(int i = 0; i < 9; i ++){
+        digitalWrite(i, HIGH);
+ }
  break;
  case DISABLED:
- //Turns lights red
+ for(int i = 9; i < 18; i ++){
+        digitalWrite(i, LOW);
+ }
  break;
  case TELEOPERATED:
  //Does something else
@@ -30,7 +34,9 @@ void Lights::update(){
  //Does something else undecided
  break;
  case LIGHTSOFF:
- //Turns light off
+ for(int i = 0; i < 26; i ++){
+        digitalWrite(i, LOW);
+ }
  break;
  default:
  setLightState(DISABLED);
