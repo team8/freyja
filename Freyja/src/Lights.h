@@ -14,6 +14,7 @@ public:
   virtual ~Lights();
   void setLightState();
   void update();
+  int main();
 private:
   LightState lightState;
 };
