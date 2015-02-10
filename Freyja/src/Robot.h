@@ -11,6 +11,9 @@
 #include "Arm.h"
 #include "Lifter.h"
 
+/**
+ * The class representing the physical robot and subsystems, not inclusive of controllers
+ */
 class Robot {
 	private:
 		//The drivetrain, arm, and lifter subsystems
