@@ -2,7 +2,11 @@
 
 Lights::Lights():
 
-        setLightState(ENABLED);
+        setLightState(LIGHTSOFF);
+        wiringPiSetup();
+        for(int i = 0; i < 26; i ++){
+                pinMode(i, OUTPUT);
+        }
         }
 Lights:~Lights(){
  //Empty Constructor
