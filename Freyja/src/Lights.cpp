@@ -43,7 +43,7 @@ void Lights::update(){
                 }
         }
 void pwm(int pin, int angle){
-        String cmd = "echo " +(String)pin = "=" + (String)angle + " > /dev/servoblaster"
+        String cmd = "echo " +(std:string)pin = "=" + (std:string)angle + " > /dev/servoblaster"
 }       //import os.system(cmd); //This sends the string to the system so the raspberry pi can run
         //whatever it does.
         //sleep(.5);
