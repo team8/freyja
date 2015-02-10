@@ -17,6 +17,7 @@ public:
   int main();
 private:
   LightState lightState;
+  boolean lightsOn = true;
 };
   
   
