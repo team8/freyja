@@ -39,3 +39,10 @@ void Lights::update(){
  }
 
 }
+int Lights::main(){
+        //Test Code
+        digitalWrite(0, HIGH); 
+        delay(10000);
+        digitalWrite(0,  LOW);
+        return 0;
+}
