@@ -27,9 +27,6 @@ void Lights::update(){
         digitalWrite(i, LOW);
  }
  break;
- case TELEOPERATED:
- //Does something else
- break;
  case AUTONOMOUS:
  //Does something else undecided
  break;
