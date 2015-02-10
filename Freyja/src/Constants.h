@@ -40,4 +40,13 @@
 
 #define LIFT_SPEED 0.5
 
+//Light Starting/Ending Ports
+
+#define PORT_ENABLED_START 0
+#define PORT_ENABLED_START 8
+#define PORT_DISABLED_START 9
+#define PORT_DISABLED_START 17
+#define PORT_AUTONOMOUS_START 18
+#define PORT_ENABLED_START 26
+
 #endif /* CONSTANTS_H */
