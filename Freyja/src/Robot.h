@@ -16,9 +16,11 @@
  */
 class Robot {
 	private:
-		//The drivetrain, arm, and lifter subsystems
+		/** The drivetrain subsystem **/
 		Drivetrain drivetrain;
+		/** The arm subsystem **/
 		Arm arm;
+		/** The lifter subsystem **/
 		Lifter lifter;
 
 	public:
