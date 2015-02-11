@@ -36,7 +36,7 @@ using namespace std;
 /** The Freyja class constructor **/
 Freyja::Freyja() :
 		//Constructor calls for robot, and controllers
-		robot(), humanController(), autoController(&robot) {
+		robot(), humanController(&robot), autoController(&robot) {
 }
 
 /** Robot initialization, implemented from iterative robot **/
@@ -66,7 +66,7 @@ void Freyja::TeleopInit() {
 /** Teleop period update, implemented from iterative robot **/
 void Freyja::TeleopPeriodic() {
 	//Updates human controller and robot
-	humanController.update(&robot);
+	humanController.update();
 	robot.update();
 }
 
