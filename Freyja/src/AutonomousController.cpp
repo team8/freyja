@@ -8,6 +8,8 @@
 #include "AutonomousController.h"
 using namespace std;
 
+// constructrs the anolog dial and sets the path to the one being used
+// then sets the original command to stop and creates the executor
 AutonomousController::AutonomousController(Robot *robotPointer) :
 	dial((uint32_t) PORT_AUTO_DIAL)
 {
@@ -17,6 +19,8 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 	executing = false;
 }
 
+// called once at the beginning of autonomous, this sets the robot
+// onto the correct path
 void AutonomousController::init() {
 	switch(path) {
 		case STOP:
@@ -40,12 +44,17 @@ void AutonomousController::init() {
 		}
 }
 
+// called periodically throughout autonomous, this pops the top off the
+// commandStack and sends it to the executor
+// the reason for using this instead of just method calls is so that autonomous
+// is controlled periodically and will only function when the update method is
+// called
 void AutonomousController::update() {
 	if(!executing) {
 		command = commandStack.top(); //fetch
+                executing = true;
 		executor->executeCommand(command); // execute
 		commandStack.pop(); // increment
-		executing = true;
 	}
 }
 

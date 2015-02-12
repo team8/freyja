@@ -14,6 +14,7 @@
 #include "Constants.h"
 #include "AutonomousExecutor.h"
 
+
 class AutonomousController {
 	public:
 		AutonomousController(Robot *robotPointer);
@@ -34,8 +35,10 @@ class AutonomousController {
 		} command;
 
 	private:
+                // the ordered list of commands, will be changed to a List soon
 		std::stack<AutoCommand> commandStack;
 
+                // tracks whether the executor is actively functioning
 		bool executing;
 
 		AutonomousExecutor* executor;
