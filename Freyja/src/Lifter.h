@@ -16,17 +16,16 @@ public:
 	void lift(double distance);
 	void setLevel(double level);
 
-	typedef enum State{
+	enum State{
 		MOVING,
 		IDLE,
 		ZEROING
-	}State;
-	State state;
+	} state;
 
 	State getState();
 
 private:
-	Talon motor;
+	VictorSP motor;
 	Encoder liftEncoder;
 	DigitalInput digitalInput;
 	PIDController controller;
