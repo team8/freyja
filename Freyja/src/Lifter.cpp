@@ -3,7 +3,7 @@
 Lifter::Lifter() :
 		motor((uint32_t) 0),
 		liftEncoder((uint32_t) 0, (uint32_t) 0),
-		digitalInput((uint32_t) 0),
+		digitalInput((uint32_t)1), //MAKE PROPER
 		controller(0.f, 0.f, 0.f, &liftEncoder, &motor)
 {
 	state = IDLE;

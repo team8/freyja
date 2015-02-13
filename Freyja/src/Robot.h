@@ -16,7 +16,7 @@ class Robot {
 		//The drivetrain, arm, and lifter subsystems
 		Drivetrain drivetrain;
 		Arm arm;
-		Lifter lifter;
+		//Lifter lifter;
 
 	public:
 		/** Robot constructor, initializes robot and subsystems */

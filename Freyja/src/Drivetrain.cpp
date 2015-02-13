@@ -2,50 +2,56 @@
 
 Drivetrain::Drivetrain() :
 		//Initializes the left talons
-		leftTopTalon((uint32_t) PORT_DRIVE_VIC_LEFT_FRONT),
-		leftBottomTalon((uint32_t) PORT_DRIVE_VIC_LEFT_BACK),
-		
+		leftTopTalon((uint32_t) PORT_DRIVE_VIC_LEFT_FRONT), leftBottomTalon(
+				(uint32_t) PORT_DRIVE_VIC_LEFT_BACK),
+
 		//Initializes the right talons
-		rightTopTalon((uint32_t) PORT_DRIVE_VIC_RIGHT_FRONT),
-		rightBottomTalon((uint32_t) PORT_DRIVE_VIC_RIGHT_BACK),
+		rightTopTalon((uint32_t) PORT_DRIVE_VIC_RIGHT_FRONT), rightBottomTalon(
+				(uint32_t) PORT_DRIVE_VIC_RIGHT_BACK),
 
 		//Initializes the two encoders with opposite orientations
-		leftEncoder((uint32_t) PORT_ENCODER_LEFT_A, (uint32_t) PORT_ENCODER_LEFT_B, true),
-		rightEncoder((uint32_t) PORT_ENCODER_RIGHT_A, (uint32_t) PORT_ENCODER_RIGHT_B, false),
+		leftEncoder((uint32_t) PORT_ENCODER_LEFT_A,
+				(uint32_t) PORT_ENCODER_LEFT_B, true), rightEncoder(
+				(uint32_t) PORT_ENCODER_RIGHT_A,
+				(uint32_t) PORT_ENCODER_RIGHT_B, false),
 
 		//Initializes the gyroscope
 		gyro(PORT_GYRO),
 
 		//Initializes the pid controllers
-		leftTopController(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftTopTalon),
-		leftBottomController(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftBottomTalon),
-		rightTopController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightTopTalon),
-		rightBottomController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightBottomTalon),
+		leftTopController(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE,
+				&leftEncoder, &leftTopTalon), leftBottomController(
+		LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder,
+				&leftBottomTalon), rightTopController(RIGHT_PROPORTIONAL,
+		RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightTopTalon), rightBottomController(
+		RIGHT_PROPORTIONAL,
+		RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightBottomTalon),
 
-
-		leftTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTopTalon),
-		leftBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftBottomTalon),
-		rightTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTopTalon),
-		rightBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightBottomTalon)
-{
+		leftTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE,
+				&gyro, &leftTopTalon), leftBottomGyroController(
+		GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro,
+				&leftBottomTalon), rightTopGyroController(GYRO_PROPORTIONAL,
+		GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTopTalon), rightBottomGyroController(
+		GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro,
+				&rightBottomTalon) {
 	//Initializes the target and rotate speeds to zero
 	targetSpeed = 0;
 	rotateSpeed = 0;
-	
+
 	//Sets the encoder distance per pulses
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
 	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
-	
+
 	//Sets the input ranges for pid controllers
 	leftTopController.SetInputRange(-9999, 9999);
 	rightTopController.SetInputRange(-9999, 9999);
 	leftBottomController.SetInputRange(-9999, 9999);
 	rightBottomController.SetInputRange(-9999, 9999);
-	
+
 	//Sets the max period for stopped detection
 	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 	rightEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
-	
+
 	//Sets the inital robot state to idle
 	state = IDLE;
 }
@@ -55,9 +61,9 @@ void Drivetrain::init() {
 	//Resets encoders
 	leftEncoder.Reset();
 	rightEncoder.Reset();
-	
+
 	//Stops robot motion
-	stopTalons();
+	//stopTalons();
 }
 
 //Disables the drivetrain
@@ -68,52 +74,50 @@ void Drivetrain::disable() {
 
 //Updates the drivetrain
 void Drivetrain::update() {
-	std::cout << "Left Encoder: " + leftEncoder.Get() << std::endl;
-	std::cout << "Right Encoder: " + rightEncoder.Get() << std::endl;
-	std::cout << std::endl;
+	//std::cout << "Left Encoder: " + leftEncoder.Get() << std::endl;
+	//std::cout << "Right Encoder: " + rightEncoder.Get() << std::endl;
+//	std::cout << std::endl;
 
 	//State machine for various states in update
-	switch(state)
-	{
+	switch (state) {
 	//Updates for the idle state
 	case IDLE:
-	{
 		stopControl();
 
 		break;
-	}
-	//Updates for the driving distance state
+
+		//Updates for the driving distance state
 	case DRIVING_DIST:
-	{
 		//Tests if the drivetrain has drived the specified distance
-		if(leftEncoder.GetStopped() && rightEncoder.GetStopped()) {
+		if (leftEncoder.GetStopped() && rightEncoder.GetStopped()) {
 			state = IDLE;
 		}
 
 		break;
-	}
-	//Updates for the rotating angle state
+
+		//Updates for the rotating angle state
 	case ROTATING_ANGLE:
-	{
 		//IF change condition : disable and set state to idle
 
 		break;
-	}
-	//Updates for the teleop state
+
+		//Updates for the teleop state
 	case DRIVING_TELEOP:
-	{
 		//Determines the appropriate left and right speed
-		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
+		double leftSpeed = -std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 		double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
-		leftTopTalon.Set(leftSpeed);
-		leftBottomTalon.Set(leftSpeed);
-		rightTopTalon.Set(rightSpeed);
-		rightBottomTalon.Set(rightSpeed);
+		leftTopTalon.Set(std::pow(leftSpeed, 3));
+		leftBottomTalon.Set(std::pow(leftSpeed, 3));
+		rightTopTalon.Set(std::pow(rightSpeed, 3));
+		rightBottomTalon.Set(std::pow(rightSpeed, 3));
+
+//		std::cout << "Left Encoder: " + leftEncoder.Get() << std::endl;
+//		std::cout << "Right Encoder: " + rightEncoder.Get() << std::endl;
 
 		break;
-	}
+
 	}
 }
 

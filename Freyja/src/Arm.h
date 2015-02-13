@@ -32,6 +32,7 @@ public:
 	//Enum changers which work with the update State Machine
 	void setPistonState(PistonState state);
 	void setCompressorState(CompressorState state);
+	bool getCompressor();
 	//Inherited Methods from subsystem:
 	void init();
 	void update();

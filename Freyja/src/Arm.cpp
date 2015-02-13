@@ -3,7 +3,9 @@
 
 Arm::Arm() :
 //Compressor which initializes the compressor with no arguments, and gives the solenoids their ports
-	compressor(), solenoid((uint32_t) 0, (uint32_t) 1) {
+	compressor(),
+	solenoid((uint32_t) 0, (uint32_t) 1)
+{
 	compressor.Start();
 	setPistonState(IDLE);
 }
@@ -21,6 +23,9 @@ void Arm::setPistonState(PistonState state) {
 	this->pistonState = state;
 }
 
+bool Arm::getCompressor() {
+	return true;
+}
 void Arm::disable() {
 	//Turns everything off just in case
 	setCompressorState(OFF);
@@ -59,6 +64,7 @@ void Arm::update() {
 		setPistonState(IDLE);
 		break;
 	}
+
 	switch(compressorState) {
 	case ON:
 	//Starts the compressor from an off state.
@@ -70,7 +76,7 @@ void Arm::update() {
 		break;
 	default:
 	//In case stuff hits the fan
-		setCompressorState(OFF);
+		//setCompressorState(OFF);
 		break;
 	}
 }

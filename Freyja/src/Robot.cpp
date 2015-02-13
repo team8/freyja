@@ -1,20 +1,20 @@
 #include "Robot.h"
 
 Robot::Robot() :
-		drivetrain(), arm(), lifter() {
+		drivetrain(), arm()/*lifter()*/ {
 
 }
 
 void Robot::init() {
 	drivetrain.init();
 	arm.init();
-	lifter.init();
+	//lifter.init();
 }
 
 void Robot::update() {
 	drivetrain.update();
 	arm.update();
-	lifter.update();
+	//lifter.update();
 }
 
 void Robot::disable() {
@@ -45,6 +45,6 @@ void Robot::lift(double distance) {
 	//lifter.lift(distance);
 }
 void Robot::setLifterLevel(int level) {
-	lifter.setLevel(level);
+	//lifter.setLevel(level);
 }
 

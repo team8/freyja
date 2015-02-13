@@ -11,10 +11,9 @@ private:
 	Joystick turnJoystick;
 	Joystick operatorJoystick;
 	
-	Robot *robotPointer;
 public:
-	HumanController(Robot *robotPointer);
-	void update();
+	HumanController();
+	void update(Robot *robotPointer);
 };
 
 #endif
