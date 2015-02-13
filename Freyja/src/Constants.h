@@ -42,6 +42,6 @@
 
 #define LIFT_SPEED 0.5
 
-#define LIFT_SPEED 0.5
+#define TOTE_HEIGHT 12.1
 
 #endif /* CONSTANTS_H */

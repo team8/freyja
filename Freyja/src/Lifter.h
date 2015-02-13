@@ -23,12 +23,12 @@ public:
 		MOVING,
 		IDLE,
 		ZEROING
-	}state;
+	} state;
 
 	State getState();
 
 private:
-	VictorSP motor;
+	VictorSP victor;
 	Encoder liftEncoder;
 	DigitalInput digitalInput;
 	PIDController controller;

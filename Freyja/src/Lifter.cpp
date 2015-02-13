@@ -1,8 +1,8 @@
 #include "Lifter.h"
 
 Lifter::Lifter() :
-		motor((uint32_t) 0), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput(
-				(uint32_t) 0), controller(0.f, 0.f, 0.f, &liftEncoder, &motor) {
+victor((uint32_t) 0), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput(
+(uint32_t) 0), controller(0.f, 0.f, 0.f, &liftEncoder, &victor) {
 	state = IDLE;
 }
 
@@ -17,43 +17,42 @@ void Lifter::init() {
 }
 //updates lifter constantly
 void Lifter::update() {
-//executes commands based on the state of the lifter
+	//executes commands based on the state of the lifter
 	switch (state) {
-	case MOVING:
-	{
-		break;
-	}
-	case IDLE:
-	{
-		liftEncoder.Reset();
-		break;
-	}
-	case ZEROING:
-		/** checks to see if a sensor at the bottom of the lifter has been hit
-		 * if it has been hit, then reset the encoders
-		 *the purpose of this is to get rid of any error for pid.
-		 **/
-	{
-		if(checkSensorHit()) {
+		case MOVING:
+		{
+			break;
+		}
+		case IDLE:
+		{
+			disable();
+			break;
+		}
+		case ZEROING:
+			/** checks to see if a sensor at the bottom of the lifter has been hit
+			 * if it has been hit, then reset the encoders
+			 *the purpose of this is to get rid of any error for pid.
+			 **/
+		{
+			if (checkSensorHit()) {
 				setLevel(0);
 				liftEncoder.Reset();
+			}
+			break;
 		}
-		break;
-	}
 	}
 }
 
 //disables everything on lifter
 void Lifter::disable() {
-	motor.Disable();
-	liftEncoder.Reset();
+	victor.Set(0.0);
+	victor.Disable();
 	controller.Disable();
-
 }
 
 //this method moves the lifter.
 void Lifter::setLevel(double level) {
-	controller.SetSetpoint(level);
+	controller.SetSetpoint(level*TOTE_HEIGHT);
 	/*
 	 * Checks to see if the pid has reached its target.
 	 * if it has, it reverts to idle state
@@ -62,20 +61,19 @@ void Lifter::setLevel(double level) {
 	currentLevel = level;
 	if (controller.GetError() < 0.5 && controller.GetError() > -0.5) {
 		state = IDLE;
-	}
-	else {
+	} else {
 		state = MOVING;
 	}
 }
 //this function moves the lifter to its lowest point to remove any error.
-	void Lifter::zeroing() {
-		motor.Set(-.2);
-		state = ZEROING;
+void Lifter::zeroing() {
+	victor.Set(-.2);
+	state = ZEROING;
 
-	}
+}
 
 //void Lifter::setSpeed(double speed) {
-//	motor.Set(speed);
+//	victor.Set(speed);
 //}
 
 //returns a boolean based on if the sensor has been hit
