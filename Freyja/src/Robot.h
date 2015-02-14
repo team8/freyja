@@ -54,7 +54,11 @@ class Robot {
 
 		Drivetrain::State getDrivetrainState();
 		Lifter::State getLifterState();
-		Arm::State getArmState();
+
+		/**Wrapper method for zeroing the lifter level **/
+		void zeroLifter();
+		/**Wrapper method for getting the current level of the lifter**/
+		double getLevel();
 };
 
 #endif /* ROBOT_H */

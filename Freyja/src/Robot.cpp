@@ -63,7 +63,11 @@ Lifter::State Robot::getLifterState() {
 	return drivetrain.getState();
 }
 
-Arm::State Robot::getArmState() {
-	return drivetrain.getState();
+double Robot::getLevel() {
+	lifter.getLevel();
+}
+
+void Robot::zeroLifter() {
+	lifter.zeroing();
 }
 
