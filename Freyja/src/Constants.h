@@ -2,20 +2,20 @@
 #define CONSTANTS_H
 
 //ports for drive train talons
-#define PORT_DRIVE_VIC_LEFT_FRONT 2
-#define PORT_DRIVE_VIC_LEFT_BACK 3
-#define PORT_DRIVE_VIC_RIGHT_FRONT 0
-#define PORT_DRIVE_VIC_RIGHT_BACK 1
+#define PORT_DRIVE_VIC_LEFT_FRONT 0
+#define PORT_DRIVE_VIC_LEFT_BACK 1
+#define PORT_DRIVE_VIC_RIGHT_FRONT 2
+#define PORT_DRIVE_VIC_RIGHT_BACK 3
 
 //Joystick ports
 #define PORT_SPEED 1
 #define PORT_TURN 2
 #define PORT_OPERATOR 0
 
-#define PORT_ENCODER_RIGHT_A 2
-#define PORT_ENCODER_RIGHT_B 3
-#define PORT_ENCODER_LEFT_A 0
-#define PORT_ENCODER_LEFT_B 1
+#define PORT_ENCODER_RIGHT_A 3
+#define PORT_ENCODER_RIGHT_B 2
+#define PORT_ENCODER_LEFT_A 1
+#define PORT_ENCODER_LEFT_B 0
 
 #define PORT_AUTO_DIAL 1
 
@@ -42,6 +42,6 @@
 
 #define LIFT_SPEED 0.5
 
-#define LIFT_SPEED 0.5
+#define TOTE_HEIGHT 12.1
 
 #endif /* CONSTANTS_H */

@@ -16,7 +16,7 @@ class Robot {
 		//The drivetrain, arm, and lifter subsystems
 		Drivetrain drivetrain;
 		Arm arm;
-		//Lifter lifter;
+		Lifter lifter;
 
 	public:
 		/** Robot constructor, initializes robot and subsystems */
@@ -48,7 +48,14 @@ class Robot {
 		void lift(double distance);
 
 		/** Wrapper method for setting the lifter level */
-		void setLifterLevel(int level);
+		void setLifterLevel(double level);
+
+		/**Wrapper method for zeroing the lifter level **/
+		void zeroLifter();
+		/**Wrapper method for getting the current level of the lifter**/
+		double getLevel();
+
+
 };
 
 #endif /* ROBOT_H */

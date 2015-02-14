@@ -8,25 +8,27 @@ class Lifter: public Subsys {
 public:
 	Lifter();
 	virtual ~Lifter();
-	void init();
-	void update();
-	void disable();
+	void init() override;
+	void update() override;
+	void disable() override;
 	bool checkSensorHit();
 	double getDistance(); //uses encoder
 	void lift(double distance);
 	void setLevel(double level);
+	void zeroing();
+	double getLevel();
+	double currentLevel;
 
-	typedef enum State{
+	enum State{
 		MOVING,
 		IDLE,
 		ZEROING
-	}State;
-	State state;
+	} state;
 
 	State getState();
 
 private:
-	Talon motor;
+	VictorSP victor;
 	Encoder liftEncoder;
 	DigitalInput digitalInput;
 	PIDController controller;
