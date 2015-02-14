@@ -16,6 +16,7 @@ AutonomousExecutor::AutonomousExecutor(Robot *robotPointer, std::list<AutoComman
 }
 
 void AutonomousExecutor::executeCommand(AutoCommand command) {
+	std::cout << "AutonomousExecutor::executeCommand(" << command << ")" << std::endl;
 	switch(command) {
 	case CMD_STOP: {
 		break;
