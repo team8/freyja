@@ -1,6 +1,6 @@
 /*
- * Version 8
- * 2/6/15
+ * Version 9
+ * 2/13/15
  * Jonathan Zwiebel
  */
 
@@ -15,7 +15,7 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 {
 	path = (Path) dial.GetValue();
 	command = CMD_STOP;
-	executor = new AutonomousExecutor(*robotPointer, & commandStack);
+	executor = new AutonomousExecutor(*robotPointer, & commandSet);
 	executing = false;
 }
 
@@ -45,16 +45,16 @@ void AutonomousController::init() {
 }
 
 // called periodically throughout autonomous, this pops the top off the
-// commandStack and sends it to the executor
+// commandSet and sends it to the executor
 // the reason for using this instead of just method calls is so that autonomous
 // is controlled periodically and will only function when the update method is
 // called
 void AutonomousController::update() {
 	if(!executing) {
-		command = commandStack.top(); //fetch
+		command = commandSet.back(); //fetch
                 executing = true;
 		executor->executeCommand(command); // execute
-		commandStack.pop(); // increment
+		commandSet.pop_back(); // increment
 	}
 }
 
@@ -65,41 +65,41 @@ void AutonomousController::stop() {
 }
 
 void AutonomousController::drive() {
-	commandStack.push(CMD_STOP);
-	commandStack.push(CMD_FORWARD_DRIVE);
+	commandSet.push_back(CMD_STOP);
+	commandSet.push_back(CMD_AUTO_DRIVE);
 }
 
 void AutonomousController::toteScore() {
-	commandStack.push(CMD_STOP);
-	commandStack.push(CMD_TOTE_SCORE);
+	commandSet.push_back(CMD_STOP);
+	commandSet.push_back(CMD_TOTE_SCORE);
 }
 
 void AutonomousController::toteScoreDoubleLeft() {
-	commandStack.push(CMD_STOP);
-	commandStack.push(CMD_TOTE_SCORE);
-	commandStack.push(CMD_TOTE_TO_TOTE_LEFT);
-	commandStack.push(CMD_LIFT);
+	commandSet.push_back(CMD_STOP);
+	commandSet.push_back(CMD_TOTE_SCORE);
+	commandSet.push_back(CMD_TOTE_TO_TOTE_LEFT);
+	commandSet.push_back(CMD_LIFT);
 }
 
 void AutonomousController::toteScoreDoubleRight() {
-	commandStack.push(CMD_STOP);
-	commandStack.push(CMD_TOTE_SCORE);
-	commandStack.push(CMD_TOTE_TO_TOTE_RIGHT);
-	commandStack.push(CMD_LIFT);
+	commandSet.push_back(CMD_STOP);
+	commandSet.push_back(CMD_TOTE_SCORE);
+	commandSet.push_back(CMD_TOTE_TO_TOTE_RIGHT);
+	commandSet.push_back(CMD_LIFT);
 }
 
 void AutonomousController::canScore() {
-	commandStack.push(CMD_STOP);
-	commandStack.push(CMD_CAN_SCORE);
+	commandSet.push_back(CMD_STOP);
+	commandSet.push_back(CMD_CAN_SCORE);
 }
 
 void AutonomousController::accumulateGray() {
-	commandStack.push(CMD_STOP);
-	commandStack.push(CMD_DRIVE_LANDFILL_AUTO);
-	commandStack.push(CMD_HALF_ROTATE);
-	commandStack.push(CMD_GRAY_FROM_GRAY);
-	commandStack.push(CMD_GRAY_FROM_GRAY);
-	commandStack.push(CMD_LANDFILL_DRIVE);
+	commandSet.push_back(CMD_STOP);
+	commandSet.push_back(CMD_DRIVE_LANDFILL_AUTO);
+	commandSet.push_back(CMD_HALF_ROTATE);
+	commandSet.push_back(CMD_GRAY_TO_GRAY);
+	commandSet.push_back(CMD_GRAY_TO_GRAY);
+	commandSet.push_back(CMD_LANDFILL_DRIVE);
 }
 
 //Empty destructor

@@ -1,6 +1,6 @@
 /*
- * Version 8
- * 2/6/15
+ * Version 9
+ * 2/13/15
  * Jonathan Zwiebel
  */
 
@@ -15,19 +15,19 @@
 #define LIFT_DISTANCE 0 // z: lift distance
 
 #include <WPILib.h>
-#include <stack>
+#include <list>
 #include "AutonomousController.h"
 #include "Robot.h"
 #include "Constants.h"
 
 class AutonomousExecutor {
 public:
-	AutonomousExecutor(Robot *robotPointer, std::stack<AutonomousController::AutoCommand> *commandStack);
+	AutonomousExecutor(Robot *robotPointer, std::list<AutonomousController::AutoCommand> *commandSet);
 	void executeCommand(AutonomousController::AutoCommand command);
 	virtual ~AutonomousExecutor();
 private:
 	Robot* robot;
-	std::stack<AutonomousController::AutoCommand>* commandStack;
+	std::list<AutonomousController::AutoCommand>* commandSet;
 	void drive(int dist);
 	void lift();
 	void drop();

@@ -1,6 +1,6 @@
 /*
- * Version 8
- * 2/6/15
+ * Version 9
+ * 2/13/15
  * Jonathan Zwiebel
  */
 
@@ -9,7 +9,7 @@
 
 
 #include <WPILib.h>
-#include <stack>
+#include <list>
 #include "Robot.h"
 #include "Constants.h"
 #include "AutonomousExecutor.h"
@@ -36,7 +36,7 @@ class AutonomousController {
 
 	private:
                 // the ordered list of commands, will be changed to a List soon
-		std::stack<AutoCommand> commandStack;
+		std::list<AutoCommand> commandSet;
 
                 // tracks whether the executor is actively functioning
 		bool executing;

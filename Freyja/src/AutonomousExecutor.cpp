@@ -1,18 +1,18 @@
 /*
- * Version 8
- * 2/6/15
+ * Version 9
+ * 2/13/15
  * Jonathan Zwiebel
  */
 #include "AutonomousExecutor.h"
 #include <WPILib.h>
-#include <stack>
+#include <list>
 #include "AutonomousController.h"
 #include "Robot.h"
 #include "Constants.h"
 
-AutonomousExecutor::AutonomousExecutor(Robot *robotPointer, std::stack<AutonomousController::AutoCommand> *commandStack) {
+AutonomousExecutor::AutonomousExecutor(Robot *robotPointer, std::list<AutonomousController::AutoCommand> *commandSet) {
 	this->robot = robotPointer;
-	this->commandStack = commandStack;
+	this->commandSet = commandSet;
 }
 
 void AutonomousExecutor::executeCommand(AutonomousController::AutoCommand command) {
@@ -76,9 +76,9 @@ void AutonomousExecutor::executeCommand(AutonomousController::AutoCommand comman
 }
 
 void AutonomousExecutor::toteScore() {
-	commandStack->push(AutonomousController::CMD_DROP);
-	commandStack->push(AutonomousController::CMD_AUTO_DRIVE);
-	commandStack->push(AutonomousController::CMD_LIFT);
+	commandSet->push_back(AutonomousController::CMD_DROP);
+	commandSet->push_back(AutonomousController::CMD_AUTO_DRIVE);
+	commandSet->push_back(AutonomousController::CMD_LIFT);
 }
 
 void AutonomousExecutor::accumulateFromAuto() {
@@ -90,9 +90,9 @@ void AutonomousExecutor::toteToTote(bool isLeft) {
 }
 
 void AutonomousExecutor::canScore() {
-	commandStack->push(AutonomousController::CMD_DROP);
-	commandStack->push(AutonomousController::CMD_AUTO_DRIVE);
-	commandStack->push(AutonomousController::CMD_CAN_LIFT);
+	commandSet->push_back(AutonomousController::CMD_DROP);
+	commandSet->push_back(AutonomousController::CMD_AUTO_DRIVE);
+	commandSet->push_back(AutonomousController::CMD_CAN_LIFT);
 }
 
 void AutonomousExecutor::grayToGray() {
