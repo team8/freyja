@@ -1,74 +1,74 @@
 /*
- * Version 9
- * 2/13/15
+ * Version 10
+ * 2/14/15
  * Jonathan Zwiebel
  */
-#include "AutonomousExecutor.h"
+
 #include <WPILib.h>
+#include "AutonomousExecutor.h"
 #include <list>
-#include "AutonomousController.h"
 #include "Robot.h"
 #include "Constants.h"
 
-AutonomousExecutor::AutonomousExecutor(Robot *robotPointer, std::list<AutonomousController::AutoCommand> *commandSet) {
+AutonomousExecutor::AutonomousExecutor(Robot *robotPointer, std::list<AutoCommand> *commandSet) {
 	this->robot = robotPointer;
 	this->commandSet = commandSet;
 }
 
-void AutonomousExecutor::executeCommand(AutonomousController::AutoCommand command) {
+void AutonomousExecutor::executeCommand(AutoCommand command) {
 	switch(command) {
-	case AutonomousController::CMD_STOP: {
+	case CMD_STOP: {
 		break;
 	}
-	case AutonomousController::CMD_AUTO_DRIVE: {
+	case CMD_AUTO_DRIVE: {
 		drive(YELLOW_AUTO_DISTANCE);
 		break;
 	}
-	case AutonomousController::CMD_LIFT: {
+	case ::CMD_LIFT: {
 		lift();
 		break;
 	}
-	case AutonomousController::CMD_DROP: {
+	case ::CMD_DROP: {
 		drop();
 		break;
 	}
-	case AutonomousController::CMD_TOTE_SCORE: {
+	case ::CMD_TOTE_SCORE: {
 		toteScore();
 		break;
 	}
-	case AutonomousController::CMD_ACCUMULATE_FROM_AUTO: {
+	case ::CMD_ACCUMULATE_FROM_AUTO: {
 		accumulateFromAuto();
 		break;
 	}
-	case AutonomousController::CMD_TOTE_TO_TOTE_LEFT: {
+	case ::CMD_TOTE_TO_TOTE_LEFT: {
 		toteToTote(true);
 		break;
 	}
-	case AutonomousController::CMD_TOTE_TO_TOTE_RIGHT: {
+	case ::CMD_TOTE_TO_TOTE_RIGHT: {
 		toteToTote(false);
 		break;
 	}
-	case AutonomousController::CMD_CAN_SCORE: {
+	case ::CMD_CAN_SCORE: {
 		canScore();
 		break;
 	}
-	case AutonomousController::CMD_DRIVE_LANDFILL_AUTO: {
+	case ::CMD_DRIVE_LANDFILL_AUTO: {
 		drive(AUTO_GRAY_DISTANCE);
 		break;
 	}
-	case AutonomousController::CMD_GRAY_TO_GRAY: {
+	case ::CMD_GRAY_TO_GRAY: {
 		grayToGray();
 		break;
 	}
-	case AutonomousController::CMD_HALF_ROTATE: {
+	case ::CMD_HALF_ROTATE: {
 		rotate(180);
 		break;
 	}
-	case AutonomousController::CMD_LANDFILL_DRIVE: {
+	case ::CMD_LANDFILL_DRIVE: {
 		drive(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
 		break;
 	}
-	case AutonomousController::CMD_CAN_LIFT: {
+	case ::CMD_CAN_LIFT: {
 		canLift();
 		break;
 	}
@@ -76,9 +76,11 @@ void AutonomousExecutor::executeCommand(AutonomousController::AutoCommand comman
 }
 
 void AutonomousExecutor::toteScore() {
-	commandSet->push_back(AutonomousController::CMD_DROP);
-	commandSet->push_back(AutonomousController::CMD_AUTO_DRIVE);
-	commandSet->push_back(AutonomousController::CMD_LIFT);
+	std::list<AutoCommand> toteScoreSet;
+	toteScoreSet.push_back(CMD_LIFT);
+	toteScoreSet.push_back(CMD_AUTO_DRIVE);
+	toteScoreSet.push_back(CMD_DROP);
+	commandSet->splice(0, toteScoreSet);
 }
 
 void AutonomousExecutor::accumulateFromAuto() {
@@ -90,9 +92,11 @@ void AutonomousExecutor::toteToTote(bool isLeft) {
 }
 
 void AutonomousExecutor::canScore() {
-	commandSet->push_back(AutonomousController::CMD_DROP);
-	commandSet->push_back(AutonomousController::CMD_AUTO_DRIVE);
-	commandSet->push_back(AutonomousController::CMD_CAN_LIFT);
+	std::list<AutoCommand> canScoreSet;
+	canScoreSet.push_back(CMD_CAN_LIFT);
+	canScoreSet.push_back(CMD_AUTO_DRIVE);
+	canScoreSet.push_back(CMD_DROP);
+	commandSet->splice(0, canScoreSet);
 }
 
 void AutonomousExecutor::grayToGray() {

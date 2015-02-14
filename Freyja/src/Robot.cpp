@@ -60,7 +60,7 @@ Drivetrain::State Robot::getDrivetrainState() {
 }
 
 Lifter::State Robot::getLifterState() {
-	return drivetrain.getState();
+	//return drivetrain.getState();
 }
 
 double Robot::getLevel() {

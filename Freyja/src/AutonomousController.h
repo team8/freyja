@@ -1,6 +1,6 @@
 /*
- * Version 9
- * 2/13/15
+ * Version 10
+ * 2/14/15
  * Jonathan Zwiebel
  */
 
@@ -20,20 +20,6 @@ class AutonomousController {
 		AutonomousController(Robot *robotPointer);
 		virtual ~AutonomousController();
 
-		// The separate paths that can be run during autonomous, delegated by dial value, will remain constant
-		// for entire auto period
-		enum Path {
-			STOP, DRIVE, TOTE_SCORE, TOTE_SCORE_DOUBLE_LEFT, TOTE_SCORE_DOUBLE_RIGHT,
-			CAN_SCORE,  ACCUMULATE_GRAY
-		} path;
-
-		// The current command that is being executed on the robot, this will change throughout auto
-		enum AutoCommand {
-			CMD_STOP, CMD_AUTO_DRIVE, CMD_LIFT, CMD_DROP, CMD_TOTE_SCORE, CMD_ACCUMULATE_FROM_AUTO, CMD_TOTE_TO_TOTE_LEFT,
-			CMD_TOTE_TO_TOTE_RIGHT, CMD_CAN_SCORE, CMD_DRIVE_LANDFILL_AUTO, CMD_GRAY_TO_GRAY, CMD_HALF_ROTATE, CMD_LANDFILL_DRIVE,
-			CMD_CAN_LIFT
-		} command;
-
 	private:
                 // the ordered list of commands, will be changed to a List soon
 		std::list<AutoCommand> commandSet;
@@ -42,7 +28,7 @@ class AutonomousController {
 		bool executing;
 
 		AutonomousExecutor* executor;
-		AnalogInput dial;
+		//AnalogInput dial;
 
 		void update();
 		void init();
@@ -59,6 +45,7 @@ class AutonomousController {
 		void canScore();
 		void canScoreAccumulate();
 		void accumulateGray();
+		void test();
 };
 
 #endif /* AUTONOMOUS_CONTROLLER_H */
