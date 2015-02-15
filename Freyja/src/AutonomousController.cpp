@@ -9,17 +9,17 @@
 #include "AutonomousController.h"
 using namespace std;
 
-// constructrs the anolog dial and sets the path to the one being used
+// constructs the analog dial and sets the path to the one being used
 // then sets the original command to stop and creates the executor
 
 // DIAL CURRENTLY COMMENTED OUT
-AutonomousController::AutonomousController(Robot *robotPointer)
+AutonomousController::AutonomousController(Robot *robotPointer) :
+		executor(robotPointer, &commandSet)
 	//dial((uint32_t) PORT_AUTO_DIAL)
 {
 	//path = (Path) dial.GetValue();
 	path = TEST;
 	command = CMD_STOP;
-	executor = new AutonomousExecutor(*robotPointer, &commandSet);
 	executing = false;
 }
 
@@ -63,7 +63,7 @@ void AutonomousController::update() {
 	if(!executing) {
 		command = commandSet.front(); //fetch
         executing = true;
-		executor->executeCommand(command); // execute
+		executor.executeCommand(command); // execute
 		commandSet.pop_back(); // increment
 	}
 }

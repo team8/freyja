@@ -17,6 +17,7 @@
 
 #include <WPILib.h>
 #include <list>
+#include <iterator>
 #include "Robot.h"
 #include "Constants.h"
 
@@ -28,6 +29,7 @@ public:
 private:
 	Robot* robot;
 	std::list<AutoCommand>* commandSet;
+	std::list<AutoCommand>::iterator comIt;
 	void drive(int dist);
 	void lift();
 	void drop();

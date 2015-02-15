@@ -9,6 +9,7 @@
 #include <list>
 #include "Robot.h"
 #include "Constants.h"
+#include <iterator>
 
 AutonomousExecutor::AutonomousExecutor(Robot *robotPointer, std::list<AutoCommand> *commandSet) {
 	this->robot = robotPointer;
@@ -81,7 +82,11 @@ void AutonomousExecutor::toteScore() {
 	toteScoreSet.push_back(CMD_LIFT);
 	toteScoreSet.push_back(CMD_AUTO_DRIVE);
 	toteScoreSet.push_back(CMD_DROP);
-	commandSet->splice(0, toteScoreSet);
+
+	comIt = commandSet->begin();
+	advance(comIt, 1);
+	commandSet->splice(comIt, toteScoreSet);
+	commandSet->pop_front();
 }
 
 void AutonomousExecutor::accumulateFromAuto() {
@@ -97,7 +102,11 @@ void AutonomousExecutor::canScore() {
 	canScoreSet.push_back(CMD_CAN_LIFT);
 	canScoreSet.push_back(CMD_AUTO_DRIVE);
 	canScoreSet.push_back(CMD_DROP);
-	commandSet->splice(0, canScoreSet);
+
+	comIt = commandSet->begin();
+	advance(comIt, 1);
+	commandSet->splice(comIt, canScoreSet);
+	commandSet->pop_front();
 }
 
 void AutonomousExecutor::grayToGray() {

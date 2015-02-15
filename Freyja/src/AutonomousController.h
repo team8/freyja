@@ -27,7 +27,7 @@ class AutonomousController {
                 // tracks whether the executor is actively functioning
 		bool executing;
 
-		AutonomousExecutor* executor;
+		AutonomousExecutor executor;
 		//AnalogInput dial;
 
 		void update();
