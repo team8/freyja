@@ -7,23 +7,21 @@
 
 /**
  * The class representing the human controller
- * This class is responsible for getting human input and sending appropriate command to the robot
+ * This class takes human input through joysticks
+ * and sends appropriate commands to the robot
  */
 class HumanController {
 private:
-	/** The joystick for forward-backward motion */
+	//The joystick for forward-backward motion
 	Joystick moveJoystick;
-	/** The joystick for rotation motion */
+	//The joystick for rotation
 	Joystick turnJoystick;
-	/** The joystick for the superstructure */
+	//The joystick for non-drivetrain functions
 	Joystick operatorJoystick;
-	
-	/** The robot pointer through which commands are sent */
+	//The robot pointer through which commands are sent
 	Robot *robotPointer;
 public:
-	/** Controller constructor, initializes fields */
 	HumanController(Robot *robotPointer);
-	/** Updates this human controller */
 	void update();
 };
 

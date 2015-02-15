@@ -6,69 +6,67 @@ Robot::Robot() :
 	drivetrain(), arm(), lifter() {
 }
 
-/** Initializes instance and subsystems */
+/** Initializes subsystems */
 void Robot::init() {
-	//Calls initialization on subsystems
 	drivetrain.init();
 	arm.init();
-	//lifter.init();
+	lifter.init();
 }
 
-/** Updates instance and subsystems */
+/** Updates all subsystems */
 void Robot::update() {
-	//Calls update on subsystems
 	drivetrain.update();
 	arm.update();
-	//lifter.update();
+	lifter.update();
 }
 
-/** Disables instance and subsystems */
+/** Disables all subsystems */
 void Robot::disable() {
-	//Calls disable on subsystems
 	drivetrain.disable();
 	arm.disable();
 	lifter.disable();
 }
 
-/** Wrapper method for drivetrain teleoperated movement */
+/** Moves the robot according to a targetSpeed to move at, and
+ * a rotateSpeed to turn by */
 void Robot::move(double targetSpeed, double rotateSpeed) {
 	drivetrain.setSpeed(targetSpeed, rotateSpeed);
 }
 
-/** Wrapper method for changing piston state */
-void Robot::changePistonState(Arm::PistonState state) {
-	arm.setPistonState(state);
-}
-
-/** Wrapper method for changing the compressor state */
-void Robot::changeCompressorState(Arm::CompressorState state) {
-	arm.setCompressorState(state);
-}
-
-/** Wrapper method for driving a specified distance */
+/**  Drives the robot a specified distance */
 void Robot::driveDistance(double distance) {
 	drivetrain.driveDistance(distance);
 }
 
-/** Wrapper method for rotating a specified angle */
+/** Rotates the robot by a specific angle */
 void Robot::rotateAngle(double angle) {
 	drivetrain.rotateAngle(angle);
 }
-
-/** Wrapper method for lifting a specified distance */
-void Robot::lift(double distance) {
-	//lifter.lift(distance);
+/** Changes the piston state to a new PistonState */
+void Robot::changePistonState(Arm::PistonState state) {
+	arm.setPistonState(state);
 }
 
-/** Wrapper method for setting the lifter level */
+/** Changes the compressor state to a new CompressorState */
+void Robot::changeCompressorState(Arm::CompressorState state) {
+	arm.setCompressorState(state);
+}
+
+/** Lifts a specified distance */
+void Robot::lift(double distance) {
+	lifter.lift(distance);
+}
+
+/** Sets the lifter level */
 void Robot::setLifterLevel(double level) {
 	lifter.setLevel(level);
 }
-
+/** Returns the level of the lifter */
 double Robot::getLevel() {
 	return lifter.getLevel();
 }
 
+/** Zeroes the lifter */
 void Robot::zeroLifter() {
 	lifter.zeroing();
 }

@@ -1,9 +1,3 @@
-/**
- * Represents the robot
- * Contains three subsystems, arm, drivetrain, and lifter
- * Initializes, disables, and updates these subsystems
- * Has wrapper methods that delegate tasks to subsystems
- */
 #ifndef ROBOT_H
 #define ROBOT_H
 
@@ -12,55 +6,37 @@
 #include "Lifter.h"
 
 /**
- * The class representing the physical robot and subsystems, not inclusive of controllers
+ * Represents the physical robot
+ * Contains three subsystems, arm, drivetrain, and lifter
+ * Runs these subsystems by initializing, updating, and disabling them as needed
+ * Has wrapper methods and commands that delegate tasks to subsystems
  */
 class Robot {
 	private:
-		/** The drivetrain subsystem **/
 		Drivetrain drivetrain;
-		/** The arm subsystem **/
 		Arm arm;
-		/** The lifter subsystem **/
 		Lifter lifter;
 
 	public:
-		/** Robot constructor, initializes robot and subsystems */
 		Robot();
-
-		/** Initializes instance and subsystems */
 		void init();
-		/** Updates instance and subsystems */
 		void update();
-		/** Disables instance and subsystems */
 		void disable();
 
-		/** Wrapper method for drivetrain teleoperated movement */
+		//Drivetrain commands
 		void move(double targetSpeed, double rotateSpeed);
-
-		/** Wrapper method for changing piston state */
-		void changePistonState(Arm::PistonState state);
-
-		/** Wrapper method for changing the compressor state */
-		void changeCompressorState(Arm::CompressorState state);
-
-		/** Wrapper method for driving a specified distance */
 		void driveDistance(double distance);
-
-		/** Wrapper method for rotating a specified angle */
 		void rotateAngle(double angle);
 
-		/** Wrapper method for lifting a specified distance */
+		//Arm commands
+		void changePistonState(Arm::PistonState state);
+		void changeCompressorState(Arm::CompressorState state);
+
+		//Lifter commands
 		void lift(double distance);
-
-		/** Wrapper method for setting the lifter level */
 		void setLifterLevel(double level);
-
-		/**Wrapper method for zeroing the lifter level **/
 		void zeroLifter();
-		/**Wrapper method for getting the current level of the lifter**/
 		double getLevel();
-
-
 };
 
 #endif /* ROBOT_H */

@@ -12,9 +12,9 @@ class Freyja: public IterativeRobot
 {
 private:
 	Robot robot;
-	/** Controls the robot during teleop **/
+	//Controls the robot during teleop
 	HumanController humanController;
-	/** Controls the robot during autonomous **/
+	//Controls the robot during autonomous
 	AutonomousController autoController;
 public:
 	Freyja();
