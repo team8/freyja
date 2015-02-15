@@ -4,66 +4,54 @@
 #include "Robot.h"
 
 /**
- * The class describing the robot and its controllers
- * Implements WPI class of Iterative Robot, and appropriate functions
+ * Interprets the state of the robot and relays the commands
+ * to the robot controllers
+ * Implements all the WPI Iterative Robot methods
  */
-class Freyja: public IterativeRobot {
+class Freyja: public IterativeRobot
+{
 private:
-	/** The field representing the robot **/
 	Robot robot;
-	/** The field representing the human controller **/
+	/** Controls the robot during teleop **/
 	HumanController humanController;
-	/** The field representing the autonomous controller **/
+	/** Controls the robot during autonomous **/
 	AutonomousController autoController;
 public:
-	/** The Freyja class constructor */
 	Freyja();
-
-	/** Robot initialization, implemented from iterative robot */
 	void RobotInit();
-	/** Disabled period initialization, implemented from iterative robot */
 	void DisabledInit();
-	/** Disabled period update, implemented from iterative robot */
 	void DisabledPeriodic();
-	/** Teleop period initialization, implemented from iterative robot */
 	void TeleopInit();
-	/** Teleop period update, implemented from iterative robot */
 	void TeleopPeriodic();
 };
 
-/** The Freyja class constructor */
 Freyja::Freyja() :
-		//Constructor calls for robot, and controllers
+		//Calls the constructors for the robot and controllers
 		robot(), humanController(&robot), autoController(&robot) {
 }
 
-/** Robot initialization, implemented from iterative robot */
+/** Called when the robot starts */
 void Freyja::RobotInit() {
-	//Initializes robot
 	robot.init();
 }
 
-/** Disabled period update, implemented from iterative robot */
+/** Called as the robot is disabled */
 void Freyja::DisabledInit() {
-	//Disables robot
 	robot.disable();
 }
 
-/** Disabled period update, implemented from iterative robot */
+/** Called repeatedly while the robot is disabled */
 void Freyja::DisabledPeriodic() {
-	//Disables and updates robot
 	robot.disable();
 	robot.update();
 }
-/** Teleop period initialization, implemented from iterative robot */
+/** Prepares the robot for teleop */
 void Freyja::TeleopInit() {
-	//Initializes robot
 	robot.init();
 }
 
-/** Teleop period update, implemented from iterative robot */
+/** Called repeatedly during teleop periodic */
 void Freyja::TeleopPeriodic() {
-	//Updates human controller and robot
 	humanController.update();
 	robot.update();
 }
