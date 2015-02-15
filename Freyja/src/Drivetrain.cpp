@@ -42,8 +42,8 @@ Drivetrain::Drivetrain() :
 	rightBottomController.SetInputRange(-999, 999);
 
 	//Sets the max period for stopped detection
-//	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
-//	rightEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
+	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
+	rightEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 
 	//Sets the inital robot state to idle
 	state = IDLE;
@@ -80,9 +80,10 @@ void Drivetrain::update() {
 		//Updates for the driving distance state
 	case DRIVING_DIST:
 		//Tests if the drivetrain has drived the specified distance
-//		if (leftEncoder.GetStopped() && rightEncoder.GetStopped()) {
-//			state = IDLE;
-//		}
+		if (leftEncoder.GetStopped() && rightEncoder.GetStopped()) {
+			std::cout << "Drive Completed" << std::endl;
+			state = IDLE;
+		}
 
 		std::cout << "Left Error: " << leftTopController.GetError() << std::endl;
 		std::cout << "Left Error: " << leftBottomController.GetError() << std::endl;
