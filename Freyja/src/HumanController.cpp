@@ -14,10 +14,10 @@ HumanController::HumanController() :
 void HumanController::update(Robot *robotPointer) {
 	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
 
-	if (operatorJoystick.GetRawButton(2)) {
+	if (operatorJoystick.GetRawButton(1)) {
 		robotPointer->changePistonState(Arm::PistonState::EXTENDING);
 	}
-	if (operatorJoystick.GetRawButton(1)) {
+	if (operatorJoystick.GetRawButton(2)) {
 		robotPointer->changePistonState(Arm::PistonState::RETRACTING);
 	}
 	if(operatorJoystick.GetRawButton(6)) {

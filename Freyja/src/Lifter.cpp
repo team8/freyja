@@ -2,7 +2,7 @@
 
 Lifter::Lifter() :
 victor((uint32_t) 0), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput(
-(uint32_t) 0), controller(0.f, 0.f, 0.f, &liftEncoder, &victor) {
+(uint32_t) 9), controller(0.f, 0.f, 0.f, &liftEncoder, &victor) {
 	state = IDLE;
 }
 
@@ -17,6 +17,8 @@ void Lifter::init() {
 }
 //updates lifter constantly
 void Lifter::update() {
+	std::cout << "Hall Effect Value: " << digitalInput.Get() << std::endl;
+
 	//executes commands based on the state of the lifter
 	switch (state) {
 		case MOVING:

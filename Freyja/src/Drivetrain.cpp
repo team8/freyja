@@ -36,14 +36,14 @@ Drivetrain::Drivetrain() :
 	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
 
 	//Sets the input ranges for pid controllers
-	leftTopController.SetInputRange(-9999, 9999);
-	rightTopController.SetInputRange(-9999, 9999);
-	leftBottomController.SetInputRange(-9999, 9999);
-	rightBottomController.SetInputRange(-9999, 9999);
+	leftTopController.SetInputRange(-999, 999);
+	rightTopController.SetInputRange(-999, 999);
+	leftBottomController.SetInputRange(-999, 999);
+	rightBottomController.SetInputRange(-999, 999);
 
 	//Sets the max period for stopped detection
-	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
-	rightEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
+//	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
+//	rightEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 
 	//Sets the inital robot state to idle
 	state = IDLE;
@@ -56,7 +56,9 @@ void Drivetrain::init() {
 	rightEncoder.Reset();
 
 	//Stops robot motion
-	//stopTalons();
+	stopTalons();
+
+	driveDistance(100);
 }
 
 //Disables the drivetrain
@@ -67,9 +69,6 @@ void Drivetrain::disable() {
 
 //Updates the drivetrain
 void Drivetrain::update() {
-	std::cout << "Left Encoder: " + leftEncoder.Get() << std::endl;
-	std::cout << "Right Encoder: " + rightEncoder.Get() << std::endl;
-
 	//State machine for various states in update
 	switch (state) {
 	//Updates for the idle state
@@ -81,9 +80,14 @@ void Drivetrain::update() {
 		//Updates for the driving distance state
 	case DRIVING_DIST:
 		//Tests if the drivetrain has drived the specified distance
-		if (leftEncoder.GetStopped() && rightEncoder.GetStopped()) {
-			state = IDLE;
-		}
+//		if (leftEncoder.GetStopped() && rightEncoder.GetStopped()) {
+//			state = IDLE;
+//		}
+
+		std::cout << "Left Error: " << leftTopController.GetError() << std::endl;
+		std::cout << "Left Error: " << leftBottomController.GetError() << std::endl;
+		std::cout << "Right Error: " << rightTopController.GetError() << std::endl;
+		std::cout << "Right Error: " << rightBottomController.GetError() << std::endl;
 
 		break;
 
@@ -96,8 +100,8 @@ void Drivetrain::update() {
 		//Updates for the teleop state
 	case DRIVING_TELEOP:
 		//Determines the appropriate left and right speed
-		double leftSpeed = -std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
-		double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
+		double leftSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
+		double rightSpeed = -std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(std::pow(leftSpeed, 3));
@@ -117,6 +121,8 @@ void Drivetrain::stopControl() {
 
 	//Sets teleop speeds to idle
 	setSpeed(0, 0);
+
+	state = State::IDLE;
 
 	//Disables pid controllers
 	leftTopController.Disable();
