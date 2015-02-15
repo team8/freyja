@@ -31,8 +31,6 @@ public:
 	void TeleopPeriodic();
 };
 
-using namespace std;
-
 /** The Freyja class constructor */
 Freyja::Freyja() :
 		//Constructor calls for robot, and controllers
