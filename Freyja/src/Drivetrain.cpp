@@ -107,6 +107,20 @@ void Drivetrain::update() {
 
 		break;
 
+	case PRECISION_TRIGGER:
+		//Determines the appropriate left and right speed
+		double leftSpeed = -std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
+		double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
+
+		//Sets talons to left and right speeds
+		leftTopTalon.Set(leftSpeed*.1);
+		leftBottomTalon.Set(leftSpeed*.1);
+		rightTopTalon.Set(rightSpeed*.1);
+		rightBottomTalon.Set(rightSpeed*.1);
+
+		break;
+
+
 	}
 }
 
@@ -200,6 +214,11 @@ void Drivetrain::driveDistance(double distance) {
 	rightBottomController.Enable();
 }
 
+void Drivetrain:: setStateTrigger(){
+
+	state = PRECISION_TRIGGER;;
+
+}
 //Gets the state of this drivetrain
 Drivetrain::State Drivetrain::getState() {
 	return state;

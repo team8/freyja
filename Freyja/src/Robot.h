@@ -44,6 +44,9 @@ class Robot {
 		/** Wrapper method for rotating a specified angle */
 		void rotateAngle(double angle);
 
+		/** Wrapper method for changing the Drivetrain state to PRECISION_TRIGGER*/
+		void changeDrivetrainStateToPRECISION_TRIGGER();
+
 		/** Wrapper method for lifting a specified distance */
 		void lift(double distance);
 

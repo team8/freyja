@@ -41,6 +41,10 @@ void Robot::rotateAngle(double angle) {
 	drivetrain.rotateAngle(angle);
 }
 
+void Robot::changeDrivetrainStateToPRECISION_TRIGGER(){
+	drivetrain.setStateTrigger();
+}
+
 void Robot::lift(double distance) {
 	//lifter.lift(distance);
 }
