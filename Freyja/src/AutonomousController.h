@@ -30,6 +30,9 @@ class AutonomousController {
 		AutonomousExecutor executor;
 		//AnalogInput dial;
 
+		Path path;
+		AutoCommand command;
+
 		void update();
 		void init();
 		void callCommand(AutoCommand nc);
