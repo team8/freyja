@@ -2,7 +2,7 @@
 
 Lifter::Lifter() :
 victor((uint32_t) 9), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput(
-(uint32_t) 9), controller(0.f, 0.f, 0.f, &liftEncoder, &victor)
+(uint32_t) 9), digitalInput2((uint32_t) 8), controller(0.f, 0.f, 0.f, &liftEncoder, &victor)
 {
 	state = IDLE;
 	victor.Set(0);
@@ -77,11 +77,9 @@ void Lifter::zeroing() {
 //}
 
 //returns a boolean based on if the sensor has been hit
-bool Lifter::checkSensorHit() {
-	if (digitalInput.Get() == 1) {
-		return true;
-	}
-	return false;
+bool Lifter::checkSensorHit(bool firstSensor) {
+	if (firstSensor) return (digitalInput.Get() == 1);
+	else return (digitalInput2.Get() == 1);
 }
 
 //gets the current state of the lifter.
