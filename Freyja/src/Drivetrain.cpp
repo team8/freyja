@@ -105,8 +105,6 @@ void Drivetrain::update() {
 
 		//Updates for the teleop state
 	case DRIVING_TELEOP:
-		targetSpeed += acceleration;
-
 		//Determines the appropriate left and right speed
 
 		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
@@ -180,8 +178,8 @@ void Drivetrain::stopTalons() {
 }
 
 //Sets drivetrain teleop target and rotate speed
-void Drivetrain::setSpeed(double targetSpeed, double rotateSpeed) {
-	setTargetSpeed(targetSpeed);
+void Drivetrain::setSpeed(double acceleration, double rotateSpeed) {
+	setTargetSpeed(targetSpeed + acceleration);
 	setRotateSpeed(rotateSpeed);
 }
 
