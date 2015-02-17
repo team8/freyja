@@ -22,8 +22,8 @@ void Robot::disable() {
 	arm.disable();
 }
 
-void Robot::move(double targetSpeed, double rotateSpeed) {
-	drivetrain.setSpeed(targetSpeed, rotateSpeed);
+void Robot::move(double acceleration, double rotateSpeed) {
+	drivetrain.setSpeed(acceleration, rotateSpeed);
 }
 
 void Robot::changePistonState(Arm::PistonState state) {

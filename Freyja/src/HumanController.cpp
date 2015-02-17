@@ -12,8 +12,10 @@ HumanController::HumanController() :
 }
 
 void HumanController::update(Robot *robotPointer) {
-//	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
-
+	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
+	if(moveJoystick.GetRawButton(1)) {
+		robotPointer->changeDrivetrainStateToBRAKE();
+	}
 	if (turnJoystick.GetRawButton(1)){
 		robotPointer->changeDrivetrainStateToPRECISION_TRIGGER();
 	}
@@ -43,6 +45,6 @@ void HumanController::update(Robot *robotPointer) {
 	}
 	//this moves the lifter to the lowest level
 	if (operatorJoystick.GetRawButton(10)) {
-		robotPointer->zeroLifter():
+		robotPointer -> zeroLifter();
 	}
 }

@@ -58,7 +58,6 @@ void Drivetrain::init() {
 
 	//Sets the inital robot state to idle
 	state = IDLE;
-}
 
 	//Resets encoders
 	leftEncoder.Reset();
@@ -67,7 +66,7 @@ void Drivetrain::init() {
 	//Stops robot motion
 	stopTalons();
 
-	driveDistance(100);
+	//driveDistance(100);
 }
 
 //Disables the drivetrain
@@ -107,10 +106,8 @@ void Drivetrain::update() {
 	case DRIVING_TELEOP:
 		//Determines the appropriate left and right speed
 
-		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
-		double rightSpeed = -std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
 		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
-		rightSpeed = -std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
+		rightSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(leftSpeed);
@@ -126,7 +123,7 @@ void Drivetrain::update() {
 	case PRECISION_TRIGGER:
 		//Determines the appropriate left and right speed
 		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
-		rightSpeed =- std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
+		rightSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(leftSpeed * 0.5);
@@ -140,6 +137,8 @@ void Drivetrain::update() {
 
 		//Stops Talons
 		stopTalons();
+		acceleration = 0;
+		targetSpeed = 0;
 
 		break;
 
@@ -179,7 +178,12 @@ void Drivetrain::stopTalons() {
 
 //Sets drivetrain teleop target and rotate speed
 void Drivetrain::setSpeed(double acceleration, double rotateSpeed) {
-	setTargetSpeed(targetSpeed + acceleration);
+	if(acceleration > -0.1 && acceleration < 0.1) {
+		setTargetSpeed(targetSpeed * 0.90);
+	}
+	else {
+		setTargetSpeed(targetSpeed + acceleration / 150);
+	}
 	setRotateSpeed(rotateSpeed);
 }
 
