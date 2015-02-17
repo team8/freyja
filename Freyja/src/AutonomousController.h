@@ -10,15 +10,19 @@
 
 #include <WPILib.h>
 #include <list>
+
+#include <algorithm>
 #include "Robot.h"
 #include "Constants.h"
 #include "AutonomousExecutor.h"
-
+#include "UDP_Listener.h"
 
 class AutonomousController {
 	public:
 		AutonomousController(Robot *robotPointer);
 		virtual ~AutonomousController();
+		void update();
+		void init();
 
 	private:
                 // the ordered list of commands, will be changed to a List soon
@@ -33,9 +37,12 @@ class AutonomousController {
 		Path path;
 		AutoCommand command;
 
-		void update();
-		void init();
-		void callCommand(AutoCommand nc);
+		UDP_Listener udpListener;
+
+		double distance;
+		double angle;
+
+
 
 		void stop();
 		void drive();

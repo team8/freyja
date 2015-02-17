@@ -14,13 +14,16 @@ using namespace std;
 
 // DIAL CURRENTLY COMMENTED OUT
 AutonomousController::AutonomousController(Robot *robotPointer) :
-		executor(robotPointer, &commandSet)
+		executor(robotPointer, &commandSet),
+		udpListener{"4950"}
 	//dial((uint32_t) PORT_AUTO_DIAL)
 {
 	//path = (Path) dial.GetValue();
 	path = TEST;
 	command = CMD_STOP;
 	executing = false;
+	distance = 0;
+	angle = 0;
 }
 
 // called once at the beginning of autonomous, this sets the robot
@@ -60,6 +63,15 @@ void AutonomousController::init() {
 // is controlled periodically and will only function when the update method is
 // called
 void AutonomousController::update() {
+	//network
+	std::string msg = udpListener.recv();
+	if (msg != UDP_Listener::RECV_ERROR) {
+			std::string::size_type sz;
+			distance = std::stod(msg, &sz);
+			angle = std::stod(msg.substr(sz));
+			std::cout << "distance: " << distance << "    angle: " << angle << std::endl;
+	}
+
 	if(!executing) {
 		command = commandSet.front(); //fetch
         executing = true;

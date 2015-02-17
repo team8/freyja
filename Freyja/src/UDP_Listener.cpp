@@ -57,7 +57,8 @@ std::string UDP_Listener::recv() {
 	readfds = masterfds;
 	if (select(fdmax + 1, &readfds, nullptr, nullptr, &tv) == -1) {
 		std::cerr << "select" << std::endl;
-		return "";
+		msg = RECV_ERROR;
+		return msg;
 	}
 	for (int i = 0; i <= fdmax; ++i) {
 		if (FD_ISSET(i, &readfds)) {
@@ -66,7 +67,7 @@ std::string UDP_Listener::recv() {
 			if ((bytesn = recvfrom(sockfd, buf, BYTESMAX - 1, 0,
 					(struct sockaddr *) &their_addr, &addr_len)) == -1) {
 				std::cerr << "recvfrom" << std::endl;
-				msg = "error";
+				msg = RECV_ERROR;
 			} else {
 				buf[bytesn] = '\0';
 
