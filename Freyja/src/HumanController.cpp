@@ -48,6 +48,6 @@ void HumanController::update(Robot *robotPointer) {
 	}
 	//this moves the lifter to the lowest level
 	if (operatorJoystick.GetRawButton(10)) {
-		robotPointer->zeroLifter();
+		robotPointer->zeroLifter():
 	}
 }

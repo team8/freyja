@@ -135,6 +135,13 @@ void Drivetrain::update() {
 
 		break;
 
+	case BRAKE:
+
+		//Stops Talons
+		stopTalons();
+
+		break;
+
 
 	}
 }
@@ -235,6 +242,12 @@ void Drivetrain::driveDistance(double distance) {
 void Drivetrain:: setStateTrigger(){
 
 	state = PRECISION_TRIGGER;;
+
+}
+
+void Drivetrain:: setStateBrake(){
+
+	state = BRAKE;;
 
 }
 //Gets the state of this drivetrain
