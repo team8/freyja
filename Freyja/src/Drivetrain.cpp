@@ -128,8 +128,8 @@ void Drivetrain::update() {
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(leftSpeed * 0.4);
 		leftBottomTalon.Set(leftSpeed * 0.4);
-		rightTopTalon.Set(rightSpeed * 0.4);
-		rightBottomTalon.Set(rightSpeed * 0.4);
+		rightTopTalon.Set(-rightSpeed * 0.4);
+		rightBottomTalon.Set(-rightSpeed * 0.4);
 
 		break;
 
