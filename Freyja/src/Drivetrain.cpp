@@ -90,13 +90,8 @@ void Drivetrain::update() {
 			std::cout << "Drive Completed" << std::endl;
 		}
 
-		leftTopTalon.Set(std::max(std::min((drivingSetpoint - leftEncoder.GetDistance())*LEFT_PROPORTIONAL, 1.0), -1.0));
-		leftBottomTalon.Set(std::max(std::min((drivingSetpoint - leftEncoder.GetDistance())*LEFT_PROPORTIONAL, 1.0), -1.0));
-		rightTopTalon.Set(std::max(std::min((drivingSetpoint - rightEncoder.GetDistance())*RIGHT_PROPORTIONAL, 1.0), -1.0));
-		rightBottomTalon.Set(std::max(std::min((drivingSetpoint - rightEncoder.GetDistance())*RIGHT_PROPORTIONAL, 1.0), -1.0));
-
-		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << " Output: " << std::max(std::min((drivingSetpoint - leftEncoder.GetDistance())*LEFT_PROPORTIONAL, 1.0), -1.0) << std::endl;
-		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << " Output: " << std::max(std::min((drivingSetpoint - rightEncoder.GetDistance())*RIGHT_PROPORTIONAL, 1.0), -1.0) << std::endl;
+		std::cout << "Left Error: " << leftTopController.GetError() << std::endl;
+		std::cout << "Right Error: " << rightTopController.GetError() << std::endl;
 
 		break;
 
@@ -109,19 +104,18 @@ void Drivetrain::update() {
 		//Updates for the teleop state
 	case DRIVING_TELEOP:
 		//Determines the appropriate left and right speed
-
-		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
-		rightSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
 	{
 		//Determines the appropriate left and right speed
 		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 		double rightSpeed = -std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
-		leftTopTalon.Set(leftSpeed );
-		leftBottomTalon.Set(leftSpeed);
-		rightTopTalon.Set(-rightSpeed);
-		rightBottomTalon.Set(-rightSpeed);
+		leftTopTalon.Set(-leftSpeed );
+		leftBottomTalon.Set(-leftSpeed);
+		rightTopTalon.Set(rightSpeed);
+		rightBottomTalon.Set(rightSpeed);
 
 		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
 		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
@@ -130,14 +124,14 @@ void Drivetrain::update() {
 	}
 	case PRECISION_TRIGGER:
 		//Determines the appropriate left and right speed
-		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
-		rightSpeed = std::max(std::min(targetSpeed - rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
+		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
+		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
-		leftTopTalon.Set(leftSpeed);
-		leftBottomTalon.Set(leftSpeed);
-		rightTopTalon.Set(-rightSpeed);
-		rightBottomTalon.Set(-rightSpeed);
+		leftTopTalon.Set(-leftSpeed);
+		leftBottomTalon.Set(-leftSpeed);
+		rightTopTalon.Set(rightSpeed);
+		rightBottomTalon.Set(rightSpeed);
 
 		break;
 
