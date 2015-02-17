@@ -126,10 +126,10 @@ void Drivetrain::update() {
 		rightSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
-		leftTopTalon.Set(leftSpeed * 0.5);
-		leftBottomTalon.Set(leftSpeed * 0.5);
-		rightTopTalon.Set(rightSpeed * 0.5);
-		rightBottomTalon.Set(rightSpeed * 0.5);
+		leftTopTalon.Set(leftSpeed * 0.4);
+		leftBottomTalon.Set(leftSpeed * 0.4);
+		rightTopTalon.Set(rightSpeed * 0.4);
+		rightBottomTalon.Set(rightSpeed * 0.4);
 
 		break;
 
@@ -178,11 +178,11 @@ void Drivetrain::stopTalons() {
 
 //Sets drivetrain teleop target and rotate speed
 void Drivetrain::setSpeed(double acceleration, double rotateSpeed) {
-	if(acceleration > -0.1 && acceleration < 0.1) {
-		setTargetSpeed(targetSpeed * 0.90);
+	if(acceleration > -SPEED_DECAY_RANGE && acceleration < SPEED_DECAY_RANGE) {
+		setTargetSpeed(targetSpeed * SPEED_DECAY_CONSTANT);
 	}
 	else {
-		setTargetSpeed(targetSpeed + acceleration / 150);
+		setTargetSpeed(targetSpeed + acceleration / ACCELERATION_CONSTANT);
 	}
 	setRotateSpeed(rotateSpeed);
 }
