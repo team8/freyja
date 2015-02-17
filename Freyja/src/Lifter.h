@@ -33,6 +33,7 @@ private:
 	VictorSP victor;
 	Encoder liftEncoder;
 	DigitalInput digitalInput;
+	DigitalInput digitalInput2;
 	PIDController controller;
 };
 
