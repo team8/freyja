@@ -26,6 +26,9 @@ private:
 	//The rotation speed of the robot during teleoperated control
 	double rotateSpeed;
 	
+	double leftSpeed;
+	double rightSpeed;
+
 	//The two encoders, or distance sensors, of the drivetrain
 	Encoder leftEncoder;
 	Encoder rightEncoder;

@@ -17,10 +17,10 @@ Drivetrain::Drivetrain() :
 		gyro(PORT_GYRO),
 
 		//Initializes the pid controllers
-		leftTopController(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftTopTalon, 0.05),
-		leftBottomController(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftBottomTalon, 0.05),
-		rightTopController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightTopTalon, 0.05),
-		rightBottomController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightBottomTalon, 0.05),
+		leftTopController(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftTopTalon),
+		leftBottomController(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftBottomTalon),
+		rightTopController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightTopTalon),
+		rightBottomController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightBottomTalon),
 
 		leftTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTopTalon),
 		leftBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftBottomTalon),
@@ -52,11 +52,12 @@ void Drivetrain::init() {
 	//Sets the max period for stopped detection
 	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 	rightEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
+	leftSpeed = 0;
+	rightSpeed = 0;
 
-	leftTopController.SetAbsoluteTolerance(10);
-	rightTopController.SetAbsoluteTolerance(10);
-	leftBottomController.SetAbsoluteTolerance(10);
-	rightBottomController.SetAbsoluteTolerance(10);
+	//Sets the inital robot state to idle
+	state = IDLE;
+}
 
 	//Resets encoders
 	leftEncoder.Reset();
@@ -104,8 +105,11 @@ void Drivetrain::update() {
 		//Updates for the teleop state
 	case DRIVING_TELEOP:
 		//Determines the appropriate left and right speed
+
 		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 		double rightSpeed = -std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
+		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
+		rightSpeed = -std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(leftSpeed);
@@ -120,14 +124,14 @@ void Drivetrain::update() {
 
 	case PRECISION_TRIGGER:
 		//Determines the appropriate left and right speed
-		double leftSpeed = -std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
-		double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
+		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
+		rightSpeed =- std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
-		leftTopTalon.Set(leftSpeed*.1);
-		leftBottomTalon.Set(leftSpeed*.1);
-		rightTopTalon.Set(rightSpeed*.1);
-		rightBottomTalon.Set(rightSpeed*.1);
+		leftTopTalon.Set(leftSpeed * 0.5);
+		leftBottomTalon.Set(leftSpeed * 0.5);
+		rightTopTalon.Set(rightSpeed * 0.5);
+		rightBottomTalon.Set(rightSpeed * 0.5);
 
 		break;
 
