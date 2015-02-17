@@ -39,6 +39,8 @@ private:
 	//The gyroscope, or orientation sensor, of the drivetrain
 	Gyro gyro;
 	
+	double drivingSetpoint;
+
 	//The PID Controllers of the drivetrain, control loops allowing highly precise and efficient movement
 	PIDController leftTopController;
 	PIDController leftBottomController;

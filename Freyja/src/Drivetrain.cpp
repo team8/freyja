@@ -32,14 +32,6 @@ Drivetrain::Drivetrain() :
 	rotateSpeed = 0;
 	acceleration = 0;
 
-
-	//Sets the inital robot state to idle
-	state = IDLE;
-}
-
-//Initializes the drivetrain
-void Drivetrain::init() {
-
 	//Sets the encoder distance per pulses
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
 	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
@@ -53,6 +45,13 @@ void Drivetrain::init() {
 	//Sets the max period for stopped detection
 	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 	rightEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
+
+	//Sets the inital robot state to idle
+	state = IDLE;
+}
+
+//Initializes the drivetrain
+void Drivetrain::init() {
 	leftSpeed = 0;
 	rightSpeed = 0;
 
@@ -105,9 +104,12 @@ void Drivetrain::update() {
 		//Updates for the teleop state
 	case DRIVING_TELEOP:
 		//Determines the appropriate left and right speed
-
 		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
 		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+	{
+		//Determines the appropriate left and right speed
+		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
+		double rightSpeed = -std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(-leftSpeed );
@@ -119,7 +121,7 @@ void Drivetrain::update() {
 		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
 
 		break;
-
+	}
 	case PRECISION_TRIGGER:
 		//Determines the appropriate left and right speed
 		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
@@ -229,21 +231,22 @@ void Drivetrain::driveDistance(double distance) {
 	state = DRIVING_DIST;
 
 	//Enables pid controllers
-	leftTopController.Enable();
-	leftBottomController.Enable();
-	rightTopController.Enable();
-	rightBottomController.Enable();
+//	leftTopController.Enable();
+//	leftBottomController.Enable();
+//	rightTopController.Enable();
+//	rightBottomController.Enable();
 
 	//Resets encoders
 	leftEncoder.Reset();
 	rightEncoder.Reset();
 
+	drivingSetpoint = distance;
 
 	//Sets controller setpoint to given distance
-	leftTopController.SetSetpoint(distance);
-	leftBottomController.SetSetpoint(distance);
-	rightTopController.SetSetpoint(distance);
-	rightBottomController.SetSetpoint(distance);
+//	leftTopController.SetSetpoint(distance);
+//	leftBottomController.SetSetpoint(distance);
+//	rightTopController.SetSetpoint(distance);
+//	rightBottomController.SetSetpoint(distance);
 }
 
 void Drivetrain:: setStateTrigger(){
