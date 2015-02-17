@@ -126,7 +126,7 @@ void AutonomousExecutor::drive(int dist) {
 }
 
 void AutonomousExecutor::lift() {
-	robot->lift();
+	robot->lift(10);
 }
 
 void AutonomousExecutor::drop() {
