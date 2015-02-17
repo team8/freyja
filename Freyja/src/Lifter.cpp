@@ -61,12 +61,14 @@ void Lifter::setLevel(double level) {
 	currentLevel = level;
 	if (controller.GetError() < 0.5 && controller.GetError() > -0.5) {
 		state = IDLE;
+	} else {
+//		state = MOVING;
 	}
 }
 //this function moves the lifter to its lowest point to remove any error.
 void Lifter::zeroing() {
 	victor.Set(-.2);
-
+//	state = ZEROING;
 }
 
 //void Lifter::setSpeed(double speed) {
