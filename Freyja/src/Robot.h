@@ -51,7 +51,7 @@ class Robot {
 		void changeDrivetrainStateToBRAKE();
 
 		/** Wrapper method for lifting a specified distance */
-		void lift();
+		void lift(double distance);
 		void drop();
 		void canLift();
 
@@ -65,11 +65,8 @@ class Robot {
 		void zeroLifter();
 		/**Wrapper method for getting the current level of the lifter**/
 		double getLevel();
-<<<<<<< HEAD
-=======
 
 		void setLifter(double speed);
->>>>>>> 31ceff6c53440b7e2b43cd83b17bf93cd7237c32
 };
 
 #endif /* ROBOT_H */

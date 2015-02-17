@@ -11,7 +11,7 @@ public:
 	void init() override;
 	void update() override;
 	void disable() override;
-	bool checkSensorHit();
+	bool checkSensorHit(bool firstSensor);
 	double getDistance(); //uses encoder
 	void lift(double distance);
 	void setLevel(double level);

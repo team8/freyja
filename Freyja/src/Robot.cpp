@@ -72,7 +72,7 @@ Drivetrain::State Robot::getDrivetrainState() {
 }
 
 Lifter::State Robot::getLifterState() {
-	//return drivetrain.getState();
+	return lifter.getState();
 }
 
 double Robot::getLevel() {
@@ -83,6 +83,6 @@ void Robot::zeroLifter() {
 	lifter.zeroing();
 }
 
-void Robot:setLifter(double speed) {
+void Robot::setLifter(double speed) {
 	lifter.setState(speed);
 }
