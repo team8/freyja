@@ -63,7 +63,9 @@ public:
 		//A state in which the talon speed is set through teleop commands
 		DRIVING_TELEOP,
 		//A state in which the turning speed is lowered for higher precision
-		PRECISION_TRIGGER
+		PRECISION_TRIGGER,
+		//A state in which the talons are set to 0
+		BRAKE
 	} State;
 	
 	//The State variable created for this instance
@@ -105,6 +107,9 @@ public:
 
 	//Set state to PREISION_TRIGGER
 	void setStateTrigger();
+
+	//Set state to BRAKE
+	void setStateBrake();
 
 	//Returns the state of this drivetrain
 	State getState();

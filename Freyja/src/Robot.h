@@ -47,6 +47,9 @@ class Robot {
 		/** Wrapper method for changing the Drivetrain state to PRECISION_TRIGGER*/
 		void changeDrivetrainStateToPRECISION_TRIGGER();
 
+		/** Wrapper method for changing the Drivetrain state to BRAKE*/
+		void changeDrivetrainStateToBRAKE();
+
 		/** Wrapper method for lifting a specified distance */
 		void lift(double distance);
 

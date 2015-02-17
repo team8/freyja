@@ -45,6 +45,10 @@ void Robot::changeDrivetrainStateToPRECISION_TRIGGER(){
 	drivetrain.setStateTrigger();
 }
 
+void Robot::changeDrivetrainStateToBRAKE(){
+	drivetrain.setStateBrake();
+}
+
 void Robot::lift(double distance) {
 	//lifter.lift(distance);
 }
