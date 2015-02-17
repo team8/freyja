@@ -40,7 +40,8 @@ public:
 	//
 private:
 	Compressor compressor;
-	DoubleSolenoid solenoid1, solenoid2;
+	DoubleSolenoid solenoid1;
+	//DoubleSolenoid solenoid2;
 
 	CompressorState compressorState;
 	PistonState pistonState;

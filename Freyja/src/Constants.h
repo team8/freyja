@@ -18,10 +18,10 @@
 #define PORT_ENCODER_LEFT_B 0
 
 // Solenoid Ports
-#define SOLENOID_1_PORT_A 1
-#define SOLENOID_1_PORT_B 2
-#define SOLENOID_2_PORT_A 1
-#define SOLENOID_2_PORT_B 2
+#define SOLENOID_1_PORT_A 0
+#define SOLENOID_1_PORT_B 1
+#define SOLENOID_2_PORT_A 2
+#define SOLENOID_2_PORT_B 3
 
 #define PORT_AUTO_DIAL 1
 

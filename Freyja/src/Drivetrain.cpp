@@ -45,6 +45,9 @@ Drivetrain::Drivetrain() :
 	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 	rightEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 
+	leftSpeed = 0;
+	rightSpeed = 0;
+
 	//Sets the inital robot state to idle
 	state = IDLE;
 }
@@ -96,8 +99,8 @@ void Drivetrain::update() {
 		//Updates for the teleop state
 	case DRIVING_TELEOP:
 		//Determines the appropriate left and right speed
-		double leftSpeed = -std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
-		double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
+		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
+		rightSpeed = -std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(std::pow(leftSpeed, 3));
@@ -109,14 +112,14 @@ void Drivetrain::update() {
 
 	case PRECISION_TRIGGER:
 		//Determines the appropriate left and right speed
-		double leftSpeed = -std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
-		double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
+		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
+		rightSpeed =- std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
-		leftTopTalon.Set(leftSpeed*.1);
-		leftBottomTalon.Set(leftSpeed*.1);
-		rightTopTalon.Set(rightSpeed*.1);
-		rightBottomTalon.Set(rightSpeed*.1);
+		leftTopTalon.Set(leftSpeed * 0.5);
+		leftBottomTalon.Set(leftSpeed * 0.5);
+		rightTopTalon.Set(rightSpeed * 0.5);
+		rightBottomTalon.Set(rightSpeed * 0.5);
 
 		break;
 
