@@ -46,6 +46,11 @@ Drivetrain::Drivetrain() :
 	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 	rightEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 
+	leftTopTalon.SetControlMode(CANSpeedController::kSpeed);
+	leftBottomTalon.SetControlMode(CANSpeedController::kSpeed);
+	rightTopTalon.SetControlMode(CANSpeedController::kSpeed);
+	rightBottomTalon.SetControlMode(CANSpeedController::kSpeed);
+
 	//Sets the inital robot state to idle
 	state = IDLE;
 }

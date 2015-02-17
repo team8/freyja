@@ -14,12 +14,12 @@
 class Drivetrain: public Subsys {
 private:
 	//The robot's left talons, or speed controllers
-	TalonSRX leftTopTalon;
-	TalonSRX leftBottomTalon;
+	CANTalon leftTopTalon;
+	CANTalon leftBottomTalon;
 
 	//The robot's right talons, or speed controllers
-	TalonSRX rightTopTalon;
-	TalonSRX rightBottomTalon;
+	CANTalon rightTopTalon;
+	CANTalon rightBottomTalon;
 
 	//The forward speed of the robot during teleoperated control
 	double targetSpeed;
