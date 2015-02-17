@@ -106,11 +106,11 @@ void Drivetrain::update() {
 	case DRIVING_TELEOP:
 		//Determines the appropriate left and right speed
 
-		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
-		rightSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
+		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+		rightSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
-		leftTopTalon.Set(leftSpeed);
+		leftTopTalon.Set(leftSpeed );
 		leftBottomTalon.Set(leftSpeed);
 		rightTopTalon.Set(-rightSpeed);
 		rightBottomTalon.Set(-rightSpeed);
@@ -122,14 +122,14 @@ void Drivetrain::update() {
 
 	case PRECISION_TRIGGER:
 		//Determines the appropriate left and right speed
-		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
-		rightSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
+		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
+		rightSpeed = std::max(std::min(targetSpeed - rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
-		leftTopTalon.Set(leftSpeed * 0.4);
-		leftBottomTalon.Set(leftSpeed * 0.4);
-		rightTopTalon.Set(-rightSpeed * 0.4);
-		rightBottomTalon.Set(-rightSpeed * 0.4);
+		leftTopTalon.Set(leftSpeed);
+		leftBottomTalon.Set(leftSpeed);
+		rightTopTalon.Set(-rightSpeed);
+		rightBottomTalon.Set(-rightSpeed);
 
 		break;
 
@@ -181,8 +181,12 @@ void Drivetrain::setSpeed(double acceleration, double rotateSpeed) {
 	if(acceleration > -SPEED_DECAY_RANGE && acceleration < SPEED_DECAY_RANGE) {
 		setTargetSpeed(targetSpeed * SPEED_DECAY_CONSTANT);
 	}
+	// multipling to check sign
+	if(acceleration * targetSpeed < 0) {
+		setTargetSpeed(targetSpeed + acceleration * ACCELERATION_REVERSE_CONSTANT);
+	}
 	else {
-		setTargetSpeed(targetSpeed + acceleration / ACCELERATION_CONSTANT);
+		setTargetSpeed(targetSpeed + acceleration * ACCELERATION_CONSTANT);
 	}
 	setRotateSpeed(rotateSpeed);
 }
