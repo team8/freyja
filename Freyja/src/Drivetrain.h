@@ -58,7 +58,9 @@ public:
 		//A state in which the robot is rotating a specified angle through pid control
 		ROTATING_ANGLE,
 		//A state in which the talon speed is set through teleop commands
-		DRIVING_TELEOP
+		DRIVING_TELEOP,
+		//A state in which the turning speed is lowered for higher precision
+		PRECISION_TRIGGER
 	} State;
 	
 	//The State variable created for this instance
@@ -97,6 +99,9 @@ public:
 
 	//Drives the drivetrain the given distance, uses pid controllers
 	void driveDistance(double distance);
+
+	//Set state to PREISION_TRIGGER
+	void setStateTrigger();
 
 	//Returns the state of this drivetrain
 	State getState();

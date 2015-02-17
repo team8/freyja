@@ -1,10 +1,12 @@
 #include "Arm.h"
+#include "Constants.h"
 
 
 Arm::Arm() :
 //Compressor which initializes the compressor with no arguments, and gives the solenoids their ports
 	compressor(),
-	solenoid((uint32_t) 0, (uint32_t) 1)
+	solenoid1((uint32_t) SOLENOID_1_PORT_A, (uint32_t) SOLENOID_1_PORT_B),
+	solenoid2((uint32_t) SOLENOID_2_PORT_A, (uint32_t) SOLENOID_2_PORT_B)
 {
 	compressor.Start();
 	setPistonState(IDLE);
@@ -42,19 +44,23 @@ void Arm::update() {
 	switch(pistonState) {
 	case EXTENDING:
 	//If the piston is extending, it puts air in the chamber behind the piston, pushing it forward
-		solenoid.Set(DoubleSolenoid::Value::kForward);
+		solenoid1.Set(DoubleSolenoid::Value::kForward);
+		solenoid2.Set(DoubleSolenoid::Value::kForward);
 		break;
 	case RETRACTING:
 	//If the piston is retracting, it puts air in front of the disc, expelling the air out of the solenoid.
-		solenoid.Set(DoubleSolenoid::Value::kReverse);
+		solenoid1.Set(DoubleSolenoid::Value::kReverse);
+		solenoid2.Set(DoubleSolenoid::Value::kReverse);
 		break;
 	case IDLE:
 	//Locks the solenoid, no actuation
-		solenoid.Set(DoubleSolenoid::Value::kOff);
+		solenoid1.Set(DoubleSolenoid::Value::kOff);
+		solenoid2.Set(DoubleSolenoid::Value::kOff);
 		break;
 	case PUSH:
 	//Pushes the piston a little.
-		solenoid.Set(DoubleSolenoid::Value::kForward);
+		solenoid1.Set(DoubleSolenoid::Value::kForward);
+		solenoid2.Set(DoubleSolenoid::Value::kForward);
 		//CHECK THIS VALUE LATER, it can still fully actuate possibly.
 		Wait(0.2);
 		setPistonState(IDLE);
