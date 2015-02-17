@@ -1,9 +1,11 @@
 #include "Lifter.h"
 
 Lifter::Lifter() :
-victor((uint32_t) 0), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput(
-(uint32_t) 9), controller(0.f, 0.f, 0.f, &liftEncoder, &victor) {
+victor((uint32_t) 9), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput(
+(uint32_t) 9), controller(0.f, 0.f, 0.f, &liftEncoder, &victor)
+{
 	state = IDLE;
+	victor.Set(0);
 }
 
 Lifter::~Lifter() {
@@ -14,31 +16,27 @@ void Lifter::init() {
 	liftEncoder.Reset();
 	controller.Reset();
 	controller.Enable();
+	
+	state = IDLE;
 }
 //updates lifter constantly
 void Lifter::update() {
 
 	//executes commands based on the state of the lifter
 	switch (state) {
-		case MOVING:
+		case UP:
 		{
+			victor.Set(1.0);
+			break;
+		}
+		case DOWN:
+		{
+			victor.Set(-1.0);
 			break;
 		}
 		case IDLE:
 		{
-			disable();
-			break;
-		}
-		case ZEROING:
-			/** checks to see if a sensor at the bottom of the lifter has been hit
-			 * if it has been hit, then reset the encoders
-			 *the purpose of this is to get rid of any error for pid.
-			 **/
-		{
-			if (checkSensorHit()) {
-				setLevel(0);
-				liftEncoder.Reset();
-			}
+			victor.Set(0);
 			break;
 		}
 	}
@@ -46,9 +44,10 @@ void Lifter::update() {
 
 //disables everything on lifter
 void Lifter::disable() {
-	victor.Set(0.0);
 	victor.Disable();
 	controller.Disable();
+	
+	state = IDLE;
 }
 
 //this method moves the lifter.
@@ -94,4 +93,9 @@ Lifter::State Lifter::getState() {
 //will return the current level of the lifter once it is complete.
 double Lifter::getLevel() {
 	return currentLevel;
+}
+
+void Lifter::setState(double speed) {
+	victor.Set(speed);
+}
 }

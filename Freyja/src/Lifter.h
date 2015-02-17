@@ -20,12 +20,14 @@ public:
 	double currentLevel;
 
 	enum State{
-		MOVING,
-		IDLE,
-		ZEROING
+		UP,
+		DOWN,
+		IDLE
 	} state;
 
 	State getState();
+
+	void setState(double speed);
 
 private:
 	VictorSP victor;

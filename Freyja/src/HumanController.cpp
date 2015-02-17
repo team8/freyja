@@ -38,7 +38,7 @@ void HumanController::update(Robot *robotPointer) {
 	//Lifter Controls
 
 	//this moves the lifter up by one level
-	if (operatorJoystick.GetRawButton(7)) {
+/*	if (operatorJoystick.GetRawButton(7)) {
 		robotPointer->setLifterLevel(robotPointer->getLevel() + 1);
 	}
 	//this moves the lifter down by one level
@@ -48,5 +48,7 @@ void HumanController::update(Robot *robotPointer) {
 	//this moves the lifter to the lowest level
 	if (operatorJoystick.GetRawButton(10)) {
 		robotPointer -> zeroLifter();
-	}
+	}*/
+	
+	robotPointer->setLifter(operatorJoystick.GetY());
 }
