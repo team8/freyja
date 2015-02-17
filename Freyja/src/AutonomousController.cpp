@@ -1,205 +1,119 @@
 /*
- * Version 5
- * 1/20/15 at 2100
+ * Version 10
+ * 2/14/15
  * Jonathan Zwiebel
  */
 
+
+
 #include "AutonomousController.h"
+using namespace std;
 
-#define PATH 0
-#define YELLOW_AUTO_DISTANCE 20
-#define AUTO_GRAY_DISTANCE 20
-#define GRAY_GRAY_DISTANCE 5
-#define YELLOW_YELLOW_DISTANCE 15
-#define LIFT_DISTANCE 5
+// constructs the analog dial and sets the path to the one being used
+// then sets the original command to stop and creates the executor
 
-enum path {
-	STOP = 0,
-	DRIVE = 1,
-	TOTE_SCORE = 2,
-	TOTE_SCORE_ACCUMULATE = 3,
-	TOTE_SCORE_DOUBLE_LEFT = 4,
-	TOTE_SCORE_DOUBLE_RIGHT = 5,
-	TOTE_SCORE_DOUBLE_LEFT_ACCUMULATE = 6,
-	TOTE_SCORE_DOUBLE_RIGHT_ACCUMULATE = 7,
-	TOTE_SCORE_TRIPLE = 8,
-	CAN_SCORE = 9,
-	CAN_SCORE_ACCUMULATE = 10,
-	ACCUMULATE = 11,
-	ACCUMULATE_DOUBLE = 12,
-	ACCUMULATE_TRIPLE = 13
-};
-
-
-
+// DIAL CURRENTLY COMMENTED OUT
 AutonomousController::AutonomousController(Robot *robotPointer) :
-	dial((uint32_t) PORT_AUTO_DIAL)
+		executor(robotPointer, &commandSet)
+	//dial((uint32_t) PORT_AUTO_DIAL)
 {
-	this->robot = robotPointer;
-	std::cout << "AutonomousController constructed" << std::endl;
+	//path = (Path) dial.GetValue();
+	path = TEST;
+	command = CMD_STOP;
+	executing = false;
+}
 
-	path = dial.GetValue();
-
+// called once at the beginning of autonomous, this sets the robot
+// onto the correct path
+void AutonomousController::init() {
 	switch(path) {
-	case STOP:
-		stop();
-		break;
-	case DRIVE:
-		drive();
-		break;
-	case TOTE_SCORE:
-		toteScore();
-		break;
-	case TOTE_SCORE_ACCUMULATE:
-		toteScoreAccumulate();
-		break;
-	case TOTE_SCORE_DOUBLE_LEFT:
-		toteScoreDoubleLeft();
-		break;
-	case TOTE_SCORE_DOUBLE_RIGHT:
-		toteScoreDoubleRight();
-		break;
-	case TOTE_SCORE_DOUBLE_LEFT_ACCUMULATE:
-		toteScoreDoubleLeftAccumulate();
-		break;
-	case TOTE_SCORE_DOUBLE_RIGHT_ACCUMULATE:
-		toteScoreDoubleRightAccumulate();
-		break;
-	case TOTE_SCORE_TRIPLE:
-		toteScoreTriple();
-		break;
-	case CAN_SCORE:
-		canScore();
-		break;
-	case CAN_SCORE_ACCUMULATE:
-		canScoreAccumulate();
-		break;
-	case ACCUMULATE:
-		accumulate();
-		break;
-	case ACCUMULATE_DOUBLE:
-		accumulateDouble();
-		break;
-	case ACCUMULATE_TRIPLE:
-		accumulateTriple();
-		break;
+		case STOP:
+			stop();
+			break;
+		case DRIVE:
+			drive();
+			break;
+		case TOTE_SCORE:
+			toteScore();
+			break;
+		case TOTE_SCORE_DOUBLE_LEFT:
+			toteScoreDoubleLeft();
+			break;
+		case TOTE_SCORE_DOUBLE_RIGHT:
+			toteScoreDoubleRight();
+			break;
+		case CAN_SCORE:
+			canScore();
+			break;
+		case ACCUMULATE_GRAY:
+			accumulateGray();
+			break;
+		case TEST:
+			test();
+			break;
+		}
+}
+
+// called periodically throughout autonomous, this pops the top off the
+// commandSet and sends it to the executor
+// the reason for using this instead of just method calls is so that autonomous
+// is controlled periodically and will only function when the update method is
+// called
+void AutonomousController::update() {
+	if(!executing) {
+		command = commandSet.front(); //fetch
+        executing = true;
+		executor.executeCommand(command); // execute
+		commandSet.pop_back(); // increment
 	}
 }
 
 void AutonomousController::stop() {
-
+	path = STOP;
+	command = CMD_STOP;
+	executing = false;
 }
 
 void AutonomousController::drive() {
-	robot->driveDistance(YELLOW_AUTO_DISTANCE);
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_STOP);
 }
 
 void AutonomousController::toteScore() {
-	robot->lift(LIFT_DISTANCE);
-	robot->driveDistance(YELLOW_AUTO_DISTANCE);
-	//robot->drop();
-}
-
-void AutonomousController::toteScoreAccumulate() {
-	toteScore();
-	accumulateFromScore();
+	commandSet.push_back(CMD_TOTE_SCORE);
+	commandSet.push_back(CMD_STOP);
 }
 
 void AutonomousController::toteScoreDoubleLeft() {
-	robot->lift(LIFT_DISTANCE);
-	toteToTote(false);
-	toteScore();
+	commandSet.push_back(CMD_LIFT);
+	commandSet.push_back(CMD_TOTE_TO_TOTE_LEFT);
+	commandSet.push_back(CMD_TOTE_SCORE);
+	commandSet.push_back(CMD_STOP);
 }
 
 void AutonomousController::toteScoreDoubleRight() {
-	robot->lift(LIFT_DISTANCE);
-	toteToTote(true);
-	toteScore();
-}
-
-void AutonomousController::toteScoreDoubleLeftAccumulate() {
-	toteScoreDoubleLeft();
-	accumulateFromScore();
-}
-
-void AutonomousController::toteScoreDoubleRightAccumulate() {
-	toteScoreDoubleRight();
-	accumulateFromScore();
-}
-
-void AutonomousController::toteScoreTriple() {
-	// magic
+	commandSet.push_back(CMD_LIFT);
+	commandSet.push_back(CMD_TOTE_TO_TOTE_RIGHT);
+	commandSet.push_back(CMD_TOTE_SCORE);
+	commandSet.push_back(CMD_STOP);
 }
 
 void AutonomousController::canScore() {
-	// robot->liftCan();
-	robot->driveDistance(YELLOW_AUTO_DISTANCE);
-	// robot->drop();
+	commandSet.push_back(CMD_CAN_SCORE);
+	commandSet.push_back(CMD_STOP);
 }
 
-void AutonomousController::canScoreAccumulate() {
-	canScore();
-	accumulateFromScore();
+void AutonomousController::accumulateGray() {
+	commandSet.push_back(CMD_LANDFILL_DRIVE);
+	commandSet.push_back(CMD_GRAY_TO_GRAY);
+	commandSet.push_back(CMD_GRAY_TO_GRAY);
+	commandSet.push_back(CMD_HALF_ROTATE);
+	commandSet.push_back(CMD_DRIVE_LANDFILL_AUTO);
+	commandSet.push_back(CMD_STOP);
 }
 
-void AutonomousController::accumulate() {
-	robot->driveDistance(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
-	robot->lift(LIFT_DISTANCE);
-	robot->rotateAngle(180);
-	robot->driveDistance(AUTO_GRAY_DISTANCE);
-	// robot->drop();
-}
-
-void AutonomousController::accumulateDouble() {
-	robot->driveDistance(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
-	robot->lift(LIFT_DISTANCE);
-	robot->rotateAngle(90);
-	robot->driveDistance(GRAY_GRAY_DISTANCE);
-	robot->rotateAngle(-90);
-	robot->lift(LIFT_DISTANCE);
-	robot->rotateAngle(180);
-	robot->driveDistance(AUTO_GRAY_DISTANCE);
-		// robot->drop();
-}
-
-void AutonomousController::accumulateTriple() {
-	robot->driveDistance(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
-	robot->lift(LIFT_DISTANCE);
-	robot->rotateAngle(90);
-	robot->driveDistance(GRAY_GRAY_DISTANCE);
-	robot->rotateAngle(-90);
-	robot->lift(LIFT_DISTANCE);
-	robot->rotateAngle(90);
-	robot->driveDistance(GRAY_GRAY_DISTANCE);
-	robot->rotateAngle(-90);
-	robot->lift(LIFT_DISTANCE);
-	robot->rotateAngle(180);
-	robot->driveDistance(AUTO_GRAY_DISTANCE);
-	// robot->drop();
-}
-
-void AutonomousController::toteToTote(bool isRight) {
-	if(isRight) {
-		robot->rotateAngle(90);
-		robot->driveDistance(YELLOW_YELLOW_DISTANCE);
-		robot->rotateAngle(-90);
-	}
-	else {
-		robot->rotateAngle(-90);
-		robot->driveDistance(YELLOW_YELLOW_DISTANCE);
-		robot->rotateAngle(90);
-	}
-}
-
-void AutonomousController::accumulateFromScore() {
-	robot->driveDistance(-1);
-	robot->rotateAngle(-90);
-	robot->driveDistance(1);
-	robot->rotateAngle(90);
-	robot->driveDistance(1 + AUTO_GRAY_DISTANCE);
-	robot->lift(LIFT_DISTANCE);
-	robot->rotateAngle(180);
-	robot->driveDistance(AUTO_GRAY_DISTANCE);
+void AutonomousController::test() {
+	commandSet.push_back(CMD_STOP);
 }
 
 //Empty destructor

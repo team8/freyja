@@ -50,10 +50,25 @@ void Robot::changeDrivetrainStateToBRAKE(){
 }
 
 void Robot::lift(double distance) {
-	//lifter.lift(distance);
+
 }
-void Robot::setLifterLevel(double level) {
+
+void Robot::drop() {
+}
+
+void Robot::canLift() {
+}
+
+void Robot::setLifterLevel(int level) {
 	lifter.setLevel(level);
+}
+
+Drivetrain::State Robot::getDrivetrainState() {
+	return drivetrain.getState();
+}
+
+Lifter::State Robot::getLifterState() {
+	//return drivetrain.getState();
 }
 
 double Robot::getLevel() {
@@ -63,5 +78,4 @@ double Robot::getLevel() {
 void Robot::zeroLifter() {
 	lifter.zeroing();
 }
-
 
