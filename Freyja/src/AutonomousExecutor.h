@@ -13,13 +13,14 @@
 #define AUTO_GRAY_DISTANCE 10 // y: auto zone to landfill tote
 #define GRAY_GRAY_DISTANCE 2 // x: between totes in landfill zone
 #define YELLOW_YELLOW_DISTANCE 5 // x: between yellow auto totes
-#define LIFT_DISTANCE 0 // z: lift distance
+#define LIFT_DISTANCE 10 // z: lift distance
 
 #include <WPILib.h>
 #include <list>
 #include <iterator>
 #include "Robot.h"
 #include "Constants.h"
+#include "Arm.h"
 
 class AutonomousExecutor {
 public:
@@ -40,6 +41,9 @@ private:
 	void grayToGray();
 	void rotate(int angle);
 	void canLift();
+	void open();
+	void close();
+	void toteLift();
 };
 
 #endif /* SRC_AUTONOMOUSEXECUTOR_H_ */

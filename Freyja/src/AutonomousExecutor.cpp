@@ -10,6 +10,7 @@
 #include "Robot.h"
 #include "Constants.h"
 #include <iterator>
+#include "Arm.h"
 
 AutonomousExecutor::AutonomousExecutor(Robot *robotPointer, std::list<AutoCommand> *commandSet) {
 	this->robot = robotPointer;
@@ -74,14 +75,26 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 		canLift();
 		break;
 	}
+	case CMD_CLOSE: {
+		close();
+		break;
+	}
+	case CMD_OPEN: {
+		open();
+		break;
+	}
+	case CMD_TOTE_LIFT: {
+		toteLift();
+		break;
+	}
 	}
 }
 
 void AutonomousExecutor::toteScore() {
 	std::list<AutoCommand> toteScoreSet;
-	toteScoreSet.push_back(CMD_LIFT);
+	toteScoreSet.push_back(CMD_TOTE_LIFT);
 	toteScoreSet.push_back(CMD_AUTO_DRIVE);
-	toteScoreSet.push_back(CMD_DROP);
+	toteScoreSet.push_back(CMD_OPEN);
 
 	comIt = commandSet->begin();
 	advance(comIt, 1);
@@ -99,9 +112,10 @@ void AutonomousExecutor::toteToTote(bool isLeft) {
 
 void AutonomousExecutor::canScore() {
 	std::list<AutoCommand> canScoreSet;
-	canScoreSet.push_back(CMD_CAN_LIFT);
+	// fix me!!!!
+	canScoreSet.push_back(CMD_TOTE_LIFT);
 	canScoreSet.push_back(CMD_AUTO_DRIVE);
-	canScoreSet.push_back(CMD_DROP);
+	canScoreSet.push_back(CMD_OPEN);
 
 	comIt = commandSet->begin();
 	advance(comIt, 1);
@@ -126,13 +140,30 @@ void AutonomousExecutor::drive(int dist) {
 }
 
 void AutonomousExecutor::lift() {
-	robot->lift(10);
+	robot->lift(LIFT_DISTANCE);
 }
 
 void AutonomousExecutor::drop() {
 	robot->drop();
 }
 
+void AutonomousExecutor::open() {
+	robot->changePistonState(Arm::PistonState::EXTENDING);
+}
+void AutonomousExecutor::close() {
+	robot->changePistonState(Arm::PistonState::RETRACTING);
+}
+
+void AutonomousExecutor::toteLift() {
+	std::list<AutoCommand> toteLiftSet;
+	toteLiftSet.push_back(CMD_CLOSE);
+	toteLiftSet.push_back(CMD_LIFT);
+
+	comIt = commandSet->begin();
+	advance(comIt, 1);
+	commandSet->splice(comIt, toteLiftSet);
+	commandSet->pop_front();
+}
 AutonomousExecutor::~AutonomousExecutor() {
 	// TODO Auto-generated destructor stub
 }
