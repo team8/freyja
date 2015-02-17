@@ -91,8 +91,8 @@ void Drivetrain::update() {
 			std::cout << "Drive Completed" << std::endl;
 		}
 
-		std::cout << "Left Error: " << leftTopController.GetError() << " Output: " << leftTopController.Get() << std::endl;
-		std::cout << "Right Error: " << rightTopController.GetError() << " Output: " << rightTopController.Get() << std::endl;
+		std::cout << "Left Error: " << leftTopController.GetError() << std::endl;
+		std::cout << "Right Error: " << rightTopController.GetError() << std::endl;
 
 		break;
 
@@ -106,14 +106,14 @@ void Drivetrain::update() {
 	case DRIVING_TELEOP:
 		//Determines the appropriate left and right speed
 
-		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
-		rightSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
-		leftTopTalon.Set(leftSpeed );
-		leftBottomTalon.Set(leftSpeed);
-		rightTopTalon.Set(-rightSpeed);
-		rightBottomTalon.Set(-rightSpeed);
+		leftTopTalon.Set(-leftSpeed );
+		leftBottomTalon.Set(-leftSpeed);
+		rightTopTalon.Set(rightSpeed);
+		rightBottomTalon.Set(rightSpeed);
 
 		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
 		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
@@ -122,14 +122,14 @@ void Drivetrain::update() {
 
 	case PRECISION_TRIGGER:
 		//Determines the appropriate left and right speed
-		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
-		rightSpeed = std::max(std::min(targetSpeed - rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
+		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
+		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
-		leftTopTalon.Set(leftSpeed);
-		leftBottomTalon.Set(leftSpeed);
-		rightTopTalon.Set(-rightSpeed);
-		rightBottomTalon.Set(-rightSpeed);
+		leftTopTalon.Set(-leftSpeed);
+		leftBottomTalon.Set(-leftSpeed);
+		rightTopTalon.Set(rightSpeed);
+		rightBottomTalon.Set(rightSpeed);
 
 		break;
 
@@ -141,8 +141,6 @@ void Drivetrain::update() {
 		targetSpeed = 0;
 
 		break;
-
-
 	}
 }
 
