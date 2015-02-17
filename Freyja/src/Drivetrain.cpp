@@ -30,6 +30,7 @@ Drivetrain::Drivetrain() :
 	//Initializes the target and rotate speeds to zero
 	targetSpeed = 0;
 	rotateSpeed = 0;
+	acceleration = 0;
 
 
 	//Sets the inital robot state to idle
@@ -104,6 +105,8 @@ void Drivetrain::update() {
 
 		//Updates for the teleop state
 	case DRIVING_TELEOP:
+		targetSpeed += acceleration;
+
 		//Determines the appropriate left and right speed
 
 		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
