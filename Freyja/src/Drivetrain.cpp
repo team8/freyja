@@ -95,8 +95,8 @@ void Drivetrain::update() {
 		rightTopTalon.Set(std::max(std::min((drivingSetpoint - rightEncoder.GetDistance())*RIGHT_PROPORTIONAL, 1.0), -1.0));
 		rightBottomTalon.Set(std::max(std::min((drivingSetpoint - rightEncoder.GetDistance())*RIGHT_PROPORTIONAL, 1.0), -1.0));
 
-		std::cout << "Left Error: " << drivingSetpoint - leftEncoder.GetDistance() << " Output: " << std::max(std::min((drivingSetpoint - leftEncoder.GetDistance())*LEFT_PROPORTIONAL, 1.0), -1.0) << std::endl;
-		std::cout << "Right Error: " << drivingSetpoint - rightEncoder.GetDistance() << " Output: " << std::max(std::min((drivingSetpoint - rightEncoder.GetDistance())*RIGHT_PROPORTIONAL, 1.0), -1.0) << std::endl;
+		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << " Output: " << std::max(std::min((drivingSetpoint - leftEncoder.GetDistance())*LEFT_PROPORTIONAL, 1.0), -1.0) << std::endl;
+		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << " Output: " << std::max(std::min((drivingSetpoint - rightEncoder.GetDistance())*RIGHT_PROPORTIONAL, 1.0), -1.0) << std::endl;
 
 		break;
 
@@ -249,10 +249,10 @@ void Drivetrain::driveDistance(double distance) {
 	drivingSetpoint = distance;
 
 	//Sets controller setpoint to given distance
-	leftTopController.SetSetpoint(distance);
-	leftBottomController.SetSetpoint(distance);
-	rightTopController.SetSetpoint(distance);
-	rightBottomController.SetSetpoint(distance);
+//	leftTopController.SetSetpoint(distance);
+//	leftBottomController.SetSetpoint(distance);
+//	rightTopController.SetSetpoint(distance);
+//	rightBottomController.SetSetpoint(distance);
 }
 
 void Drivetrain:: setStateTrigger(){
