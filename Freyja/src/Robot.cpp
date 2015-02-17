@@ -8,13 +8,13 @@ Robot::Robot() :
 void Robot::init() {
 	drivetrain.init();
 	arm.init();
-	//lifter.init();
+	lifter.init();
 }
 
 void Robot::update() {
 	drivetrain.update();
 	arm.update();
-	//lifter.update();
+	lifter.update();
 	
 	//disables lifter if either sensor is hit
 	if (lifter.checkSensorHit(true) || lifter.checkSensorHit(false))

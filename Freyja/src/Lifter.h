@@ -20,8 +20,7 @@ public:
 	double currentLevel;
 
 	enum State{
-		UP,
-		DOWN,
+		MOVING,
 		IDLE
 	} state;
 

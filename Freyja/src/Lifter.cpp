@@ -24,15 +24,11 @@ void Lifter::update() {
 
 	//executes commands based on the state of the lifter
 	switch (state) {
-		case UP:
+		case MOVING:
 		{
 			victor.Set(1.0);
 			break;
 		}
-		case DOWN:
-		{
-			victor.Set(-1.0);
-			break;
 		}
 		case IDLE:
 		{
@@ -59,10 +55,10 @@ void Lifter::setLevel(double level) {
 	 * otherwise, it keeps moving.
 	 */
 	currentLevel = level;
-	if (controller.GetError() < 0.5 && controller.GetError() > -0.5) {
+	if (liftEncoder.GetStopped()) {
 		state = IDLE;
 	} else {
-//		state = MOVING;
+		state = MOVING;
 	}
 }
 //this function moves the lifter to its lowest point to remove any error.

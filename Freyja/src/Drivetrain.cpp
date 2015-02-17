@@ -109,7 +109,7 @@ void Drivetrain::update() {
 	{
 		//Determines the appropriate left and right speed
 		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
-		double rightSpeed = -std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
+		double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(-leftSpeed );
@@ -231,10 +231,10 @@ void Drivetrain::driveDistance(double distance) {
 	state = DRIVING_DIST;
 
 	//Enables pid controllers
-//	leftTopController.Enable();
-//	leftBottomController.Enable();
-//	rightTopController.Enable();
-//	rightBottomController.Enable();
+	leftTopController.Enable();
+	leftBottomController.Enable();
+	rightTopController.Enable();
+	rightBottomController.Enable();
 
 	//Resets encoders
 	leftEncoder.Reset();
@@ -243,10 +243,10 @@ void Drivetrain::driveDistance(double distance) {
 	drivingSetpoint = distance;
 
 	//Sets controller setpoint to given distance
-//	leftTopController.SetSetpoint(distance);
-//	leftBottomController.SetSetpoint(distance);
-//	rightTopController.SetSetpoint(distance);
-//	rightBottomController.SetSetpoint(distance);
+	leftTopController.SetSetpoint(distance);
+	leftBottomController.SetSetpoint(distance);
+	rightTopController.SetSetpoint(distance);
+	rightBottomController.SetSetpoint(distance);
 }
 
 void Drivetrain:: setStateTrigger(){
