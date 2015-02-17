@@ -15,6 +15,10 @@ void Robot::update() {
 	drivetrain.update();
 	arm.update();
 	//lifter.update();
+	
+	//disables lifter if either sensor is hit
+	if (lifter.checkSensorHit(true) || lifter.checkSensorHit(false))
+		lifter.disable();
 }
 
 void Robot::disable() {
@@ -68,7 +72,7 @@ Drivetrain::State Robot::getDrivetrainState() {
 }
 
 Lifter::State Robot::getLifterState() {
-	//return drivetrain.getState();
+	return lifter.getState();
 }
 
 double Robot::getLevel() {
