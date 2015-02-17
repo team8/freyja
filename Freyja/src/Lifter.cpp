@@ -17,7 +17,6 @@ void Lifter::init() {
 }
 //updates lifter constantly
 void Lifter::update() {
-	std::cout << "Hall Effect Value: " << digitalInput.Get() << std::endl;
 
 	//executes commands based on the state of the lifter
 	switch (state) {
