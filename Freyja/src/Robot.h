@@ -61,7 +61,7 @@ class Robot {
 		/**Wrapper method for getting the current level of the lifter**/
 		double getLevel();
 
-
+		void setLifter(double speed);
 };
 
 #endif /* ROBOT_H */
