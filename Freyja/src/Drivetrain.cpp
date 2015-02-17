@@ -32,14 +32,6 @@ Drivetrain::Drivetrain() :
 	rotateSpeed = 0;
 	acceleration = 0;
 
-
-	//Sets the inital robot state to idle
-	state = IDLE;
-}
-
-//Initializes the drivetrain
-void Drivetrain::init() {
-
 	//Sets the encoder distance per pulses
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
 	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
@@ -53,6 +45,13 @@ void Drivetrain::init() {
 	//Sets the max period for stopped detection
 	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 	rightEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
+
+	//Sets the inital robot state to idle
+	state = IDLE;
+}
+
+//Initializes the drivetrain
+void Drivetrain::init() {
 	leftSpeed = 0;
 	rightSpeed = 0;
 
@@ -91,8 +90,13 @@ void Drivetrain::update() {
 			std::cout << "Drive Completed" << std::endl;
 		}
 
-		std::cout << "Left Error: " << leftTopController.GetError() << " Output: " << leftTopController.Get() << std::endl;
-		std::cout << "Right Error: " << rightTopController.GetError() << " Output: " << rightTopController.Get() << std::endl;
+		leftTopTalon.Set(std::max(std::min((drivingSetpoint - leftEncoder.GetDistance())*LEFT_PROPORTIONAL, 1.0), -1.0));
+		leftBottomTalon.Set(std::max(std::min((drivingSetpoint - leftEncoder.GetDistance())*LEFT_PROPORTIONAL, 1.0), -1.0));
+		rightTopTalon.Set(std::max(std::min((drivingSetpoint - rightEncoder.GetDistance())*RIGHT_PROPORTIONAL, 1.0), -1.0));
+		rightBottomTalon.Set(std::max(std::min((drivingSetpoint - rightEncoder.GetDistance())*RIGHT_PROPORTIONAL, 1.0), -1.0));
+
+		std::cout << "Left Error: " << drivingSetpoint - leftEncoder.GetDistance() << " Output: " << std::max(std::min((drivingSetpoint - leftEncoder.GetDistance())*LEFT_PROPORTIONAL, 1.0), -1.0) << std::endl;
+		std::cout << "Right Error: " << drivingSetpoint - rightEncoder.GetDistance() << " Output: " << std::max(std::min((drivingSetpoint - rightEncoder.GetDistance())*RIGHT_PROPORTIONAL, 1.0), -1.0) << std::endl;
 
 		break;
 
@@ -108,6 +112,10 @@ void Drivetrain::update() {
 
 		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
 		rightSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+	{
+		//Determines the appropriate left and right speed
+		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
+		double rightSpeed = -std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(leftSpeed );
@@ -119,7 +127,7 @@ void Drivetrain::update() {
 		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
 
 		break;
-
+	}
 	case PRECISION_TRIGGER:
 		//Determines the appropriate left and right speed
 		leftSpeed = std::max(std::min(targetSpeed + rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
@@ -141,8 +149,6 @@ void Drivetrain::update() {
 		targetSpeed = 0;
 
 		break;
-
-
 	}
 }
 
@@ -231,15 +237,16 @@ void Drivetrain::driveDistance(double distance) {
 	state = DRIVING_DIST;
 
 	//Enables pid controllers
-	leftTopController.Enable();
-	leftBottomController.Enable();
-	rightTopController.Enable();
-	rightBottomController.Enable();
+//	leftTopController.Enable();
+//	leftBottomController.Enable();
+//	rightTopController.Enable();
+//	rightBottomController.Enable();
 
 	//Resets encoders
 	leftEncoder.Reset();
 	rightEncoder.Reset();
 
+	drivingSetpoint = distance;
 
 	//Sets controller setpoint to given distance
 	leftTopController.SetSetpoint(distance);

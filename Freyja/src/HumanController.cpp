@@ -13,14 +13,16 @@ HumanController::HumanController() :
 
 void HumanController::update(Robot *robotPointer) {
 	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
+
 	if(moveJoystick.GetRawButton(1)) {
 		robotPointer->changeDrivetrainStateToBRAKE();
 	}
+
 	if (turnJoystick.GetRawButton(1)){
 		robotPointer->changeDrivetrainStateToPRECISION_TRIGGER();
 	}
-	if (operatorJoystick.GetRawButton(1)) {
 
+	if (operatorJoystick.GetRawButton(1)) {
 		robotPointer->changePistonState(Arm::PistonState::EXTENDING);
 	}
 	if (operatorJoystick.GetRawButton(2)) {
