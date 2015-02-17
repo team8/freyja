@@ -26,6 +26,9 @@ private:
 	//The rotation speed of the robot during teleoperated control
 	double rotateSpeed;
 	
+	// The value returned by the Y-axis of the driver stick
+	double acceleration;
+
 	double leftSpeed;
 	double rightSpeed;
 
