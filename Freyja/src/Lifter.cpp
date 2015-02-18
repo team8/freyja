@@ -1,5 +1,5 @@
 #include "Lifter.h"
-
+#include <iostream>
 Lifter::Lifter() :
 victor((uint32_t) 9), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput(
 (uint32_t) 9), digitalInput2((uint32_t) 8), controller(0.f, 0.f, 0.f, &liftEncoder, &victor)
@@ -20,17 +20,12 @@ void Lifter::init() {
 }
 //updates lifter constantly
 void Lifter::update() {
-
+	std::cout << "bottom switch is: " << checkSensorHit(false) << std::endl;
+	std::cout << "top switch is: " << checkSensorHit(true) << std::endl;
 	//executes commands based on the state of the lifter
 	switch (state) {
 		case MOVING:
 		{
-
-			if (checkEitherHit()) {
-				disable();
-				state = IDLE;
-			}
-
 			break;
 		}
 
@@ -82,8 +77,8 @@ void Lifter::zeroing() {
 
 //returns a boolean based on if the sensor has been hit
 bool Lifter::checkSensorHit(bool firstSensor) {
-	if (firstSensor) return (digitalInput.Get() == 1);
-	else return (digitalInput2.Get() == 1);
+	if (firstSensor == false) return (digitalInput.Get());
+	else return (digitalInput2.Get());
 }
 
 
@@ -110,5 +105,17 @@ double Lifter::getLevel() {
 }
 
 void Lifter::setState(double speed) {
-	victor.Set(speed);
+	state = MOVING;
+
+	if(!checkSensorHit(false)) {
+		victor.SetSpeed((float) std::max(0.0, speed));
+
+	}
+	else if(!checkSensorHit(true)) {
+		victor.SetSpeed((float) std::min(0.0, speed));
+	}
+	else
+	{
+		victor.SetSpeed(speed);
+	}
 }
