@@ -66,7 +66,10 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 		break;
 	}
 	case ::CMD_HALF_ROTATE: {
+		std::cout << "CMD_HALF_ROTATE start" << std::endl;
 		rotate(180);
+		std::cout << "CMD_HALF_ROTATE end" << std::endl;
+
 		break;
 	}
 	case ::CMD_LANDFILL_DRIVE: {
@@ -87,6 +90,10 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 	}
 	case CMD_TOTE_LIFT: {
 		toteLift();
+		break;
+	}
+	default: {
+		std::cout<<"default"<<std::endl;
 		break;
 	}
 	}
@@ -130,6 +137,7 @@ void AutonomousExecutor::grayToGray() {
 }
 
 void AutonomousExecutor::rotate(int angle) {
+	std::cout << "rotate method in AutoExecutor" << std::endl;
 	robot->rotateAngle(180);
 }
 
@@ -169,7 +177,9 @@ void AutonomousExecutor::toteLift() {
 }
 
 bool AutonomousExecutor::isAllIdle() {
-	return robot->getDrivetrainState();
+	std::cout << "Drive state: " << robot->getDrivetrainState() << std::endl;
+	//std::cout << "expected dstate: " << Drivetrain::State::IDLE << std::endl;
+	return robot->getDrivetrainState() == Drivetrain::State::IDLE;
 }
 
 // robot->getDrivetrainState();

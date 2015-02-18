@@ -19,7 +19,7 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 	//dial((uint32_t) PORT_AUTO_DIAL)
 {
 	//path = (Path) dial.GetValue();
-	path = DRIVE;
+	path = TEST;
 	command = CMD_STOP;
 	executing = false;
 	distance = 0;
@@ -72,17 +72,24 @@ void AutonomousController::update() {
 //			std::cout << "distance: " << distance << "    angle: " << angle << std::endl;
 //	}
 
-	std::cout << "update reached" << std::endl;
-	if(!executing && executor.isAllIdle()) {
-		std::cout << "executing loop count" << std::endl;
+	std::cout << "executing: " << executing << std::endl;
+	if(executor.isAllIdle() && !executing) {
+		std::cout << commandSet.front() << std::endl;
 		command = commandSet.front(); //fetch
         executing = true;
 		executor.executeCommand(command); // execute
-		std::cout << "right after executeCommand" << std::endl;
-		commandSet.pop_front(); // increment
-		executing = false;
-		std::cout << "executing set to false" << std::endl;
+		if(!commandSet.empty()) {
+			std::cout << "pop pop" << endl;
+			commandSet.pop_front(); // increment
 		}
+		else {
+			std::cout << "commandSet empty" << std::endl;
+			executing = false;
+		}
+	}
+	else if(executor.isAllIdle()) {
+		cout << "all idle, executing to true" << endl;
+		executing = false;
 	}
 }
 
@@ -131,6 +138,8 @@ void AutonomousController::accumulateGray() {
 }
 
 void AutonomousController::test() {
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_HALF_ROTATE);
 	commandSet.push_back(CMD_STOP);
 }
 

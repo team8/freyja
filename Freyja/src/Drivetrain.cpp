@@ -86,19 +86,21 @@ void Drivetrain::update() {
 		//Updates for the driving distance state
 	case DRIVING_DIST:
 		//Tests if the drivetrain has drived the specified distance
-		if (leftEncoder.GetStopped() && rightEncoder.GetStopped()) {
+		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopController.GetError() < 1) {
+			std::cout << "state reset to idle in dd" << std::endl;
 			state = IDLE;
 		}
 
-		std::cout << "Left Error: " << leftTopController.GetError() << std::endl;
-		std::cout << "Right Error: " << rightTopController.GetError() << std::endl;
+		//std::cout << "Left Error: " << leftTopController.GetError() << std::endl;
+		//std::cout << "Right Error: " << rightTopController.GetError() << std::endl;
 
 		break;
 
 		//Updates for the rotating angle state
 	case ROTATING_ANGLE:
 		//IF change condition : disable and set state to idle
-		if (leftEncoder.GetStopped() && rightEncoder.GetStopped()) {
+		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopController.GetError() < 1) {
+			std::cout << "state reset to idle in ra" << std::endl;
 			state = IDLE;
 		}
 
@@ -210,21 +212,24 @@ void Drivetrain::setRotateSpeed(double speed) {
 
 //Rotates the given angle
 void Drivetrain::rotateAngle(double angle) {
+	std::cout << "rotateAngle check 1" << std::endl;
 	stopControl();
-
+	std::cout << "rotateAngle check 2" << std::endl;
 	state = ROTATING_ANGLE;
 
 	gyro.Reset();
-
+	std::cout << "rotateAngle check 3" << std::endl;
 	leftTopGyroController.SetSetpoint(angle);
 	leftBottomGyroController.SetSetpoint(angle);
 	rightTopGyroController.SetSetpoint(angle);
 	rightBottomGyroController.SetSetpoint(angle);
+	std::cout << "rotateAngle check 4" << std::endl;
 
 	leftTopGyroController.Enable();
 	leftBottomGyroController.Enable();
 	rightTopGyroController.Enable();
 	rightBottomGyroController.Enable();
+	std::cout << "rotateAngle check 5" << std::endl;
 }
 
 //Drives the given distance

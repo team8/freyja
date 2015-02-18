@@ -27,6 +27,7 @@ public:
 	AutonomousExecutor(Robot *robotPointer, std::list<AutoCommand> *commandSet);
 	void executeCommand(AutoCommand command);
 	virtual ~AutonomousExecutor();
+	bool isAllIdle();
 private:
 	Robot* robot;
 	std::list<AutoCommand>* commandSet;
@@ -44,7 +45,6 @@ private:
 	void open();
 	void close();
 	void toteLift();
-	bool isAllIdle();
 };
 
 #endif /* FREYJA_SRC_AUTONOMOUSEXECUTOR_H_ */

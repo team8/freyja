@@ -26,6 +26,7 @@ void Robot::update() {
 void Robot::disable() {
 	drivetrain.disable();
 	arm.disable();
+	lifter.disable();
 }
 
 void Robot::move(double acceleration, double rotateSpeed) {

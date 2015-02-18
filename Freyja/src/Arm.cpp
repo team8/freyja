@@ -30,8 +30,8 @@ bool Arm::getCompressor() {
 }
 void Arm::disable() {
 	//Turns everything off just in case
-	setCompressorState(OFF);
 	setPistonState(IDLE);
+	setCompressorState(OFF);
 }
 
 void Arm::update() {
