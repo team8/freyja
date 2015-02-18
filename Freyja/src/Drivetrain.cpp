@@ -121,9 +121,9 @@ void Drivetrain::update() {
 		leftBottomTalon.Set(-leftSpeed);
 		rightTopTalon.Set(rightSpeed);
 		rightBottomTalon.Set(rightSpeed);
-
-		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
-		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
+//
+//		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
+//		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
 
 		break;
 	}
