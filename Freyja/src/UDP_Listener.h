@@ -50,7 +50,7 @@ public:
 
 	std::string recv(); //recovers from buffer and returns the string
 
-	const std::string RECV_ERROR = "error";
+	static constexpr char *RECV_ERROR = "error";
 };
 
 #endif
