@@ -1,16 +1,14 @@
 /*
- * Version 10
- * 2/14/15
- * Jonathan Zwiebel
+ * Version 11
+ * 2/17/15
+ * Jonathan Zwiebel and Nihar Mitra
  */
 
 #ifndef AUTONOMOUS_CONTROLLER_H
 #define AUTONOMOUS_CONTROLLER_H
 
-
 #include <WPILib.h>
 #include <list>
-
 #include <algorithm>
 #include "Robot.h"
 #include "Constants.h"
@@ -25,10 +23,10 @@ class AutonomousController {
 		void init();
 
 	private:
-                // the ordered list of commands, will be changed to a List soon
+		// the highest level list of commands, mutates
 		std::list<AutoCommand> commandSet;
 
-                // tracks whether the executor is actively functioning
+		// tracks whether the executor is actively functioning
 		bool executing;
 
 		AutonomousExecutor executor;
@@ -39,11 +37,11 @@ class AutonomousController {
 
 		UDP_Listener udpListener;
 
+		// vision variables
 		double distance;
 		double angle;
 
-
-
+		// paths
 		void stop();
 		void drive();
 		void toteScore();

@@ -58,6 +58,7 @@
 
 #define TOTE_HEIGHT 12.1
 
+// Constants used for fine tuning steering
 // assumes 200 updates per second
 #define ACCELERATION_CONSTANT 0.0133
 #define SPEED_DECAY_CONSTANT 0.90
@@ -66,6 +67,7 @@
 #define ROTATE_CONSTANT 0.8
 #define ACCELERATION_REVERSE_CONSTANT 0.025
 
+// enums for AutonomousController and AutonomousExecutor
 enum Path {
 	STOP, DRIVE, TOTE_SCORE, TOTE_SCORE_DOUBLE_LEFT, TOTE_SCORE_DOUBLE_RIGHT,
 	CAN_SCORE,  ACCUMULATE_GRAY, TEST

@@ -1,7 +1,7 @@
 /*
- * Version 10
- * 2/14/15
- * Jonathan Zwiebel
+ * Version 11
+ * 2/17/15
+ * Jonathan Zwiebel and Nihar Mitra
  */
 
 
@@ -63,7 +63,7 @@ void AutonomousController::init() {
 // is controlled periodically and will only function when the update method is
 // called
 void AutonomousController::update() {
-	//network
+	//network with rPi to offsource vision
 //	std::string msg = udpListener.recv();
 //	if (msg != UDP_Listener::RECV_ERROR) {
 //			std::string::size_type sz;
@@ -73,42 +73,51 @@ void AutonomousController::update() {
 //	}
 
 	std::cout << "executing: " << executing << std::endl;
+
+	// loops only when there is no command currently running
 	if(executor.isAllIdle() && !executing) {
 		std::cout << commandSet.front() << std::endl;
-		command = commandSet.front(); //fetch
+		command = commandSet.front(); //fetch - gets the command to run
         executing = true;
-		executor.executeCommand(command); // execute
+		executor.executeCommand(command); // execute - runs the command
+		// conditional to prevent null reference error
 		if(!commandSet.empty()) {
 			std::cout << "pop pop" << endl;
-			commandSet.pop_front(); // increment
+			commandSet.pop_front(); // increment - sets the next command run to run
 		}
 		else {
 			std::cout << "commandSet empty" << std::endl;
 			executing = false;
+			// turns off the loop
 		}
 	}
+	// checks if everything is idle, meaning nothing is running
 	else if(executor.isAllIdle()) {
 		cout << "all idle, executing to true" << endl;
 		executing = false;
 	}
 }
 
+// dead stop path
 void AutonomousController::stop() {
 	path = STOP;
 	command = CMD_STOP;
 	executing = true;
 }
 
+// drives into auto zone
 void AutonomousController::drive() {
 	commandSet.push_back(CMD_AUTO_DRIVE);
 	commandSet.push_back(CMD_STOP);
 }
 
+// scores a single yellow tote
 void AutonomousController::toteScore() {
 	commandSet.push_back(CMD_TOTE_SCORE);
 	commandSet.push_back(CMD_STOP);
 }
 
+// scores a yellow tote and the one to its left
 void AutonomousController::toteScoreDoubleLeft() {
 	commandSet.push_back(CMD_LIFT);
 	commandSet.push_back(CMD_TOTE_TO_TOTE_LEFT);
@@ -116,6 +125,7 @@ void AutonomousController::toteScoreDoubleLeft() {
 	commandSet.push_back(CMD_STOP);
 }
 
+// scores a yellow tote and the one to its right
 void AutonomousController::toteScoreDoubleRight() {
 	commandSet.push_back(CMD_LIFT);
 	commandSet.push_back(CMD_TOTE_TO_TOTE_RIGHT);
@@ -123,11 +133,13 @@ void AutonomousController::toteScoreDoubleRight() {
 	commandSet.push_back(CMD_STOP);
 }
 
+// scores an auto can on our side
 void AutonomousController::canScore() {
 	commandSet.push_back(CMD_CAN_SCORE);
 	commandSet.push_back(CMD_STOP);
 }
 
+// goes to the landfill zone, accumulates gray totes and ends in auto zone
 void AutonomousController::accumulateGray() {
 	commandSet.push_back(CMD_LANDFILL_DRIVE);
 	commandSet.push_back(CMD_GRAY_TO_GRAY);
@@ -137,6 +149,7 @@ void AutonomousController::accumulateGray() {
 	commandSet.push_back(CMD_STOP);
 }
 
+// special path used for testing
 void AutonomousController::test() {
 	commandSet.push_back(CMD_AUTO_DRIVE);
 	commandSet.push_back(CMD_HALF_ROTATE);

@@ -1,7 +1,7 @@
 /*
- * Version 10
- * 2/14/15
- * Jonathan Zwiebel
+ * Version 11
+ * 2/17/15
+ * Jonathan Zwiebel and Nihar Mitra
  */
 
 #include <WPILib.h>
@@ -29,54 +29,54 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 		std::cout << "CMD_AUTO_DRIVE end" << std::endl;
 		break;
 	}
-	case ::CMD_LIFT: {
+	case CMD_LIFT: {
 		lift();
 		break;
 	}
-	case ::CMD_DROP: {
+	case CMD_DROP: {
 		drop();
 		break;
 	}
-	case ::CMD_TOTE_SCORE: {
+	case CMD_TOTE_SCORE: {
 		toteScore();
 		break;
 	}
-	case ::CMD_ACCUMULATE_FROM_AUTO: {
+	case CMD_ACCUMULATE_FROM_AUTO: {
 		accumulateFromAuto();
 		break;
 	}
-	case ::CMD_TOTE_TO_TOTE_LEFT: {
+	case CMD_TOTE_TO_TOTE_LEFT: {
 		toteToTote(true);
 		break;
 	}
-	case ::CMD_TOTE_TO_TOTE_RIGHT: {
+	case CMD_TOTE_TO_TOTE_RIGHT: {
 		toteToTote(false);
 		break;
 	}
-	case ::CMD_CAN_SCORE: {
+	case CMD_CAN_SCORE: {
 		canScore();
 		break;
 	}
-	case ::CMD_DRIVE_LANDFILL_AUTO: {
+	case CMD_DRIVE_LANDFILL_AUTO: {
 		drive(AUTO_GRAY_DISTANCE);
 		break;
 	}
-	case ::CMD_GRAY_TO_GRAY: {
+	case CMD_GRAY_TO_GRAY: {
 		grayToGray();
 		break;
 	}
-	case ::CMD_HALF_ROTATE: {
+	case CMD_HALF_ROTATE: {
 		std::cout << "CMD_HALF_ROTATE start" << std::endl;
 		rotate(180);
 		std::cout << "CMD_HALF_ROTATE end" << std::endl;
 
 		break;
 	}
-	case ::CMD_LANDFILL_DRIVE: {
+	case CMD_LANDFILL_DRIVE: {
 		drive(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
 		break;
 	}
-	case ::CMD_CAN_LIFT: {
+	case CMD_CAN_LIFT: {
 		canLift();
 		break;
 	}
@@ -93,12 +93,14 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 		break;
 	}
 	default: {
-		std::cout<<"default"<<std::endl;
+		// default states only occurs when illegal command is called
+		std::cout<<"default command called in autoexec"<<std::endl;
 		break;
 	}
 	}
 }
 
+// MACRO: picks up a tote, drives and drops it in the correct zone
 void AutonomousExecutor::toteScore() {
 	std::list<AutoCommand> toteScoreSet;
 	toteScoreSet.push_back(CMD_TOTE_LIFT);
@@ -111,14 +113,17 @@ void AutonomousExecutor::toteScore() {
 	commandSet->pop_front();
 }
 
+// MACRO: accumulates a gray tote from autonomous
 void AutonomousExecutor::accumulateFromAuto() {
 
 }
 
+// MACRO: moves from one yellow tote to another with vision
 void AutonomousExecutor::toteToTote(bool isLeft) {
 
 }
 
+// MACRO: picks up a can, drives and drops it in the correct zone
 void AutonomousExecutor::canScore() {
 	std::list<AutoCommand> canScoreSet;
 	// fix me!!!!
@@ -132,39 +137,49 @@ void AutonomousExecutor::canScore() {
 	commandSet->pop_front();
 }
 
+// MACRO: moves from one gray tote to another
 void AutonomousExecutor::grayToGray() {
 
 }
 
+// BASE_ARG: rotates a given angle
 void AutonomousExecutor::rotate(int angle) {
 	std::cout << "rotate method in AutoExecutor" << std::endl;
 	robot->rotateAngle(180);
 }
 
+// BASE: lifts a can
 void AutonomousExecutor::canLift() {
 	robot->canLift();
 }
 
+// BASE_ARG: drives forward a set distance
 void AutonomousExecutor::drive(int dist) {
 	std::cout << "AutoExec::drive called" << std::endl;
 	robot->driveDistance(dist);
 }
 
+// BASE: lifts a tote
 void AutonomousExecutor::lift() {
 	robot->lift(LIFT_DISTANCE);
 }
 
+// BASE: drops whatever is being held
 void AutonomousExecutor::drop() {
 	robot->drop();
 }
 
+// BASE: opens the arms
 void AutonomousExecutor::open() {
 	robot->changePistonState(Arm::PistonState::EXTENDING);
 }
+
+// BASE: closes the arms
 void AutonomousExecutor::close() {
 	robot->changePistonState(Arm::PistonState::RETRACTING);
 }
 
+// MACRO: lifts a tote
 void AutonomousExecutor::toteLift() {
 	std::list<AutoCommand> toteLiftSet;
 	toteLiftSet.push_back(CMD_CLOSE);
@@ -176,6 +191,9 @@ void AutonomousExecutor::toteLift() {
 	commandSet->pop_front();
 }
 
+/* checks if any of the subsystems are currently working
+ * currently implemented: drivetrain
+ */
 bool AutonomousExecutor::isAllIdle() {
 	std::cout << "Drive state: " << robot->getDrivetrainState() << std::endl;
 	//std::cout << "expected dstate: " << Drivetrain::State::IDLE << std::endl;
