@@ -1,9 +1,9 @@
 #include "Lifter.h"
 
 Lifter::Lifter() :
-victor((uint32_t) 9), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput(
-(uint32_t) 9), digitalInput2((uint32_t) 8), controller(0.f, 0.f, 0.f, &liftEncoder, &victor)
-{
+		victor((uint32_t) 9), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput(
+				(uint32_t) 9), digitalInput2((uint32_t) 8), controller(0.f, 0.f,
+				0.f, &liftEncoder, &victor) {
 	state = IDLE;
 	victor.Set(0);
 }
@@ -16,7 +16,7 @@ void Lifter::init() {
 	liftEncoder.Reset();
 	controller.Reset();
 	controller.Enable();
-	
+
 	state = IDLE;
 }
 //updates lifter constantly
@@ -24,31 +24,27 @@ void Lifter::update() {
 
 	//executes commands based on the state of the lifter
 	switch (state) {
-		case MOVING:
-		{
-			victor.Set(1.0);
-			break;
-		}
-		}
-		case IDLE:
-		{
-			victor.Set(0);
-			break;
-		}
+	case MOVING:
+		victor.Set(1.0);
+		break;
+	case IDLE:
+		victor.Set(0);
+		break;
+
 	}
 }
 
 //disables everything on lifter
 void Lifter::disable() {
-	victor.Disable();
+	//victor.Disable();
 	controller.Disable();
-	
+
 	state = IDLE;
 }
 
 //this method moves the lifter.
 void Lifter::setLevel(double level) {
-	controller.SetSetpoint(level*TOTE_HEIGHT);
+	controller.SetSetpoint(level * TOTE_HEIGHT);
 	/*
 	 * Checks to see if the pid has reached its target.
 	 * if it has, it reverts to idle state
@@ -73,8 +69,10 @@ void Lifter::zeroing() {
 
 //returns a boolean based on if the sensor has been hit
 bool Lifter::checkSensorHit(bool firstSensor) {
-	if (firstSensor) return (digitalInput.Get() == 1);
-	else return (digitalInput2.Get() == 1);
+	if (firstSensor)
+		return (digitalInput.Get() == 1);
+	else
+		return (digitalInput2.Get() == 1);
 }
 
 //gets the current state of the lifter.
