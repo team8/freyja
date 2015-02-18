@@ -20,8 +20,8 @@ void Lifter::init() {
 }
 //updates lifter constantly
 void Lifter::update() {
-	std::cout << "bottom switch is: " << checkSensorHit(false) << std::endl;
-	std::cout << "top switch is: " << checkSensorHit(true) << std::endl;
+	//std::cout << "bottom switch is: " << checkSensorHit(false) << std::endl;
+	//std::cout << "top switch is: " << checkSensorHit(true) << std::endl;
 	//executes commands based on the state of the lifter
 	switch (state) {
 		case MOVING:

@@ -14,7 +14,7 @@ Drivetrain::Drivetrain() :
 		rightEncoder((uint32_t) PORT_ENCODER_RIGHT_A, (uint32_t) PORT_ENCODER_RIGHT_B, false),
 
 		//Initializes the gyroscope
-		gyro(PORT_GYRO),
+		gyro((int32_t) PORT_GYRO),
 
 		//Initializes the pid controllers
 		leftTopController(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftTopTalon),
@@ -212,13 +212,20 @@ void Drivetrain::setRotateSpeed(double speed) {
 
 //Rotates the given angle
 void Drivetrain::rotateAngle(double angle) {
-	std::cout << "rotateAngle check 1" << std::endl;
+
 	stopControl();
-	std::cout << "rotateAngle check 2" << std::endl;
+
 	state = ROTATING_ANGLE;
+	std::cout << "Before init gyro "<< std::endl;
+
+	gyro.InitGyro();
+
+	std::cout << "Gyro angle: " << gyro.GetAngle() << std::endl;
+	std::cout << "rotateAngle check 2" << std::endl;
 
 	gyro.Reset();
 	std::cout << "rotateAngle check 3" << std::endl;
+
 	leftTopGyroController.SetSetpoint(angle);
 	leftBottomGyroController.SetSetpoint(angle);
 	rightTopGyroController.SetSetpoint(angle);
