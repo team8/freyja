@@ -18,8 +18,9 @@ void Robot::update() {
 	lifter.update();
 	
 	//disables lifter if either sensor is hit
-	if (lifter.checkSensorHit(true) || lifter.checkSensorHit(false))
+	if (lifter.checkEitherHit()){
 		lifter.disable();
+	}
 }
 
 void Robot::disable() {

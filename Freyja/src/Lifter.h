@@ -1,5 +1,5 @@
-#ifndef SRC_LIFTER_H_
-#define SRC_LIFTER_H_
+#ifndef FREYJA_SRC_LIFTER_H_
+#define FREYJA_SRC_LIFTER_H_
 #include "Subsys.h"
 #include <WPILib.h>
 #include "Constants.h"
@@ -11,7 +11,11 @@ public:
 	void init() override;
 	void update() override;
 	void disable() override;
+
 	bool checkSensorHit(bool firstSensor);
+	bool checkBottomHit();
+	bool checkEitherHit();
+
 	double getDistance(); //uses encoder
 	void lift(double distance);
 	void setLevel(double level);
@@ -31,9 +35,11 @@ public:
 private:
 	VictorSP victor;
 	Encoder liftEncoder;
+
 	DigitalInput digitalInput;
 	DigitalInput digitalInput2;
+
 	PIDController controller;
 };
 
-#endif /* SRC_LIFTER_H_ */
+#endif /* FREYJA_SRC_LIFTER_H_ */

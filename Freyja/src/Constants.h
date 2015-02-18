@@ -25,7 +25,7 @@
 
 #define PORT_AUTO_DIAL 1
 
-#define PORT_GYRO 0
+#define PORT_GYRO 6
 
 //#define LEFT_PROPORTIONAL 0.12
 //#define LEFT_INTEGRAL 0.0

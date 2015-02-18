@@ -7,7 +7,7 @@ class Freyja: public IterativeRobot {
 private:
 	Robot robot;
 	HumanController humanController;
-	//AutonomousController autoController;
+	AutonomousController autoController;
 
 public:
 	Freyja();
@@ -17,11 +17,15 @@ public:
 	void DisabledPeriodic();
 	void TeleopInit();
 	void TeleopPeriodic();
+	void AutonomousInit();
+	void AutonomousPeriodic();
 };
 
 using namespace std;
 
-Freyja::Freyja() {
+Freyja::Freyja() :
+		autoController(&robot)
+{
 
 }
 
@@ -44,6 +48,16 @@ void Freyja::TeleopInit() {
 
 void Freyja::TeleopPeriodic() {
 	humanController.update(&robot);
+    robot.update();
+}
+
+void Freyja::AutonomousInit() {
+	robot.init();
+	autoController.init();
+}
+
+void Freyja::AutonomousPeriodic() {
+	autoController.update();
     robot.update();
 }
 

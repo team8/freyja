@@ -24,7 +24,9 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 		break;
 	}
 	case CMD_AUTO_DRIVE: {
+		std::cout << "CMD_AUTO_DRIVE start" << std::endl;
 		drive(YELLOW_AUTO_DISTANCE);
+		std::cout << "CMD_AUTO_DRIVE end" << std::endl;
 		break;
 	}
 	case ::CMD_LIFT: {
@@ -136,6 +138,7 @@ void AutonomousExecutor::canLift() {
 }
 
 void AutonomousExecutor::drive(int dist) {
+	std::cout << "AutoExec::drive called" << std::endl;
 	robot->driveDistance(dist);
 }
 
@@ -164,6 +167,13 @@ void AutonomousExecutor::toteLift() {
 	commandSet->splice(comIt, toteLiftSet);
 	commandSet->pop_front();
 }
+
+bool AutonomousExecutor::isAllIdle() {
+	return robot->getDrivetrainState();
+}
+
+// robot->getDrivetrainState();
+
 AutonomousExecutor::~AutonomousExecutor() {
 	// TODO Auto-generated destructor stub
 }

@@ -19,7 +19,7 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 	//dial((uint32_t) PORT_AUTO_DIAL)
 {
 	//path = (Path) dial.GetValue();
-	path = TEST;
+	path = DRIVE;
 	command = CMD_STOP;
 	executing = false;
 	distance = 0;
@@ -64,26 +64,32 @@ void AutonomousController::init() {
 // called
 void AutonomousController::update() {
 	//network
-	std::string msg = udpListener.recv();
-	if (msg != UDP_Listener::RECV_ERROR) {
-			std::string::size_type sz;
-			distance = std::stod(msg, &sz);
-			angle = std::stod(msg.substr(sz));
-			std::cout << "distance: " << distance << "    angle: " << angle << std::endl;
-	}
+//	std::string msg = udpListener.recv();
+//	if (msg != UDP_Listener::RECV_ERROR) {
+//			std::string::size_type sz;
+//			distance = std::stod(msg, &sz);
+//			angle = std::stod(msg.substr(sz));
+//			std::cout << "distance: " << distance << "    angle: " << angle << std::endl;
+//	}
 
-	if(!executing) {
+	std::cout << "update reached" << std::endl;
+	if(!executing && executor.isAllIdle()) {
+		std::cout << "executing loop count" << std::endl;
 		command = commandSet.front(); //fetch
         executing = true;
 		executor.executeCommand(command); // execute
-		commandSet.pop_back(); // increment
+		std::cout << "right after executeCommand" << std::endl;
+		commandSet.pop_front(); // increment
+		executing = false;
+		std::cout << "executing set to false" << std::endl;
+		}
 	}
 }
 
 void AutonomousController::stop() {
 	path = STOP;
 	command = CMD_STOP;
-	executing = false;
+	executing = true;
 }
 
 void AutonomousController::drive() {

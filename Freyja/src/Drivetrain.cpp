@@ -87,7 +87,7 @@ void Drivetrain::update() {
 	case DRIVING_DIST:
 		//Tests if the drivetrain has drived the specified distance
 		if (leftEncoder.GetStopped() && rightEncoder.GetStopped()) {
-			std::cout << "Drive Completed" << std::endl;
+			state = IDLE;
 		}
 
 		std::cout << "Left Error: " << leftTopController.GetError() << std::endl;
@@ -98,7 +98,10 @@ void Drivetrain::update() {
 		//Updates for the rotating angle state
 	case ROTATING_ANGLE:
 		//IF change condition : disable and set state to idle
-		std::cout << "we in rotating angle" << std::endl;
+		if (leftEncoder.GetStopped() && rightEncoder.GetStopped()) {
+			state = IDLE;
+		}
+
 		break;
 
 		//Updates for the teleop state

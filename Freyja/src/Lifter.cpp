@@ -1,12 +1,11 @@
 #include "Lifter.h"
 
 Lifter::Lifter() :
-		victor((uint32_t) 9), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput(
-				(uint32_t) 9), digitalInput2((uint32_t) 8), controller(0.f, 0.f,
-				0.f, &liftEncoder, &victor) {
-	state = IDLE;
-	victor.Set(0);
+victor((uint32_t) 9), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput(
+(uint32_t) 9), digitalInput2((uint32_t) 8), controller(0.f, 0.f, 0.f, &liftEncoder, &victor)
+{
 }
+
 
 Lifter::~Lifter() {
 
@@ -24,19 +23,32 @@ void Lifter::update() {
 
 	//executes commands based on the state of the lifter
 	switch (state) {
-	case MOVING:
-		victor.Set(1.0);
-		break;
-	case IDLE:
-		victor.Set(0);
-		break;
+		case MOVING:
+		{
 
+			if (checkEitherHit()) {
+				disable();
+				state = IDLE;
+			}
+
+			break;
+		}
+
+		case IDLE:
+		{
+
+			if (checkSensorHit(false)) {
+				setLevel(0);
+				liftEncoder.Reset();
+			}
+			break;
+		}
 	}
 }
 
 //disables everything on lifter
 void Lifter::disable() {
-	//victor.Disable();
+	victor.Disable();
 	controller.Disable();
 
 	state = IDLE;
@@ -44,7 +56,7 @@ void Lifter::disable() {
 
 //this method moves the lifter.
 void Lifter::setLevel(double level) {
-	controller.SetSetpoint(level * TOTE_HEIGHT);
+	controller.SetSetpoint(level*TOTE_HEIGHT);
 	/*
 	 * Checks to see if the pid has reached its target.
 	 * if it has, it reverts to idle state
@@ -67,13 +79,24 @@ void Lifter::zeroing() {
 //	victor.Set(speed);
 //}
 
+
 //returns a boolean based on if the sensor has been hit
 bool Lifter::checkSensorHit(bool firstSensor) {
-	if (firstSensor)
-		return (digitalInput.Get() == 1);
-	else
-		return (digitalInput2.Get() == 1);
+	if (firstSensor) return (digitalInput.Get() == 1);
+	else return (digitalInput2.Get() == 1);
 }
+
+
+
+//returns a boolean based on if either sensor has been hit
+bool Lifter::checkEitherHit() {
+	if (digitalInput.Get() == 1 || digitalInput2.Get() == 1) {
+		return true;
+	}
+	return false;
+
+}
+
 
 //gets the current state of the lifter.
 //this is used to tell other classes what state the lifter is in.

@@ -5,14 +5,14 @@
  */
 
 
-#ifndef SRC_AUTONOMOUSEXECUTOR_H_
-#define SRC_AUTONOMOUSEXECUTOR_H_
+#ifndef FREYJA_SRC_AUTONOMOUSEXECUTOR_H_
+#define FREYJA_SRC_AUTONOMOUSEXECUTOR_H_
 
 // Distance constants used specifically for autonomous
-#define YELLOW_AUTO_DISTANCE 15 // y: front of yellow tote to auto zone
-#define AUTO_GRAY_DISTANCE 10 // y: auto zone to landfill tote
-#define GRAY_GRAY_DISTANCE 2 // x: between totes in landfill zone
-#define YELLOW_YELLOW_DISTANCE 5 // x: between yellow auto totes
+#define YELLOW_AUTO_DISTANCE 150 // y: front of yellow tote to auto zone
+#define AUTO_GRAY_DISTANCE 100 // y: auto zone to landfill tote
+#define GRAY_GRAY_DISTANCE 20 // x: between totes in landfill zone
+#define YELLOW_YELLOW_DISTANCE 50 // x: between yellow auto totes
 #define LIFT_DISTANCE 10 // z: lift distance
 
 #include <WPILib.h>
@@ -44,6 +44,7 @@ private:
 	void open();
 	void close();
 	void toteLift();
+	bool isAllIdle();
 };
 
-#endif /* SRC_AUTONOMOUSEXECUTOR_H_ */
+#endif /* FREYJA_SRC_AUTONOMOUSEXECUTOR_H_ */
