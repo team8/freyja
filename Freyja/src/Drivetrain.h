@@ -75,47 +75,25 @@ public:
 	//The State variable created for this instance
 	State state;
 
-	//Constructor declaration, constructs fileds of drivetrain
 	Drivetrain();
-
-	//Destructor declaration
 	virtual ~Drivetrain();
 
-	//Initializes drivetain and associated fields
 	void init();
-
-	//Disables drivetrain and associated fields
 	void disable();
-
-	//Updates the drivetrain and fields
 	void update();
 
-	//Stops robot motion and controler output
 	void stopControl();
-
-	//Stops all drivetrain motion
 	void stopTalons();
 
-	//Sets the target and rotate speed of the robot
 	void setSpeed(double targetSpeed, double rotateSpeed);
-
-	//Sets the target and rotate speed of the robot
 	void setTargetSpeed(double speed);
 	void setRotateSpeed(double speed);
 
-	//Rotates the drivetrain by the given angle, uses gyroscope and pid controllers
 	void rotateAngle(double angle);
-
-	//Drives the drivetrain the given distance, uses pid controllers
 	void driveDistance(double distance);
 
-	//Set state to PREISION_TRIGGER
 	void setStateTrigger();
-
-	//Set state to BRAKE
 	void setStateBrake();
-
-	//Returns the state of this drivetrain
 	State getState();
 };
 

@@ -22,48 +22,26 @@ public:
 	/** Robot constructor, initializes robot and subsystems */
 	Robot();
 
-	/** Initializes instance and subsystems */
 	void init();
-	/** Updates instance and subsystems */
 	void update();
-	/** Disables instance and subsystems */
 	void disable();
 
-	/** Wrapper method for drivetrain teleoperated movement */
 	void move(double targetSpeed, double rotateSpeed);
-
-	/** Wrapper method for driving a specified distance */
 	void driveDistance(double distance);
-
-	/** Wrapper method for rotating a specified angle */
 	void rotateAngle(double angle);
-
-	/** Wrapper method for changing piston state */
-	void changePistonState(Arm::PistonState state);
-
-	/** Wrapper method for changing the compressor state */
-	void changeCompressorState(Arm::CompressorState state);
-
-	/** Wrapper method for changing the Drivetrain state to PRECISION_TRIGGER*/
 	void changeDrivetrainStateToPRECISION_TRIGGER();
-
-	/** Wrapper method for changing the Drivetrain state to BRAKE*/
 	void changeDrivetrainStateToBRAKE();
+	Drivetrain::State getDrivetrainState();
+
+	void changePistonState(Arm::PistonState state);
+	void changeCompressorState(Arm::CompressorState state);
 
 	void drop();
 	void canLift();
-
-	/** Wrapper method for setting the lifter level */
 	void setLifterLevel(int level);
-
-	Drivetrain::State getDrivetrainState();
 	Lifter::State getLifterState();
-
-	/**Wrapper method for zeroing the lifter level **/
 	void zeroLifter();
-	/**Wrapper method for getting the current level of the lifter**/
 	double getLevel();
-
 	void setLifter(double speed);
 };
 

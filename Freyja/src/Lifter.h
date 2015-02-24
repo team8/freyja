@@ -16,7 +16,7 @@ public:
 	bool checkBottomHit();
 	bool checkEitherHit();
 
-	double getDistance(); //uses encoder
+	double getDistance();
 	void lift(double distance);
 	void setLevel(double level);
 	void zeroing();
