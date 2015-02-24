@@ -27,6 +27,7 @@
 
 #define PORT_GYRO 6
 
+//Various PID constants
 //#define LEFT_PROPORTIONAL 0.12
 //#define LEFT_INTEGRAL 0.0
 //#define LEFT_DERIVATIVE 0.10
@@ -51,11 +52,11 @@
 
 #define PID_ASSISTED_TIME_CONSTANT 50
 
+//Distance per pulse for drivetrain
 #define RIGHT_DPP 0.018258776354
 #define LEFT_DPP 0.012808296080
 
 #define LIFT_SPEED 0.5
-
 #define TOTE_HEIGHT 12.1
 
 // Constants used for fine tuning steering

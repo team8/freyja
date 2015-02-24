@@ -60,11 +60,12 @@ void Freyja::TeleopPeriodic() {
 	robot.update();
 }
 
+/** Initializes the robot for autonomous */
 void Freyja::AutonomousInit() {
 	robot.init();
 	autoController.init();
 }
-
+/** Called repeatedly while autonomous is running */
 void Freyja::AutonomousPeriodic() {
 	autoController.update();
 	robot.update();
