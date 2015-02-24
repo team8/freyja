@@ -1,205 +1,158 @@
 /*
- * Version 5
- * 1/20/15 at 2100
- * Jonathan Zwiebel
+ * Version 11
+ * 2/17/15
+ * Jonathan Zwiebel and Nihar Mitra
  */
 
+
 #include "AutonomousController.h"
+using namespace std;
 
-#define PATH 0
-#define YELLOW_AUTO_DISTANCE 20
-#define AUTO_GRAY_DISTANCE 20
-#define GRAY_GRAY_DISTANCE 5
-#define YELLOW_YELLOW_DISTANCE 15
-#define LIFT_DISTANCE 5
+// constructs the analog dial and sets the path to the one being used
+// then sets the original command to stop and creates the executor
 
-enum path {
-	STOP = 0,
-	DRIVE = 1,
-	TOTE_SCORE = 2,
-	TOTE_SCORE_ACCUMULATE = 3,
-	TOTE_SCORE_DOUBLE_LEFT = 4,
-	TOTE_SCORE_DOUBLE_RIGHT = 5,
-	TOTE_SCORE_DOUBLE_LEFT_ACCUMULATE = 6,
-	TOTE_SCORE_DOUBLE_RIGHT_ACCUMULATE = 7,
-	TOTE_SCORE_TRIPLE = 8,
-	CAN_SCORE = 9,
-	CAN_SCORE_ACCUMULATE = 10,
-	ACCUMULATE = 11,
-	ACCUMULATE_DOUBLE = 12,
-	ACCUMULATE_TRIPLE = 13
-};
-
-
-
+// DIAL CURRENTLY COMMENTED OUT
 AutonomousController::AutonomousController(Robot *robotPointer) :
-	dial((uint32_t) PORT_AUTO_DIAL)
+		executor(robotPointer, &commandSet),
+		udpListener{"4950"}
+	//dial((uint32_t) PORT_AUTO_DIAL)
 {
-	this->robot = robotPointer;
-	std::cout << "AutonomousController constructed" << std::endl;
+	//path = (Path) dial.GetValue();
+	path = TEST;
+	command = CMD_STOP;
+	executing = false;
+	distance = 0;
+	angle = 0;
+}
 
-	path = dial.GetValue();
-
+// called once at the beginning of autonomous, this sets the robot
+// onto the correct path
+void AutonomousController::init() {
 	switch(path) {
-	case STOP:
-		stop();
-		break;
-	case DRIVE:
-		drive();
-		break;
-	case TOTE_SCORE:
-		toteScore();
-		break;
-	case TOTE_SCORE_ACCUMULATE:
-		toteScoreAccumulate();
-		break;
-	case TOTE_SCORE_DOUBLE_LEFT:
-		toteScoreDoubleLeft();
-		break;
-	case TOTE_SCORE_DOUBLE_RIGHT:
-		toteScoreDoubleRight();
-		break;
-	case TOTE_SCORE_DOUBLE_LEFT_ACCUMULATE:
-		toteScoreDoubleLeftAccumulate();
-		break;
-	case TOTE_SCORE_DOUBLE_RIGHT_ACCUMULATE:
-		toteScoreDoubleRightAccumulate();
-		break;
-	case TOTE_SCORE_TRIPLE:
-		toteScoreTriple();
-		break;
-	case CAN_SCORE:
-		canScore();
-		break;
-	case CAN_SCORE_ACCUMULATE:
-		canScoreAccumulate();
-		break;
-	case ACCUMULATE:
-		accumulate();
-		break;
-	case ACCUMULATE_DOUBLE:
-		accumulateDouble();
-		break;
-	case ACCUMULATE_TRIPLE:
-		accumulateTriple();
-		break;
+		case STOP:
+			stop();
+			break;
+		case DRIVE:
+			drive();
+			break;
+		case TOTE_SCORE:
+			toteScore();
+			break;
+		case TOTE_SCORE_DOUBLE_LEFT:
+			toteScoreDoubleLeft();
+			break;
+		case TOTE_SCORE_DOUBLE_RIGHT:
+			toteScoreDoubleRight();
+			break;
+		case CAN_SCORE:
+			canScore();
+			break;
+		case ACCUMULATE_GRAY:
+			accumulateGray();
+			break;
+		case TEST:
+			test();
+			break;
+		}
+}
+
+// called periodically throughout autonomous, this pops the top off the
+// commandSet and sends it to the executor
+// the reason for using this instead of just method calls is so that autonomous
+// is controlled periodically and will only function when the update method is
+// called
+void AutonomousController::update() {
+	//network with rPi to offsource vision
+//	std::string msg = udpListener.recv();
+//	if (msg != UDP_Listener::RECV_ERROR) {
+//			std::string::size_type sz;
+//			distance = std::stod(msg, &sz);
+//			angle = std::stod(msg.substr(sz));
+//			std::cout << "distance: " << distance << "    angle: " << angle << std::endl;
+//	}
+
+	std::cout << "executing: " << executing << std::endl;
+
+	// loops only when there is no command currently running
+	if(executor.isAllIdle() && !executing) {
+		std::cout << commandSet.front() << std::endl;
+		command = commandSet.front(); //fetch - gets the command to run
+        executing = true;
+		executor.executeCommand(command); // execute - runs the command
+		// conditional to prevent null reference error
+		if(!commandSet.empty()) {
+			std::cout << "pop pop" << endl;
+			commandSet.pop_front(); // increment - sets the next command run to run
+		}
+		else {
+			std::cout << "commandSet empty" << std::endl;
+			executing = false;
+			// turns off the loop
+		}
+	}
+	// checks if everything is idle, meaning nothing is running
+	else if(executor.isAllIdle()) {
+		cout << "all idle, executing to true" << endl;
+		executing = false;
 	}
 }
 
+// dead stop path
 void AutonomousController::stop() {
-
+	path = STOP;
+	command = CMD_STOP;
+	executing = true;
 }
 
+// drives into auto zone
 void AutonomousController::drive() {
-	robot->driveDistance(YELLOW_AUTO_DISTANCE);
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_STOP);
 }
 
+// scores a single yellow tote
 void AutonomousController::toteScore() {
-	robot->lift(LIFT_DISTANCE);
-	robot->driveDistance(YELLOW_AUTO_DISTANCE);
-	//robot->drop();
+	commandSet.push_back(CMD_TOTE_SCORE);
+	commandSet.push_back(CMD_STOP);
 }
 
-void AutonomousController::toteScoreAccumulate() {
-	toteScore();
-	accumulateFromScore();
-}
-
+// scores a yellow tote and the one to its left
 void AutonomousController::toteScoreDoubleLeft() {
-	robot->lift(LIFT_DISTANCE);
-	toteToTote(false);
-	toteScore();
+	commandSet.push_back(CMD_LIFT);
+	commandSet.push_back(CMD_TOTE_TO_TOTE_LEFT);
+	commandSet.push_back(CMD_TOTE_SCORE);
+	commandSet.push_back(CMD_STOP);
 }
 
+// scores a yellow tote and the one to its right
 void AutonomousController::toteScoreDoubleRight() {
-	robot->lift(LIFT_DISTANCE);
-	toteToTote(true);
-	toteScore();
+	commandSet.push_back(CMD_LIFT);
+	commandSet.push_back(CMD_TOTE_TO_TOTE_RIGHT);
+	commandSet.push_back(CMD_TOTE_SCORE);
+	commandSet.push_back(CMD_STOP);
 }
 
-void AutonomousController::toteScoreDoubleLeftAccumulate() {
-	toteScoreDoubleLeft();
-	accumulateFromScore();
-}
-
-void AutonomousController::toteScoreDoubleRightAccumulate() {
-	toteScoreDoubleRight();
-	accumulateFromScore();
-}
-
-void AutonomousController::toteScoreTriple() {
-	// magic
-}
-
+// scores an auto can on our side
 void AutonomousController::canScore() {
-	// robot->liftCan();
-	robot->driveDistance(YELLOW_AUTO_DISTANCE);
-	// robot->drop();
+	commandSet.push_back(CMD_CAN_SCORE);
+	commandSet.push_back(CMD_STOP);
 }
 
-void AutonomousController::canScoreAccumulate() {
-	canScore();
-	accumulateFromScore();
+// goes to the landfill zone, accumulates gray totes and ends in auto zone
+void AutonomousController::accumulateGray() {
+	commandSet.push_back(CMD_LANDFILL_DRIVE);
+	commandSet.push_back(CMD_GRAY_TO_GRAY);
+	commandSet.push_back(CMD_GRAY_TO_GRAY);
+	commandSet.push_back(CMD_HALF_ROTATE);
+	commandSet.push_back(CMD_DRIVE_LANDFILL_AUTO);
+	commandSet.push_back(CMD_STOP);
 }
 
-void AutonomousController::accumulate() {
-	robot->driveDistance(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
-	robot->lift(LIFT_DISTANCE);
-	robot->rotateAngle(180);
-	robot->driveDistance(AUTO_GRAY_DISTANCE);
-	// robot->drop();
-}
-
-void AutonomousController::accumulateDouble() {
-	robot->driveDistance(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
-	robot->lift(LIFT_DISTANCE);
-	robot->rotateAngle(90);
-	robot->driveDistance(GRAY_GRAY_DISTANCE);
-	robot->rotateAngle(-90);
-	robot->lift(LIFT_DISTANCE);
-	robot->rotateAngle(180);
-	robot->driveDistance(AUTO_GRAY_DISTANCE);
-		// robot->drop();
-}
-
-void AutonomousController::accumulateTriple() {
-	robot->driveDistance(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
-	robot->lift(LIFT_DISTANCE);
-	robot->rotateAngle(90);
-	robot->driveDistance(GRAY_GRAY_DISTANCE);
-	robot->rotateAngle(-90);
-	robot->lift(LIFT_DISTANCE);
-	robot->rotateAngle(90);
-	robot->driveDistance(GRAY_GRAY_DISTANCE);
-	robot->rotateAngle(-90);
-	robot->lift(LIFT_DISTANCE);
-	robot->rotateAngle(180);
-	robot->driveDistance(AUTO_GRAY_DISTANCE);
-	// robot->drop();
-}
-
-void AutonomousController::toteToTote(bool isRight) {
-	if(isRight) {
-		robot->rotateAngle(90);
-		robot->driveDistance(YELLOW_YELLOW_DISTANCE);
-		robot->rotateAngle(-90);
-	}
-	else {
-		robot->rotateAngle(-90);
-		robot->driveDistance(YELLOW_YELLOW_DISTANCE);
-		robot->rotateAngle(90);
-	}
-}
-
-void AutonomousController::accumulateFromScore() {
-	robot->driveDistance(-1);
-	robot->rotateAngle(-90);
-	robot->driveDistance(1);
-	robot->rotateAngle(90);
-	robot->driveDistance(1 + AUTO_GRAY_DISTANCE);
-	robot->lift(LIFT_DISTANCE);
-	robot->rotateAngle(180);
-	robot->driveDistance(AUTO_GRAY_DISTANCE);
+// special path used for testing
+void AutonomousController::test() {
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_HALF_ROTATE);
+	commandSet.push_back(CMD_STOP);
 }
 
 //Empty destructor

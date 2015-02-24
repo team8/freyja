@@ -1,27 +1,47 @@
+/*
+ * Version 11
+ * 2/17/15
+ * Jonathan Zwiebel and Nihar Mitra
+ */
+
 #ifndef AUTONOMOUS_CONTROLLER_H
 #define AUTONOMOUS_CONTROLLER_H
 
-#define PATH 0
-
 #include <WPILib.h>
+#include <list>
+#include <algorithm>
 #include "Robot.h"
-#include "Timer.h"
 #include "Constants.h"
-#include <AnalogInput.h>
-
+#include "AutonomousExecutor.h"
+#include "UDP_Listener.h"
 
 class AutonomousController {
 	public:
 		AutonomousController(Robot *robotPointer);
 		virtual ~AutonomousController();
-		int path;
+		void update();
+		void init();
 
 	private:
-		Timer time;
-		Robot* robot;
-		AnalogInput dial;
+		// the highest level list of commands, mutates
+		std::list<AutoCommand> commandSet;
 
-		//Various drive paths
+		// tracks whether the executor is actively functioning
+		bool executing;
+
+		AutonomousExecutor executor;
+		//AnalogInput dial;
+
+		Path path;
+		AutoCommand command;
+
+		UDP_Listener udpListener;
+
+		// vision variables
+		double distance;
+		double angle;
+
+		// paths
 		void stop();
 		void drive();
 		void toteScore();
@@ -30,14 +50,10 @@ class AutonomousController {
 		void toteScoreDoubleRight();
 		void toteScoreDoubleLeftAccumulate();
 		void toteScoreDoubleRightAccumulate();
-		void toteScoreTriple();
 		void canScore();
 		void canScoreAccumulate();
-		void accumulate();
-		void accumulateDouble();
-		void accumulateTriple();
-		void accumulateFromScore();
-		void toteToTote(bool isRight);
-	};
+		void accumulateGray();
+		void test();
+};
 
 #endif /* AUTONOMOUS_CONTROLLER_H */

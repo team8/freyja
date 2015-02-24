@@ -16,6 +16,7 @@ private:
 	HumanController humanController;
 	//Controls the robot during autonomous
 	AutonomousController autoController;
+
 public:
 	Freyja();
 	void RobotInit();
@@ -23,11 +24,16 @@ public:
 	void DisabledPeriodic();
 	void TeleopInit();
 	void TeleopPeriodic();
+	void AutonomousInit();
+	void AutonomousPeriodic();
 };
+
+using namespace std;
 
 Freyja::Freyja() :
 		//Calls the constructors for the robot and controllers
-		robot(), humanController(&robot), autoController(&robot) {
+		autoController(&robot), humanController(&robot)
+{
 }
 
 /** Called when the robot starts */
@@ -54,6 +60,16 @@ void Freyja::TeleopInit() {
 void Freyja::TeleopPeriodic() {
 	humanController.update();
 	robot.update();
+}
+
+void Freyja::AutonomousInit() {
+	robot.init();
+	autoController.init();
+}
+
+void Freyja::AutonomousPeriodic() {
+	autoController.update();
+    robot.update();
 }
 
 START_ROBOT_CLASS(Freyja);

@@ -1,9 +1,8 @@
 #include "Robot.h"
-
 /** Robot constructor, initializes robot and subsystems */
 Robot::Robot() :
-	//Initializes drivetrain, arm, and lifter
-	drivetrain(), arm(), lifter() {
+		//Initializes drivetrain, arm, and lifter
+		drivetrain(), arm(), lifter() {
 }
 
 /** Initializes subsystems */
@@ -18,6 +17,10 @@ void Robot::update() {
 	drivetrain.update();
 	arm.update();
 	lifter.update();
+	//disables lifter if either sensor is hit
+	if(lifter.checkEitherHit()) {
+		lifter.disable();
+	}
 }
 
 /** Disables all subsystems */
@@ -27,10 +30,20 @@ void Robot::disable() {
 	lifter.disable();
 }
 
-/** Moves the robot according to a targetSpeed to move at, and
+/** Moves the robot according to an acceleration to move at, and
  * a rotateSpeed to turn by */
-void Robot::move(double targetSpeed, double rotateSpeed) {
-	drivetrain.setSpeed(targetSpeed, rotateSpeed);
+void Robot::move(double acceleration, double rotateSpeed) {
+	drivetrain.setSpeed(acceleration, rotateSpeed);
+}
+
+/** Changes the piston state to a new PistonState */
+void Robot::changePistonState(Arm::PistonState state) {
+	arm.setPistonState(state);
+}
+
+/** Changes the compressor state to a new CompressorState */
+void Robot::changeCompressorState(Arm::CompressorState state) {
+	arm.setCompressorState(state);
 }
 
 /**  Drives the robot a specified distance */
@@ -42,23 +55,25 @@ void Robot::driveDistance(double distance) {
 void Robot::rotateAngle(double angle) {
 	drivetrain.rotateAngle(angle);
 }
-/** Changes the piston state to a new PistonState */
-void Robot::changePistonState(Arm::PistonState state) {
-	arm.setPistonState(state);
+
+void Robot::changeDrivetrainStateToPRECISION_TRIGGER() {
+	drivetrain.setStateTrigger();
 }
 
-/** Changes the compressor state to a new CompressorState */
-void Robot::changeCompressorState(Arm::CompressorState state) {
-	arm.setCompressorState(state);
+void Robot::changeDrivetrainStateToBRAKE() {
+	drivetrain.setStateBrake();
 }
 
-/** Lifts a specified distance */
-void Robot::lift(double distance) {
-	lifter.lift(distance);
+Drivetrain::State Robot::getDrivetrainState() {
+	return drivetrain.getState();
+}
+
+Lifter::State Robot::getLifterState() {
+	return lifter.getState();
 }
 
 /** Sets the lifter level */
-void Robot::setLifterLevel(double level) {
+void Robot::setLifterLevel(int level) {
 	lifter.setLevel(level);
 }
 /** Returns the level of the lifter */
@@ -71,4 +86,12 @@ void Robot::zeroLifter() {
 	lifter.zeroing();
 }
 
+void Robot::drop() {
+}
 
+void Robot::canLift() {
+}
+
+void Robot::setLifter(double speed) {
+	lifter.setState(speed);
+}

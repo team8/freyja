@@ -26,6 +26,12 @@ private:
 	//The rotation speed of the robot during teleoperated control
 	double rotateSpeed;
 	
+	// The value returned by the Y-axis of the driver stick
+	double acceleration;
+
+	double leftSpeed;
+	double rightSpeed;
+
 	//The two encoders, or distance sensors, of the drivetrain
 	Encoder leftEncoder;
 	Encoder rightEncoder;
@@ -33,6 +39,8 @@ private:
 	//The gyroscope, or orientation sensor, of the drivetrain
 	Gyro gyro;
 	
+	double drivingSetpoint;
+
 	//The PID Controllers of the drivetrain, control loops allowing highly precise and efficient movement
 	PIDController leftTopController;
 	PIDController leftBottomController;
@@ -58,7 +66,11 @@ public:
 		//A state in which the robot is rotating a specified angle through pid control
 		ROTATING_ANGLE,
 		//A state in which the talon speed is set through teleop commands
-		DRIVING_TELEOP
+		DRIVING_TELEOP,
+		//A state in which the turning speed is lowered for higher precision
+		PRECISION_TRIGGER,
+		//A state in which the talons are set to 0
+		BRAKE
 	} State;
 	
 	//The State variable created for this instance
@@ -97,6 +109,12 @@ public:
 
 	//Drives the drivetrain the given distance, uses pid controllers
 	void driveDistance(double distance);
+
+	//Set state to PREISION_TRIGGER
+	void setStateTrigger();
+
+	//Set state to BRAKE
+	void setStateBrake();
 
 	//Returns the state of this drivetrain
 	State getState();
