@@ -86,6 +86,7 @@ void Robot::zeroLifter() {
 	lifter.zeroing();
 }
 
+//TODO What are these two methods?
 void Robot::drop() {
 }
 

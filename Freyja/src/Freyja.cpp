@@ -8,8 +8,7 @@
  * to the robot controllers
  * Implements all the WPI Iterative Robot methods
  */
-class Freyja: public IterativeRobot
-{
+class Freyja: public IterativeRobot {
 private:
 	Robot robot;
 	//Controls the robot during teleop
@@ -32,8 +31,7 @@ using namespace std;
 
 Freyja::Freyja() :
 		//Calls the constructors for the robot and controllers
-		autoController(&robot), humanController(&robot)
-{
+		autoController(&robot), humanController(&robot) {
 }
 
 /** Called when the robot starts */
@@ -69,7 +67,7 @@ void Freyja::AutonomousInit() {
 
 void Freyja::AutonomousPeriodic() {
 	autoController.update();
-    robot.update();
+	robot.update();
 }
 
 START_ROBOT_CLASS(Freyja);

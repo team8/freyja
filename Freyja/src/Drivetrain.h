@@ -25,7 +25,7 @@ private:
 	double targetSpeed;
 	//The rotation speed of the robot during teleoperated control
 	double rotateSpeed;
-	
+
 	// The value returned by the Y-axis of the driver stick
 	double acceleration;
 
@@ -35,10 +35,10 @@ private:
 	//The two encoders, or distance sensors, of the drivetrain
 	Encoder leftEncoder;
 	Encoder rightEncoder;
-	
+
 	//The gyroscope, or orientation sensor, of the drivetrain
 	Gyro gyro;
-	
+
 	double drivingSetpoint;
 
 	//The PID Controllers of the drivetrain, control loops allowing highly precise and efficient movement
@@ -57,8 +57,7 @@ private:
 
 public:
 	//An enum type definition for the state the robot is in
-	typedef enum State
-	{
+	typedef enum State {
 		//A state in which the drivetrain is not moving and is ready to receive commands
 		IDLE,
 		//A state in which the robot is driving a specified distance through pid control
@@ -72,13 +71,13 @@ public:
 		//A state in which the talons are set to 0
 		BRAKE
 	} State;
-	
+
 	//The State variable created for this instance
 	State state;
-	
+
 	//Constructor declaration, constructs fileds of drivetrain
 	Drivetrain();
-	
+
 	//Destructor declaration
 	virtual ~Drivetrain();
 
@@ -87,7 +86,7 @@ public:
 
 	//Disables drivetrain and associated fields
 	void disable();
-	
+
 	//Updates the drivetrain and fields
 	void update();
 

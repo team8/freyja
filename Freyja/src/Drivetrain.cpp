@@ -25,7 +25,10 @@ Drivetrain::Drivetrain() :
 		leftTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTopTalon),
 		leftBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftBottomTalon),
 		rightTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTopTalon),
-		rightBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightBottomTalon)
+		rightBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightBottomTalon),
+
+		//Initializes various instance variables
+		drivingSetpoint(), leftSpeed(), rightSpeed()
 {
 	//Initializes the target and rotate speeds to zero
 	targetSpeed = 0;
@@ -199,14 +202,12 @@ void Drivetrain::setSpeed(double acceleration, double rotateSpeed) {
 //Sets drivetrain teleop target speed
 void Drivetrain::setTargetSpeed(double speed) {
 	state = DRIVING_TELEOP;
-
 	this->targetSpeed = speed;
 }
 
 //Sets drivetrain teleop rotate speed
 void Drivetrain::setRotateSpeed(double speed) {
 	state = DRIVING_TELEOP;
-
 	this->rotateSpeed = speed;
 }
 
@@ -264,16 +265,13 @@ void Drivetrain::driveDistance(double distance) {
 	rightBottomController.SetSetpoint(distance);
 }
 
-void Drivetrain:: setStateTrigger(){
-
-	state = PRECISION_TRIGGER;;
-
+//Turns on precision trigger
+void Drivetrain::setStateTrigger(){
+	state = PRECISION_TRIGGER;
 }
-
-void Drivetrain:: setStateBrake(){
-
-	state = BRAKE;;
-
+//Turns on the brake
+void Drivetrain::setStateBrake(){
+	state = BRAKE;
 }
 //Gets the state of this drivetrain
 Drivetrain::State Drivetrain::getState() {

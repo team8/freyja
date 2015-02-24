@@ -16,44 +16,44 @@
 #include "UDP_Listener.h"
 
 class AutonomousController {
-	public:
-		AutonomousController(Robot *robotPointer);
-		virtual ~AutonomousController();
-		void update();
-		void init();
+public:
+	AutonomousController(Robot *robotPointer);
+	virtual ~AutonomousController();
+	void update();
+	void init();
 
-	private:
-		// the highest level list of commands, mutates
-		std::list<AutoCommand> commandSet;
+private:
+	// the highest level list of commands, mutates
+	std::list<AutoCommand> commandSet;
 
-		// tracks whether the executor is actively functioning
-		bool executing;
+	// tracks whether the executor is actively functioning
+	bool executing;
 
-		AutonomousExecutor executor;
-		//AnalogInput dial;
+	AutonomousExecutor executor;
+	//AnalogInput dial;
 
-		Path path;
-		AutoCommand command;
+	Path path;
+	AutoCommand command;
 
-		UDP_Listener udpListener;
+	UDP_Listener udpListener;
 
-		// vision variables
-		double distance;
-		double angle;
+	// vision variables
+	double distance;
+	double angle;
 
-		// paths
-		void stop();
-		void drive();
-		void toteScore();
-		void toteScoreAccumulate();
-		void toteScoreDoubleLeft();
-		void toteScoreDoubleRight();
-		void toteScoreDoubleLeftAccumulate();
-		void toteScoreDoubleRightAccumulate();
-		void canScore();
-		void canScoreAccumulate();
-		void accumulateGray();
-		void test();
+	// paths
+	void stop();
+	void drive();
+	void toteScore();
+	void toteScoreAccumulate();
+	void toteScoreDoubleLeft();
+	void toteScoreDoubleRight();
+	void toteScoreDoubleLeftAccumulate();
+	void toteScoreDoubleRightAccumulate();
+	void canScore();
+	void canScoreAccumulate();
+	void accumulateGray();
+	void test();
 };
 
 #endif /* AUTONOMOUS_CONTROLLER_H */
