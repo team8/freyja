@@ -4,7 +4,6 @@
  * Jonathan Zwiebel and Nihar Mitra
  */
 
-
 #ifndef FREYJA_SRC_AUTONOMOUSEXECUTOR_H_
 #define FREYJA_SRC_AUTONOMOUSEXECUTOR_H_
 

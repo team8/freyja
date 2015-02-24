@@ -1,43 +1,31 @@
 #include "Lifter.h"
 #include <iostream>
 Lifter::Lifter() :
-victor((uint32_t) 9), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput(
-(uint32_t) 9), digitalInput2((uint32_t) 8), controller(0.f, 0.f, 0.f, &liftEncoder, &victor)
-{
+		victor((uint32_t) 9), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput((uint32_t) 9),
+		digitalInput2((uint32_t) 8), controller(0.f, 0.f, 0.f, &liftEncoder, &victor), state(IDLE),
+		currentLevel() {
 }
 
-
-Lifter::~Lifter() {
-
-}
-//starts everything that lifter contains
+//Initializes lifter to be ready to operate
 void Lifter::init() {
 	liftEncoder.Reset();
 	controller.Reset();
 	controller.Enable();
-
-	state = IDLE;
 }
-//updates lifter constantly
+
+//Operates lifter according to current state
 void Lifter::update() {
 	//std::cout << "bottom switch is: " << checkSensorHit(false) << std::endl;
 	//std::cout << "top switch is: " << checkSensorHit(true) << std::endl;
-	//executes commands based on the state of the lifter
-	switch (state) {
-		case MOVING:
-		{
-			break;
+	switch(state) {
+	case MOVING:
+		break;
+	case IDLE:
+		if(checkSensorHit(false)) {
+			setLevel(0);
+			liftEncoder.Reset();
 		}
-
-		case IDLE:
-		{
-
-			if (checkSensorHit(false)) {
-				setLevel(0);
-				liftEncoder.Reset();
-			}
-			break;
-		}
+		break;
 	}
 }
 
@@ -45,20 +33,15 @@ void Lifter::update() {
 void Lifter::disable() {
 	victor.Disable();
 	controller.Disable();
-
 	state = IDLE;
 }
 
 //this method moves the lifter.
 void Lifter::setLevel(double level) {
-	controller.SetSetpoint(level*TOTE_HEIGHT);
-	/*
-	 * Checks to see if the pid has reached its target.
-	 * if it has, it reverts to idle state
-	 * otherwise, it keeps moving.
-	 */
+	controller.SetSetpoint(level * TOTE_HEIGHT);
 	currentLevel = level;
-	if (liftEncoder.GetStopped()) {
+	//Checks to see if the pid has reached its target.
+	if(liftEncoder.GetStopped()) {
 		state = IDLE;
 	} else {
 		state = MOVING;
@@ -74,48 +57,45 @@ void Lifter::zeroing() {
 //	victor.Set(speed);
 //}
 
-
-//returns a boolean based on if the sensor has been hit
+//Returns whether or not that sensor has been hit
+//Param determines if first or second sensor is checked
 bool Lifter::checkSensorHit(bool firstSensor) {
-	if (firstSensor == false) return (digitalInput.Get());
-	else return (digitalInput2.Get());
+	if(firstSensor == false)
+		return (digitalInput.Get());
+	else
+		return (digitalInput2.Get());
 }
 
-
-
-//returns a boolean based on if either sensor has been hit
+//Returns a boolean based on if either sensor has been hit
 bool Lifter::checkEitherHit() {
-	if (digitalInput.Get() == 1 || digitalInput2.Get() == 1) {
-		return true;
-	}
-	return false;
-
+	return (digitalInput.Get() || digitalInput2.Get());
 }
 
-
-//gets the current state of the lifter.
-//this is used to tell other classes what state the lifter is in.
+//Gets the current state of the lifter.
 Lifter::State Lifter::getState() {
 	return state;
 }
 
-//will return the current level of the lifter once it is complete.
+//Returns the current level of the lifter
 double Lifter::getLevel() {
 	return currentLevel;
 }
 
+//TODO Name of method is confusing, not what it actually does
+//Moves the lifter at the specified speed
 void Lifter::setState(double speed) {
 	state = MOVING;
 
 	if(!checkSensorHit(false)) {
 		victor.SetSpeed((float) std::max(0.0, speed));
 
-	}
-	else if(!checkSensorHit(true)) {
+	} else if(!checkSensorHit(true)) {
 		victor.SetSpeed((float) std::min(0.0, speed));
-	}
-	else
-	{
+	} else {
 		victor.SetSpeed(speed);
 	}
+}
+
+//Empty destructor
+Lifter::~Lifter() {
 }

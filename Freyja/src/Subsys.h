@@ -3,7 +3,6 @@
 #ifndef SUBSYS_H
 #define SUBSYS_H
 
-
 class Subsys {
 public:
 	virtual void init() = 0;

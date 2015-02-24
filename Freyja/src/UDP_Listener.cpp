@@ -1,7 +1,7 @@
 #include "UDP_Listener.h"
 
 UDP_Listener::UDP_Listener(const std::string &port) :
-		port(port) {
+		port(port), addr_len() {
 
 	tv.tv_sec = 0;
 	tv.tv_usec = 0;

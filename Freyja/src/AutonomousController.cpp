@@ -4,8 +4,6 @@
  * Jonathan Zwiebel and Nihar Mitra
  */
 
-
-
 #include "AutonomousController.h"
 using namespace std;
 
@@ -14,9 +12,8 @@ using namespace std;
 
 // DIAL CURRENTLY COMMENTED OUT
 AutonomousController::AutonomousController(Robot *robotPointer) :
-		executor(robotPointer, &commandSet),
-		udpListener{"4950"}
-	//dial((uint32_t) PORT_AUTO_DIAL)
+		executor(robotPointer, &commandSet), udpListener { "4950" }
+//dial((uint32_t) PORT_AUTO_DIAL)
 {
 	//path = (Path) dial.GetValue();
 	path = TEST;
@@ -30,31 +27,31 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 // onto the correct path
 void AutonomousController::init() {
 	switch(path) {
-		case STOP:
-			stop();
-			break;
-		case DRIVE:
-			drive();
-			break;
-		case TOTE_SCORE:
-			toteScore();
-			break;
-		case TOTE_SCORE_DOUBLE_LEFT:
-			toteScoreDoubleLeft();
-			break;
-		case TOTE_SCORE_DOUBLE_RIGHT:
-			toteScoreDoubleRight();
-			break;
-		case CAN_SCORE:
-			canScore();
-			break;
-		case ACCUMULATE_GRAY:
-			accumulateGray();
-			break;
-		case TEST:
-			test();
-			break;
-		}
+	case STOP:
+		stop();
+		break;
+	case DRIVE:
+		drive();
+		break;
+	case TOTE_SCORE:
+		toteScore();
+		break;
+	case TOTE_SCORE_DOUBLE_LEFT:
+		toteScoreDoubleLeft();
+		break;
+	case TOTE_SCORE_DOUBLE_RIGHT:
+		toteScoreDoubleRight();
+		break;
+	case CAN_SCORE:
+		canScore();
+		break;
+	case ACCUMULATE_GRAY:
+		accumulateGray();
+		break;
+	case TEST:
+		test();
+		break;
+	}
 }
 
 // called periodically throughout autonomous, this pops the top off the
@@ -78,14 +75,13 @@ void AutonomousController::update() {
 	if(executor.isAllIdle() && !executing) {
 		std::cout << commandSet.front() << std::endl;
 		command = commandSet.front(); //fetch - gets the command to run
-        executing = true;
+		executing = true;
 		executor.executeCommand(command); // execute - runs the command
 		// conditional to prevent null reference error
 		if(!commandSet.empty()) {
 			std::cout << "pop pop" << endl;
 			commandSet.pop_front(); // increment - sets the next command run to run
-		}
-		else {
+		} else {
 			std::cout << "commandSet empty" << std::endl;
 			executing = false;
 			// turns off the loop
@@ -157,4 +153,5 @@ void AutonomousController::test() {
 }
 
 //Empty destructor
-AutonomousController::~AutonomousController() {}
+AutonomousController::~AutonomousController() {
+}

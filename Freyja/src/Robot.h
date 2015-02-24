@@ -12,61 +12,37 @@
 #include "Lifter.h"
 
 class Robot {
-	private:
-		//The drivetrain, arm, and lifter subsystems
-		Drivetrain drivetrain;
-		Arm arm;
-		Lifter lifter;
+private:
+	//The drivetrain, arm, and lifter subsystems
+	Drivetrain drivetrain;
+	Arm arm;
+	Lifter lifter;
 
-	public:
-		/** Robot constructor, initializes robot and subsystems */
-		Robot();
+public:
+	/** Robot constructor, initializes robot and subsystems */
+	Robot();
 
-		/** Initializes instance and subsystems */
-		void init();
-		/** Updates instance and subsystems */
-		void update();
-		/** Disables instance and subsystems */
-		void disable();
+	void init();
+	void update();
+	void disable();
 
-		/** Wrapper method for drivetrain teleoperated movement */
-		void move(double targetSpeed, double rotateSpeed);
+	void move(double targetSpeed, double rotateSpeed);
+	void driveDistance(double distance);
+	void rotateAngle(double angle);
+	void changeDrivetrainStateToPRECISION_TRIGGER();
+	void changeDrivetrainStateToBRAKE();
+	Drivetrain::State getDrivetrainState();
 
-		/** Wrapper method for changing piston state */
-		void changePistonState(Arm::PistonState state);
+	void changePistonState(Arm::PistonState state);
+	void changeCompressorState(Arm::CompressorState state);
 
-		/** Wrapper method for changing the compressor state */
-		void changeCompressorState(Arm::CompressorState state);
-
-		/** Wrapper method for driving a specified distance */
-		void driveDistance(double distance);
-
-		/** Wrapper method for rotating a specified angle */
-		void rotateAngle(double angle);
-
-		/** Wrapper method for changing the Drivetrain state to PRECISION_TRIGGER*/
-		void changeDrivetrainStateToPRECISION_TRIGGER();
-
-		/** Wrapper method for changing the Drivetrain state to BRAKE*/
-		void changeDrivetrainStateToBRAKE();
-
-		/** Wrapper method for lifting a specified distance */
-		void lift(double distance);
-		void drop();
-		void canLift();
-
-		/** Wrapper method for setting the lifter level */
-		void setLifterLevel(int level);
-
-		Drivetrain::State getDrivetrainState();
-		Lifter::State getLifterState();
-
-		/**Wrapper method for zeroing the lifter level **/
-		void zeroLifter();
-		/**Wrapper method for getting the current level of the lifter**/
-		double getLevel();
-
-		void setLifter(double speed);
+	void drop();
+	void canLift();
+	void setLifterLevel(int level);
+	Lifter::State getLifterState();
+	void zeroLifter();
+	double getLevel();
+	void setLifter(double speed);
 };
 
 #endif /* ROBOT_H */

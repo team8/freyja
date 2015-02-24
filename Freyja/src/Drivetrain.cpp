@@ -25,7 +25,10 @@ Drivetrain::Drivetrain() :
 		leftTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTopTalon),
 		leftBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftBottomTalon),
 		rightTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTopTalon),
-		rightBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightBottomTalon)
+		rightBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightBottomTalon),
+
+		//Initializes various instance variables
+		drivingSetpoint(), leftSpeed(), rightSpeed()
 {
 	//Initializes the target and rotate speeds to zero
 	targetSpeed = 0;
@@ -74,44 +77,29 @@ void Drivetrain::disable() {
 	stopControl();
 }
 
-//Updates the drivetrain
+//Updates the drivetrain based on state machine
 void Drivetrain::update() {
-	//State machine for various states in update
 	switch (state) {
-	//Updates for the idle state
 	case IDLE:
 		stopControl();
 		break;
-
-		//Updates for the driving distance state
 	case DRIVING_DIST:
-		//Tests if the drivetrain has drived the specified distance
+		//Tests if the drivetrain has drived the specified distance and stops if it has
 		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopController.GetError() < 1) {
-			std::cout << "state reset to idle in dd" << std::endl;
 			state = IDLE;
 		}
-
-		//std::cout << "Left Error: " << leftTopController.GetError() << std::endl;
-		//std::cout << "Right Error: " << rightTopController.GetError() << std::endl;
-
 		break;
-
-		//Updates for the rotating angle state
 	case ROTATING_ANGLE:
-		//IF change condition : disable and set state to idle
+		//If angle is reached, stops rotating
 		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopController.GetError() < 1) {
-			std::cout << "state reset to idle in ra" << std::endl;
 			state = IDLE;
 		}
 
 		break;
-
-		//Updates for the teleop state
 	case DRIVING_TELEOP:
 		//Determines the appropriate left and right speed
 		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
 		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
-	{
 		//Determines the appropriate left and right speed
 		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
 		double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
@@ -121,12 +109,9 @@ void Drivetrain::update() {
 		leftBottomTalon.Set(-leftSpeed);
 		rightTopTalon.Set(rightSpeed);
 		rightBottomTalon.Set(rightSpeed);
-//
 //		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
 //		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
-
 		break;
-	}
 	case PRECISION_TRIGGER:
 		//Determines the appropriate left and right speed
 		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
@@ -137,16 +122,13 @@ void Drivetrain::update() {
 		leftBottomTalon.Set(-leftSpeed);
 		rightTopTalon.Set(rightSpeed);
 		rightBottomTalon.Set(rightSpeed);
-
 		break;
 
 	case BRAKE:
-
 		//Stops Talons
 		stopTalons();
 		acceleration = 0;
 		targetSpeed = 0;
-
 		break;
 	}
 }
@@ -199,14 +181,12 @@ void Drivetrain::setSpeed(double acceleration, double rotateSpeed) {
 //Sets drivetrain teleop target speed
 void Drivetrain::setTargetSpeed(double speed) {
 	state = DRIVING_TELEOP;
-
 	this->targetSpeed = speed;
 }
 
 //Sets drivetrain teleop rotate speed
 void Drivetrain::setRotateSpeed(double speed) {
 	state = DRIVING_TELEOP;
-
 	this->rotateSpeed = speed;
 }
 
@@ -264,16 +244,13 @@ void Drivetrain::driveDistance(double distance) {
 	rightBottomController.SetSetpoint(distance);
 }
 
-void Drivetrain:: setStateTrigger(){
-
-	state = PRECISION_TRIGGER;;
-
+//Turns on precision trigger
+void Drivetrain::setStateTrigger(){
+	state = PRECISION_TRIGGER;
 }
-
-void Drivetrain:: setStateBrake(){
-
-	state = BRAKE;;
-
+//Turns on the brake
+void Drivetrain::setStateBrake(){
+	state = BRAKE;
 }
 //Gets the state of this drivetrain
 Drivetrain::State Drivetrain::getState() {

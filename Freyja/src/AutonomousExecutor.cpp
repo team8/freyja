@@ -18,83 +18,102 @@ AutonomousExecutor::AutonomousExecutor(Robot *robotPointer, std::list<AutoComman
 }
 
 void AutonomousExecutor::executeCommand(AutoCommand command) {
-	std::cout << "AutonomousExecutor::executeCommand(" << command << ")" << std::endl;
+	std::cout << "AutonomousExecutor::executeCommand(" << command << ")"
+			<< std::endl;
 	switch(command) {
-	case CMD_STOP: {
+	case CMD_STOP:
+	{
 		break;
 	}
-	case CMD_AUTO_DRIVE: {
+	case CMD_AUTO_DRIVE:
+	{
 		std::cout << "CMD_AUTO_DRIVE start" << std::endl;
 		drive(YELLOW_AUTO_DISTANCE);
 		std::cout << "CMD_AUTO_DRIVE end" << std::endl;
 		break;
 	}
-	case CMD_LIFT: {
+	case CMD_LIFT:
+	{
 		lift();
 		break;
 	}
-	case CMD_DROP: {
+	case CMD_DROP:
+	{
 		drop();
 		break;
 	}
-	case CMD_TOTE_SCORE: {
+	case CMD_TOTE_SCORE:
+	{
 		toteScore();
 		break;
 	}
-	case CMD_ACCUMULATE_FROM_AUTO: {
+	case CMD_ACCUMULATE_FROM_AUTO:
+	{
 		accumulateFromAuto();
 		break;
 	}
-	case CMD_TOTE_TO_TOTE_LEFT: {
+	case CMD_TOTE_TO_TOTE_LEFT:
+	{
 		toteToTote(true);
 		break;
 	}
-	case CMD_TOTE_TO_TOTE_RIGHT: {
+	case CMD_TOTE_TO_TOTE_RIGHT:
+	{
 		toteToTote(false);
 		break;
 	}
-	case CMD_CAN_SCORE: {
+	case CMD_CAN_SCORE:
+	{
 		canScore();
 		break;
 	}
-	case CMD_DRIVE_LANDFILL_AUTO: {
+	case CMD_DRIVE_LANDFILL_AUTO:
+	{
 		drive(AUTO_GRAY_DISTANCE);
 		break;
 	}
-	case CMD_GRAY_TO_GRAY: {
+	case CMD_GRAY_TO_GRAY:
+	{
 		grayToGray();
 		break;
 	}
-	case CMD_HALF_ROTATE: {
+	case CMD_HALF_ROTATE:
+	{
 		std::cout << "CMD_HALF_ROTATE start" << std::endl;
 		rotate(180);
 		std::cout << "CMD_HALF_ROTATE end" << std::endl;
 
 		break;
 	}
-	case CMD_LANDFILL_DRIVE: {
+	case CMD_LANDFILL_DRIVE:
+	{
 		drive(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
 		break;
 	}
-	case CMD_CAN_LIFT: {
+	case CMD_CAN_LIFT:
+	{
 		canLift();
 		break;
 	}
-	case CMD_CLOSE: {
+	case CMD_CLOSE:
+	{
 		close();
 		break;
 	}
-	case CMD_OPEN: {
+	case CMD_OPEN:
+	{
 		open();
 		break;
 	}
-	case CMD_TOTE_LIFT: {
+	case CMD_TOTE_LIFT:
+	{
 		toteLift();
 		break;
 	}
-	default: {
+	default:
+	{
 		// default states only occurs when illegal command is called
-		std::cout<<"default command called in autoexec"<<std::endl;
+		std::cout << "default command called in autoexec" << std::endl;
 		break;
 	}
 	}
@@ -161,7 +180,7 @@ void AutonomousExecutor::drive(int dist) {
 
 // BASE: lifts a tote
 void AutonomousExecutor::lift() {
-	robot->lift(LIFT_DISTANCE);
+//	robot->lift(LIFT_DISTANCE);
 }
 
 // BASE: drops whatever is being held
