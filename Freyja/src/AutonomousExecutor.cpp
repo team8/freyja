@@ -161,7 +161,7 @@ void AutonomousExecutor::drive(int dist) {
 
 // BASE: lifts a tote
 void AutonomousExecutor::lift() {
-	robot->lift(LIFT_DISTANCE);
+//	robot->lift(LIFT_DISTANCE);
 }
 
 // BASE: drops whatever is being held
