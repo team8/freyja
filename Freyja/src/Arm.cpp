@@ -10,25 +10,23 @@ Arm::Arm() :
 	compressor.Start();
 	setPistonState(IDLE);
 }
-
+//Simply changes the enum CompressorState
 void Arm::setCompressorState(CompressorState state) {
-	//Simply changes the enum CompressorState. This method is called as a wrapping function in robot.
 	this->compressorState = state;
 }
+//Changes the state of the piston
 void Arm::setPistonState(PistonState state) {
-	//Does the same thing as setCompressorState, except changes the state of the piston
 	this->pistonState = state;
 }
-
+//TODO Why does this always return true?
 bool Arm::getCompressor() {
 	return true;
 }
 void Arm::disable() {
-	//Turns everything off just in case
 	setPistonState(IDLE);
 	setCompressorState(OFF);
 }
-
+//Operates piston and compressor based on the states
 void Arm::update() {
 	//I understand that you can't actually start compressing, and I will add that.
 	//As for whether we can compress and extend and retract at the same time, I think we can do that, as long as we hook the
@@ -82,8 +80,8 @@ void Arm::update() {
 	}
 }
 
+//Prepares arm for operation
 void Arm::init() {
-	//Turns everything off when we start the robot.
 	setCompressorState(ON);
 	setPistonState(IDLE);
 }

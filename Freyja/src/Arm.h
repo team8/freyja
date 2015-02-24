@@ -27,15 +27,14 @@ public:
 	//Constructor and Deconstructor
 	Arm();
 	virtual ~Arm();
-	//Enum changers which work with the update State Machine
+	//State changers which work with the update method state machine
 	void setPistonState(PistonState state);
 	void setCompressorState(CompressorState state);
 	bool getCompressor();
-	//Inherited Methods from subsystem:
+	//Inherited Methods from subsystem
 	void init();
 	void update();
 	void disable();
-	//
 private:
 	Compressor compressor;
 	DoubleSolenoid solenoid1;
