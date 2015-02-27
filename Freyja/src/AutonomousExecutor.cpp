@@ -110,6 +110,11 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 		toteLift();
 		break;
 	}
+	case CMD_VISION_ACCUMULATE:
+	{
+		visionAccumulate();
+		break;
+	}
 	default:
 	{
 		// default states only occurs when illegal command is called
@@ -208,6 +213,10 @@ void AutonomousExecutor::toteLift() {
 	advance(comIt, 1);
 	commandSet->splice(comIt, toteLiftSet);
 	commandSet->pop_front();
+}
+
+void AutonomousExecutor::visionAccumulate() {
+	std::cout << "visionAccumulate called, shouldn't be called" << std::endl;
 }
 
 /* checks if any of the subsystems are currently working

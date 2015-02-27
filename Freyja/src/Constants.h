@@ -12,10 +12,10 @@
 #define PORT_TURN 2
 #define PORT_OPERATOR 0
 
-#define PORT_ENCODER_RIGHT_A 2
-#define PORT_ENCODER_RIGHT_B 3
-#define PORT_ENCODER_LEFT_A 1
-#define PORT_ENCODER_LEFT_B 0
+#define PORT_ENCODER_RIGHT_A 0
+#define PORT_ENCODER_RIGHT_B 1
+#define PORT_ENCODER_LEFT_A 2
+#define PORT_ENCODER_LEFT_B 3
 
 // Solenoid Ports
 #define SOLENOID_1_PORT_A 0
@@ -25,7 +25,7 @@
 
 #define PORT_AUTO_DIAL 1
 
-#define PORT_GYRO 6
+#define PORT_GYRO 1
 
 //Various PID constants
 //#define LEFT_PROPORTIONAL 0.12
@@ -48,13 +48,15 @@
 #define GYRO_INTEGRAL 0.0
 #define GYRO_DERIVATIVE 0.1
 
-#define ENCODER_MAX_PERIOD 1
+#define ENCODER_MAX_PERIOD 0.5
 
 #define PID_ASSISTED_TIME_CONSTANT 50
 
 //Distance per pulse for drivetrain
-#define RIGHT_DPP 0.018258776354
-#define LEFT_DPP 0.012808296080
+//#define RIGHT_DPP 0.018258776354
+//#define LEFT_DPP 0.012808296080
+#define RIGHT_DPP .0782
+#define LEFT_DPP .0813
 
 #define LIFT_SPEED 0.5
 #define TOTE_HEIGHT 12.1
@@ -97,7 +99,8 @@ enum AutoCommand {
 	CMD_CAN_LIFT,
 	CMD_CLOSE,
 	CMD_OPEN,
-	CMD_TOTE_LIFT
+	CMD_TOTE_LIFT,
+	CMD_VISION_ACCUMULATE
 };
 
 #endif /* CONSTANTS_H */

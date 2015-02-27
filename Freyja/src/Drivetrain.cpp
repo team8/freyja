@@ -28,7 +28,7 @@ Drivetrain::Drivetrain() :
 		rightBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightBottomTalon),
 
 		//Initializes various instance variables
-		drivingSetpoint(), leftSpeed(), rightSpeed()
+		leftSpeed(), rightSpeed()
 {
 	//Initializes the target and rotate speeds to zero
 	targetSpeed = 0;
@@ -69,6 +69,7 @@ void Drivetrain::init() {
 	stopTalons();
 
 	//driveDistance(100);
+	//rotateAngle(90);
 }
 
 //Disables the drivetrain
@@ -79,6 +80,7 @@ void Drivetrain::disable() {
 
 //Updates the drivetrain based on state machine
 void Drivetrain::update() {
+	//std::cout << "Gyro readout: " << gyro.GetAngle() << std::endl;
 	switch (state) {
 	case IDLE:
 		stopControl();
@@ -88,30 +90,31 @@ void Drivetrain::update() {
 		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopController.GetError() < 1) {
 			state = IDLE;
 		}
+		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
+		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
 		break;
 	case ROTATING_ANGLE:
 		//If angle is reached, stops rotating
-		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopController.GetError() < 1) {
+		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
+		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopGyroController.GetError() < 1) {
 			state = IDLE;
 		}
 
 		break;
 	case DRIVING_TELEOP:
+	{
 		//Determines the appropriate left and right speed
 		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
 		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
 		//Determines the appropriate left and right speed
-		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
-		double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(-leftSpeed );
 		leftBottomTalon.Set(-leftSpeed);
 		rightTopTalon.Set(rightSpeed);
 		rightBottomTalon.Set(rightSpeed);
-//		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
-//		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
 		break;
+	}
 	case PRECISION_TRIGGER:
 		//Determines the appropriate left and right speed
 		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
@@ -196,27 +199,18 @@ void Drivetrain::rotateAngle(double angle) {
 	stopControl();
 
 	state = ROTATING_ANGLE;
-	std::cout << "Before init gyro "<< std::endl;
-
-	gyro.InitGyro();
-
-	std::cout << "Gyro angle: " << gyro.GetAngle() << std::endl;
-	std::cout << "rotateAngle check 2" << std::endl;
 
 	gyro.Reset();
-	std::cout << "rotateAngle check 3" << std::endl;
 
 	leftTopGyroController.SetSetpoint(angle);
 	leftBottomGyroController.SetSetpoint(angle);
 	rightTopGyroController.SetSetpoint(angle);
 	rightBottomGyroController.SetSetpoint(angle);
-	std::cout << "rotateAngle check 4" << std::endl;
 
 	leftTopGyroController.Enable();
 	leftBottomGyroController.Enable();
 	rightTopGyroController.Enable();
 	rightBottomGyroController.Enable();
-	std::cout << "rotateAngle check 5" << std::endl;
 }
 
 //Drives the given distance
@@ -234,8 +228,6 @@ void Drivetrain::driveDistance(double distance) {
 	//Resets encoders
 	leftEncoder.Reset();
 	rightEncoder.Reset();
-
-	drivingSetpoint = distance;
 
 	//Sets controller setpoint to given distance
 	leftTopController.SetSetpoint(distance);
