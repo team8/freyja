@@ -225,6 +225,7 @@ void AutonomousExecutor::visionAccumulate() {
 bool AutonomousExecutor::isAllIdle() {
 	std::cout << "Drive state: " << robot->getDrivetrainState() << std::endl;
 	//std::cout << "expected dstate: " << Drivetrain::State::IDLE << std::endl;
+
 	return robot->getDrivetrainState() == Drivetrain::State::IDLE;
 }
 
