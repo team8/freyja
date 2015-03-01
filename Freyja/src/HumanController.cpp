@@ -10,7 +10,7 @@ HumanController::HumanController(Robot *robotPointer) :
 }
 
 void HumanController::update() {
-//	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
+	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
 
 /*	if(moveJoystick.GetRawButton(2)) {
 		robotPointer->driveDistance(100);
@@ -28,10 +28,10 @@ void HumanController::update() {
 	if(turnJoystick.GetRawButton(1)) {
 		robotPointer->changeDrivetrainStateToPRECISION_TRIGGER();
 	}
-	if(operatorJoystick.GetRawButton(1)) {
+	if(operatorJoystick.GetRawButton(2)) {
 		robotPointer->changePistonState(Arm::PistonState::EXTENDING);
 	}
-	if(operatorJoystick.GetRawButton(2)) {
+	if(operatorJoystick.GetRawButton(1)) {
 		robotPointer->changePistonState(Arm::PistonState::RETRACTING);
 	}
 	if(operatorJoystick.GetRawButton(6)) {

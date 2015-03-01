@@ -61,20 +61,18 @@
 //Distance per pulse for drivetrain
 #define RIGHT_DPP 0.018258776354
 #define LEFT_DPP 0.012808296080
-//#define RIGHT_DPP .0782
-//#define LEFT_DPP .0813
 
 #define LIFT_SPEED 0.5
 #define TOTE_HEIGHT 12.1
 
 // Constants used for fine tuning steering
 // assumes 200 updates per second
-#define ACCELERATION_CONSTANT 0.0133
-#define SPEED_DECAY_CONSTANT 0.90
+#define ACCELERATION_CONSTANT 0.0063
+#define SPEED_DECAY_CONSTANT 0.95
 #define SPEED_DECAY_RANGE 0.1
 #define PRECISION_ROTATE_CONSANT 0.4
 #define ROTATE_CONSTANT 0.8
-#define ACCELERATION_REVERSE_CONSTANT 0.025
+#define ACCELERATION_REVERSE_CONSTANT 0.060
 
 // enums for AutonomousController and AutonomousExecutor
 enum Path {

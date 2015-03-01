@@ -83,17 +83,17 @@ double Lifter::getLevel() {
 
 //TODO Name of method is confusing, not what it actually does
 //Moves the lifter at the specified speed
-void Lifter::setState(double speed) {
+void Lifter::setSpeed(double speed) {
 	state = MOVING;
 
 	if(!checkSensorHit(false)) {
-		victor.SetSpeed((float) std::max(0.0, speed));
-
+//		victor.SetSpeed((float) std::max(0.0, speed));
 	} else if(!checkSensorHit(true)) {
-		victor.SetSpeed((float) std::min(0.0, speed));
+//		victor.SetSpeed((float) std::min(0.0, speed));
 	} else {
 		victor.SetSpeed(speed);
 	}
+	victor.SetSpeed(speed);
 }
 
 //Empty destructor

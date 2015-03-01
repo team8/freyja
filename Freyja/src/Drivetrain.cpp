@@ -68,7 +68,7 @@ void Drivetrain::init() {
 	//Stops robot motion
 	stopTalons();
 
-	driveDistance(100);
+//	driveDistance(100);
 //	rotateAngle(180);
 }
 
@@ -112,6 +112,10 @@ void Drivetrain::update() {
 		leftBottomTalon.Set(-leftSpeed);
 		rightTopTalon.Set(rightSpeed);
 		rightBottomTalon.Set(rightSpeed);
+
+		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
+		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
+
 		break;
 	}
 	case PRECISION_TRIGGER:

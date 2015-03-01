@@ -94,5 +94,5 @@ void Robot::canLift() {
 }
 
 void Robot::setLifter(double speed) {
-	lifter.setState(speed);
+	lifter.setSpeed(speed);
 }

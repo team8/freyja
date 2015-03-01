@@ -29,7 +29,7 @@ public:
 
 	State getState();
 
-	void setState(double speed);
+	void setSpeed(double speed);
 
 private:
 	VictorSP victor;
