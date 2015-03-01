@@ -10,9 +10,9 @@ HumanController::HumanController(Robot *robotPointer) :
 }
 
 void HumanController::update() {
-//	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
+	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
 
-	if(moveJoystick.GetRawButton(2)) {
+/*	if(moveJoystick.GetRawButton(2)) {
 		robotPointer->driveDistance(100);
 	}
 	if(moveJoystick.GetRawButton(3)) {
@@ -20,7 +20,7 @@ void HumanController::update() {
 	}
 	if(moveJoystick.GetRawButton(4)) {
 		robotPointer->rotateAngle(180);
-	}
+	}*/
 
 	if(moveJoystick.GetRawButton(1)) {
 		robotPointer->changeDrivetrainStateToBRAKE();

@@ -1,8 +1,8 @@
 #include "Lifter.h"
 #include <iostream>
 Lifter::Lifter() :
-		victor((uint32_t) 9), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput((uint32_t) 9),
-		digitalInput2((uint32_t) 8), controller(0.f, 0.f, 0.f, &liftEncoder, &victor), state(IDLE),
+		victor((uint32_t) 9), liftEncoder((uint32_t) LIFT_ENCODER_PORT_A, (uint32_t) LIFT_ECONDER_PORT_B), digitalInput((uint32_t) LIMIT_SWITCH_TOP),
+		digitalInput2((uint32_t) LIMIT_SWITCH_BOT), controller(0.f, 0.f, 0.f, &liftEncoder, &victor), state(IDLE),
 		currentLevel() {
 }
 

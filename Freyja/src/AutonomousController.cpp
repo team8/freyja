@@ -21,6 +21,7 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 	executing = false;
 	distance = 0;
 	angle = 0;
+	robotPointer->init();
 }
 
 // called once at the beginning of autonomous, this sets the robot
@@ -152,9 +153,7 @@ void AutonomousController::accumulateGray() {
 
 // special path used for testing
 void AutonomousController::test() {
-	commandSet.push_back(CMD_AUTO_DRIVE);
 	commandSet.push_back(CMD_HALF_ROTATE);
-	commandSet.push_back(CMD_AUTO_DRIVE);
 	commandSet.push_back(CMD_STOP);
 }
 
