@@ -10,7 +10,7 @@ HumanController::HumanController(Robot *robotPointer) :
 }
 
 void HumanController::update() {
-	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
+//	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
 
 /*	if(moveJoystick.GetRawButton(2)) {
 		robotPointer->driveDistance(100);

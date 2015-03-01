@@ -68,7 +68,7 @@ void Drivetrain::init() {
 	//Stops robot motion
 	stopTalons();
 
-//	driveDistance(100);
+	driveDistance(100);
 //	rotateAngle(180);
 }
 

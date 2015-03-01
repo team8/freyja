@@ -59,10 +59,10 @@
 #define PID_ASSISTED_TIME_CONSTANT 50
 
 //Distance per pulse for drivetrain
-//#define RIGHT_DPP 0.018258776354
-//#define LEFT_DPP 0.012808296080
-#define RIGHT_DPP .0782
-#define LEFT_DPP .0813
+#define RIGHT_DPP 0.018258776354
+#define LEFT_DPP 0.012808296080
+//#define RIGHT_DPP .0782
+//#define LEFT_DPP .0813
 
 #define LIFT_SPEED 0.5
 #define TOTE_HEIGHT 12.1
