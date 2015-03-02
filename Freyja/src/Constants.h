@@ -73,6 +73,7 @@
 #define PRECISION_ROTATE_CONSANT 0.4
 #define ROTATE_CONSTANT 0.8
 #define ACCELERATION_REVERSE_CONSTANT 0.060
+#define BRAKING_CONSTANT 0.60
 
 // enums for AutonomousController and AutonomousExecutor
 enum Path {

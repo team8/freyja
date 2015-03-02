@@ -67,7 +67,6 @@ void Drivetrain::init() {
 
 	//Stops robot motion
 	stopTalons();
-
 //	driveDistance(100);
 //	rotateAngle(180);
 }
@@ -80,7 +79,7 @@ void Drivetrain::disable() {
 
 //Updates the drivetrain based on state machine
 void Drivetrain::update() {
-	//std::cout << "Gyro readout: " << gyro.GetAngle() << std::endl;
+	//std::cout << "State: " << state << std::endl;
 	switch (state) {
 	case IDLE:
 		stopControl();
@@ -90,8 +89,10 @@ void Drivetrain::update() {
 		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopController.GetError() < 1) {
 			state = IDLE;
 		}
+
 		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
 		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
+
 		break;
 	case ROTATING_ANGLE:
 		//If angle is reached, stops rotating
@@ -116,6 +117,13 @@ void Drivetrain::update() {
 		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
 		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
 
+//		std::cout << "Left Top Speed: " << leftTopTalon.Get() << std::endl;
+//		std::cout << "Left Bot Speed: " << leftBottomTalon.Get() << std::endl;
+//		std::cout << "Right Top Speed: " << rightTopTalon.Get() << std::endl;
+//		std::cout << "Right Bot Speed: " << rightBottomTalon.Get() << std::endl;
+//		std::cout << "Target Speed: " << targetSpeed << std::endl;
+//		std::cout << "Acceleration: " << acceleration << std::endl;
+
 		break;
 	}
 	case PRECISION_TRIGGER:
@@ -132,9 +140,9 @@ void Drivetrain::update() {
 
 	case BRAKE:
 		//Stops Talons
-		stopTalons();
-		acceleration = 0;
-		targetSpeed = 0;
+		//stopTalons();
+		acceleration = -targetSpeed;
+		setSpeed(acceleration, targetSpeed);
 		break;
 	}
 }
@@ -170,7 +178,8 @@ void Drivetrain::stopTalons() {
 }
 
 //Sets drivetrain teleop target and rotate speed
-void Drivetrain::setSpeed(double acceleration, double rotateSpeed) {
+void Drivetrain::setSpeed(double myAcceleration, double rotateSpeed) {
+	acceleration = myAcceleration;
 	if(acceleration > -SPEED_DECAY_RANGE && acceleration < SPEED_DECAY_RANGE) {
 		setTargetSpeed(targetSpeed * SPEED_DECAY_CONSTANT);
 	}
