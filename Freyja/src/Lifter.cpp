@@ -15,8 +15,8 @@ void Lifter::init() {
 
 //Operates lifter according to current state
 void Lifter::update() {
-	//std::cout << "bottom switch is: " << checkSensorHit(false) << std::endl;
-	//std::cout << "top switch is: " << checkSensorHit(true) << std::endl;
+	std::cout << "bottom switch is: " << checkSensorHit(false) << std::endl;
+	std::cout << "top switch is: " << checkSensorHit(true) << std::endl;
 	switch(state) {
 	case MOVING:
 		break;
@@ -60,7 +60,7 @@ void Lifter::zeroing() {
 //Returns whether or not that sensor has been hit
 //Param determines if first or second sensor is checked
 bool Lifter::checkSensorHit(bool firstSensor) {
-	if(firstSensor == false)
+	if(firstSensor)
 		return (digitalInput.Get());
 	else
 		return (digitalInput2.Get());
@@ -85,11 +85,14 @@ double Lifter::getLevel() {
 //Moves the lifter at the specified speed
 void Lifter::setSpeed(double speed) {
 	state = MOVING;
-
-	if(!checkSensorHit(false)) {
-//		victor.SetSpeed((float) std::max(0.0, speed));
-	} else if(!checkSensorHit(true)) {
-//		victor.SetSpeed((float) std::min(0.0, speed));
+	// victor forward = downward
+	//Check top limit switch, only move down
+	if(checkSensorHit(true)) {
+		victor.SetSpeed((float) std::max(0.0, speed));
+	}
+	//Check second limit switch, only move up
+	else if(checkSensorHit(false)) {
+		victor.SetSpeed((float) std::min(0.0, speed));
 	} else {
 		victor.SetSpeed(speed);
 	}
