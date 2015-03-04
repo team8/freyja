@@ -153,7 +153,7 @@ void AutonomousController::accumulateGray() {
 
 // special path used for testing
 void AutonomousController::test() {
-	commandSet.push_back(CMD_HALF_ROTATE);
+	commandSet.push_back(CMD_TOTE_SCORE);
 	commandSet.push_back(CMD_STOP);
 }
 

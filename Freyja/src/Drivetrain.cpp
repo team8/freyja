@@ -67,7 +67,7 @@ void Drivetrain::init() {
 
 	//Stops robot motion
 	stopTalons();
-//	driveDistance(100);
+	driveDistance(100);
 //	rotateAngle(180);
 }
 
@@ -88,6 +88,7 @@ void Drivetrain::update() {
 		//Tests if the drivetrain has drived the specified distance and stops if it has
 		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopController.GetError() < 1) {
 			state = IDLE;
+			std::cout << "idled" << std::endl;
 		}
 
 		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
@@ -114,15 +115,24 @@ void Drivetrain::update() {
 		rightTopTalon.Set(rightSpeed);
 		rightBottomTalon.Set(rightSpeed);
 
-		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
-		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
+		//std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
+		//std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
 
-//		std::cout << "Left Top Speed: " << leftTopTalon.Get() << std::endl;
-//		std::cout << "Left Bot Speed: " << leftBottomTalon.Get() << std::endl;
-//		std::cout << "Right Top Speed: " << rightTopTalon.Get() << std::endl;
-//		std::cout << "Right Bot Speed: " << rightBottomTalon.Get() << std::endl;
-//		std::cout << "Target Speed: " << targetSpeed << std::endl;
-//		std::cout << "Acceleration: " << acceleration << std::endl;
+		//std::cout << "Left Top Actual Speed: " << leftTopTalon.Get() << std::endl;
+		//std::cout << "Left Desired Speed: " << -leftSpeed << std::endl;
+		//std::cout << "Right Top Actual Speed: " << rightTopTalon.Get() << std::endl;
+		//std::cout << "Right Desired Speed: " << rightSpeed << std::endl;
+	//	std::cout << "Left Encoder Raw: " << leftEncoder.GetRaw() << std::endl;
+	//	std::cout << "Right Encoder Raw: " << rightEncoder.GetRaw() << std::endl;
+		//std::cout << "Left Raw: " << leftEncoder.GetRaw() << std::endl;
+		//std::cout << "Right Raw: " << rightEncoder.GetRaw() << std::endl;
+		//std::cout << "Left Direction: " << leftEncoder.GetDirection() << std::endl;
+		//std::cout << "Right Direction: " << rightEncoder.GetDirection() << std::endl;
+		//std::cout << "Left Bot Speed: " << leftBottomTalon.Get() << std::endl;
+		//std::cout << "Right Top Speed: " << rightTopTalon.Get() << std::endl;
+		//std::cout << "Right Bot Speed: " << rightBottomTalon.Get() << std::endl;
+		//std::cout << "Target Speed: " << targetSpeed << std::endl;
+		//std::cout << "Acceleration: " << acceleration << std::endl;
 
 		break;
 	}
@@ -141,8 +151,9 @@ void Drivetrain::update() {
 	case BRAKE:
 		//Stops Talons
 		//stopTalons();
-		acceleration = -targetSpeed;
-		setSpeed(acceleration, targetSpeed);
+		acceleration = 0;
+		targetSpeed = 0;
+		setSpeed(0, 0);
 		break;
 	}
 }

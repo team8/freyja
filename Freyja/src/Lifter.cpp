@@ -1,9 +1,12 @@
 #include "Lifter.h"
 #include <iostream>
 Lifter::Lifter() :
-		victor((uint32_t) 9), liftEncoder((uint32_t) LIFT_ENCODER_PORT_A, (uint32_t) LIFT_ECONDER_PORT_B), digitalInput((uint32_t) LIMIT_SWITCH_TOP),
-		digitalInput2((uint32_t) LIMIT_SWITCH_BOT), controller(0.f, 0.f, 0.f, &liftEncoder, &victor), state(IDLE),
-		currentLevel() {
+		victor((uint32_t) 9), liftEncoder((uint32_t) LIFT_ENCODER_PORT_A, (uint32_t) LIFT_ENCODER_PORT_B),
+		digitalInput((uint32_t) LIMIT_SWITCH_TOP), digitalInput2((uint32_t) LIMIT_SWITCH_BOT),
+		controller(0.f, 0.f, 0.f, &liftEncoder, &victor) {
+	currentLevel = 0;
+	state = IDLE;
+
 }
 
 //Initializes lifter to be ready to operate
@@ -15,13 +18,14 @@ void Lifter::init() {
 
 //Operates lifter according to current state
 void Lifter::update() {
-	std::cout << "bottom switch is: " << checkSensorHit(false) << std::endl;
-	std::cout << "top switch is: " << checkSensorHit(true) << std::endl;
+//	std::cout << "bottom switch is: " << checkSensorHit(false) << std::endl;
+//	std::cout << "top switch is: " << checkSensorHit(true) << std::endl;
 	switch(state) {
 	case MOVING:
 		break;
 	case IDLE:
 		if(checkSensorHit(false)) {
+
 			setLevel(0);
 			liftEncoder.Reset();
 		}
@@ -60,10 +64,14 @@ void Lifter::zeroing() {
 //Returns whether or not that sensor has been hit
 //Param determines if first or second sensor is checked
 bool Lifter::checkSensorHit(bool firstSensor) {
-	if(firstSensor)
+	std::cout << "digInp: " << digitalInput.Get() << std::endl;
+	std::cout << "digInp2: " << digitalInput2.Get() << std::endl;
+	if(firstSensor) {
 		return (digitalInput.Get());
-	else
+	}
+	else {
 		return (digitalInput2.Get());
+	}
 }
 
 //Returns a boolean based on if either sensor has been hit
@@ -87,16 +95,20 @@ void Lifter::setSpeed(double speed) {
 	state = MOVING;
 	// victor forward = downward
 	//Check top limit switch, only move down
+/*
 	if(checkSensorHit(true)) {
-		victor.SetSpeed((float) std::max(0.0, speed));
+//		std::cout << "Can't move up" << std::endl;
+		victor.SetSpeed(std::max(0.0, speed));
 	}
 	//Check second limit switch, only move up
 	else if(checkSensorHit(false)) {
-		victor.SetSpeed((float) std::min(0.0, speed));
+//		std::cout << "Can't move down" << std::endl;
+		victor.SetSpeed(std::min(0.0, speed));
 	} else {
+//		std::cout << "Limitless" << std::endl;
+*/
 		victor.SetSpeed(speed);
-	}
-	victor.SetSpeed(speed);
+	//}
 }
 
 //Empty destructor

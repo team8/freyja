@@ -74,7 +74,7 @@ Lifter::State Robot::getLifterState() {
 
 /** Sets the lifter level */
 void Robot::setLifterLevel(int level) {
-	lifter.setLevel(level);
+	lifter.setSpeed(level);
 }
 /** Returns the level of the lifter */
 double Robot::getLevel() {

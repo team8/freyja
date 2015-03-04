@@ -12,8 +12,8 @@
 #define PORT_TURN 2
 #define PORT_OPERATOR 0
 
-#define PORT_ENCODER_RIGHT_A 0
-#define PORT_ENCODER_RIGHT_B 1
+#define PORT_ENCODER_RIGHT_A 4
+#define PORT_ENCODER_RIGHT_B 5
 #define PORT_ENCODER_LEFT_A 2
 #define PORT_ENCODER_LEFT_B 3
 
@@ -23,8 +23,8 @@
 #define SOLENOID_2_PORT_A 2
 #define SOLENOID_2_PORT_B 3
 
-#define LIFT_ENCODER_PORT_A 4
-#define LIFT_ECONDER_PORT_B 5
+#define LIFT_ENCODER_PORT_A 0
+#define LIFT_ENCODER_PORT_B 1
 
 #define LIMIT_SWITCH_TOP 9
 #define LIMIT_SWITCH_BOT 8
@@ -59,10 +59,12 @@
 #define PID_ASSISTED_TIME_CONSTANT 50
 
 //Distance per pulse for drivetrain
-#define RIGHT_DPP 0.018258776354
-#define LEFT_DPP 0.012808296080
+//#define RIGHT_DPP 0.018258776354
+//#define LEFT_DPP 0.012808296080
+#define RIGHT_DPP 0.01294599
+#define LEFT_DPP 0.01290522
 
-#define LIFT_SPEED 0.5
+#define LIFT_SPEED 1.5
 #define TOTE_HEIGHT 12.1
 
 // Constants used for fine tuning steering
