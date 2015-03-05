@@ -64,8 +64,8 @@ void Lifter::zeroing() {
 //Returns whether or not that sensor has been hit
 //Param determines if first or second sensor is checked
 bool Lifter::checkSensorHit(bool firstSensor) {
-	std::cout << "digInp: " << digitalInput.Get() << std::endl;
-	std::cout << "digInp2: " << digitalInput2.Get() << std::endl;
+	//std::cout << "digInp: " << digitalInput.Get() << std::endl;
+	//std::cout << "digInp2: " << digitalInput2.Get() << std::endl;
 	if(firstSensor) {
 		return (digitalInput.Get());
 	}

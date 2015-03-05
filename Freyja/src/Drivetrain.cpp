@@ -67,7 +67,7 @@ void Drivetrain::init() {
 
 	//Stops robot motion
 	stopTalons();
-	driveDistance(100);
+//	driveDistance(100);
 //	rotateAngle(180);
 }
 
@@ -91,8 +91,8 @@ void Drivetrain::update() {
 			std::cout << "idled" << std::endl;
 		}
 
-		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
-		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
+	//	std::cout << "Left Encoder: " << leftEncoder.GetRaw() << std::endl;
+	//	std::cout << "Right Encoder: " << rightEncoder.GetRaw() << std::endl;
 
 		break;
 	case ROTATING_ANGLE:
@@ -122,8 +122,8 @@ void Drivetrain::update() {
 		//std::cout << "Left Desired Speed: " << -leftSpeed << std::endl;
 		//std::cout << "Right Top Actual Speed: " << rightTopTalon.Get() << std::endl;
 		//std::cout << "Right Desired Speed: " << rightSpeed << std::endl;
-	//	std::cout << "Left Encoder Raw: " << leftEncoder.GetRaw() << std::endl;
-	//	std::cout << "Right Encoder Raw: " << rightEncoder.GetRaw() << std::endl;
+		std::cout << "Left Encoder Raw: " << leftEncoder.GetRaw() << std::endl;
+		std::cout << "Right Encoder Raw: " << rightEncoder.GetRaw() << std::endl;
 		//std::cout << "Left Raw: " << leftEncoder.GetRaw() << std::endl;
 		//std::cout << "Right Raw: " << rightEncoder.GetRaw() << std::endl;
 		//std::cout << "Left Direction: " << leftEncoder.GetDirection() << std::endl;
