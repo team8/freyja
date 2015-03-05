@@ -64,6 +64,10 @@ void Robot::changeDrivetrainStateToThrottle() {
 	drivetrain.setStateThrottle();
 }
 
+void Robot::changeDrivetrainStateToHighSpeed() {
+	drivetrain.setStateHighSpeed();
+}
+
 Drivetrain::State Robot::getDrivetrainState() {
 	return drivetrain.getState();
 }
@@ -86,11 +90,13 @@ void Robot::zeroLifter() {
 	lifter.zeroing();
 }
 
-//TODO What are these two methods?
+// Lowers the arm to the ground
 void Robot::drop() {
+	lifter.setLevel(0);
 }
 
-void Robot::canLift() {
+//Will lift a can
+void Robot::liftCan() {
 }
 
 void Robot::setLifter(double speed) {

@@ -20,12 +20,12 @@ void Lifter::init() {
 void Lifter::update() {
 //	std::cout << "bottom switch is: " << checkSensorHit(false) << std::endl;
 //	std::cout << "top switch is: " << checkSensorHit(true) << std::endl;
+	std::cout << "Lifter encoder" << liftEncoder.Get() << std::endl;
 	switch(state) {
 	case MOVING:
 		break;
 	case IDLE:
 		if(checkSensorHit(false)) {
-
 			setLevel(0);
 			liftEncoder.Reset();
 		}
@@ -46,6 +46,7 @@ void Lifter::setLevel(double level) {
 	currentLevel = level;
 	//Checks to see if the pid has reached its target.
 	if(liftEncoder.GetStopped()) {
+		std::cout << "Reached level " << level << std::endl;
 		state = IDLE;
 	} else {
 		state = MOVING;

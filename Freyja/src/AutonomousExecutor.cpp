@@ -129,6 +129,7 @@ void AutonomousExecutor::toteScore() {
 	std::list<AutoCommand> toteScoreSet;
 	toteScoreSet.push_back(CMD_TOTE_LIFT);
 	toteScoreSet.push_back(CMD_AUTO_DRIVE);
+	toteScoreSet.push_back(CMD_DROP);
 	toteScoreSet.push_back(CMD_OPEN);
 
 	comIt = commandSet->begin();
@@ -174,7 +175,7 @@ void AutonomousExecutor::rotate(int angle) {
 
 // BASE: lifts a can
 void AutonomousExecutor::canLift() {
-	robot->canLift();
+	robot->liftCan();
 }
 
 // BASE_ARG: drives forward a set distance

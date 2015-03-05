@@ -69,7 +69,10 @@ public:
 		//A state in which the turning speed is lowered for higher precision
 		PRECISION_TRIGGER,
 		//A state in which the talons are set to 0
-		THROTTLE
+		//Go max speed backwards
+		THROTTLE,
+		//Higher sensititivity goes faster
+		HIGH_SPEED
 	} State;
 
 	//The State variable created for this instance
@@ -94,6 +97,7 @@ public:
 
 	void setStateTrigger();
 	void setStateThrottle();
+	void setStateHighSpeed();
 	State getState();
 };
 

@@ -80,6 +80,7 @@ void Drivetrain::disable() {
 //Updates the drivetrain based on state machine
 void Drivetrain::update() {
 	//std::cout << "State: " << state << std::endl;
+	std::cout << "Gyro angle: " << gyro.GetAngle() << std::endl;
 	switch (state) {
 	case IDLE:
 		stopControl();
@@ -88,7 +89,6 @@ void Drivetrain::update() {
 		//Tests if the drivetrain has drived the specified distance and stops if it has
 		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopController.GetError() < 1) {
 			state = IDLE;
-			std::cout << "idled" << std::endl;
 		}
 
 	//	std::cout << "Left Encoder: " << leftEncoder.GetRaw() << std::endl;
@@ -110,36 +110,36 @@ void Drivetrain::update() {
 		//Determines the appropriate left and right speed
 
 		//Sets talons to left and right speeds
-		leftTopTalon.Set(-leftSpeed );
+		leftTopTalon.Set(-leftSpeed);
 		leftBottomTalon.Set(-leftSpeed);
 		rightTopTalon.Set(rightSpeed);
 		rightBottomTalon.Set(rightSpeed);
 
-		//std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
-		//std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
+//		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
+//		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
 
-		//std::cout << "Left Top Actual Speed: " << leftTopTalon.Get() << std::endl;
-		//std::cout << "Left Desired Speed: " << -leftSpeed << std::endl;
-		//std::cout << "Right Top Actual Speed: " << rightTopTalon.Get() << std::endl;
-		//std::cout << "Right Desired Speed: " << rightSpeed << std::endl;
-		std::cout << "Left Encoder Raw: " << leftEncoder.GetRaw() << std::endl;
-		std::cout << "Right Encoder Raw: " << rightEncoder.GetRaw() << std::endl;
-		//std::cout << "Left Raw: " << leftEncoder.GetRaw() << std::endl;
-		//std::cout << "Right Raw: " << rightEncoder.GetRaw() << std::endl;
-		//std::cout << "Left Direction: " << leftEncoder.GetDirection() << std::endl;
-		//std::cout << "Right Direction: " << rightEncoder.GetDirection() << std::endl;
-		//std::cout << "Left Bot Speed: " << leftBottomTalon.Get() << std::endl;
-		//std::cout << "Right Top Speed: " << rightTopTalon.Get() << std::endl;
-		//std::cout << "Right Bot Speed: " << rightBottomTalon.Get() << std::endl;
-		//std::cout << "Target Speed: " << targetSpeed << std::endl;
-		//std::cout << "Acceleration: " << acceleration << std::endl;
+//		std::cout << "Left Top Actual Speed: " << leftTopTalon.Get() << std::endl;
+//		std::cout << "Left Desired Speed: " << -leftSpeed << std::endl;
+//		std::cout << "Right Top Actual Speed: " << rightTopTalon.Get() << std::endl;
+//		std::cout << "Right Desired Speed: " << rightSpeed << std::endl;
+//		std::cout << "Left Encoder Raw: " << leftEncoder.GetRaw() << std::endl;
+//		std::cout << "Right Encoder Raw: " << rightEncoder.GetRaw() << std::endl;
+//		std::cout << "Left Raw: " << leftEncoder.GetRaw() << std::endl;
+//		std::cout << "Right Raw: " << rightEncoder.GetRaw() << std::endl;
+//		std::cout << "Left Direction: " << leftEncoder.GetDirection() << std::endl;
+//		std::cout << "Right Direction: " << rightEncoder.GetDirection() << std::endl;
+//		std::cout << "Left Bot Speed: " << leftBottomTalon.Get() << std::endl;
+//		std::cout << "Right Top Speed: " << rightTopTalon.Get() << std::endl;
+//		std::cout << "Right Bot Speed: " << rightBottomTalon.Get() << std::endl;
+//		std::cout << "Target Speed: " << targetSpeed << std::endl;
+//		std::cout << "Acceleration: " << acceleration << std::endl;
 
 		break;
 	}
 	case PRECISION_TRIGGER:
 		//Determines the appropriate left and right speed
-		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
-		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
+		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(-leftSpeed);
@@ -153,11 +153,23 @@ void Drivetrain::update() {
 		//stopTalons();
 		acceleration = 0;
 		targetSpeed = 1;
-
+		//Goes backwards
 		leftTopTalon.Set(-1);
 		leftBottomTalon.Set(-1);
 		rightTopTalon.Set(1);
 		rightBottomTalon.Set(1);
+		break;
+
+	case HIGH_SPEED:
+		//Determines the appropriate left and right speed
+		leftSpeed = std::max(std::min(targetSpeed * HIGH_DPI - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+		rightSpeed = std::max(std::min(targetSpeed * HIGH_DPI + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+
+		//Sets talons to left and right speeds
+		leftTopTalon.Set(-leftSpeed);
+		leftBottomTalon.Set(-leftSpeed);
+		rightTopTalon.Set(rightSpeed);
+		rightBottomTalon.Set(rightSpeed);
 		break;
 	}
 }
@@ -267,9 +279,14 @@ void Drivetrain::driveDistance(double distance) {
 void Drivetrain::setStateTrigger(){
 	state = PRECISION_TRIGGER;
 }
-//Turns on the brake
+//Turns on the throttle
 void Drivetrain::setStateThrottle(){
 	state = THROTTLE;
+}
+
+//Start high dpi
+void Drivetrain::setStateHighSpeed() {
+	state = HIGH_SPEED;
 }
 //Gets the state of this drivetrain
 Drivetrain::State Drivetrain::getState() {
