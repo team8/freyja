@@ -60,8 +60,8 @@ void Robot::changeDrivetrainStateToPRECISION_TRIGGER() {
 	drivetrain.setStateTrigger();
 }
 
-void Robot::changeDrivetrainStateToBRAKE() {
-	drivetrain.setStateBrake();
+void Robot::changeDrivetrainStateToThrottle() {
+	drivetrain.setStateThrottle();
 }
 
 Drivetrain::State Robot::getDrivetrainState() {

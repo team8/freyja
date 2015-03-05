@@ -30,7 +30,7 @@ public:
 	void driveDistance(double distance);
 	void rotateAngle(double angle);
 	void changeDrivetrainStateToPRECISION_TRIGGER();
-	void changeDrivetrainStateToBRAKE();
+	void changeDrivetrainStateToThrottle();
 	Drivetrain::State getDrivetrainState();
 
 	void changePistonState(Arm::PistonState state);

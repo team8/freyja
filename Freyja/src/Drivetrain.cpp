@@ -148,12 +148,16 @@ void Drivetrain::update() {
 		rightBottomTalon.Set(rightSpeed);
 		break;
 
-	case BRAKE:
+	case THROTTLE:
 		//Stops Talons
 		//stopTalons();
 		acceleration = 0;
-		targetSpeed = 0;
-		setSpeed(0, 0);
+		targetSpeed = 1;
+
+		leftTopTalon.Set(-1);
+		leftBottomTalon.Set(-1);
+		rightTopTalon.Set(1);
+		rightBottomTalon.Set(1);
 		break;
 	}
 }
@@ -264,8 +268,8 @@ void Drivetrain::setStateTrigger(){
 	state = PRECISION_TRIGGER;
 }
 //Turns on the brake
-void Drivetrain::setStateBrake(){
-	state = BRAKE;
+void Drivetrain::setStateThrottle(){
+	state = THROTTLE;
 }
 //Gets the state of this drivetrain
 Drivetrain::State Drivetrain::getState() {

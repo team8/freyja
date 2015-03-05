@@ -69,7 +69,7 @@ public:
 		//A state in which the turning speed is lowered for higher precision
 		PRECISION_TRIGGER,
 		//A state in which the talons are set to 0
-		BRAKE
+		THROTTLE
 	} State;
 
 	//The State variable created for this instance
@@ -93,7 +93,7 @@ public:
 	void driveDistance(double distance);
 
 	void setStateTrigger();
-	void setStateBrake();
+	void setStateThrottle();
 	State getState();
 };
 
