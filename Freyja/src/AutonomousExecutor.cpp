@@ -186,7 +186,9 @@ void AutonomousExecutor::drive(int dist) {
 
 // BASE: lifts a tote
 void AutonomousExecutor::lift() {
-//	robot->lift(LIFT_DISTANCE);
+	//Pid version
+	robot->setLifterLevel(1);
+
 }
 
 // BASE: drops whatever is being held
@@ -221,16 +223,12 @@ void AutonomousExecutor::visionAccumulate() {
 }
 
 /* checks if any of the subsystems are currently working
- * currently implemented: drivetrain
+ * currently implemented: drivetrain and lifter
  */
 bool AutonomousExecutor::isAllIdle() {
-	std::cout << "Drive state: " << robot->getDrivetrainState() << std::endl;
-	//std::cout << "expected dstate: " << Drivetrain::State::IDLE << std::endl;
-
-	return robot->getDrivetrainState() == Drivetrain::State::IDLE;
+//	std::cout << "Drive state: " << robot->getDrivetrainState() << std::endl;
+	return (robot->getDrivetrainState() == Drivetrain::State::IDLE) && (robot->getLifterState() == Lifter::State::IDLE);
 }
-
-// robot->getDrivetrainState();
 
 AutonomousExecutor::~AutonomousExecutor() {
 	// TODO Auto-generated destructor stub

@@ -39,6 +39,7 @@ void HumanController::update() {
 	}
 	if(operatorJoystick.GetRawButton(7)) {
 		robotPointer->changeCompressorState(Arm::CompressorState::ON);
+
 	}
 
 	//Lifter Controls

@@ -39,6 +39,7 @@ private:
 	DigitalInput digitalInput2;
 
 	PIDController controller;
+	double targetSpeed;
 };
 
 #endif /* FREYJA_SRC_LIFTER_H_ */

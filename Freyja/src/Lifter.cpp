@@ -1,9 +1,7 @@
 #include "Lifter.h"
 #include <iostream>
 Lifter::Lifter() :
-		victor((uint32_t) 9), liftEncoder((uint32_t) LIFT_ENCODER_PORT_A, (uint32_t) LIFT_ENCODER_PORT_B),
-		digitalInput((uint32_t) LIMIT_SWITCH_TOP), digitalInput2((uint32_t) LIMIT_SWITCH_BOT),
-		controller(0.f, 0.f, 0.f, &liftEncoder, &victor) {
+		victor((uint32_t) 9), liftEncoder((uint32_t) LIFT_ENCODER_PORT_A, (uint32_t) LIFT_ENCODER_PORT_B), digitalInput((uint32_t) LIMIT_SWITCH_TOP), digitalInput2((uint32_t) LIMIT_SWITCH_BOT), controller(0.f, 0.f, 0.f, &liftEncoder, &victor), targetSpeed(0) {
 	currentLevel = 0;
 	state = IDLE;
 
@@ -23,12 +21,10 @@ void Lifter::update() {
 	std::cout << "Lifter encoder" << liftEncoder.Get() << std::endl;
 	switch(state) {
 	case MOVING:
+		victor.SetSpeed(targetSpeed);
 		break;
 	case IDLE:
-		if(checkSensorHit(false)) {
-			setLevel(0);
-			liftEncoder.Reset();
-		}
+		victor.SetSpeed(0);
 		break;
 	}
 }
@@ -49,6 +45,7 @@ void Lifter::setLevel(double level) {
 		std::cout << "Reached level " << level << std::endl;
 		state = IDLE;
 	} else {
+		targetSpeed = controller.Get();
 		state = MOVING;
 	}
 }
@@ -69,8 +66,7 @@ bool Lifter::checkSensorHit(bool firstSensor) {
 	//std::cout << "digInp2: " << digitalInput2.Get() << std::endl;
 	if(firstSensor) {
 		return (digitalInput.Get());
-	}
-	else {
+	} else {
 		return (digitalInput2.Get());
 	}
 }
@@ -96,19 +92,20 @@ void Lifter::setSpeed(double speed) {
 	state = MOVING;
 	// victor forward = downward
 	//Check top limit switch, only move down
-/*
-	if(checkSensorHit(true)) {
-//		std::cout << "Can't move up" << std::endl;
-		victor.SetSpeed(std::max(0.0, speed));
-	}
-	//Check second limit switch, only move up
-	else if(checkSensorHit(false)) {
-//		std::cout << "Can't move down" << std::endl;
-		victor.SetSpeed(std::min(0.0, speed));
-	} else {
-//		std::cout << "Limitless" << std::endl;
-*/
-		victor.SetSpeed(speed);
+	/*
+	 if(checkSensorHit(true)) {
+	 //		std::cout << "Can't move up" << std::endl;
+	 targetSpeed = std::max(0.0, speed);
+	 }
+	 //Check second limit switch, only move up
+	 else if(checkSensorHit(false)) {
+	 //		std::cout << "Can't move down" << std::endl;
+	 targetSpeed = std::min(0.0, speed);
+	 } else {
+	 //		std::cout << "Limitless" << std::endl;
+	 */
+	//TODO Put inside the else statement
+	targetSpeed = speed;
 	//}
 }
 
