@@ -23,7 +23,7 @@ void HumanController::update() {
 	}*/
 
 	if(moveJoystick.GetRawButton(1)) {
-		robotPointer->changeDrivetrainStateToThrottle();
+		robotPointer->changeDrivetrainStateToHighSpeed();
 	}
 	if(turnJoystick.GetRawButton(1)) {
 		robotPointer->changeDrivetrainStateToPRECISION_TRIGGER();
