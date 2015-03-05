@@ -55,12 +55,13 @@ Drivetrain::Drivetrain() :
 
 //Initializes the drivetrain
 void Drivetrain::init() {
+
 	leftSpeed = 0;
 	rightSpeed = 0;
 
 	//Sets the inital robot state to idle
 	state = IDLE;
-
+	gyro.InitGyro();
 	//Resets encoders
 	leftEncoder.Reset();
 	rightEncoder.Reset();

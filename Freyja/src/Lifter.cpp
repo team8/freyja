@@ -20,7 +20,7 @@ void Lifter::init() {
 void Lifter::update() {
 //	std::cout << "bottom switch is: " << checkSensorHit(false) << std::endl;
 //	std::cout << "top switch is: " << checkSensorHit(true) << std::endl;
-	std::cout << "Lifter encoder" << liftEncoder.Get() << std::endl;
+	//std::cout << "Lifter encoder" << liftEncoder.Get() << std::endl;
 	switch(state) {
 	case MOVING:
 		break;
