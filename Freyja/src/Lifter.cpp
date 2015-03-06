@@ -25,10 +25,12 @@ void Lifter::update() {
 	//std::cout << "Lifter encoder" << liftEncoder.Get() << std::endl;
 	switch (state) {
 	case MOVING:
-		std::cout << "Moving lifter at speed: " << targetSpeed << std::endl;
+		std::cout << "Desired lifter speed: " << targetSpeed << std::endl;
 		victor.SetSpeed(targetSpeed);
+		std::cout << "Actual lifter speed: " << victor.Get() << std::endl;
 		break;
 	case IDLE:
+		std::cout << "lifter idling" << std::endl;
 		victor.SetSpeed(0);
 		break;
 	}
@@ -108,7 +110,14 @@ void Lifter::setSpeed(double speed) {
 		std::cout << "Limitless" << std::endl;
 		targetSpeed = speed;
 	}
-	state = MOVING;
+	if (targetSpeed >= -0.1 && targetSpeed <= 0.1) {
+		state = IDLE;
+		std::cout << "lifter idling\n";
+	}
+	else {
+		state = MOVING;
+		std::cout << "lifter moving\n";
+	}
 }
 
 //Empty destructor

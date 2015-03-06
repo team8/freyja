@@ -14,8 +14,8 @@
 
 #define PORT_ENCODER_RIGHT_A 2
 #define PORT_ENCODER_RIGHT_B 3
-#define PORT_ENCODER_LEFT_A 0
-#define PORT_ENCODER_LEFT_B 1
+#define PORT_ENCODER_LEFT_A 1
+#define PORT_ENCODER_LEFT_B 0
 
 // Solenoid Ports
 #define SOLENOID_1_PORT_A 0
