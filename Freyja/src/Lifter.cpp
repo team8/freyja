@@ -25,6 +25,7 @@ void Lifter::update() {
 	//std::cout << "Lifter encoder" << liftEncoder.Get() << std::endl;
 	switch (state) {
 	case MOVING:
+		std::cout << "Moving lifter at speed: " << targetSpeed << std::endl;
 		victor.SetSpeed(targetSpeed);
 		break;
 	case IDLE:

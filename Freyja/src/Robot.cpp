@@ -18,9 +18,9 @@ void Robot::update() {
 	arm.update();
 	lifter.update();
 	//disables lifter if either sensor is hit
-	if(lifter.checkEitherHit()) {
-		lifter.disable();
-	}
+//	if(lifter.checkEitherHit()) {
+//		lifter.disable();
+//	}
 }
 
 /** Disables all subsystems */
