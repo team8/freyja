@@ -28,7 +28,7 @@ Drivetrain::Drivetrain() :
 		rightBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightBottomTalon),
 
 		//Initializes various instance variables
-		leftSpeed(), rightSpeed()
+		leftSpeed(), rightSpeed(), drivingSetpoint()
 {
 	//Initializes the target and rotate speeds to zero
 	targetSpeed = 0;
@@ -61,7 +61,7 @@ void Drivetrain::init() {
 
 	//Sets the inital robot state to idle
 	state = IDLE;
-	gyro.InitGyro();
+//	gyro.InitGyro();
 	//Resets encoders
 	leftEncoder.Reset();
 	rightEncoder.Reset();

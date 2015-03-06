@@ -21,25 +21,12 @@ private:
 	TalonSRX rightTopTalon;
 	TalonSRX rightBottomTalon;
 
-	//The forward speed of the robot during teleoperated control
-	double targetSpeed;
-	//The rotation speed of the robot during teleoperated control
-	double rotateSpeed;
-
-	// The value returned by the Y-axis of the driver stick
-	double acceleration;
-
-	double leftSpeed;
-	double rightSpeed;
-
 	//The two encoders, or distance sensors, of the drivetrain
 	Encoder leftEncoder;
 	Encoder rightEncoder;
 
 	//The gyroscope, or orientation sensor, of the drivetrain
 	Gyro gyro;
-
-	double drivingSetpoint;
 
 	//The PID Controllers of the drivetrain, control loops allowing highly precise and efficient movement
 	PIDController leftTopController;
@@ -54,6 +41,19 @@ private:
 
 	PIDController rightTopGyroController;
 	PIDController rightBottomGyroController;
+
+	//The forward speed of the robot during teleoperated control
+	double targetSpeed;
+	//The rotation speed of the robot during teleoperated control
+	double rotateSpeed;
+
+	// The value returned by the Y-axis of the driver stick
+	double acceleration;
+
+	double leftSpeed;
+	double rightSpeed;
+
+	double drivingSetpoint;
 
 public:
 	//An enum type definition for the state the robot is in
