@@ -78,7 +78,7 @@ void Drivetrain::init() {
 
 	//Stops robot motion
 	stopTalons();
-//	driveDistance(100);
+	//driveDistance(100);
 //	rotateAngle(180);
 }
 
@@ -101,8 +101,8 @@ void Drivetrain::update() {
 			state = IDLE;
 		}
 
-	//	std::cout << "Left Encoder: " << leftEncoder.GetRaw() << std::endl;
-	//	std::cout << "Right Encoder: " << rightEncoder.GetRaw() << std::endl;
+		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
+		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
 
 		break;
 	case ROTATING_ANGLE:
@@ -125,15 +125,19 @@ void Drivetrain::update() {
 		rightTopTalon.Set(rightSpeed);
 		rightBottomTalon.Set(rightSpeed);
 
-//		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
-//		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
+		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
+		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
 
 //		std::cout << "Left Top Actual Speed: " << leftTopTalon.Get() << std::endl;
 //		std::cout << "Left Desired Speed: " << -leftSpeed << std::endl;
 //		std::cout << "Right Top Actual Speed: " << rightTopTalon.Get() << std::endl;
 //		std::cout << "Right Desired Speed: " << rightSpeed << std::endl;
-		std::cout << "Left Encoder Raw: " << leftEncoder.GetRaw() << std::endl;
-		std::cout << "Right Encoder Raw: " << rightEncoder.GetRaw() << std::endl;
+//		std::cout << "Left Encoder Raw: " << leftEncoder.GetRaw() << std::endl;
+//		std::cout << "Right Encoder Raw: " << rightEncoder.GetRaw() << std::endl;
+//		std::cout << "Left Talon Top Out: " << leftTopTalon.Get() << std::endl;
+//		std::cout << "Left Talon Bottom Out: " << leftBottomTalon.Get() << std::endl;
+//		std::cout << "right Talon Top Out: " << rightTopTalon.Get() << std::endl;
+//		std::cout << "right Talon Bottom Out: " << rightBottomTalon.Get() << std::endl;
 //		std::cout << "Left Raw: " << leftEncoder.GetRaw() << std::endl;
 //		std::cout << "Right Raw: " << rightEncoder.GetRaw() << std::endl;
 //		std::cout << "Left Direction: " << leftEncoder.GetDirection() << std::endl;

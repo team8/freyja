@@ -25,9 +25,9 @@ void Lifter::update() {
 	//std::cout << "Lifter encoder" << liftEncoder.Get() << std::endl;
 	switch (state) {
 	case MOVING:
-		std::cout << "Desired lifter speed: " << targetSpeed << std::endl;
+//		std::cout << "Desired lifter speed: " << targetSpeed << std::endl;
 		victor.SetSpeed(targetSpeed);
-		std::cout << "Actual lifter speed: " << victor.Get() << std::endl;
+//		std::cout << "Actual lifter speed: " << victor.Get() << std::endl;
 		break;
 	case IDLE:
 		victor.SetSpeed(0);
@@ -95,28 +95,17 @@ double Lifter::getLevel() {
 //TODO Name of method is confusing, not what it actually does
 //Moves the lifter at the specified speed
 void Lifter::setSpeed(double speed) {
-	// victor forward = downward
 	//Check top limit switch, only move down
 //	if (checkSensorHit(true)) {
-//		std::cout << "Can't move up" << std::endl;
 //		targetSpeed = std::max(0.0, speed);
 //	}
 //	//Check second limit switch, only move up
 //	else if (checkSensorHit(false)) {
-//		std::cout << "Can't move down" << std::endl;
 //		targetSpeed = std::min(0.0, speed);
 //	} else {
-//		std::cout << "Limitless" << std::endl;
 		targetSpeed = speed;
 //	}
-//	if (targetSpeed >= -0.1 && targetSpeed <= 0.1) {
-//		state = IDLE;
-//		std::cout << "lifter idling\n";
-//	}
-//	else {
-		state = MOVING;
-//		std::cout << "lifter moving\n";
-//	}
+	state = MOVING;
 }
 
 //Empty destructor

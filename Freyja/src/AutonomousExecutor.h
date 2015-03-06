@@ -13,6 +13,7 @@
 #define GRAY_GRAY_DISTANCE 20 // x: between totes in landfill zone
 #define YELLOW_YELLOW_DISTANCE 50 // x: between yellow auto totes
 #define LIFT_DISTANCE 10 // z: lift distance
+#define TEMPORARY_DRIVE_CONSTANT 50
 
 #include <WPILib.h>
 #include <list>
