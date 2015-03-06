@@ -97,26 +97,26 @@ double Lifter::getLevel() {
 void Lifter::setSpeed(double speed) {
 	// victor forward = downward
 	//Check top limit switch, only move down
-	if (checkSensorHit(true)) {
-		std::cout << "Can't move up" << std::endl;
-		targetSpeed = std::max(0.0, speed);
-	}
-	//Check second limit switch, only move up
-	else if (checkSensorHit(false)) {
-		std::cout << "Can't move down" << std::endl;
-		targetSpeed = std::min(0.0, speed);
-	} else {
-		std::cout << "Limitless" << std::endl;
+//	if (checkSensorHit(true)) {
+//		std::cout << "Can't move up" << std::endl;
+//		targetSpeed = std::max(0.0, speed);
+//	}
+//	//Check second limit switch, only move up
+//	else if (checkSensorHit(false)) {
+//		std::cout << "Can't move down" << std::endl;
+//		targetSpeed = std::min(0.0, speed);
+//	} else {
+//		std::cout << "Limitless" << std::endl;
 		targetSpeed = speed;
-	}
-	if (targetSpeed >= -0.1 && targetSpeed <= 0.1) {
-		state = IDLE;
-		std::cout << "lifter idling\n";
-	}
-	else {
+//	}
+//	if (targetSpeed >= -0.1 && targetSpeed <= 0.1) {
+//		state = IDLE;
+//		std::cout << "lifter idling\n";
+//	}
+//	else {
 		state = MOVING;
-		std::cout << "lifter moving\n";
-	}
+//		std::cout << "lifter moving\n";
+//	}
 }
 
 //Empty destructor
