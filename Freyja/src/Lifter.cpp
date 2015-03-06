@@ -60,7 +60,7 @@ void Lifter::zeroing() {
 //Returns whether or not that sensor has been hit
 //Param determines if first or second sensor is checked
 bool Lifter::checkSensorHit(bool firstSensor) {
-	if(firstSensor == false)
+	if(firstSensor)
 		return (digitalInput.Get());
 	else
 		return (digitalInput2.Get());
@@ -87,9 +87,11 @@ void Lifter::setState(double speed) {
 	state = MOVING;
 
 	if(!checkSensorHit(false)) {
+		std::cout << "Top limit switch" << std::endl;
 		victor.SetSpeed((float) std::max(0.0, speed));
 
 	} else if(!checkSensorHit(true)) {
+		std::cout << "Bottom limit switch" << std::endl;
 		victor.SetSpeed((float) std::min(0.0, speed));
 	} else {
 		victor.SetSpeed(speed);
