@@ -23,6 +23,8 @@
 #define SOLENOID_2_PORT_A 2
 #define SOLENOID_2_PORT_B 3
 
+#define PORT_LIFT_VIC 9
+
 #define LIFT_ENCODER_PORT_A 0
 #define LIFT_ENCODER_PORT_B 1
 
