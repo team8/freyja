@@ -35,6 +35,11 @@ private:
 	PIDController rightTopController;
 	PIDController rightBottomController;
 
+//	PIDController leftTopTurn;
+//	PIDController leftBottomTurn;
+//	PIDController rightTopTurn;
+//	PIDController rightBottomTurn;
+
 	//The PID Controllers of the drivetrin's rotation, cotrol loops allowing the rotation of a desired angle
 	PIDController leftTopGyroController;
 	PIDController leftBottomGyroController;

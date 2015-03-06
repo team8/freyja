@@ -12,10 +12,10 @@
 #define PORT_TURN 2
 #define PORT_OPERATOR 0
 
-#define PORT_ENCODER_RIGHT_A 4
-#define PORT_ENCODER_RIGHT_B 5
-#define PORT_ENCODER_LEFT_A 2
-#define PORT_ENCODER_LEFT_B 3
+#define PORT_ENCODER_RIGHT_A 2
+#define PORT_ENCODER_RIGHT_B 3
+#define PORT_ENCODER_LEFT_A 0
+#define PORT_ENCODER_LEFT_B 1
 
 // Solenoid Ports
 #define SOLENOID_1_PORT_A 0
@@ -30,6 +30,8 @@
 
 #define LIMIT_SWITCH_TOP 9
 #define LIMIT_SWITCH_BOT 8
+
+#define DISTANCE_PER_DEGREE 1
 
 #define PORT_AUTO_DIAL 1
 

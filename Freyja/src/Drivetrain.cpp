@@ -22,6 +22,11 @@ Drivetrain::Drivetrain() :
 		rightTopController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightTopTalon),
 		rightBottomController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightBottomTalon),
 
+//		leftTopTurn(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftTopTalon),
+//		leftBottomTurn(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftBottomTalon),
+//		rightTopTurn(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &rightEncoder, &rightTopTalon),
+//		rightBottomTurn(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &rightEncoder, &rightBottomTalon),
+
 		leftTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTopTalon),
 		leftBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftBottomTalon),
 		rightTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTopTalon),
@@ -44,6 +49,11 @@ Drivetrain::Drivetrain() :
 	rightTopController.SetInputRange(-9999, 9999);
 	leftBottomController.SetInputRange(-9999, 9999);
 	rightBottomController.SetInputRange(-9999, 9999);
+
+//	leftTopTurn.SetInputRange(-9999, 9999);
+//	leftBottomTurn.SetInputRange(-9999, 9999);
+//	rightTopTurn.SetInputRange(-9999, 9999);
+//	rightBottomTurn.SetInputRange(-9999, 9999);
 
 	//Sets the max period for stopped detection
 	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
@@ -251,6 +261,23 @@ void Drivetrain::rotateAngle(double angle) {
 	leftBottomGyroController.Enable();
 	rightTopGyroController.Enable();
 	rightBottomGyroController.Enable();
+
+	//Resets encoders
+//	leftEncoder.Reset();
+//	rightEncoder.Reset();
+
+//	leftTopTurn.SetSetpoint(angle*DISTANCE_PER_DEGREE);
+//	leftBottomTurn.SetSetpoint(angle*DISTANCE_PER_DEGREE);
+//	rightTopTurn.SetSetpoint(angle*DISTANCE_PER_DEGREE);
+//	rightBottomTurn.SetSetpoint(angle*DISTANCE_PER_DEGREE);
+
+//	leftTopTurn.Enable();
+//	leftBottomTurn.Enable();
+//	rightTopTurn.Enable();
+//	rightBottomTurn.Enable();
+
+
+
 }
 
 //Drives the given distance
