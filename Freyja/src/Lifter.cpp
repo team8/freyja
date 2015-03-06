@@ -30,7 +30,6 @@ void Lifter::update() {
 		std::cout << "Actual lifter speed: " << victor.Get() << std::endl;
 		break;
 	case IDLE:
-		std::cout << "lifter idling" << std::endl;
 		victor.SetSpeed(0);
 		break;
 	}

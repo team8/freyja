@@ -91,7 +91,6 @@ void Drivetrain::disable() {
 //Updates the drivetrain based on state machine
 void Drivetrain::update() {
 	//std::cout << "State: " << state << std::endl;
-	std::cout << "Gyro angle: " << gyro.GetAngle() << std::endl;
 	switch (state) {
 	case IDLE:
 		stopControl();
@@ -133,8 +132,8 @@ void Drivetrain::update() {
 //		std::cout << "Left Desired Speed: " << -leftSpeed << std::endl;
 //		std::cout << "Right Top Actual Speed: " << rightTopTalon.Get() << std::endl;
 //		std::cout << "Right Desired Speed: " << rightSpeed << std::endl;
-//		std::cout << "Left Encoder Raw: " << leftEncoder.GetRaw() << std::endl;
-//		std::cout << "Right Encoder Raw: " << rightEncoder.GetRaw() << std::endl;
+		std::cout << "Left Encoder Raw: " << leftEncoder.GetRaw() << std::endl;
+		std::cout << "Right Encoder Raw: " << rightEncoder.GetRaw() << std::endl;
 //		std::cout << "Left Raw: " << leftEncoder.GetRaw() << std::endl;
 //		std::cout << "Right Raw: " << rightEncoder.GetRaw() << std::endl;
 //		std::cout << "Left Direction: " << leftEncoder.GetDirection() << std::endl;
