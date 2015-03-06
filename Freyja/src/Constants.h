@@ -34,14 +34,6 @@
 #define PORT_GYRO 1
 
 //Various PID constants
-//#define LEFT_PROPORTIONAL 0.12
-//#define LEFT_INTEGRAL 0.0
-//#define LEFT_DERIVATIVE 0.10
-//
-//#define RIGHT_PROPORTIONAL -0.12
-//#define RIGHT_INTEGRAL -0.0
-//#define RIGHT_DERIVATIVE -0.1
-
 #define LEFT_PROPORTIONAL 0.12
 #define LEFT_INTEGRAL 0.0
 #define LEFT_DERIVATIVE 0.1
@@ -59,10 +51,11 @@
 #define PID_ASSISTED_TIME_CONSTANT 50
 
 //Distance per pulse for drivetrain
-//#define RIGHT_DPP 0.018258776354
-//#define LEFT_DPP 0.012808296080
-#define RIGHT_DPP 0.01294599
-#define LEFT_DPP 0.01290522
+#define RIGHT_DPP 0.018258776354
+#define LEFT_DPP 0.012808296080
+//Murphy
+//#define RIGHT_DPP 0.01294599
+//#define LEFT_DPP 0.01290522
 
 #define LIFT_SPEED 1.5
 #define TOTE_HEIGHT 12.1
