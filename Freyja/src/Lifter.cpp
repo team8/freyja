@@ -2,10 +2,12 @@
 #include <iostream>
 Lifter::Lifter() :
 		victor((uint32_t) PORT_LIFT_VIC), liftEncoder((uint32_t) LIFT_ENCODER_PORT_A,
-				(uint32_t) LIFT_ENCODER_PORT_B),
-				digitalInput((uint32_t) LIMIT_SWITCH_TOP),
-				digitalInput2((uint32_t) LIMIT_SWITCH_BOT),
-				controller(0.12, 0.f, 0.1,&liftEncoder, &victor), targetSpeed(0) {
+				(uint32_t) LIFT_ENCODER_PORT_B, false),
+		digitalInput((uint32_t) LIMIT_SWITCH_TOP),
+		digitalInput2((uint32_t) LIMIT_SWITCH_BOT),
+		controller(0.12, 0.f, 0.1, &liftEncoder, &victor),
+		targetSpeed(0)
+{
 	currentLevel = 0;
 	state = IDLE;
 }
@@ -14,7 +16,6 @@ Lifter::Lifter() :
 void Lifter::init() {
 	liftEncoder.Reset();
 	controller.Reset();
-	controller.Enable();
 
 	liftEncoder.SetDistancePerPulse(LIFTER_DPP);
 	controller.SetInputRange(-9999, 9999);
@@ -23,17 +24,25 @@ void Lifter::init() {
 
 //Operates lifter according to current state
 void Lifter::update() {
-//	std::cout << "bottom switch is: " << checkSensorHit(false) << std::endl;
-//	std::cout << "top switch is: " << checkSensorHit(true) << std::endl;
-	std::cout << "Lifter encoder" << liftEncoder.Get() << std::endl;
+//	std::cout << "Lift Encoder: " << liftEncoder.Get() << std::endl;
+	std::cout << "bottom switch is: " << checkSensorHit(false) << std::endl;
+	std::cout << "top switch is: " << checkSensorHit(true) << std::endl;
 	switch (state) {
 	case MOVING:
 //		std::cout << "Desired lifter speed: " << targetSpeed << std::endl;
 		victor.SetSpeed(targetSpeed);
 //		std::cout << "Actual lifter speed: " << victor.Get() << std::endl;
 		break;
+	case AUTO_LIFTING:
+		if (liftEncoder.GetStopped() && controller.GetError() < 1) {
+			state = IDLE;
+		}
+
+		std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
+		break;
 	case IDLE:
 		victor.SetSpeed(0);
+		controller.Disable();
 		break;
 	}
 }
@@ -80,6 +89,19 @@ bool Lifter::checkSensorHit(bool firstSensor) {
 	}
 }
 
+void Lifter::lift(double distance) {
+	state = AUTO_LIFTING;
+
+	//Enables pid controllers
+	controller.Enable();
+
+	//Resets encoders
+	liftEncoder.Reset();
+
+	//Sets controller setpoint to given distance
+	controller.SetSetpoint(distance);
+}
+
 //Returns a boolean based on if either sensor has been hit
 bool Lifter::checkEitherHit() {
 	return (digitalInput.Get() || digitalInput2.Get());
@@ -98,16 +120,18 @@ double Lifter::getLevel() {
 //TODO Name of method is confusing, not what it actually does
 //Moves the lifter at the specified speed
 void Lifter::setSpeed(double speed) {
+	controller.Disable();
+
 	//Check top limit switch, only move down
-//	if (checkSensorHit(true)) {
-//		targetSpeed = std::max(0.0, speed);
-//	}
-//	//Check second limit switch, only move up
-//	else if (checkSensorHit(false)) {
-//		targetSpeed = std::min(0.0, speed);
-//	} else {
+	if (!checkSensorHit(true)) {
+		targetSpeed = std::min(0.0, speed);
+	}
+	//Check second limit switch, only move up
+	else if (!checkSensorHit(false)) {
+		targetSpeed = std::max(0.0, speed);
+	} else {
 		targetSpeed = speed;
-//	}
+	}
 	state = MOVING;
 }
 
