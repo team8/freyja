@@ -37,11 +37,10 @@ public:
 	void update();
 	void disable();
 private:
-	Timer timer;
-
 	Compressor compressor;
 	DoubleSolenoid solenoid1;
 	//DoubleSolenoid solenoid2;
+	Timer timer;
 
 	CompressorState compressorState;
 	PistonState pistonState;
