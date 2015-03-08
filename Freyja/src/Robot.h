@@ -33,6 +33,7 @@ public:
 	void changeDrivetrainStateToThrottle();
 	void changeDrivetrainStateToHighSpeed();
 	Drivetrain::State getDrivetrainState();
+	Arm::PistonState getArmPistonState();
 
 	void changePistonState(Arm::PistonState state);
 	void changeCompressorState(Arm::CompressorState state);

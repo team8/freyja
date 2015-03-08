@@ -76,6 +76,10 @@ Lifter::State Robot::getLifterState() {
 	return lifter.getState();
 }
 
+Arm::PistonState Robot::getArmPistonState() {
+	return arm.getPistonState();
+}
+
 /** Sets the lifter level */
 void Robot::setLifterLevel(int level) {
 	lifter.setSpeed(level);

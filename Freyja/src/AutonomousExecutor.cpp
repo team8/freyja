@@ -239,7 +239,10 @@ void AutonomousExecutor::visionAccumulate() {
 bool AutonomousExecutor::isAllIdle() {
 	std::cout << "Drive state: " << robot->getDrivetrainState() << std::endl;
 	std::cout << "Lifter state: " << robot->getLifterState() << std::endl;
-	return (robot->getDrivetrainState() == Drivetrain::State::IDLE) && (robot->getLifterState() == Lifter::State::IDLE);
+	std::cout << "Arm state: " << robot->getArmPistonState() << std::endl;
+	return (robot->getDrivetrainState() == Drivetrain::State::IDLE) &&
+			(robot->getLifterState() == Lifter::State::IDLE) &&
+					(robot->getArmPistonState() == Arm::PistonState::IDLE);
 }
 
 AutonomousExecutor::~AutonomousExecutor() {

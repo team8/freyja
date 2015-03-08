@@ -61,6 +61,8 @@ void Arm::update() {
 		//Locks the solenoid, no actuation
 		solenoid1.Set(DoubleSolenoid::Value::kOff);
 		//solenoid2.Set(DoubleSolenoid::Value::kOff);
+		timer.Stop();
+		timer.Reset();
 		break;
 	case PUSH:
 		//Pushes the piston a little.
@@ -98,6 +100,10 @@ void Arm::update() {
 void Arm::init() {
 	setCompressorState(ON);
 	setPistonState(IDLE);
+}
+
+Arm::PistonState Arm::getPistonState() {
+	return pistonState;
 }
 
 // Auto-generated destructor

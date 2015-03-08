@@ -31,11 +31,11 @@ public:
 	void setPistonState(PistonState state);
 	void setCompressorState(CompressorState state);
 	bool getCompressor();
-	PistonState getState();
 	//Inherited Methods from subsystem
 	void init();
 	void update();
 	void disable();
+	Arm::PistonState getPistonState();
 private:
 	Compressor compressor;
 	DoubleSolenoid solenoid1;
