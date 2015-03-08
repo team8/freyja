@@ -129,10 +129,18 @@ void AutonomousController::toteScoreDoubleLeft() {
 
 // scores a yellow tote and the one to its right
 void AutonomousController::toteScoreDoubleRight() {
-	commandSet.push_back(CMD_TOTE_SCORE);
-	commandSet.push_back(CMD_HALF_ROTATE);
-	commandSet.push_back(CMD_VISION_ACCUMULATE);
-	commandSet.push_back(CMD_HALF_ROTATE);
+//	commandSet.push_back(CMD_TOTE_SCORE);
+//	commandSet.push_back(CMD_HALF_ROTATE);
+//	commandSet.push_back(CMD_VISION_ACCUMULATE);
+//	commandSet.push_back(CMD_HALF_ROTATE);
+//	commandSet.push_back(CMD_AUTO_DRIVE);
+//	commandSet.push_back(CMD_STOP);
+
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_BACK_AUTO_DRIVE);
+	commandSet.push_back(CMD_ROTATE_90);
+	commandSet.push_back(CMD_DRIVE_YELLOW_YELLOW);
+	commandSet.push_back(CMD_ROTATE_NEG_90);
 	commandSet.push_back(CMD_AUTO_DRIVE);
 	commandSet.push_back(CMD_STOP);
 }

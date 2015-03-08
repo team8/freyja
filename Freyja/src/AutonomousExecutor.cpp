@@ -125,6 +125,26 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 		drive(FRONT_IN_DISTANCE);
 		break;
 	}
+	case CMD_BACK_AUTO_DRIVE:
+	{
+		drive(-YELLOW_AUTO_DISTANCE);
+		break;
+	}
+	case CMD_ROTATE_90:
+	{
+		rotate(90);
+		break;
+	}
+	case CMD_ROTATE_NEG_90:
+	{
+		rotate(-90);
+		break;
+	}
+	case CMD_DRIVE_YELLOW_YELLOW:
+	{
+		drive(YELLOW_YELLOW_DISTANCE);
+		break;
+	}
 	default:
 	{
 		// default states only occurs when illegal command is called
