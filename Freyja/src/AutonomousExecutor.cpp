@@ -117,7 +117,7 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 	}
 	case CMD_BACK_OUT:
 	{
-		drive(BACK_OUT_DISTANCE);
+		drive(-BACK_OUT_DISTANCE);
 		break;
 	}
 	case CMD_FRONT_IN:
@@ -143,6 +143,16 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 	case CMD_DRIVE_YELLOW_YELLOW:
 	{
 		drive(YELLOW_YELLOW_DISTANCE);
+		break;
+	}
+	case CMD_BACK_TO_TOTE_DRIVE:
+	{
+		drive(-BACK_TO_TOTE_DISTANCE);
+		break;
+	}
+	case CMD_DRIVE_YELLOW_CAN:
+	{
+		drive(YELLOW_CAN_DISTANCE);
 		break;
 	}
 	default:

@@ -14,6 +14,8 @@
 #define YELLOW_YELLOW_DISTANCE 78 // x: between yellow auto totes
 #define LIFT_DISTANCE 10 // z: lift distance
 #define TEMPORARY_DRIVE_CONSTANT 50
+#define YELLOW_CAN_DISTANCE 55
+#define BACK_TO_TOTE_DISTANCE 129
 #define BACK_OUT_DISTANCE 5
 #define FRONT_IN_DISTANCE 5
 

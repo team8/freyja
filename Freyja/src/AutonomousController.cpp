@@ -53,6 +53,9 @@ void AutonomousController::init() {
 	case TEST:
 		test();
 		break;
+	case TOTE_SCORE_DOUBLE_STRAIGHT:
+		toteScoreDoubleStraight();
+		break;
 	}
 }
 
@@ -145,6 +148,23 @@ void AutonomousController::toteScoreDoubleRight() {
 	commandSet.push_back(CMD_STOP);
 }
 
+// like double right but wiggles the can and doesn't turn too close
+void AutonomousController::toteScoreDoubleWiggle() {
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_BACK_TO_TOTE_DRIVE);
+	commandSet.push_back(CMD_ROTATE_90);
+	commandSet.push_back(CMD_DRIVE_YELLOW_CAN);
+	commandSet.push_back(CMD_ROTATE_NEG_90);
+	commandSet.push_back(CMD_FRONT_IN);
+	commandSet.push_back(CMD_BACK_OUT);
+	commandSet.push_back(CMD_ROTATE_90);
+	commandSet.push_back(CMD_FRONT_IN);
+	commandSet.push_back(CMD_FRONT_IN);
+	commandSet.push_back(CMD_ROTATE_NEG_90);
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_STOP);
+}
+
 // scores an auto can on our side
 void AutonomousController::canScore() {
 	commandSet.push_back(CMD_CAN_SCORE);
@@ -158,6 +178,12 @@ void AutonomousController::accumulateGray() {
 	commandSet.push_back(CMD_BACK_OUT);
 	commandSet.push_back(CMD_HALF_ROTATE);
 	commandSet.push_back(CMD_DRIVE_LANDFILL_AUTO);
+	commandSet.push_back(CMD_STOP);
+}
+
+
+// gets a tote, lifts and then pushes the second tote to get 2 in the auto zone
+void AutonomousController::toteScoreDoubleStraight() {
 	commandSet.push_back(CMD_STOP);
 }
 
