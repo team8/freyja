@@ -56,7 +56,11 @@ void AutonomousController::init() {
 	case TOTE_SCORE_DOUBLE_STRAIGHT:
 		toteScoreDoubleStraight();
 		break;
+	case TOTE_SCORE_DOUBLE_WIGGLE:
+		toteScoreDoubleWiggle();
+		break;
 	}
+
 }
 
 // called periodically throughout autonomous, this pops the top off the
