@@ -137,9 +137,9 @@ void Drivetrain::update() {
 		rightTopTalon.Set(rightSpeed);
 		rightBottomTalon.Set(rightSpeed);
 
-		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
-		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
-
+//		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
+//		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
+		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
 //		std::cout << "Left Top Actual Speed: " << leftTopTalon.Get() << std::endl;
 //		std::cout << "Left Desired Speed: " << -leftSpeed << std::endl;
 //		std::cout << "Right Top Actual Speed: " << rightTopTalon.Get() << std::endl;

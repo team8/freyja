@@ -24,19 +24,19 @@ void Lifter::init() {
 
 //Operates lifter according to current state
 void Lifter::update() {
-//	std::cout << "Lift Encoder: " << liftEncoder.Get() << std::endl;
+	std::cout << "digitalInput.Get(): " << digitalInput.Get() << std::endl << "digitalInput2.Get(): " << digitalInput2.Get() << std::endl;
 	switch (state) {
 	case MOVING:
-//		std::cout << "Desired lifter speed: " << targetSpeed << std::endl;
+		std::cout << "Desired lifter speed: " << targetSpeed << std::endl;
 		victor.SetSpeed(targetSpeed);
-//		std::cout << "Actual lifter speed: " << victor.Get() << std::endl;
+		std::cout << "Actual lifter speed: " << victor.Get() << std::endl;
 		break;
 	case AUTO_LIFTING:
 		if (liftEncoder.GetStopped() && controller.GetError() < 1) {
 			state = IDLE;
 		}
 
-		std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
+		//std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
 		break;
 	case IDLE:
 		victor.SetSpeed(0);
@@ -115,33 +115,21 @@ double Lifter::getLevel() {
 
 //TODO Name of method is confusing, not what it actually does
 //Moves the lifter at the specified speed
-<<<<<<< HEAD
-void Lifter::setState(double speed) {
-	state = MOVING;
-
-	if(!checkSensorHit(false)) {
-		std::cout << "Top limit switch" << std::endl;
-		victor.SetSpeed((float) std::max(0.0, speed));
-
-	} else if(!checkSensorHit(true)) {
-		std::cout << "Bottom limit switch" << std::endl;
-		victor.SetSpeed((float) std::min(0.0, speed));
-=======
 void Lifter::setSpeed(double speed) {
-	controller.Disable();
-
-	//Check top limit switch, only move down
-	if (!checkSensorHit(true)) {
-		targetSpeed = std::min(0.0, speed);
-	}
-	//Check second limit switch, only move up
-	else if (!checkSensorHit(false)) {
-		targetSpeed = std::max(0.0, speed);
->>>>>>> madera-stable
-	} else {
-		targetSpeed = speed;
-	}
 	state = MOVING;
+	targetSpeed = speed;
+
+//	//Check top limit switch, only move down
+//	if (!checkSensorHit(true)) {
+//		targetSpeed = std::min(0.0, speed);
+//	}
+//	//Check second limit switch, only move up
+//	else if (!checkSensorHit(false)) {
+//		targetSpeed = std::max(0.0, speed);
+//	} else {
+//		targetSpeed = speed;
+//	}
+//	state = MOVING;
 }
 
 //Empty destructor

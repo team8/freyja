@@ -19,6 +19,7 @@ public:
 	double getDistance();
 	void lift(double distance);
 	void setLevel(double level);
+	void setState(double speed);
 	void zeroing();
 	double getLevel();
 	double currentLevel;
