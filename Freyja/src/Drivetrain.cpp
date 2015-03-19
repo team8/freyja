@@ -127,8 +127,8 @@ void Drivetrain::update() {
 	case DRIVING_TELEOP:
 	{
 		//Determines the appropriate left and right speed
-		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
-		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 0.75), -0.75);
+		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 0.75), -0.75);
 		//Determines the appropriate left and right speed
 
 		//Sets talons to left and right speeds

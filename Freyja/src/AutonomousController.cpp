@@ -16,7 +16,8 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 //dial((uint32_t) PORT_AUTO_DIAL)
 {
 	//path = (Path) dial.GetValue();
-	path = DRIVE;
+	path = TEST;
+	//initial command
 	command = CMD_STOP;
 	executing = false;
 	distance = 0;
@@ -52,7 +53,14 @@ void AutonomousController::init() {
 	case TEST:
 		test();
 		break;
+	case TOTE_SCORE_DOUBLE_STRAIGHT:
+		toteScoreDoubleStraight();
+		break;
+	case TOTE_SCORE_DOUBLE_WIGGLE:
+		toteScoreDoubleWiggle();
+		break;
 	}
+
 }
 
 // called periodically throughout autonomous, this pops the top off the
@@ -111,6 +119,7 @@ void AutonomousController::drive() {
 
 // scores a single yellow tote
 void AutonomousController::toteScore() {
+	commandSet.push_back(CMD_FRONT_IN);
 	commandSet.push_back(CMD_TOTE_SCORE);
 	commandSet.push_back(CMD_STOP);
 }
@@ -127,10 +136,35 @@ void AutonomousController::toteScoreDoubleLeft() {
 
 // scores a yellow tote and the one to its right
 void AutonomousController::toteScoreDoubleRight() {
-	commandSet.push_back(CMD_TOTE_SCORE);
-	commandSet.push_back(CMD_HALF_ROTATE);
-	commandSet.push_back(CMD_VISION_ACCUMULATE);
-	commandSet.push_back(CMD_HALF_ROTATE);
+//	commandSet.push_back(CMD_TOTE_SCORE);
+//	commandSet.push_back(CMD_HALF_ROTATE);
+//	commandSet.push_back(CMD_VISION_ACCUMULATE);
+//	commandSet.push_back(CMD_HALF_ROTATE);
+//	commandSet.push_back(CMD_AUTO_DRIVE);
+//	commandSet.push_back(CMD_STOP);
+
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_BACK_AUTO_DRIVE);
+	commandSet.push_back(CMD_ROTATE_90);
+	commandSet.push_back(CMD_DRIVE_YELLOW_YELLOW);
+	commandSet.push_back(CMD_ROTATE_NEG_90);
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_STOP);
+}
+
+// like double right but wiggles the can and doesn't turn too close
+void AutonomousController::toteScoreDoubleWiggle() {
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_BACK_TO_TOTE_DRIVE);
+	commandSet.push_back(CMD_ROTATE_90);
+	commandSet.push_back(CMD_DRIVE_YELLOW_CAN);
+	commandSet.push_back(CMD_ROTATE_NEG_90);
+	commandSet.push_back(CMD_FRONT_IN);
+	commandSet.push_back(CMD_BACK_OUT);
+	commandSet.push_back(CMD_ROTATE_90);
+	commandSet.push_back(CMD_FRONT_IN);
+	commandSet.push_back(CMD_FRONT_IN);
+	commandSet.push_back(CMD_ROTATE_NEG_90);
 	commandSet.push_back(CMD_AUTO_DRIVE);
 	commandSet.push_back(CMD_STOP);
 }
@@ -141,20 +175,26 @@ void AutonomousController::canScore() {
 	commandSet.push_back(CMD_STOP);
 }
 
-// goes to the landfill zone, accumulates gray totes and ends in auto zone
+// goes to/starts in the landfill zone, accumulates gray tote and ends in auto zone
 void AutonomousController::accumulateGray() {
-	commandSet.push_back(CMD_LANDFILL_DRIVE);
-	commandSet.push_back(CMD_GRAY_TO_GRAY);
-	commandSet.push_back(CMD_GRAY_TO_GRAY);
+	commandSet.push_back(CMD_FRONT_IN);
+	commandSet.push_back(CMD_CLOSE);
+	commandSet.push_back(CMD_BACK_OUT);
 	commandSet.push_back(CMD_HALF_ROTATE);
 	commandSet.push_back(CMD_DRIVE_LANDFILL_AUTO);
+	commandSet.push_back(CMD_STOP);
+}
+
+
+// gets a tote, lifts and then pushes the second tote to get 2 in the auto zone
+void AutonomousController::toteScoreDoubleStraight() {
 	commandSet.push_back(CMD_STOP);
 }
 
 // special path used for testing
 void AutonomousController::test() {
 	commandSet.push_back(CMD_TOTE_SCORE);
-	commandSet.push_back(CMD_STOP);
+	//commandSet.push_back(CMD_STOP);
 }
 
 //Empty destructor

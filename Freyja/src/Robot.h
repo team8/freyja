@@ -33,6 +33,7 @@ public:
 	void changeDrivetrainStateToThrottle();
 	void changeDrivetrainStateToHighSpeed();
 	Drivetrain::State getDrivetrainState();
+	Arm::PistonState getArmPistonState();
 
 	void changePistonState(Arm::PistonState state);
 	void changeCompressorState(Arm::CompressorState state);
@@ -44,6 +45,7 @@ public:
 	void zeroLifter();
 	double getLevel();
 	void setLifter(double speed);
+	void liftDist(double dist);
 };
 
 #endif /* ROBOT_H */

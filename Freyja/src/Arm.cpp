@@ -4,7 +4,8 @@
 Arm::Arm() :
 //Compressor which initializes the compressor with no arguments, and gives the solenoids their ports
 		compressor(), solenoid1((uint32_t) SOLENOID_1_PORT_A,
-				(uint32_t) SOLENOID_1_PORT_B)
+				(uint32_t) SOLENOID_1_PORT_B),
+		timer()
 //solenoid2((uint32_t) SOLENOID_2_PORT_A, (uint32_t) SOLENOID_2_PORT_B)
 {
 	compressor.Start();
@@ -17,6 +18,7 @@ void Arm::setCompressorState(CompressorState state) {
 //Changes the state of the piston
 void Arm::setPistonState(PistonState state) {
 	this->pistonState = state;
+	this->timer.Start();
 }
 //TODO Why does this always return true?
 bool Arm::getCompressor() {
@@ -39,24 +41,38 @@ void Arm::update() {
 		//If the piston is extending, it puts air in the chamber behind the piston, pushing it forward
 		solenoid1.Set(DoubleSolenoid::Value::kForward);
 		//solenoid2.Set(DoubleSolenoid::Value::kForward);
+		if(timer.Get() >= ARM_EXTEND_TIME) {
+			timer.Stop();
+			timer.Reset();
+			pistonState = IDLE;
+		}
 		break;
 	case RETRACTING:
 		//If the piston is retracting, it puts air in front of the disc, expelling the air out of the solenoid.
 		solenoid1.Set(DoubleSolenoid::Value::kReverse);
 		//solenoid2.Set(DoubleSolenoid::Value::kReverse);
+		if(timer.Get() >= ARM_EXTEND_TIME) {
+			timer.Stop();
+			timer.Reset();
+			pistonState = IDLE;
+		}
 		break;
 	case IDLE:
 		//Locks the solenoid, no actuation
 		solenoid1.Set(DoubleSolenoid::Value::kOff);
 		//solenoid2.Set(DoubleSolenoid::Value::kOff);
+		timer.Stop();
+		timer.Reset();
 		break;
 	case PUSH:
 		//Pushes the piston a little.
 		solenoid1.Set(DoubleSolenoid::Value::kForward);
 		//solenoid2.Set(DoubleSolenoid::Value::kForward);
-		//TODO CHECK THIS VALUE LATER, it can still fully actuate possibly.
-		Wait(0.2);
-		setPistonState(IDLE);
+		if(timer.Get() >= ARM_EXTEND_TIME) {
+			timer.Stop();
+			timer.Reset();
+			pistonState = IDLE;
+		}
 		break;
 	default:
 		//In case stuff hits the fan
@@ -84,6 +100,10 @@ void Arm::update() {
 void Arm::init() {
 	setCompressorState(ON);
 	setPistonState(IDLE);
+}
+
+Arm::PistonState Arm::getPistonState() {
+	return pistonState;
 }
 
 // Auto-generated destructor

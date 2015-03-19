@@ -27,9 +27,9 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 	}
 	case CMD_AUTO_DRIVE:
 	{
-		std::cout << "CMD_AUTO_DRIVE start" << std::endl;
+		//std::cout << "CMD_AUTO_DRIVE start" << std::endl;
 		drive(YELLOW_AUTO_DISTANCE);
-		std::cout << "CMD_AUTO_DRIVE end" << std::endl;
+	//	std::cout << "CMD_AUTO_DRIVE end" << std::endl;
 		break;
 	}
 	case CMD_LIFT:
@@ -115,6 +115,46 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 		visionAccumulate();
 		break;
 	}
+	case CMD_BACK_OUT:
+	{
+		drive(-BACK_OUT_DISTANCE);
+		break;
+	}
+	case CMD_FRONT_IN:
+	{
+		drive(FRONT_IN_DISTANCE);
+		break;
+	}
+	case CMD_BACK_AUTO_DRIVE:
+	{
+		drive(-YELLOW_AUTO_DISTANCE);
+		break;
+	}
+	case CMD_ROTATE_90:
+	{
+		rotate(90);
+		break;
+	}
+	case CMD_ROTATE_NEG_90:
+	{
+		rotate(-90);
+		break;
+	}
+	case CMD_DRIVE_YELLOW_YELLOW:
+	{
+		drive(YELLOW_YELLOW_DISTANCE);
+		break;
+	}
+	case CMD_BACK_TO_TOTE_DRIVE:
+	{
+		drive(-BACK_TO_TOTE_DISTANCE);
+		break;
+	}
+	case CMD_DRIVE_YELLOW_CAN:
+	{
+		drive(YELLOW_CAN_DISTANCE);
+		break;
+	}
 	default:
 	{
 		// default states only occurs when illegal command is called
@@ -129,8 +169,8 @@ void AutonomousExecutor::toteScore() {
 	std::list<AutoCommand> toteScoreSet;
 	toteScoreSet.push_back(CMD_TOTE_LIFT);
 	toteScoreSet.push_back(CMD_AUTO_DRIVE);
-	toteScoreSet.push_back(CMD_DROP);
-	toteScoreSet.push_back(CMD_OPEN);
+	//toteScoreSet.push_back(CMD_DROP);
+	//toteScoreSet.push_back(CMD_OPEN);
 
 	comIt = commandSet->begin();
 	advance(comIt, 1);
@@ -187,7 +227,7 @@ void AutonomousExecutor::drive(int dist) {
 // BASE: lifts a tote
 void AutonomousExecutor::lift() {
 	//Pid version
-	robot->setLifterLevel(1);
+	robot->liftDist(LIFT_DISTANCE);
 
 }
 
@@ -209,6 +249,7 @@ void AutonomousExecutor::close() {
 // MACRO: lifts a tote
 void AutonomousExecutor::toteLift() {
 	std::list<AutoCommand> toteLiftSet;
+	std::cout << "Starting toteLift" << std::endl;
 	toteLiftSet.push_back(CMD_CLOSE);
 	toteLiftSet.push_back(CMD_LIFT);
 
@@ -228,7 +269,10 @@ void AutonomousExecutor::visionAccumulate() {
 bool AutonomousExecutor::isAllIdle() {
 	std::cout << "Drive state: " << robot->getDrivetrainState() << std::endl;
 	std::cout << "Lifter state: " << robot->getLifterState() << std::endl;
-	return (robot->getDrivetrainState() == Drivetrain::State::IDLE) && (robot->getLifterState() == Lifter::State::IDLE);
+	std::cout << "Arm state: " << robot->getArmPistonState() << std::endl;
+	return (robot->getDrivetrainState() == Drivetrain::State::IDLE) &&
+			(robot->getLifterState() == Lifter::State::IDLE) &&
+					(robot->getArmPistonState() == Arm::PistonState::IDLE);
 }
 
 AutonomousExecutor::~AutonomousExecutor() {
