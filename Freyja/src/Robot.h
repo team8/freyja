@@ -30,14 +30,15 @@ public:
 	void driveDistance(double distance);
 	void rotateAngle(double angle);
 	void changeDrivetrainStateToPRECISION_TRIGGER();
-	void changeDrivetrainStateToBRAKE();
+	void changeDrivetrainStateToThrottle();
+	void changeDrivetrainStateToHighSpeed();
 	Drivetrain::State getDrivetrainState();
 
 	void changePistonState(Arm::PistonState state);
 	void changeCompressorState(Arm::CompressorState state);
 
 	void drop();
-	void canLift();
+	void liftCan();
 	void setLifterLevel(int level);
 	Lifter::State getLifterState();
 	void zeroLifter();

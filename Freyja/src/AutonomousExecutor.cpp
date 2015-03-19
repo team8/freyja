@@ -110,6 +110,11 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 		toteLift();
 		break;
 	}
+	case CMD_VISION_ACCUMULATE:
+	{
+		visionAccumulate();
+		break;
+	}
 	default:
 	{
 		// default states only occurs when illegal command is called
@@ -124,6 +129,7 @@ void AutonomousExecutor::toteScore() {
 	std::list<AutoCommand> toteScoreSet;
 	toteScoreSet.push_back(CMD_TOTE_LIFT);
 	toteScoreSet.push_back(CMD_AUTO_DRIVE);
+	toteScoreSet.push_back(CMD_DROP);
 	toteScoreSet.push_back(CMD_OPEN);
 
 	comIt = commandSet->begin();
@@ -169,7 +175,7 @@ void AutonomousExecutor::rotate(int angle) {
 
 // BASE: lifts a can
 void AutonomousExecutor::canLift() {
-	robot->canLift();
+	robot->liftCan();
 }
 
 // BASE_ARG: drives forward a set distance
@@ -180,7 +186,9 @@ void AutonomousExecutor::drive(int dist) {
 
 // BASE: lifts a tote
 void AutonomousExecutor::lift() {
-//	robot->lift(LIFT_DISTANCE);
+	//Pid version
+	robot->setLifterLevel(1);
+
 }
 
 // BASE: drops whatever is being held
@@ -210,16 +218,18 @@ void AutonomousExecutor::toteLift() {
 	commandSet->pop_front();
 }
 
+void AutonomousExecutor::visionAccumulate() {
+	std::cout << "visionAccumulate called, shouldn't be called" << std::endl;
+}
+
 /* checks if any of the subsystems are currently working
- * currently implemented: drivetrain
+ * currently implemented: drivetrain and lifter
  */
 bool AutonomousExecutor::isAllIdle() {
 	std::cout << "Drive state: " << robot->getDrivetrainState() << std::endl;
-	//std::cout << "expected dstate: " << Drivetrain::State::IDLE << std::endl;
-	return robot->getDrivetrainState() == Drivetrain::State::IDLE;
+	std::cout << "Lifter state: " << robot->getLifterState() << std::endl;
+	return (robot->getDrivetrainState() == Drivetrain::State::IDLE) && (robot->getLifterState() == Lifter::State::IDLE);
 }
-
-// robot->getDrivetrainState();
 
 AutonomousExecutor::~AutonomousExecutor() {
 	// TODO Auto-generated destructor stub

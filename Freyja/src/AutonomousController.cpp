@@ -21,6 +21,7 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 	executing = false;
 	distance = 0;
 	angle = 0;
+	robotPointer->init();
 }
 
 // called once at the beginning of autonomous, this sets the robot
@@ -61,6 +62,7 @@ void AutonomousController::init() {
 // called
 void AutonomousController::update() {
 	//network with rPi to offsource vision
+
 //	std::string msg = udpListener.recv();
 //	if (msg != UDP_Listener::RECV_ERROR) {
 //			std::string::size_type sz;
@@ -115,17 +117,21 @@ void AutonomousController::toteScore() {
 
 // scores a yellow tote and the one to its left
 void AutonomousController::toteScoreDoubleLeft() {
-	commandSet.push_back(CMD_LIFT);
-	commandSet.push_back(CMD_TOTE_TO_TOTE_LEFT);
 	commandSet.push_back(CMD_TOTE_SCORE);
+	commandSet.push_back(CMD_HALF_ROTATE);
+	commandSet.push_back(CMD_VISION_ACCUMULATE);
+	commandSet.push_back(CMD_HALF_ROTATE);
+	commandSet.push_back(CMD_AUTO_DRIVE);
 	commandSet.push_back(CMD_STOP);
 }
 
 // scores a yellow tote and the one to its right
 void AutonomousController::toteScoreDoubleRight() {
-	commandSet.push_back(CMD_LIFT);
-	commandSet.push_back(CMD_TOTE_TO_TOTE_RIGHT);
 	commandSet.push_back(CMD_TOTE_SCORE);
+	commandSet.push_back(CMD_HALF_ROTATE);
+	commandSet.push_back(CMD_VISION_ACCUMULATE);
+	commandSet.push_back(CMD_HALF_ROTATE);
+	commandSet.push_back(CMD_AUTO_DRIVE);
 	commandSet.push_back(CMD_STOP);
 }
 
@@ -147,8 +153,7 @@ void AutonomousController::accumulateGray() {
 
 // special path used for testing
 void AutonomousController::test() {
-	commandSet.push_back(CMD_AUTO_DRIVE);
-	commandSet.push_back(CMD_HALF_ROTATE);
+	commandSet.push_back(CMD_TOTE_SCORE);
 	commandSet.push_back(CMD_STOP);
 }
 

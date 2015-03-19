@@ -22,13 +22,18 @@ Drivetrain::Drivetrain() :
 		rightTopController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightTopTalon),
 		rightBottomController(RIGHT_PROPORTIONAL, RIGHT_INTEGRAL, RIGHT_DERIVATIVE, &rightEncoder, &rightBottomTalon),
 
+//		leftTopTurn(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftTopTalon),
+//		leftBottomTurn(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &leftEncoder, &leftBottomTalon),
+//		rightTopTurn(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &rightEncoder, &rightTopTalon),
+//		rightBottomTurn(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &rightEncoder, &rightBottomTalon),
+
 		leftTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTopTalon),
 		leftBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftBottomTalon),
 		rightTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTopTalon),
 		rightBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightBottomTalon),
 
 		//Initializes various instance variables
-		drivingSetpoint(), leftSpeed(), rightSpeed()
+		leftSpeed(), rightSpeed(), drivingSetpoint()
 {
 	//Initializes the target and rotate speeds to zero
 	targetSpeed = 0;
@@ -45,6 +50,22 @@ Drivetrain::Drivetrain() :
 	leftBottomController.SetInputRange(-9999, 9999);
 	rightBottomController.SetInputRange(-9999, 9999);
 
+	//Sets the output ranges for pid controllers
+	leftTopController.SetOutputRange(-0.7, 0.7);
+	rightTopController.SetOutputRange(-0.7, 0.7);
+	leftBottomController.SetOutputRange(-0.7, 0.7);
+	rightBottomController.SetOutputRange(-0.7, 0.7);
+
+//	leftTopTurn.SetInputRange(-9999, 9999);
+//	leftBottomTurn.SetInputRange(-9999, 9999);
+//	rightTopTurn.SetInputRange(-9999, 9999);
+//	rightBottomTurn.SetInputRange(-9999, 9999);
+
+//	leftTopTurn.SetOutputRange(-0.7, 0.7);
+//	rightTopTurn.SetOutputRange(-0.7, 0.7);
+//	leftBottomTurn.SetOutputRange(-0.7, 0.7);
+//	rightBottomTurn.SetOutputRange(-0.7, 0.7);
+
 	//Sets the max period for stopped detection
 	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 	rightEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
@@ -55,20 +76,21 @@ Drivetrain::Drivetrain() :
 
 //Initializes the drivetrain
 void Drivetrain::init() {
+
 	leftSpeed = 0;
 	rightSpeed = 0;
 
 	//Sets the inital robot state to idle
 	state = IDLE;
-
+//	gyro.InitGyro();
 	//Resets encoders
 	leftEncoder.Reset();
 	rightEncoder.Reset();
 
 	//Stops robot motion
 	stopTalons();
-
 	//driveDistance(100);
+	//rotateAngle(90);
 }
 
 //Disables the drivetrain
@@ -79,6 +101,8 @@ void Drivetrain::disable() {
 
 //Updates the drivetrain based on state machine
 void Drivetrain::update() {
+	//std::cout << "State: " << state << std::endl;
+
 	switch (state) {
 	case IDLE:
 		stopControl();
@@ -88,34 +112,60 @@ void Drivetrain::update() {
 		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopController.GetError() < 1) {
 			state = IDLE;
 		}
+
+		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
+		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
+
 		break;
 	case ROTATING_ANGLE:
 		//If angle is reached, stops rotating
-		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopController.GetError() < 1) {
+		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopGyroController.GetError() < 1) {
 			state = IDLE;
 		}
-
+		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
 		break;
 	case DRIVING_TELEOP:
+	{
 		//Determines the appropriate left and right speed
 		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
 		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
 		//Determines the appropriate left and right speed
-		double leftSpeed = std::max(std::min(targetSpeed - rotateSpeed, 1.0), -1.0);
-		double rightSpeed = std::max(std::min(targetSpeed + rotateSpeed, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
-		leftTopTalon.Set(-leftSpeed );
+		leftTopTalon.Set(-leftSpeed);
 		leftBottomTalon.Set(-leftSpeed);
 		rightTopTalon.Set(rightSpeed);
 		rightBottomTalon.Set(rightSpeed);
-//		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
-//		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
+
+		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
+		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
+
+//		std::cout << "Left Top Actual Speed: " << leftTopTalon.Get() << std::endl;
+//		std::cout << "Left Desired Speed: " << -leftSpeed << std::endl;
+//		std::cout << "Right Top Actual Speed: " << rightTopTalon.Get() << std::endl;
+//		std::cout << "Right Desired Speed: " << rightSpeed << std::endl;
+//		std::cout << "Left Encoder Raw: " << leftEncoder.GetRaw() << std::endl;
+//		std::cout << "Right Encoder Raw: " << rightEncoder.GetRaw() << std::endl;
+//		std::cout << "Left Talon Top Out: " << leftTopTalon.Get() << std::endl;
+//		std::cout << "Left Talon Bottom Out: " << leftBottomTalon.Get() << std::endl;
+//		std::cout << "right Talon Top Out: " << rightTopTalon.Get() << std::endl;
+//		std::cout << "right Talon Bottom Out: " << rightBottomTalon.Get() << std::endl;
+//		std::cout << "Left Raw: " << leftEncoder.GetRaw() << std::endl;
+//		std::cout << "Right Raw: " << rightEncoder.GetRaw() << std::endl;
+//		std::cout << "Left Direction: " << leftEncoder.GetDirection() << std::endl;
+//		std::cout << "Right Direction: " << rightEncoder.GetDirection() << std::endl;
+//		std::cout << "Left Bot Speed: " << leftBottomTalon.Get() << std::endl;
+//		std::cout << "Right Top Speed: " << rightTopTalon.Get() << std::endl;
+//		std::cout << "Right Bot Speed: " << rightBottomTalon.Get() << std::endl;
+//		std::cout << "Target Speed: " << targetSpeed << std::endl;
+//		std::cout << "Acceleration: " << acceleration << std::endl;
+
 		break;
+	}
 	case PRECISION_TRIGGER:
 		//Determines the appropriate left and right speed
-		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
-		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * PRECISION_ROTATE_CONSANT, 1.0), -1.0);
+		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(-leftSpeed);
@@ -124,11 +174,28 @@ void Drivetrain::update() {
 		rightBottomTalon.Set(rightSpeed);
 		break;
 
-	case BRAKE:
+	case THROTTLE:
 		//Stops Talons
-		stopTalons();
+		//stopTalons();
 		acceleration = 0;
-		targetSpeed = 0;
+		targetSpeed = 1;
+		//Goes backwards
+		leftTopTalon.Set(-1);
+		leftBottomTalon.Set(-1);
+		rightTopTalon.Set(1);
+		rightBottomTalon.Set(1);
+		break;
+
+	case HIGH_SPEED:
+		//Determines the appropriate left and right speed
+		leftSpeed = std::max(std::min(targetSpeed * HIGH_DPI - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+		rightSpeed = std::max(std::min(targetSpeed * HIGH_DPI + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+
+		//Sets talons to left and right speeds
+		leftTopTalon.Set(-leftSpeed);
+		leftBottomTalon.Set(-leftSpeed);
+		rightTopTalon.Set(rightSpeed);
+		rightBottomTalon.Set(rightSpeed);
 		break;
 	}
 }
@@ -164,7 +231,8 @@ void Drivetrain::stopTalons() {
 }
 
 //Sets drivetrain teleop target and rotate speed
-void Drivetrain::setSpeed(double acceleration, double rotateSpeed) {
+void Drivetrain::setSpeed(double myAcceleration, double rotateSpeed) {
+	acceleration = myAcceleration;
 	if(acceleration > -SPEED_DECAY_RANGE && acceleration < SPEED_DECAY_RANGE) {
 		setTargetSpeed(targetSpeed * SPEED_DECAY_CONSTANT);
 	}
@@ -196,27 +264,35 @@ void Drivetrain::rotateAngle(double angle) {
 	stopControl();
 
 	state = ROTATING_ANGLE;
-	std::cout << "Before init gyro "<< std::endl;
-
-	gyro.InitGyro();
-
-	std::cout << "Gyro angle: " << gyro.GetAngle() << std::endl;
-	std::cout << "rotateAngle check 2" << std::endl;
 
 	gyro.Reset();
-	std::cout << "rotateAngle check 3" << std::endl;
 
 	leftTopGyroController.SetSetpoint(angle);
 	leftBottomGyroController.SetSetpoint(angle);
 	rightTopGyroController.SetSetpoint(angle);
 	rightBottomGyroController.SetSetpoint(angle);
-	std::cout << "rotateAngle check 4" << std::endl;
 
 	leftTopGyroController.Enable();
 	leftBottomGyroController.Enable();
 	rightTopGyroController.Enable();
 	rightBottomGyroController.Enable();
-	std::cout << "rotateAngle check 5" << std::endl;
+
+	//Resets encoders
+//	leftEncoder.Reset();
+//	rightEncoder.Reset();
+
+//	leftTopTurn.SetSetpoint(angle*DISTANCE_PER_DEGREE);
+//	leftBottomTurn.SetSetpoint(angle*DISTANCE_PER_DEGREE);
+//	rightTopTurn.SetSetpoint(angle*DISTANCE_PER_DEGREE);
+//	rightBottomTurn.SetSetpoint(angle*DISTANCE_PER_DEGREE);
+
+//	leftTopTurn.Enable();
+//	leftBottomTurn.Enable();
+//	rightTopTurn.Enable();
+//	rightBottomTurn.Enable();
+
+
+
 }
 
 //Drives the given distance
@@ -235,8 +311,6 @@ void Drivetrain::driveDistance(double distance) {
 	leftEncoder.Reset();
 	rightEncoder.Reset();
 
-	drivingSetpoint = distance;
-
 	//Sets controller setpoint to given distance
 	leftTopController.SetSetpoint(distance);
 	leftBottomController.SetSetpoint(distance);
@@ -248,9 +322,14 @@ void Drivetrain::driveDistance(double distance) {
 void Drivetrain::setStateTrigger(){
 	state = PRECISION_TRIGGER;
 }
-//Turns on the brake
-void Drivetrain::setStateBrake(){
-	state = BRAKE;
+//Turns on the throttle
+void Drivetrain::setStateThrottle(){
+	state = THROTTLE;
+}
+
+//Start high dpi
+void Drivetrain::setStateHighSpeed() {
+	state = HIGH_SPEED;
 }
 //Gets the state of this drivetrain
 Drivetrain::State Drivetrain::getState() {

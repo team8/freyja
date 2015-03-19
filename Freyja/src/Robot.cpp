@@ -18,9 +18,9 @@ void Robot::update() {
 	arm.update();
 	lifter.update();
 	//disables lifter if either sensor is hit
-	if(lifter.checkEitherHit()) {
-		lifter.disable();
-	}
+//	if(lifter.checkEitherHit()) {
+//		lifter.disable();
+//	}
 }
 
 /** Disables all subsystems */
@@ -60,8 +60,12 @@ void Robot::changeDrivetrainStateToPRECISION_TRIGGER() {
 	drivetrain.setStateTrigger();
 }
 
-void Robot::changeDrivetrainStateToBRAKE() {
-	drivetrain.setStateBrake();
+void Robot::changeDrivetrainStateToThrottle() {
+	drivetrain.setStateThrottle();
+}
+
+void Robot::changeDrivetrainStateToHighSpeed() {
+	drivetrain.setStateHighSpeed();
 }
 
 Drivetrain::State Robot::getDrivetrainState() {
@@ -74,7 +78,7 @@ Lifter::State Robot::getLifterState() {
 
 /** Sets the lifter level */
 void Robot::setLifterLevel(int level) {
-	lifter.setLevel(level);
+	lifter.setSpeed(level);
 }
 /** Returns the level of the lifter */
 double Robot::getLevel() {
@@ -86,13 +90,15 @@ void Robot::zeroLifter() {
 	lifter.zeroing();
 }
 
-//TODO What are these two methods?
+// Lowers the arm to the ground
 void Robot::drop() {
+	lifter.setLevel(0);
 }
 
-void Robot::canLift() {
+//Will lift a can
+void Robot::liftCan() {
 }
 
 void Robot::setLifter(double speed) {
-	lifter.setState(speed);
+	lifter.setSpeed(speed);
 }

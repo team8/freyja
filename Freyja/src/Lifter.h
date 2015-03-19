@@ -24,12 +24,12 @@ public:
 	double currentLevel;
 
 	enum State {
-		MOVING, IDLE
+		MOVING, AUTO_LIFTING, IDLE
 	} state;
 
 	State getState();
 
-	void setState(double speed);
+	void setSpeed(double speed);
 
 private:
 	VictorSP victor;
@@ -39,6 +39,7 @@ private:
 	DigitalInput digitalInput2;
 
 	PIDController controller;
+	double targetSpeed;
 };
 
 #endif /* FREYJA_SRC_LIFTER_H_ */

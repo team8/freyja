@@ -12,16 +12,26 @@ HumanController::HumanController(Robot *robotPointer) :
 void HumanController::update() {
 	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
 
+/*	if(moveJoystick.GetRawButton(2)) {
+		robotPointer->driveDistance(100);
+	}
+	if(moveJoystick.GetRawButton(3)) {
+		robotPointer->rotateAngle(90);
+	}
+	if(moveJoystick.GetRawButton(4)) {
+		robotPointer->rotateAngle(180);
+	}*/
+
 	if(moveJoystick.GetRawButton(1)) {
-		robotPointer->changeDrivetrainStateToBRAKE();
+		robotPointer->changeDrivetrainStateToHighSpeed();
 	}
 	if(turnJoystick.GetRawButton(1)) {
 		robotPointer->changeDrivetrainStateToPRECISION_TRIGGER();
 	}
-	if(operatorJoystick.GetRawButton(1)) {
+	if(operatorJoystick.GetRawButton(2)) {
 		robotPointer->changePistonState(Arm::PistonState::EXTENDING);
 	}
-	if(operatorJoystick.GetRawButton(2)) {
+	if(operatorJoystick.GetRawButton(1)) {
 		robotPointer->changePistonState(Arm::PistonState::RETRACTING);
 	}
 	if(operatorJoystick.GetRawButton(6)) {
@@ -29,6 +39,7 @@ void HumanController::update() {
 	}
 	if(operatorJoystick.GetRawButton(7)) {
 		robotPointer->changeCompressorState(Arm::CompressorState::ON);
+
 	}
 
 	//Lifter Controls

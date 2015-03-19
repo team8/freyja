@@ -1,30 +1,46 @@
 #include "Lifter.h"
 #include <iostream>
 Lifter::Lifter() :
-		victor((uint32_t) 9), liftEncoder((uint32_t) 0, (uint32_t) 0), digitalInput((uint32_t) 9),
-		digitalInput2((uint32_t) 8), controller(0.f, 0.f, 0.f, &liftEncoder, &victor), state(IDLE),
-		currentLevel() {
+		victor((uint32_t) PORT_LIFT_VIC), liftEncoder((uint32_t) LIFT_ENCODER_PORT_A,
+				(uint32_t) LIFT_ENCODER_PORT_B, true),
+		digitalInput((uint32_t) LIMIT_SWITCH_TOP),
+		digitalInput2((uint32_t) LIMIT_SWITCH_BOT),
+		controller(0.12, 0.f, 0.1, &liftEncoder, &victor),
+		targetSpeed(0)
+{
+	currentLevel = 0;
+	state = IDLE;
 }
 
 //Initializes lifter to be ready to operate
 void Lifter::init() {
 	liftEncoder.Reset();
 	controller.Reset();
-	controller.Enable();
+
+	liftEncoder.SetDistancePerPulse(LIFTER_DPP);
+	controller.SetInputRange(-9999, 9999);
+	liftEncoder.SetMaxPeriod(1);
 }
 
 //Operates lifter according to current state
 void Lifter::update() {
-	//std::cout << "bottom switch is: " << checkSensorHit(false) << std::endl;
-	//std::cout << "top switch is: " << checkSensorHit(true) << std::endl;
-	switch(state) {
+//	std::cout << "Lift Encoder: " << liftEncoder.Get() << std::endl;
+	switch (state) {
 	case MOVING:
+//		std::cout << "Desired lifter speed: " << targetSpeed << std::endl;
+		victor.SetSpeed(targetSpeed);
+//		std::cout << "Actual lifter speed: " << victor.Get() << std::endl;
+		break;
+	case AUTO_LIFTING:
+		if (liftEncoder.GetStopped() && controller.GetError() < 1) {
+			state = IDLE;
+		}
+
+		std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
 		break;
 	case IDLE:
-		if(checkSensorHit(false)) {
-			setLevel(0);
-			liftEncoder.Reset();
-		}
+		victor.SetSpeed(0);
+		controller.Disable();
 		break;
 	}
 }
@@ -41,9 +57,11 @@ void Lifter::setLevel(double level) {
 	controller.SetSetpoint(level * TOTE_HEIGHT);
 	currentLevel = level;
 	//Checks to see if the pid has reached its target.
-	if(liftEncoder.GetStopped()) {
+	if (liftEncoder.GetStopped()) {
+		std::cout << "Reached level " << level << std::endl;
 		state = IDLE;
 	} else {
+		targetSpeed = controller.Get();
 		state = MOVING;
 	}
 }
@@ -60,10 +78,24 @@ void Lifter::zeroing() {
 //Returns whether or not that sensor has been hit
 //Param determines if first or second sensor is checked
 bool Lifter::checkSensorHit(bool firstSensor) {
-	if(firstSensor)
+	if (firstSensor) {
 		return (digitalInput.Get());
-	else
+	} else {
 		return (digitalInput2.Get());
+	}
+}
+
+void Lifter::lift(double distance) {
+	state = AUTO_LIFTING;
+
+	//Enables pid controllers
+	controller.Enable();
+
+	//Resets encoders
+	liftEncoder.Reset();
+
+	//Sets controller setpoint to given distance
+	controller.SetSetpoint(distance);
 }
 
 //Returns a boolean based on if either sensor has been hit
@@ -83,6 +115,7 @@ double Lifter::getLevel() {
 
 //TODO Name of method is confusing, not what it actually does
 //Moves the lifter at the specified speed
+<<<<<<< HEAD
 void Lifter::setState(double speed) {
 	state = MOVING;
 
@@ -93,9 +126,22 @@ void Lifter::setState(double speed) {
 	} else if(!checkSensorHit(true)) {
 		std::cout << "Bottom limit switch" << std::endl;
 		victor.SetSpeed((float) std::min(0.0, speed));
-	} else {
-		victor.SetSpeed(speed);
+=======
+void Lifter::setSpeed(double speed) {
+	controller.Disable();
+
+	//Check top limit switch, only move down
+	if (!checkSensorHit(true)) {
+		targetSpeed = std::min(0.0, speed);
 	}
+	//Check second limit switch, only move up
+	else if (!checkSensorHit(false)) {
+		targetSpeed = std::max(0.0, speed);
+>>>>>>> madera-stable
+	} else {
+		targetSpeed = speed;
+	}
+	state = MOVING;
 }
 
 //Empty destructor

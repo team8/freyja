@@ -21,6 +21,32 @@ private:
 	TalonSRX rightTopTalon;
 	TalonSRX rightBottomTalon;
 
+	//The two encoders, or distance sensors, of the drivetrain
+	Encoder leftEncoder;
+	Encoder rightEncoder;
+
+	//The gyroscope, or orientation sensor, of the drivetrain
+	Gyro gyro;
+
+	//The PID Controllers of the drivetrain, control loops allowing highly precise and efficient movement
+	PIDController leftTopController;
+	PIDController leftBottomController;
+
+	PIDController rightTopController;
+	PIDController rightBottomController;
+
+//	PIDController leftTopTurn;
+//	PIDController leftBottomTurn;
+//	PIDController rightTopTurn;
+//	PIDController rightBottomTurn;
+
+	//The PID Controllers of the drivetrin's rotation, cotrol loops allowing the rotation of a desired angle
+	PIDController leftTopGyroController;
+	PIDController leftBottomGyroController;
+
+	PIDController rightTopGyroController;
+	PIDController rightBottomGyroController;
+
 	//The forward speed of the robot during teleoperated control
 	double targetSpeed;
 	//The rotation speed of the robot during teleoperated control
@@ -32,28 +58,7 @@ private:
 	double leftSpeed;
 	double rightSpeed;
 
-	//The two encoders, or distance sensors, of the drivetrain
-	Encoder leftEncoder;
-	Encoder rightEncoder;
-
-	//The gyroscope, or orientation sensor, of the drivetrain
-	Gyro gyro;
-
 	double drivingSetpoint;
-
-	//The PID Controllers of the drivetrain, control loops allowing highly precise and efficient movement
-	PIDController leftTopController;
-	PIDController leftBottomController;
-
-	PIDController rightTopController;
-	PIDController rightBottomController;
-
-	//The PID Controllers of the drivetrin's rotation, cotrol loops allowing the rotation of a desired angle
-	PIDController leftTopGyroController;
-	PIDController leftBottomGyroController;
-
-	PIDController rightTopGyroController;
-	PIDController rightBottomGyroController;
 
 public:
 	//An enum type definition for the state the robot is in
@@ -69,7 +74,10 @@ public:
 		//A state in which the turning speed is lowered for higher precision
 		PRECISION_TRIGGER,
 		//A state in which the talons are set to 0
-		BRAKE
+		//Go max speed backwards
+		THROTTLE,
+		//Higher sensititivity goes faster
+		HIGH_SPEED
 	} State;
 
 	//The State variable created for this instance
@@ -93,7 +101,8 @@ public:
 	void driveDistance(double distance);
 
 	void setStateTrigger();
-	void setStateBrake();
+	void setStateThrottle();
+	void setStateHighSpeed();
 	State getState();
 };
 
