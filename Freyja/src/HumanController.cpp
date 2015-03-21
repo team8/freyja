@@ -28,6 +28,9 @@ void HumanController::update() {
 	if(turnJoystick.GetRawButton(1)) {
 		robotPointer->changeDrivetrainStateToPRECISION_TRIGGER();
 	}
+	if(turnJoystick.GetRawButton(2)) {
+		robotPointer->changeDrivetrainStateToBrake();
+	}
 	if(operatorJoystick.GetRawButton(2)) {
 		robotPointer->changePistonState(Arm::PistonState::EXTENDING);
 	}
