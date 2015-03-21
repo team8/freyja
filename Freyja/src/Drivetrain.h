@@ -77,7 +77,9 @@ public:
 		//Go max speed backwards
 		THROTTLE,
 		//Higher sensititivity goes faster
-		HIGH_SPEED
+		HIGH_SPEED,
+		//break
+		BRAKE
 	} State;
 
 	//The State variable created for this instance
@@ -103,6 +105,7 @@ public:
 	void setStateTrigger();
 	void setStateThrottle();
 	void setStateHighSpeed();
+	void setStateBrake();
 	State getState();
 };
 

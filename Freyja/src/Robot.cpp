@@ -68,6 +68,10 @@ void Robot::changeDrivetrainStateToHighSpeed() {
 	drivetrain.setStateHighSpeed();
 }
 
+void Robot::changeDrivetrainStateToBrake() {
+	drivetrain.setStateBrake();
+}
+
 Drivetrain::State Robot::getDrivetrainState() {
 	return drivetrain.getState();
 }

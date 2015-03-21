@@ -197,6 +197,12 @@ void Drivetrain::update() {
 		rightTopTalon.Set(rightSpeed);
 		rightBottomTalon.Set(rightSpeed);
 		break;
+
+	case BRAKE:
+		stopTalons();
+		targetSpeed = 0;
+		acceleration = 0;
+		break;
 	}
 }
 
@@ -331,6 +337,11 @@ void Drivetrain::setStateThrottle(){
 void Drivetrain::setStateHighSpeed() {
 	state = HIGH_SPEED;
 }
+
+void Drivetrain::setStateBrake() {
+	state = BRAKE;
+}
+
 //Gets the state of this drivetrain
 Drivetrain::State Drivetrain::getState() {
 	return state;

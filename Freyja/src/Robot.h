@@ -32,6 +32,7 @@ public:
 	void changeDrivetrainStateToPRECISION_TRIGGER();
 	void changeDrivetrainStateToThrottle();
 	void changeDrivetrainStateToHighSpeed();
+	void changeDrivetrainStateToBrake();
 	Drivetrain::State getDrivetrainState();
 	Arm::PistonState getArmPistonState();
 
