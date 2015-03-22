@@ -34,7 +34,7 @@ void Lifter::update() {
 			state = IDLE;
 		}
 
-		//std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
+		std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
 		break;
 	case IDLE:
 		victor.SetSpeed(0);
