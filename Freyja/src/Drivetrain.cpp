@@ -199,9 +199,10 @@ void Drivetrain::update() {
 		break;
 
 	case BRAKE:
-		stopTalons();
-		targetSpeed = 0;
-		acceleration = 0;
+		leftTopTalon.Set(leftTopTalon.Get() * 0.98);
+		leftBottomTalon.Set(leftTopTalon.Get() * 0.98);
+		rightTopTalon.Set(leftTopTalon.Get() * 0.98);
+		rightBottomTalon.Set(leftTopTalon.Get() * 0.98);
 		break;
 	}
 }

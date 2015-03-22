@@ -79,8 +79,6 @@ void AutonomousController::update() {
 //			std::cout << "distance: " << distance << "    angle: " << angle << std::endl;
 //	}
 
-	std::cout << "executing: " << executing << std::endl;
-
 	// loops only when there is no command currently running
 	if(executor.isAllIdle() && !executing) {
 		std::cout << commandSet.front() << std::endl;
@@ -89,7 +87,6 @@ void AutonomousController::update() {
 		executor.executeCommand(command); // execute - runs the command
 		// conditional to prevent null reference error
 		if(!commandSet.empty()) {
-			std::cout << "pop pop" << endl;
 			commandSet.pop_front(); // increment - sets the next command run to run
 		} else {
 			std::cout << "commandSet empty" << std::endl;
@@ -99,7 +96,6 @@ void AutonomousController::update() {
 	}
 	// checks if everything is idle, meaning nothing is running
 	else if(executor.isAllIdle()) {
-		cout << "all idle, executing to true" << endl;
 		executing = false;
 	}
 }
@@ -193,8 +189,9 @@ void AutonomousController::toteScoreDoubleStraight() {
 
 // special path used for testing
 void AutonomousController::test() {
-	commandSet.push_back(CMD_TOTE_SCORE);
-	//commandSet.push_back(CMD_STOP);
+	commandSet.push_back(CMD_TOTE_LIFT);
+	//commandSet.push_back(CMD_CLOSE);
+	commandSet.push_back(CMD_STOP);
 }
 
 //Empty destructor

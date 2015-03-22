@@ -24,12 +24,10 @@ void Lifter::init() {
 
 //Operates lifter according to current state
 void Lifter::update() {
-	std::cout << "digitalInput.Get(): " << digitalInput.Get() << std::endl << "digitalInput2.Get(): " << digitalInput2.Get() << std::endl;
+//	std::cout << "digitalInput.Get(): " << digitalInput.Get() << std::endl << "digitalInput2.Get(): " << digitalInput2.Get() << std::endl;
 	switch (state) {
 	case MOVING:
-		std::cout << "Desired lifter speed: " << targetSpeed << std::endl;
 		victor.SetSpeed(targetSpeed);
-		std::cout << "Actual lifter speed: " << victor.Get() << std::endl;
 		break;
 	case AUTO_LIFTING:
 		if (liftEncoder.GetStopped() && controller.GetError() < 1) {

@@ -12,6 +12,8 @@
 #include <iterator>
 #include "Arm.h"
 
+using namespace std;
+
 AutonomousExecutor::AutonomousExecutor(Robot *robotPointer, std::list<AutoCommand> *commandSet) {
 	this->robot = robotPointer;
 	this->commandSet = commandSet;
@@ -197,7 +199,7 @@ void AutonomousExecutor::canScore() {
 	canScoreSet.push_back(CMD_OPEN);
 
 	comIt = commandSet->begin();
-	advance(comIt, 1);
+	advance(comIt, 2);
 	commandSet->splice(comIt, canScoreSet);
 	commandSet->pop_front();
 }
@@ -227,8 +229,8 @@ void AutonomousExecutor::drive(int dist) {
 // BASE: lifts a tote
 void AutonomousExecutor::lift() {
 	//Pid version
+	cout << "Lifting arms" << endl;
 	robot->liftDist(LIFT_DISTANCE);
-
 }
 
 // BASE: drops whatever is being held
@@ -238,23 +240,25 @@ void AutonomousExecutor::drop() {
 
 // BASE: opens the arms
 void AutonomousExecutor::open() {
-	robot->changePistonState(Arm::PistonState::EXTENDING);
+	cout << "Opening arms" << endl;
+	robot->changePistonState(Arm::PistonState::RETRACTING);
 }
 
 // BASE: closes the arms
 void AutonomousExecutor::close() {
-	robot->changePistonState(Arm::PistonState::RETRACTING);
+	cout << "Closing arms" << endl;
+	robot->changePistonState(Arm::PistonState::EXTENDING);
 }
 
 // MACRO: lifts a tote
 void AutonomousExecutor::toteLift() {
 	std::list<AutoCommand> toteLiftSet;
-	std::cout << "Starting toteLift" << std::endl;
+	cout << "Starting toteLift" << endl;
 	toteLiftSet.push_back(CMD_CLOSE);
 	toteLiftSet.push_back(CMD_LIFT);
 
 	comIt = commandSet->begin();
-	advance(comIt, 1);
+	advance(comIt, 2);
 	commandSet->splice(comIt, toteLiftSet);
 	commandSet->pop_front();
 }
@@ -267,8 +271,6 @@ void AutonomousExecutor::visionAccumulate() {
  * currently implemented: drivetrain and lifter
  */
 bool AutonomousExecutor::isAllIdle() {
-	std::cout << "Drive state: " << robot->getDrivetrainState() << std::endl;
-	std::cout << "Lifter state: " << robot->getLifterState() << std::endl;
 	std::cout << "Arm state: " << robot->getArmPistonState() << std::endl;
 	return (robot->getDrivetrainState() == Drivetrain::State::IDLE) &&
 			(robot->getLifterState() == Lifter::State::IDLE) &&
