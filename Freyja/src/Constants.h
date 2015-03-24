@@ -59,12 +59,15 @@
 //#define LEFT_DPP 0.012808296080
 
 //Murphy
-#define RIGHT_DPP 0.01294599
-#define LEFT_DPP 0.01290522
+//#define RIGHT_DPP 0.01294599
+//#define LEFT_DPP 0.01290522
+
+#define RIGHT_DPP 0.051599
+#define LEFT_DPP 0.051867
 
 #define LIFTER_DPP 0.019165
 
-#define ARM_EXTEND_TIME 0.75
+#define ARM_EXTEND_TIME 0.4
 
 #define LIFT_SPEED 1.5
 #define TOTE_HEIGHT 12.1

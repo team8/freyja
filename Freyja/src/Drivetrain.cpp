@@ -51,10 +51,10 @@ Drivetrain::Drivetrain() :
 	rightBottomController.SetInputRange(-9999, 9999);
 
 	//Sets the output ranges for pid controllers
-	leftTopController.SetOutputRange(-0.7, 0.7);
-	rightTopController.SetOutputRange(-0.7, 0.7);
-	leftBottomController.SetOutputRange(-0.7, 0.7);
-	rightBottomController.SetOutputRange(-0.7, 0.7);
+	leftTopController.SetOutputRange(-0.9, 0.9);
+	rightTopController.SetOutputRange(-0.9, 0.9);
+	leftBottomController.SetOutputRange(-0.9, 0.9);
+	rightBottomController.SetOutputRange(-0.9, 0.9);
 
 //	leftTopTurn.SetInputRange(-9999, 9999);
 //	leftBottomTurn.SetInputRange(-9999, 9999);
@@ -113,8 +113,8 @@ void Drivetrain::update() {
 			state = IDLE;
 		}
 
-		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
-		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
+		std::cout << "Left Raw: " << leftEncoder.GetRaw() << std::endl;
+		std::cout << "Right Raw: " << rightEncoder.GetRaw() << std::endl;
 
 		break;
 	case ROTATING_ANGLE:
@@ -137,9 +137,9 @@ void Drivetrain::update() {
 		rightTopTalon.Set(rightSpeed);
 		rightBottomTalon.Set(rightSpeed);
 
-//		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
-//		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
-		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
+		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
+		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
+//		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
 //		std::cout << "Left Top Actual Speed: " << leftTopTalon.Get() << std::endl;
 //		std::cout << "Left Desired Speed: " << -leftSpeed << std::endl;
 //		std::cout << "Right Top Actual Speed: " << rightTopTalon.Get() << std::endl;
