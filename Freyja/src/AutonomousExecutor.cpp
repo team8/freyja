@@ -14,14 +14,21 @@
 
 using namespace std;
 
-AutonomousExecutor::AutonomousExecutor(Robot *robotPointer, std::list<AutoCommand> *commandSet) {
+AutonomousExecutor::AutonomousExecutor(Robot *robotPointer, list<AutoCommand> *commandSet) :
+		udpListener ("4950")
+{
 	this->robot = robotPointer;
 	this->commandSet = commandSet;
+	visDistance = 0;
+	visPlanarAngle = 0;
+	visRotationalAngle = 0;
 }
 
 void AutonomousExecutor::executeCommand(AutoCommand command) {
-	std::cout << "AutonomousExecutor::executeCommand(" << command << ")"
-			<< std::endl;
+	cout << "AutonomousExecutor::executeCommand(" << command << ")" << endl;
+	cout << "Vision Planar Angle: " << visPlanarAngle << endl;
+	cout << "Vision Rotational Angle: " << visRotationalAngle << endl;
+	cout << "Vision Distance: " << visDistance << endl;
 	switch(command) {
 	case CMD_STOP:
 	{
@@ -157,6 +164,21 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 		drive(YELLOW_CAN_DISTANCE);
 		break;
 	}
+	case CMD_VISION_ROTATE_PLANAR:
+	{
+		rotate(visPlanarAngle);
+		break;
+	}
+	case CMD_VISION_ROTATE_ROTATIONAL:
+	{
+		rotate(visRotationalAngle);
+		break;
+	}
+	case CMD_VISION_DRIVE:
+	{
+		drive(visDistance);
+		break;
+	}
 	default:
 	{
 		// default states only occurs when illegal command is called
@@ -264,7 +286,20 @@ void AutonomousExecutor::toteLift() {
 }
 
 void AutonomousExecutor::visionAccumulate() {
-	std::cout << "visionAccumulate called, shouldn't be called" << std::endl;
+	std::list<AutoCommand> visionAccumulateSet;
+	cout << "Starting visionAccumulate" << endl;
+	visionAccumulateSet.push_back(CMD_VISION_ROTATE_PLANAR);
+	visionAccumulateSet.push_back(CMD_VISION_DRIVE);
+	visionAccumulateSet.push_back(CMD_VISION_ROTATE_ROTATIONAL);
+	visionAccumulateSet.push_back(CMD_FRONT_IN);
+	visionAccumulateSet.push_back(CMD_CLOSE);
+	visionAccumulateSet.push_back(CMD_LIFT);
+
+	// splicing untested with longer chains
+	comIt = commandSet->begin();
+	advance(comIt, 2);
+	commandSet->splice(comIt, visionAccumulateSet);
+	commandSet->pop_front();
 }
 
 /* checks if any of the subsystems are currently working

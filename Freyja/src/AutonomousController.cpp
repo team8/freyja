@@ -1,6 +1,6 @@
 /*
- * Version 11
- * 2/17/15
+ * Version 12
+ * 3/23/15
  * Jonathan Zwiebel and Nihar Mitra
  */
 
@@ -12,7 +12,7 @@ using namespace std;
 
 // DIAL CURRENTLY COMMENTED OUT
 AutonomousController::AutonomousController(Robot *robotPointer) :
-		executor(robotPointer, &commandSet), udpListener { "4950" }
+		executor(robotPointer, &commandSet)
 //dial((uint32_t) PORT_AUTO_DIAL)
 {
 	//path = (Path) dial.GetValue();
@@ -20,8 +20,6 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 	//initial command
 	command = CMD_STOP;
 	executing = false;
-	distance = 0;
-	angle = 0;
 	robotPointer->init();
 }
 
@@ -132,18 +130,10 @@ void AutonomousController::toteScoreDoubleLeft() {
 
 // scores a yellow tote and the one to its right
 void AutonomousController::toteScoreDoubleRight() {
-//	commandSet.push_back(CMD_TOTE_SCORE);
-//	commandSet.push_back(CMD_HALF_ROTATE);
-//	commandSet.push_back(CMD_VISION_ACCUMULATE);
-//	commandSet.push_back(CMD_HALF_ROTATE);
-//	commandSet.push_back(CMD_AUTO_DRIVE);
-//	commandSet.push_back(CMD_STOP);
-
-	commandSet.push_back(CMD_AUTO_DRIVE);
-	commandSet.push_back(CMD_BACK_AUTO_DRIVE);
-	commandSet.push_back(CMD_ROTATE_90);
-	commandSet.push_back(CMD_DRIVE_YELLOW_YELLOW);
-	commandSet.push_back(CMD_ROTATE_NEG_90);
+	commandSet.push_back(CMD_TOTE_SCORE);
+	commandSet.push_back(CMD_HALF_ROTATE);
+	commandSet.push_back(CMD_VISION_ACCUMULATE);
+	commandSet.push_back(CMD_HALF_ROTATE);
 	commandSet.push_back(CMD_AUTO_DRIVE);
 	commandSet.push_back(CMD_STOP);
 }
@@ -184,6 +174,12 @@ void AutonomousController::accumulateGray() {
 
 // gets a tote, lifts and then pushes the second tote to get 2 in the auto zone
 void AutonomousController::toteScoreDoubleStraight() {
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_BACK_AUTO_DRIVE);
+	commandSet.push_back(CMD_ROTATE_90);
+	commandSet.push_back(CMD_DRIVE_YELLOW_YELLOW);
+	commandSet.push_back(CMD_ROTATE_NEG_90);
+	commandSet.push_back(CMD_AUTO_DRIVE);
 	commandSet.push_back(CMD_STOP);
 }
 

@@ -25,6 +25,7 @@
 #include "Robot.h"
 #include "Constants.h"
 #include "Arm.h"
+#include "UDP_Listener.h"
 
 class AutonomousExecutor {
 public:
@@ -50,6 +51,11 @@ private:
 	void close();
 	void toteLift();
 	void visionAccumulate();
+	UDP_Listener udpListener;
+	// vision variables
+	double visDistance;
+	double visPlanarAngle;
+	double visRotationalAngle;
 };
 
 #endif /* FREYJA_SRC_AUTONOMOUSEXECUTOR_H_ */

@@ -1,6 +1,6 @@
 /*
- * Version 11
- * 2/17/15
+ * Version 12
+ * 3/23/15
  * Jonathan Zwiebel and Nihar Mitra
  */
 
@@ -13,7 +13,6 @@
 #include "Robot.h"
 #include "Constants.h"
 #include "AutonomousExecutor.h"
-#include "UDP_Listener.h"
 
 class AutonomousController {
 public:
@@ -34,12 +33,6 @@ private:
 
 	Path path;
 	AutoCommand command;
-
-	UDP_Listener udpListener;
-
-	// vision variables
-	double distance;
-	double angle;
 
 	// paths
 	void stop();
