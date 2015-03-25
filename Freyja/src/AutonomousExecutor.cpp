@@ -31,160 +31,99 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 	cout << "Vision Distance: " << visDistance << endl;
 	switch(command) {
 	case CMD_STOP:
-	{
 		break;
-	}
 	case CMD_AUTO_DRIVE:
-	{
 		//std::cout << "CMD_AUTO_DRIVE start" << std::endl;
 		drive(YELLOW_AUTO_DISTANCE);
 	//	std::cout << "CMD_AUTO_DRIVE end" << std::endl;
 		break;
-	}
 	case CMD_LIFT:
-	{
 		lift();
 		break;
-	}
 	case CMD_DROP:
-	{
 		drop();
 		break;
-	}
 	case CMD_TOTE_SCORE:
-	{
 		toteScore();
 		break;
-	}
 	case CMD_ACCUMULATE_FROM_AUTO:
-	{
 		accumulateFromAuto();
 		break;
-	}
 	case CMD_TOTE_TO_TOTE_LEFT:
-	{
 		toteToTote(true);
 		break;
-	}
 	case CMD_TOTE_TO_TOTE_RIGHT:
-	{
 		toteToTote(false);
 		break;
-	}
 	case CMD_CAN_SCORE:
-	{
 		canScore();
 		break;
-	}
 	case CMD_DRIVE_LANDFILL_AUTO:
-	{
 		drive(AUTO_GRAY_DISTANCE);
 		break;
-	}
 	case CMD_GRAY_TO_GRAY:
-	{
 		grayToGray();
 		break;
-	}
 	case CMD_HALF_ROTATE:
-	{
-		std::cout << "CMD_HALF_ROTATE start" << std::endl;
+//		std::cout << "CMD_HALF_ROTATE start" << std::endl;
 		rotate(180);
-		std::cout << "CMD_HALF_ROTATE end" << std::endl;
-
+//		std::cout << "CMD_HALF_ROTATE end" << std::endl;
 		break;
-	}
 	case CMD_LANDFILL_DRIVE:
-	{
 		drive(YELLOW_AUTO_DISTANCE + AUTO_GRAY_DISTANCE);
 		break;
-	}
 	case CMD_CAN_LIFT:
-	{
 		canLift();
 		break;
-	}
 	case CMD_CLOSE:
-	{
 		close();
 		break;
-	}
 	case CMD_OPEN:
-	{
 		open();
 		break;
-	}
 	case CMD_TOTE_LIFT:
-	{
 		toteLift();
 		break;
-	}
 	case CMD_VISION_ACCUMULATE:
-	{
 		visionAccumulate();
 		break;
-	}
 	case CMD_BACK_OUT:
-	{
 		drive(-BACK_OUT_DISTANCE);
 		break;
-	}
 	case CMD_FRONT_IN:
-	{
 		drive(FRONT_IN_DISTANCE);
 		break;
-	}
 	case CMD_BACK_AUTO_DRIVE:
-	{
 		drive(-YELLOW_AUTO_DISTANCE);
 		break;
-	}
 	case CMD_ROTATE_90:
-	{
 		rotate(90);
 		break;
-	}
 	case CMD_ROTATE_NEG_90:
-	{
 		rotate(-90);
 		break;
-	}
 	case CMD_DRIVE_YELLOW_YELLOW:
-	{
 		drive(YELLOW_YELLOW_DISTANCE);
 		break;
-	}
 	case CMD_BACK_TO_TOTE_DRIVE:
-	{
 		drive(-BACK_TO_TOTE_DISTANCE);
 		break;
-	}
 	case CMD_DRIVE_YELLOW_CAN:
-	{
 		drive(YELLOW_CAN_DISTANCE);
 		break;
-	}
 	case CMD_VISION_ROTATE_PLANAR:
-	{
 		rotate(visPlanarAngle);
 		break;
-	}
 	case CMD_VISION_ROTATE_ROTATIONAL:
-	{
 		rotate(visRotationalAngle);
 		break;
-	}
 	case CMD_VISION_DRIVE:
-	{
 		drive(visDistance);
 		break;
-	}
 	default:
-	{
 		// default states only occurs when illegal command is called
 		std::cout << "default command called in autoexec" << std::endl;
 		break;
-	}
 	}
 }
 
@@ -234,7 +173,7 @@ void AutonomousExecutor::grayToGray() {
 // BASE_ARG: rotates a given angle
 void AutonomousExecutor::rotate(int angle) {
 	std::cout << "rotate method in AutoExecutor" << std::endl;
-	robot->rotateAngle(180);
+	robot->rotateAngle(angle);
 }
 
 // BASE: lifts a can
@@ -306,7 +245,7 @@ void AutonomousExecutor::visionAccumulate() {
  * currently implemented: drivetrain and lifter
  */
 bool AutonomousExecutor::isAllIdle() {
-	std::cout << "Arm state: " << robot->getArmPistonState() << std::endl;
+//	std::cout << "Arm state: " << robot->getArmPistonState() << std::endl;
 	return (robot->getDrivetrainState() == Drivetrain::State::IDLE) &&
 			(robot->getLifterState() == Lifter::State::IDLE) &&
 					(robot->getArmPistonState() == Arm::PistonState::IDLE);

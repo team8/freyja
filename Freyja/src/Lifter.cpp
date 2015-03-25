@@ -28,6 +28,7 @@ void Lifter::update() {
 	switch (state) {
 	case MOVING:
 		victor.SetSpeed(targetSpeed);
+		std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
 		break;
 	case AUTO_LIFTING:
 		if (liftEncoder.GetStopped() && controller.GetError() < 1) {

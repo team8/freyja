@@ -125,7 +125,7 @@ void Drivetrain::update() {
 		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
 		break;
 	case DRIVING_TELEOP:
-	{
+
 		//Determines the appropriate left and right speed
 		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 0.75), -0.75);
 		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 0.75), -0.75);
@@ -137,8 +137,8 @@ void Drivetrain::update() {
 		rightTopTalon.Set(rightSpeed);
 		rightBottomTalon.Set(rightSpeed);
 
-		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
-		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
+//		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
+//		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
 //		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
 //		std::cout << "Left Top Actual Speed: " << leftTopTalon.Get() << std::endl;
 //		std::cout << "Left Desired Speed: " << -leftSpeed << std::endl;
@@ -161,7 +161,7 @@ void Drivetrain::update() {
 //		std::cout << "Acceleration: " << acceleration << std::endl;
 
 		break;
-	}
+
 	case PRECISION_TRIGGER:
 		//Determines the appropriate left and right speed
 		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);

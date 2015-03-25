@@ -16,7 +16,7 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 //dial((uint32_t) PORT_AUTO_DIAL)
 {
 	//path = (Path) dial.GetValue();
-	path = ACCUMULATE_GRAY;
+	path = TEST;
 	//initial command
 	command = CMD_STOP;
 	executing = false;
@@ -189,6 +189,7 @@ void AutonomousController::test() {
 //	commandSet.push_back(CMD_CLOSE);
 	//commandSet.push_back(CMD_LIFT);
 	//commandSet.push_back(CMD_ACCUMULATE_GRAY);
+	commandSet.push_back(CMD_HALF_ROTATE);
 	commandSet.push_back(CMD_STOP);
 }
 
