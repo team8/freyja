@@ -185,11 +185,11 @@ void AutonomousController::toteScoreDoubleStraight() {
 
 // special path used for testing
 void AutonomousController::test() {
-	//commandSet.push_back(CMD_TOTE_LIFT);
-//	commandSet.push_back(CMD_CLOSE);
-	//commandSet.push_back(CMD_LIFT);
 	//commandSet.push_back(CMD_ACCUMULATE_GRAY);
-	commandSet.push_back(CMD_HALF_ROTATE);
+//	commandSet.push_back(CMD_TOTE_LIFT);
+//	commandSet.push_back(CMD_DRIVE_YELLOW_YELLOW);
+//	commandSet.push_back(CMD_OPEN);
+//	commandSet.push_back(CMD_TOTE_STACK);
 	commandSet.push_back(CMD_STOP);
 }
 

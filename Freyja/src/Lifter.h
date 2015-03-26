@@ -25,7 +25,7 @@ public:
 	double currentLevel;
 
 	enum State {
-		MOVING, AUTO_LIFTING, IDLE
+		MOVING, AUTO_LIFTING, LEVEL_SHIFTING, IDLE
 	} state;
 
 	State getState();

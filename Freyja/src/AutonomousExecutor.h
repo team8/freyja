@@ -50,6 +50,7 @@ private:
 	void open();
 	void close();
 	void toteLift();
+	void toteStack(double stackHeight);
 	void visionAccumulate();
 	UDP_Listener udpListener;
 	// vision variables

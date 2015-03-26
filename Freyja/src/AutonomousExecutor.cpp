@@ -43,6 +43,7 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 	case CMD_DROP:
 		drop();
 		break;
+	// MACRO: picks up a tote, drives and drops it in the correct zone
 	case CMD_TOTE_SCORE:
 		toteScore();
 		break;
@@ -83,6 +84,9 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 		break;
 	case CMD_TOTE_LIFT:
 		toteLift();
+		break;
+	case CMD_TOTE_STACK:
+		toteStack(0*TOTE_HEIGHT);
 		break;
 	case CMD_VISION_ACCUMULATE:
 		visionAccumulate();
@@ -221,6 +225,22 @@ void AutonomousExecutor::toteLift() {
 	comIt = commandSet->begin();
 	advance(comIt, 2);
 	commandSet->splice(comIt, toteLiftSet);
+	commandSet->pop_front();
+}
+
+// MACRO: Drops the held tote onto one below it and then picks up the stack
+// Stack height is the lowest height to travel to
+void AutonomousExecutor::toteStack(double stackHeight) {
+	cout << "Stacking tote" << endl;
+	std::list<AutoCommand> toteStackSet;
+	toteStackSet.push_back(CMD_OPEN);
+//	toteStackSet.push_back(CMD_LOWER);
+//TODO: Want to lower arm to stackHeight....how?
+	toteStackSet.push_back(CMD_TOTE_LIFT);
+
+	comIt = commandSet->begin();
+	advance(comIt, 2);
+	commandSet->splice(comIt, toteStackSet);
 	commandSet->pop_front();
 }
 

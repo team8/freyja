@@ -25,6 +25,10 @@ void Lifter::init() {
 //Operates lifter according to current state
 void Lifter::update() {
 //	std::cout << "digitalInput.Get(): " << digitalInput.Get() << std::endl << "digitalInput2.Get(): " << digitalInput2.Get() << std::endl;
+	std::cout << "Current lifter level: " << currentLevel << std::endl;
+	std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
+	std::cout << "Lift Error: " << controller.GetError() << std::endl;
+	//std::cout << "Current Lifter state: " << state << std::endl;
 	switch (state) {
 	case MOVING:
 		victor.SetSpeed(targetSpeed);
@@ -34,8 +38,11 @@ void Lifter::update() {
 		if (liftEncoder.GetStopped() && controller.GetError() < 1) {
 			state = IDLE;
 		}
-
-		std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
+		break;
+	case LEVEL_SHIFTING:
+		if (liftEncoder.GetStopped() && controller.GetError() < 1) {
+			state = IDLE;
+		}
 		break;
 	case IDLE:
 		victor.SetSpeed(0);
@@ -53,21 +60,15 @@ void Lifter::disable() {
 
 //this method moves the lifter.
 void Lifter::setLevel(double level) {
+	liftEncoder.Reset();
 	controller.SetSetpoint(level * TOTE_HEIGHT);
 	currentLevel = level;
-	//Checks to see if the pid has reached its target.
-	if (liftEncoder.GetStopped()) {
-		std::cout << "Reached level " << level << std::endl;
-		state = IDLE;
-	} else {
-		targetSpeed = controller.Get();
-		state = MOVING;
-	}
+	state = LEVEL_SHIFTING;
 }
 //this function moves the lifter to its lowest point to remove any error.
 void Lifter::zeroing() {
-	victor.Set(-.2);
-//	state = ZEROING;
+	state = MOVING;
+	targetSpeed = - 0.2;
 }
 
 //void Lifter::setSpeed(double speed) {
@@ -109,6 +110,7 @@ Lifter::State Lifter::getState() {
 
 //Returns the current level of the lifter
 double Lifter::getLevel() {
+	std::cout << "Current lifter level: " << currentLevel << std::endl;
 	return currentLevel;
 }
 
@@ -130,6 +132,7 @@ void Lifter::setSpeed(double speed) {
 //	}
 //	state = MOVING;
 }
+
 
 //Empty destructor
 Lifter::~Lifter() {

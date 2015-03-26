@@ -56,6 +56,11 @@ Drivetrain::Drivetrain() :
 	leftBottomController.SetOutputRange(-0.9, 0.9);
 	rightBottomController.SetOutputRange(-0.9, 0.9);
 
+	leftTopGyroController.SetOutputRange(-0.7, 0.7);
+	rightTopGyroController.SetOutputRange(-0.7, 0.7);
+	leftBottomGyroController.SetOutputRange(-0.7, 0.7);
+	rightBottomGyroController.SetOutputRange(-0.7, 0.7);
+
 //	leftTopTurn.SetInputRange(-9999, 9999);
 //	leftBottomTurn.SetInputRange(-9999, 9999);
 //	rightTopTurn.SetInputRange(-9999, 9999);
