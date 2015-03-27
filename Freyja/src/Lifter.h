@@ -33,13 +33,13 @@ public:
 	void setSpeed(double speed);
 
 private:
-	VictorSP victor;
+	VictorSP victor1, victor2;
 	Encoder liftEncoder;
 
 	DigitalInput digitalInput;
 	DigitalInput digitalInput2;
 
-	PIDController controller;
+	PIDController controller1, controller2;
 	double targetSpeed;
 };
 
