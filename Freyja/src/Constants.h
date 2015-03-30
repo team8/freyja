@@ -23,8 +23,12 @@
 #define SOLENOID_2_PORT_A 2
 #define SOLENOID_2_PORT_B 3
 
-#define PORT_LIFT_VIC_1 9
-#define PORT_LIFT_VIC_2 6
+//freyja version
+//#define PORT_LIFT_VIC_1 9
+//#define PORT_LIFT_VIC_2 6
+
+#define PORT_LIFT_VIC_1 5
+#define PORT_LIFT_VIC_2 4
 
 #define LIFT_ENCODER_PORT_A 4
 #define LIFT_ENCODER_PORT_B 5
@@ -80,7 +84,8 @@
 #define SPEED_DECAY_RANGE 0.1
 #define PRECISION_ROTATE_CONSTANT 0.4
 #define HIGH_DPI 5.0
-#define ROTATE_CONSTANT 0.8
+#define LOW_DPI 1.0
+#define ROTATE_CONSTANT 0.5
 #define ACCELERATION_REVERSE_CONSTANT 0.060
 #define BRAKING_CONSTANT 0.60
 

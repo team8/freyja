@@ -1,15 +1,23 @@
 #include "Lifter.h"
 #include <iostream>
 Lifter::Lifter() :
-		victor1((uint32_t) PORT_LIFT_VIC_1), victor2((uint32_t) PORT_LIFT_VIC_2), liftEncoder((uint32_t) LIFT_ENCODER_PORT_A,
-				(uint32_t) LIFT_ENCODER_PORT_B, true),
+		victor1((uint32_t) PORT_LIFT_VIC_1),
+		victor2((uint32_t) PORT_LIFT_VIC_2),
+		liftEncoder((uint32_t) LIFT_ENCODER_PORT_A, (uint32_t) LIFT_ENCODER_PORT_B, true),
 		digitalInput((uint32_t) LIMIT_SWITCH_TOP),
 		digitalInput2((uint32_t) LIMIT_SWITCH_BOT),
-		controller1(0.12, 0.f, 0.1, &liftEncoder, &victor1),
-		controller2(0.12, 0.f, 0.1, &liftEncoder, &victor2)
+
+		controller1(0.3, 0.f, 0.1, &liftEncoder, &victor1),
+		controller2(0.3, 0.f, 0.1, &liftEncoder, &victor2),
+
+		speedController1(1.0, 0.f, 1.0, &liftEncoder, &victor1),
+		speedController2(1.0, 0.f, 1.0, &liftEncoder, &victor2)
 {
 	currentLevel = 0;
 	state = IDLE;
+
+	controller1.SetOutputRange(-0.5, 0.5);
+	controller2.SetOutputRange(-0.5, 0.5);
 }
 
 //Initializes lifter to be ready to operate
@@ -22,19 +30,21 @@ void Lifter::init() {
 	controller1.SetInputRange(-9999, 9999);
 	controller2.SetInputRange(-9999, 9999);
 	liftEncoder.SetMaxPeriod(1);
+
+//	liftEncoder.SetPIDSourceParameter(PIDSource::kRate);
 }
 
 //Operates lifter according to current state
 void Lifter::update() {
 //	std::cout << "digitalInput.Get(): " << digitalInput.Get() << std::endl << "digitalInput2.Get(): " << digitalInput2.Get() << std::endl;
 	std::cout << "Current lifter level: " << currentLevel << std::endl;
-	std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
+	std::cout << "Lift Encoder: " << liftEncoder.PIDGet() << std::endl;
 	std::cout << "Lift Error: " << controller1.GetError() << std::endl;
 	//std::cout << "Current Lifter state: " << state << std::endl;
 	switch (state) {
 	case MOVING:
-		victor1.SetSpeed(targetSpeed);
-		victor2.SetSpeed(targetSpeed);
+		victor1.SetSpeed(- targetSpeed);
+		victor2.SetSpeed(- targetSpeed);
 		std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
 		break;
 	case AUTO_LIFTING:
@@ -67,6 +77,10 @@ void Lifter::disable() {
 
 //this method moves the lifter.
 void Lifter::setLevel(double level) {
+	liftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+	speedController1.Disable();
+	speedController2.Disable();
+
 	liftEncoder.Reset();
 	controller1.SetSetpoint(level * TOTE_HEIGHT);
 	controller2.SetSetpoint(level * TOTE_HEIGHT);
@@ -94,6 +108,10 @@ bool Lifter::checkSensorHit(bool firstSensor) {
 }
 
 void Lifter::lift(double distance) {
+	liftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+	speedController1.Disable();
+	speedController2.Disable();
+
 	state = AUTO_LIFTING;
 
 	//Enables pid controllers
@@ -127,6 +145,17 @@ double Lifter::getLevel() {
 //TODO Name of method is confusing, not what it actually does
 //Moves the lifter at the specified speed
 void Lifter::setSpeed(double speed) {
+//	liftEncoder.SetPIDSourceParameter(PIDSource::kRate);
+//
+//	controller1.Disable();
+//	controller2.Disable();
+//
+//	speedController1.SetSetpoint(speed);
+//	speedController2.SetSetpoint(speed);
+//
+//	speedController1.Enable();
+//	speedController2.Enable();
+
 	state = MOVING;
 	targetSpeed = speed;
 

@@ -40,6 +40,8 @@ private:
 	DigitalInput digitalInput2;
 
 	PIDController controller1, controller2;
+	PIDController speedController1, speedController2;
+
 	double targetSpeed;
 };
 

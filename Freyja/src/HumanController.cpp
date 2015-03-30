@@ -49,17 +49,17 @@ void HumanController::update() {
 	// MAKE CONSTANT
 	//XXXXXXXXXXXXXXXXXX
 	//Lifter Controls
-	if(robotPointer->getLifterState() == Lifter::State::MOVING || operatorJoystick.GetY() * operatorJoystick.GetY() > 0.03) {
+	if(robotPointer->getLifterState() == Lifter::State::MOVING || operatorJoystick.GetY() * operatorJoystick.GetY() > 0.04) {
 		robotPointer->setLifter(operatorJoystick.GetY());
 	}
 
 	//this moves the lifter up by one level
-	if (operatorJoystick.GetRawButton(11) && robotPointer->getLifterState() != Lifter::State::LEVEL_SHIFTING) {
-	 robotPointer->setLifterLevel(robotPointer->getLevel() + 1);
+	if (operatorJoystick.GetRawButton(11) && robotPointer->getLifterState() != Lifter::State::AUTO_LIFTING) {
+	 robotPointer->liftDist(TOTE_HEIGHT);
 	 }
 	 //this moves the lifter down by one level
-	 if (operatorJoystick.GetRawButton(10) && robotPointer->getLifterState() != Lifter::State::LEVEL_SHIFTING) {
-	 robotPointer->setLifterLevel(robotPointer->getLevel() - 1);
+	 if (operatorJoystick.GetRawButton(10) && robotPointer->getLifterState() != Lifter::State::AUTO_LIFTING) {
+	 robotPointer->liftDist(-TOTE_HEIGHT);
 	 }
 	 //this moves the lifter to the lowest level
 	 if (operatorJoystick.GetRawButton(9)) {
