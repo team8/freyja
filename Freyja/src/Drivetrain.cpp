@@ -169,8 +169,8 @@ void Drivetrain::update() {
 
 	case PRECISION_TRIGGER:
 		//Determines the appropriate left and right speed
-		leftSpeed = std::max(std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
-		rightSpeed = std::max(std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+		leftSpeed = std::max(std::min(rawTargetSpeed * LOW_DPI - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+		rightSpeed = std::max(std::min(rawTargetSpeed * LOW_DPI + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
 
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(-leftSpeed);
@@ -256,6 +256,9 @@ void Drivetrain::setSpeed(double myAcceleration, double rotateSpeed) {
 		setTargetSpeed(targetSpeed + acceleration * ACCELERATION_CONSTANT);
 	}
 	setRotateSpeed(rotateSpeed);
+
+	//Sets the raw target speed to joystick displacement, don't be confused by myAcceleration setting
+	this -> rawTargetSpeed = myAcceleration;
 }
 
 //Sets drivetrain teleop target speed

@@ -51,6 +51,8 @@ private:
 	double targetSpeed;
 	//The rotation speed of the robot during teleoperated control
 	double rotateSpeed;
+	//The raw forward speed to be used in high precision mode
+	double rawTargetSpeed;
 
 	// The value returned by the Y-axis of the driver stick
 	double acceleration;
