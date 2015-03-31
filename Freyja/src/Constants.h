@@ -97,8 +97,8 @@
 #define ACCUMULATOR_SOLENOID_1_PORT_B 21 //random port
 #define ACCUMULATOR_SOLENOID_2_PORT_A 420 //random port
 #define ACCUMULATOR_SOLENOID_2_PORT_B 42 //random port
-
-
+#define ACCUMULATOR_SPEED .5
+#define EJECT_SPEED .1
 
 // enums for AutonomousController and AutonomousExecutor
 enum Path {
