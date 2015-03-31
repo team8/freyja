@@ -16,7 +16,7 @@ void Accumulator::setPistonState(PistonState state) {
 
 //Sets the target speed of the victors (note one vic is set to -speed)
 void Accumulator::setVictors(double speed) {
-	if(!speed) {
+	if(speed == 0) {
 		state = IDLE;
 	}
 	state = ACCUMULATING;
@@ -69,6 +69,6 @@ void Accumulator::disable() {
 }
 
 void Accumulator::init() {
-	setPistonState(IDLE);\
+	setPistonState(IDLE);
 	this->wheelState = IDLE;
 }
