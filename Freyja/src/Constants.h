@@ -89,6 +89,9 @@
 #define ACCELERATION_REVERSE_CONSTANT 0.060
 #define BRAKING_CONSTANT 0.60
 
+#define ACCUMULATOR_SPEED .5
+#define EJECT_SPEED .1
+
 // enums for AutonomousController and AutonomousExecutor
 enum Path {
 	STOP,
