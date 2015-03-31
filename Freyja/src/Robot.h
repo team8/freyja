@@ -10,6 +10,7 @@
 #include "Drivetrain.h"
 #include "Arm.h"
 #include "Lifter.h"
+#include "Accumulator.h"
 
 class Robot {
 private:
@@ -17,6 +18,7 @@ private:
 	Drivetrain drivetrain;
 	Arm arm;
 	Lifter lifter;
+	Accumulator accumulator;
 
 public:
 	/** Robot constructor, initializes robot and subsystems */
@@ -47,6 +49,8 @@ public:
 	double getLevel();
 	void setLifter(double speed);
 	void liftDist(double dist);
+	void accumulate();
+	void eject();
 };
 
 #endif /* ROBOT_H */
