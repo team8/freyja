@@ -2,7 +2,7 @@
 /** Robot constructor, initializes robot and subsystems */
 Robot::Robot() :
 		//Initializes drivetrain, arm, and lifter
-		drivetrain(), arm(), lifter() {
+		drivetrain(), arm(), lifter(), accumulator() {
 }
 
 /** Initializes subsystems */
@@ -10,6 +10,7 @@ void Robot::init() {
 	drivetrain.init();
 	arm.init();
 	lifter.init();
+	accumulator.init();
 }
 
 /** Updates all subsystems */
@@ -17,6 +18,7 @@ void Robot::update() {
 	drivetrain.update();
 	arm.update();
 	lifter.update();
+	accumulator.update();
 	//disables lifter if either sensor is hit
 //	if(lifter.checkEitherHit()) {
 //		lifter.disable();
@@ -28,6 +30,7 @@ void Robot::disable() {
 	drivetrain.disable();
 	arm.disable();
 	lifter.disable();
+	accumulator.disable();
 }
 
 /** Moves the robot according to an acceleration to move at, and
@@ -113,4 +116,12 @@ void Robot::setLifter(double speed) {
 
 void Robot::liftDist(double dist) {
 	lifter.lift(dist);
+}
+void Robot::accumulate(){
+	accumulator.setVictorSpeed(1.0);
+}
+void Robot::eject(){
+	accumulator.eject();	
+}
+}
 }
