@@ -1,74 +1,92 @@
 #include "Accumulator.h"
 #include "Constants.h"
 
+
 Accumulator::Accumulator() :
-	solenoid((uint32_t) SOLENOID_2_PORT_A, SOLENOID_2_PORT_B),
+	solenoid((uint32_t) ACCUMULATOR_SOLENOID_1_PORT_A, ACCUMULATOR_SOLENOID_1_PORT_B),
+	solenoid2((uint32_t) ACCUMULATOR_SOLENOID_2_PORT_A, ACCUMULATOR_SOLENOID_2_PORT_B),
 	leftVic((uint32_t) PORT_ACCUMULATE_LEFT_VIC),
 	rightVic((uint32_t) PORT_ACCUMULATE_RIGHT_VIC)
 {
-setPistonState(IDLE);
-this->wheelState = IDLE;
+setPistonState(PistonState::IDLE);
+setWheelState(WheelState::IDLE);
+ejectSpeed = 0.1;
+vicSpeed = 0.1;
+leftSpinningSpeed = 0.1;
+rightSpinningSpeed = 0.1;
 }
 
 void Accumulator::setPistonState(PistonState state) {
 	this->pistonState = state;
 }
 
-//Sets the target speed of the victors (note one vic is set to -speed)
-void Accumulator::setVictors(double speed) {
-	if(!speed) {
-		state = IDLE;
-	}
-	state = ACCUMULATING;
-	this->vicSpeed = speed;
+void Accumulator::setWheelState(WheelState state) {
+	this->wheelState = state;
 }
 
 void Accumulator::eject() {
-	state = EJECTING;
-	ejectSpeed = 0.1;
+	setWheelState(WheelState::EJECTING);
+}
+
+void Accumulator::accumulate() {
+	setWheelState(WheelState::ACCUMULATING);
 }
 
 
 void Accumulator::update() {
 	switch(pistonState) {
-	case EXTENDING:
+	case PistonState::EXTENDING:
 		solenoid.Set(DoubleSolenoid::Value::kForward);
+		solenoid2.Set(DoubleSolenoid::Value::kForward);
 		break;
-	case RETRACTING:
+	case PistonState::RETRACTING:
 		solenoid.Set(DoubleSolenoid::Value::kReverse);
+		solenoid2.Set(DoubleSolenoid::Value::kReverse);
 		break;
-	case IDLE:
+	case PistonState::IDLE:
 		solenoid.Set(DoubleSolenoid::Value::kOff);
+		solenoid2.Set(DoubleSolenoid::Value::kOff);
+		break;
+	case PistonState::SPINNING:
+		solenoid.Set(DoubleSolenoid::Value::kForward);
+		solenoid2.Set(DoubleSolenoid::Value::kReverse);
 		break;
 	default:
-		setPistonState(IDLE);
+		setPistonState(PistonState::IDLE);
 		break;
 	}
 	switch(wheelState) {
-	case ACCUMULATING:
+	case WheelState::ACCUMULATING:
 		leftVic.Set(vicSpeed);
 		rightVic.Set(-vicSpeed);
 		break;
-	case IDLE:
+	case WheelState::IDLE:
 		leftVic.Set(0);
 		rightVic.Set(0);
 		break;
-	case EJECTING:
-		leftVic.Set(ejectSpeed);
-		rightVic.Set(-ejectSpeed);
+	case WheelState::EJECTING:
+		leftVic.Set(-ejectSpeed);
+		rightVic.Set(ejectSpeed);
+		break;
+	case WheelState::SPINNING:
+		leftVic.Set(leftSpinningSpeed);
+		rightVic.Set(-rightSpinningSpeed);
 		break;
 	default:
-		this->wheelState = IDLE;
+		setWheelState(WheelState::IDLE);
 		break;
 	}
 }
 
 void Accumulator::disable() {
-	setPistonState(IDLE);
-	this->wheelState = IDLE;
+	setPistonState(PistonState::IDLE);
+	setWheelState(WheelState::IDLE);
 }
 
 void Accumulator::init() {
-	setPistonState(IDLE);\
-	this->wheelState = IDLE;
+	setPistonState(PistonState::IDLE);
+	setWheelState(WheelState::IDLE);
+}
+
+Accumulator::~Accumulator() {
 }

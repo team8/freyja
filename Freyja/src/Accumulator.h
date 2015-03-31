@@ -11,33 +11,32 @@ used to accumulate totes using spinning arms and a pneumatic pivot arm
 
 class Accumulator: public Subsys {
 public:
-	enum PistonState {
-		EXTENDING, RETRACTING, IDLE
-	}
-	enum WheelState {
-		WHEELIDLE, WHEELACCUMULATING, WHEELEJECTING
-	}
+	enum class PistonState {
+		EXTENDING, RETRACTING, SPINNING, IDLE
+	}; PistonState pistonState;
+
+	enum class WheelState {
+		ACCUMULATING, EJECTING, SPINNING, IDLE
+	}; WheelState wheelState;
 	
 	//Constructor and deconstructor
 	Accumulator();
 	virtual ~Accumulator();
-	//changes the state of the piston
 	void setPistonState(PistonState state);
-	//changes the state of the victors
-	void setVictors();
-	//Subsystem inherited methods
+	void setWheelState(WheelState state);
 	void eject();
-	void setVictorSpeed(double speed);
 	void init();
 	void update();
 	void disable();
+	void accumulate();
 private:
 	//solenoid for the pivoting action
 	DoubleSolenoid solenoid;
-	PistonState pistonState;
-	WheelState wheelState;
+	DoubleSolenoid solenoid2;
 	double ejectSpeed;
 	double vicSpeed;
+	double leftSpinningSpeed;
+	double rightSpinningSpeed;
 	//victors/talons for the wheels
 	Victor leftVic;
 	Victor rightVic;
