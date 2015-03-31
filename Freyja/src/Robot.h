@@ -49,7 +49,8 @@ public:
 	double getLevel();
 	void setLifter(double speed);
 	void liftDist(double dist);
-	void accumulate();
+	void toggleAccumulator();
+	void toggleArm();
 	void eject();
 };
 

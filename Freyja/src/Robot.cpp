@@ -117,8 +117,15 @@ void Robot::setLifter(double speed) {
 void Robot::liftDist(double dist) {
 	lifter.lift(dist);
 }
-void Robot::accumulate(){
+
+void Robot::toggleAccumulator() {
+	accumulator.togglePiston();
 }
+
+void Robot::toggleArm() {
+	arm.toggleArm();
+}
+
 void Robot::eject(){
 	accumulator.eject();	
 }

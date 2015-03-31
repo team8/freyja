@@ -29,6 +29,7 @@ public:
 	void update();
 	void disable();
 	void accumulate();
+	void togglePiston();
 private:
 	//solenoid for the pivoting action
 	DoubleSolenoid solenoid;
@@ -37,9 +38,10 @@ private:
 	double vicSpeed;
 	double leftSpinningSpeed;
 	double rightSpinningSpeed;
-	//victors/talons for the wheels
+	Timer timer;
 	Victor leftVic;
 	Victor rightVic;
+	bool openPiston;
 };
 
 #endif /*ACCUMULATOR_H*/

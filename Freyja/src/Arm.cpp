@@ -9,6 +9,7 @@ Arm::Arm() :
 //solenoid2((uint32_t) SOLENOID_2_PORT_A, (uint32_t) SOLENOID_2_PORT_B)
 {
 	compressor.Start();
+	pistonOpen = true;
 	setPistonState(IDLE);
 }
 //Simply changes the enum CompressorState
@@ -104,6 +105,17 @@ void Arm::init() {
 
 Arm::PistonState Arm::getPistonState() {
 	return pistonState;
+}
+
+void Arm::toggleArm() {
+	if(pistonOpen) {
+		setPistonState(CLOSED);
+		pistonOpen = false;
+	}
+	else {
+		setPistonState(OPEN);
+		pistonOpen = true;
+	}
 }
 
 // Auto-generated destructor

@@ -10,6 +10,7 @@ Accumulator::Accumulator() :
 {
 setPistonState(PistonState::IDLE);
 setWheelState(WheelState::IDLE);
+openPiston = true;
 ejectSpeed = 0.1;
 vicSpeed = 0.1;
 leftSpinningSpeed = 0.1;
@@ -18,6 +19,7 @@ rightSpinningSpeed = 0.1;
 
 void Accumulator::setPistonState(PistonState state) {
 	this->pistonState = state;
+	this->timer.Start();
 }
 
 void Accumulator::setWheelState(WheelState state) {
@@ -36,20 +38,39 @@ void Accumulator::accumulate() {
 void Accumulator::update() {
 	switch(pistonState) {
 	case PistonState::EXTENDING:
+		openPiston = true;
 		solenoid.Set(DoubleSolenoid::Value::kForward);
 		solenoid2.Set(DoubleSolenoid::Value::kForward);
+		if(timer.Get() >= ARM_EXTEND_TIME) {
+			timer.Stop();
+			timer.Reset();
+			pistonState = PistonState::IDLE;
+		}
 		break;
 	case PistonState::RETRACTING:
+		openPiston = false;
 		solenoid.Set(DoubleSolenoid::Value::kReverse);
 		solenoid2.Set(DoubleSolenoid::Value::kReverse);
-		break;
-	case PistonState::IDLE:
-		solenoid.Set(DoubleSolenoid::Value::kOff);
-		solenoid2.Set(DoubleSolenoid::Value::kOff);
+		if(timer.Get() >= ARM_EXTEND_TIME) {
+			timer.Stop();
+			timer.Reset();
+			pistonState = PistonState::IDLE;
+		}
 		break;
 	case PistonState::SPINNING:
 		solenoid.Set(DoubleSolenoid::Value::kForward);
 		solenoid2.Set(DoubleSolenoid::Value::kReverse);
+		if(timer.Get() >= ARM_EXTEND_TIME) {
+			timer.Stop();
+			timer.Reset();
+			pistonState = PistonState::IDLE;
+		}
+		break;
+	case PistonState::IDLE:
+		solenoid.Set(DoubleSolenoid::Value::kOff);
+		solenoid2.Set(DoubleSolenoid::Value::kOff);
+		timer.Stop();
+		timer.Reset();
 		break;
 	default:
 		setPistonState(PistonState::IDLE);
@@ -75,6 +96,15 @@ void Accumulator::update() {
 	default:
 		setWheelState(WheelState::IDLE);
 		break;
+	}
+}
+
+void Accumulator::togglePiston() {
+	if(openPiston) {
+		setPistonState(PistonState::RETRACTING);
+	}
+	else {
+		setPistonState(PistonState::EXTENDING);
 	}
 }
 
