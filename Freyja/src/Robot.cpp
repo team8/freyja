@@ -118,7 +118,7 @@ void Robot::liftDist(double dist) {
 	lifter.lift(dist);
 }
 void Robot::accumulate(){
-	accumulator.setVictorSpeed(1.0);
+	accumulator.setVictorSpeed(ACCUMULATOR_SPEED);
 }
 void Robot::eject(){
 	accumulator.eject();	
