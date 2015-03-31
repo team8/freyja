@@ -15,7 +15,7 @@ public:
 		EXTENDING, RETRACTING, IDLE
 	}
 	enum WheelState {
-		IDLE, ACCUMULATING, EJECTING
+		WHEELIDLE, WHEELACCUMULATING, WHEELEJECTING
 	}
 	
 	//Constructor and deconstructor
@@ -23,6 +23,8 @@ public:
 	virtual ~Accumulator();
 	//changes the state of the piston
 	void setPistonState(PistonState state);
+	//changes the state of the victors
+	void setVictors();
 	//Subsystem inherited methods
 	void eject();
 	void setVictorSpeed(double speed);

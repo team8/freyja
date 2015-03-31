@@ -89,6 +89,11 @@
 #define ACCELERATION_REVERSE_CONSTANT 0.060
 #define BRAKING_CONSTANT 0.60
 
+//Constants for Accumulator
+#define PORT_ACCUMULATE_LEFT_VIC 1 //random port
+#define PORT_ACCUMULATE_RIGHT_VIC 2 //random port
+
+
 // enums for AutonomousController and AutonomousExecutor
 enum Path {
 	STOP,
