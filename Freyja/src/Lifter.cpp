@@ -37,15 +37,15 @@ void Lifter::init() {
 //Operates lifter according to current state
 void Lifter::update() {
 //	std::cout << "digitalInput.Get(): " << digitalInput.Get() << std::endl << "digitalInput2.Get(): " << digitalInput2.Get() << std::endl;
-	std::cout << "Current lifter level: " << currentLevel << std::endl;
-	std::cout << "Lift Encoder: " << liftEncoder.PIDGet() << std::endl;
-	std::cout << "Lift Error: " << controller1.GetError() << std::endl;
+//	std::cout << "Current lifter level: " << currentLevel << std::endl;
+//	std::cout << "Lift Encoder: " << liftEncoder.PIDGet() << std::endl;
+//	std::cout << "Lift Error: " << controller1.GetError() << std::endl;
 	//std::cout << "Current Lifter state: " << state << std::endl;
 	switch (state) {
 	case MOVING:
 		victor1.SetSpeed(- targetSpeed);
 		victor2.SetSpeed(- targetSpeed);
-		std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
+		//std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
 		break;
 	case AUTO_LIFTING:
 		if (liftEncoder.GetStopped() && controller1.GetError() < 1) {
@@ -138,7 +138,7 @@ Lifter::State Lifter::getState() {
 
 //Returns the current level of the lifter
 double Lifter::getLevel() {
-	std::cout << "Current lifter level: " << currentLevel << std::endl;
+	//std::cout << "Current lifter level: " << currentLevel << std::endl;
 	return currentLevel;
 }
 

@@ -126,6 +126,10 @@ void Robot::toggleArm() {
 	arm.toggleArm();
 }
 
+void Robot::changeWheelState(Accumulator::WheelState state) {
+	accumulator.setWheelState(state);
+}
+
 void Robot::eject(){
 	accumulator.eject();	
 }

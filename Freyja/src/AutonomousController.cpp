@@ -171,6 +171,22 @@ void AutonomousController::accumulateGray() {
 	commandSet.push_back(CMD_STOP);
 }
 
+// goes to/starts in the landfill zone, accumulates gray tote and ends in auto zone
+void AutonomousController::accumulateGrayDouble() {
+//	commandSet.push_back(CMD_FRONT_IN);
+	commandSet.push_back(CMD_CLOSE);
+	commandSet.push_back(CMD_BACK_OUT);
+	commandSet.push_back(CMD_ROTATE_90);
+	commandSet.push_back(CMD_GRAY_TO_GRAY);
+	commandSet.push_back(CMD_ROTATE_NEG_90);
+	commandSet.push_back(CMD_FRONT_IN);
+	commandSet.push_back(CMD_CLOSE);
+	commandSet.push_back(CMD_BACK_OUT);
+	commandSet.push_back(CMD_HALF_ROTATE);
+	commandSet.push_back(CMD_DRIVE_LANDFILL_AUTO);
+	commandSet.push_back(CMD_STOP);
+}
+
 
 // gets a tote, lifts and then pushes the second tote to get 2 in the auto zone
 void AutonomousController::toteScoreDoubleStraight() {

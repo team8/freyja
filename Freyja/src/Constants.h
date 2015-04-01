@@ -90,15 +90,13 @@
 #define BRAKING_CONSTANT 0.60
 
 //Constants for Accumulator
-#define PORT_ACCUMULATE_LEFT_VIC 1 //random port
-#define PORT_ACCUMULATE_RIGHT_VIC 2 //random port
+#define PORT_ACCUMULATE_LEFT_VIC 7
+#define PORT_ACCUMULATE_RIGHT_VIC 6
 
-#define ACCUMULATOR_SOLENOID_1_PORT_A 69 //random port
-#define ACCUMULATOR_SOLENOID_1_PORT_B 21 //random port
-#define ACCUMULATOR_SOLENOID_2_PORT_A 420 //random port
-#define ACCUMULATOR_SOLENOID_2_PORT_B 42 //random port
-#define ACCUMULATOR_SPEED .5
-#define EJECT_SPEED .1
+#define ACCUMULATOR_SOLENOID_1_PORT_A 0 //random port
+#define ACCUMULATOR_SOLENOID_1_PORT_B 0 //random port
+#define ACCUMULATOR_SOLENOID_2_PORT_A 0 //random port
+#define ACCUMULATOR_SOLENOID_2_PORT_B 0 //random port
 
 // enums for AutonomousController and AutonomousExecutor
 enum Path {
@@ -109,6 +107,7 @@ enum Path {
 	TOTE_SCORE_DOUBLE_RIGHT,
 	CAN_SCORE,
 	ACCUMULATE_GRAY,
+	ACCUMULATE_GRAY_DOUBLE,
 	TEST,
 	TOTE_SCORE_DOUBLE_STRAIGHT,
 	TOTE_SCORE_DOUBLE_WIGGLE

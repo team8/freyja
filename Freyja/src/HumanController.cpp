@@ -46,10 +46,19 @@ void HumanController::update() {
 		robotPointer->setLifter(operatorJoystick.GetY());
 	}
 	if(operatorJoystick.GetRawButton(1)) {
-		robotPointer->changePistonState(Arm::PistonState::RETRACTING);
+		robotPointer->toggleAccumulator();
 	}
 	if(operatorJoystick.GetRawButton(2)) {
-		robotPointer->changePistonState(Arm::PistonState::EXTENDING);
+		robotPointer->toggleArm();
+	}
+	if(operatorJoystick.GetRawButton(3)) {
+		robotPointer->changeWheelState(Accumulator::WheelState::ACCUMULATING);
+	}
+	if(operatorJoystick.GetRawButton(4)) {
+		robotPointer->changeWheelState(Accumulator::WheelState::EJECTING);
+	}
+	if(operatorJoystick.GetRawButton(5)) {
+		robotPointer->changeWheelState(Accumulator::WheelState::SPINNING);
 	}
 	if(operatorJoystick.GetRawButton(6)) {
 		robotPointer->changeCompressorState(Arm::CompressorState::OFF);

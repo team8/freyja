@@ -40,6 +40,7 @@ public:
 
 	void changePistonState(Arm::PistonState state);
 	void changeCompressorState(Arm::CompressorState state);
+	void changeWheelState(Accumulator::WheelState state);
 
 	void drop();
 	void liftCan();

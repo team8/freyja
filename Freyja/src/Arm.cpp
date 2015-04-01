@@ -36,7 +36,6 @@ void Arm::update() {
 	//Compressor up to tanks and then to the solenoid. This will allow for a more stable air pressure, since all the compressor
 	//does is pressurize air, the only issue with extending and compressing at the same time is that we lose all the compressed air,
 	//so if we can have valves that open and close we should be fine to do this at the same time.
-
 	switch(pistonState) {
 	case EXTENDING:
 		//If the piston is extending, it puts air in the chamber behind the piston, pushing it forward
@@ -100,7 +99,7 @@ void Arm::update() {
 //Prepares arm for operation
 void Arm::init() {
 	setCompressorState(ON);
-	setPistonState(IDLE);
+	setPistonState(PistonState::IDLE);
 }
 
 Arm::PistonState Arm::getPistonState() {
@@ -108,13 +107,15 @@ Arm::PistonState Arm::getPistonState() {
 }
 
 void Arm::toggleArm() {
-	if(pistonOpen) {
-		setPistonState(CLOSED);
-		pistonOpen = false;
-	}
-	else {
-		setPistonState(OPEN);
-		pistonOpen = true;
+	if(pistonState == PistonState::IDLE) {
+		if(pistonOpen) {
+			setPistonState(PistonState::EXTENDING);
+			pistonOpen = false;
+		}
+		else {
+			setPistonState(PistonState::RETRACTING);
+			pistonOpen = true;
+		}
 	}
 }
 

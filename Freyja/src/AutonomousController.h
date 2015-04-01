@@ -46,6 +46,7 @@ private:
 	void canScore();
 	void canScoreAccumulate();
 	void accumulateGray();
+	void accumulateGrayDouble();
 	void toteScoreDoubleStraight();
 	void toteScoreDoubleWiggle();
 	void test();

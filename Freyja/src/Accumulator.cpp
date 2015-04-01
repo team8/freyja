@@ -1,6 +1,6 @@
 #include "Accumulator.h"
 #include "Constants.h"
-
+#include <iostream>
 
 Accumulator::Accumulator() :
 	solenoid((uint32_t) ACCUMULATOR_SOLENOID_1_PORT_A, ACCUMULATOR_SOLENOID_1_PORT_B),
@@ -36,6 +36,10 @@ void Accumulator::accumulate() {
 
 
 void Accumulator::update() {
+	std::cout << "Piston State: " << (int)pistonState << std::endl;
+	std::cout << "Wheel State: " << (int)wheelState << std::endl;
+
+
 	switch(pistonState) {
 	case PistonState::EXTENDING:
 		openPiston = true;
@@ -100,11 +104,15 @@ void Accumulator::update() {
 }
 
 void Accumulator::togglePiston() {
-	if(openPiston) {
-		setPistonState(PistonState::RETRACTING);
-	}
-	else {
-		setPistonState(PistonState::EXTENDING);
+	if(pistonState == PistonState::IDLE) {
+		if(openPiston) {
+			setPistonState(PistonState::EXTENDING);
+			openPiston = false;
+		}
+		else {
+			setPistonState(PistonState::RETRACTING);
+			openPiston = true;
+		}
 	}
 }
 

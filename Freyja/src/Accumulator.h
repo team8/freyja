@@ -2,6 +2,7 @@
 #define ACCUMULATOR_H
 
 #include <WPILib.h>
+#include <iostream>
 #include "Subsys.h"
 
 /*
