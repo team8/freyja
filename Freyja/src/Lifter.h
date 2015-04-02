@@ -21,6 +21,7 @@ public:
 	void setLevel(double level);
 	void setState(double speed);
 	void zeroing();
+	void resetZero();
 	double getLevel();
 	double currentLevel;
 

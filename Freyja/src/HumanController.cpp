@@ -72,7 +72,9 @@ void HumanController::update() {
 	if(operatorJoystick.GetRawButton(7)) {
 		robotPointer->changeCompressorState(Arm::CompressorState::ON);
 	}
-
+	if(operatorJoystick.GetRawButton(8)) {
+		robotPointer->resetLifterZero();
+	}
 	if (operatorJoystick.GetRawButton(9)) {
 		robotPointer -> zeroLifter();
 	}

@@ -136,6 +136,21 @@ void Lifter::lift(double distance) {
 	controller2.SetSetpoint(distance);
 }
 
+// resets the lifter's zero to the current height
+void Lifter::resetZero() {
+	state = IDLE;
+	height = 0;
+	currentLevel = 0;
+	controller1.Reset();
+	controller2.Reset();
+	speedController1.Reset();
+	speedController2.Reset();
+	controller1.Disable();
+	controller2.Disable();
+	speedController1.Disable();
+	speedController2.Disable();
+}
+
 //Returns a boolean based on if either sensor has been hit
 bool Lifter::checkEitherHit() {
 	return (digitalInput.Get() || digitalInput2.Get());

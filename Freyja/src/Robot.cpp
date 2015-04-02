@@ -133,3 +133,7 @@ void Robot::changeWheelState(Accumulator::WheelState state) {
 void Robot::eject(){
 	accumulator.eject();	
 }
+
+void Robot::resetLifterZero() {
+	lifter.zeroing();
+}

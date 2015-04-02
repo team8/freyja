@@ -53,6 +53,7 @@ public:
 	void toggleAccumulator();
 	void toggleArm();
 	void eject();
+	void resetLifterZero();
 };
 
 #endif /* ROBOT_H */
