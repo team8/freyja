@@ -1,17 +1,17 @@
 #include "Lifter.h"
 #include <iostream>
 Lifter::Lifter() :
-		victor1((uint32_t) PORT_LIFT_VIC_1),
-		victor2((uint32_t) PORT_LIFT_VIC_2),
-		liftEncoder((uint32_t) LIFT_ENCODER_PORT_A, (uint32_t) LIFT_ENCODER_PORT_B, true),
-		digitalInput((uint32_t) LIMIT_SWITCH_TOP),
-		digitalInput2((uint32_t) LIMIT_SWITCH_BOT),
+		victor1((uint32_t) PORT_LIFT_VIC_1), victor2(
+				(uint32_t) PORT_LIFT_VIC_2), liftEncoder(
+				(uint32_t) LIFT_ENCODER_PORT_A, (uint32_t) LIFT_ENCODER_PORT_B,
+				true), digitalInput((uint32_t) LIMIT_SWITCH_TOP), digitalInput2(
+				(uint32_t) LIMIT_SWITCH_BOT),
 
-		controller1(0.3, 0.f, 0.1, &liftEncoder, &victor1),
-		controller2(0.3, 0.f, 0.1, &liftEncoder, &victor2),
+		controller1(0.3, 0.f, 0.1, &liftEncoder, &victor1), controller2(0.3,
+				0.f, 0.1, &liftEncoder, &victor2)
 
-		speedController1(1.0, 0.f, 1.0, &liftEncoder, &victor1),
-		speedController2(1.0, 0.f, 1.0, &liftEncoder, &victor2)
+//		speedController1(1.0, 0.f, 1.0, &liftEncoder, &victor1),
+//		speedController2(1.0, 0.f, 1.0, &liftEncoder, &victor2)
 {
 	currentLevel = 0;
 	state = IDLE;
@@ -37,15 +37,28 @@ void Lifter::init() {
 
 //Operates lifter according to current state
 void Lifter::update() {
-//	std::cout << "digitalInput.Get(): " << digitalInput.Get() << std::endl << "digitalInput2.Get(): " << digitalInput2.Get() << std::endl;
+	std::cout << "digitalInput.Get(): " << digitalInput.Get() << std::endl
+			<< "digitalInput2.Get(): " << digitalInput2.Get() << std::endl;
 //	std::cout << "Current lifter level: " << currentLevel << std::endl;
 //	std::cout << "Lift Encoder: " << liftEncoder.PIDGet() << std::endl;
 //	std::cout << "Lift Error: " << controller1.GetError() << std::endl;
 	//std::cout << "Current Lifter state: " << state << std::endl;
 	switch (state) {
 	case MOVING:
-		victor1.SetSpeed(- targetSpeed);
-		victor2.SetSpeed(- targetSpeed);
+
+		victor1.SetSpeed(-targetSpeed);
+		victor2.SetSpeed(-targetSpeed);
+		if (checkSensorHit(true)) {
+			if (targetSpeed > 0) {
+				victor1.SetSpeed(-.1);
+				victor2.SetSpeed(-.1);
+			}
+		} else if (checkSensorHit(false)) {
+			if (targetSpeed < 0) {
+				victor1.SetSpeed(.1);
+				victor2.SetSpeed(.1);
+			}
+		}
 		//std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
 		break;
 	case AUTO_LIFTING:
@@ -78,11 +91,9 @@ void Lifter::disable() {
 
 //this method moves the lifter.
 void Lifter::setLevel(double level) {
-	liftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
-	speedController1.Disable();
-	speedController2.Disable();
-
-	liftEncoder.Reset();
+//	liftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+//	speedController1.Disable();
+//	speedController2.Disable();
 	controller1.SetSetpoint(level * TOTE_HEIGHT);
 	controller2.SetSetpoint(level * TOTE_HEIGHT);
 	currentLevel = level;
@@ -91,13 +102,16 @@ void Lifter::setLevel(double level) {
 }
 //this function moves the lifter to its lowest point to remove any error.
 void Lifter::zeroing() {
-	liftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
-	speedController1.Disable();
-	speedController2.Disable();
+//	liftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+//	speedController1.Disable();
+//	speedController2.Disable();
 
-	liftEncoder.Reset();
-	controller1.SetSetpoint(-height * TOTE_HEIGHT);
-	controller2.SetSetpoint(-height * TOTE_HEIGHT);
+//	controller1.SetSetpoint(-height * TOTE_HEIGHT);
+//	controller2.SetSetpoint(-height * TOTE_HEIGHT);
+
+	controller1.SetSetpoint(0);
+	controller2.SetSetpoint(0);
+
 	currentLevel = 0;
 	height = 0;
 	state = LEVEL_SHIFTING;
@@ -118,9 +132,9 @@ bool Lifter::checkSensorHit(bool firstSensor) {
 }
 
 void Lifter::lift(double distance) {
-	liftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
-	speedController1.Disable();
-	speedController2.Disable();
+//	liftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+//	speedController1.Disable();
+//	speedController2.Disable();
 
 	state = AUTO_LIFTING;
 
@@ -128,12 +142,9 @@ void Lifter::lift(double distance) {
 	controller1.Enable();
 	controller2.Enable();
 
-	//Resets encoders
-	liftEncoder.Reset();
-
 	//Sets controller setpoint to given distance
-	controller1.SetSetpoint(distance);
-	controller2.SetSetpoint(distance);
+	controller1.SetSetpoint(liftEncoder.GetDistance() + distance);
+	controller2.SetSetpoint(liftEncoder.GetDistance() + distance);
 }
 
 // resets the lifter's zero to the current height
@@ -141,14 +152,16 @@ void Lifter::resetZero() {
 	state = IDLE;
 	height = 0;
 	currentLevel = 0;
+	liftEncoder.Reset();
+
 	controller1.Reset();
 	controller2.Reset();
-	speedController1.Reset();
-	speedController2.Reset();
+//	speedController1.Reset();
+//	speedController2.Reset();
 	controller1.Disable();
 	controller2.Disable();
-	speedController1.Disable();
-	speedController2.Disable();
+//	speedController1.Disable();
+//	speedController2.Disable();
 }
 
 //Returns a boolean based on if either sensor has been hit
@@ -195,7 +208,6 @@ void Lifter::setSpeed(double speed) {
 		targetSpeed = speed;
 	}
 }
-
 
 //Empty destructor
 Lifter::~Lifter() {
