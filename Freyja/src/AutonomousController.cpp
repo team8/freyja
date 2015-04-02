@@ -16,7 +16,7 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 //dial((uint32_t) PORT_AUTO_DIAL)
 {
 	//path = (Path) dial.GetValue();
-	path = TEST;
+	path = DRIVE;
 	//initial command
 	command = CMD_STOP;
 	executing = false;
