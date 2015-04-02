@@ -51,9 +51,10 @@ void HumanController::update() {
 	if(operatorJoystick.GetRawButton(2)) {
 		robotPointer->toggleArm();
 	}
-	if(operatorJoystick.GetRawButton(3)) {
+	if(!operatorJoystick.GetRawButton(4) && !operatorJoystick.GetRawButton(5)) {
 		robotPointer->changeWheelState(Accumulator::WheelState::IDLE);
 	}
+
 	if(operatorJoystick.GetRawButton(4)) {
 		robotPointer->changeWheelState(Accumulator::WheelState::EJECTING);
 	}
