@@ -184,17 +184,16 @@ void Lifter::setSpeed(double speed) {
 	state = MOVING;
 	targetSpeed = speed;
 
-//	//Check top limit switch, only move down
-//	if (!checkSensorHit(true)) {
-//		targetSpeed = std::min(0.0, speed);
-//	}
-//	//Check second limit switch, only move up
-//	else if (!checkSensorHit(false)) {
-//		targetSpeed = std::max(0.0, speed);
-//	} else {
-//		targetSpeed = speed;
-//	}
-//	state = MOVING;
+	//Check top limit switch, only move down
+	if (!checkSensorHit(true)) {
+		targetSpeed = std::min(0.0, speed);
+	}
+	//Check second limit switch, only move up
+	else if (!checkSensorHit(false)) {
+		targetSpeed = std::max(0.0, speed);
+	} else {
+		targetSpeed = speed;
+	}
 }
 
 
