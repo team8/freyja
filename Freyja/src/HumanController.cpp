@@ -37,6 +37,9 @@ void HumanController::update() {
 	// Y-Axis - Lifter
 	// 1 (Trigger) - Toggle Accumulator
 	// 2 (Large Center) - Toggle Arm
+	// 3 (Small Center) - The spin
+	// 4 (Left Top) - Accumulate
+	// 5 (Right Top - Eject
 	// 6 (Left Upper) - Stop Compressing
 	// 7 (Left Lower) - Start Compressing
 	// 9 (Odd Bottom) - Zero Lifter
@@ -51,10 +54,12 @@ void HumanController::update() {
 	if(operatorJoystick.GetRawButton(2)) {
 		robotPointer->toggleArm();
 	}
-	if(!operatorJoystick.GetRawButton(4) && !operatorJoystick.GetRawButton(5)) {
+	if(!operatorJoystick.GetRawButton(3) && !operatorJoystick.GetRawButton(4) && !operatorJoystick.GetRawButton(5)) {
 		robotPointer->changeWheelState(Accumulator::WheelState::IDLE);
 	}
-
+	if(operatorJoystick.GetRawButton(3)) {
+		robotPointer->changeWheelState(Accumulator::WheelState::SPINNING);
+	}
 	if(operatorJoystick.GetRawButton(4)) {
 		robotPointer->changeWheelState(Accumulator::WheelState::EJECTING);
 	}
@@ -67,9 +72,7 @@ void HumanController::update() {
 	if(operatorJoystick.GetRawButton(7)) {
 		robotPointer->changeCompressorState(Arm::CompressorState::ON);
 	}
-	if(operatorJoystick.GetRawButton(8)) {
-		robotPointer->changeWheelState(Accumulator::WheelState::SPINNING);
-	}
+
 	if (operatorJoystick.GetRawButton(9)) {
 		robotPointer -> zeroLifter();
 	}
