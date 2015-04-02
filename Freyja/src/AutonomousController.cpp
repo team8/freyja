@@ -57,8 +57,10 @@ void AutonomousController::init() {
 	case TOTE_SCORE_DOUBLE_WIGGLE:
 		toteScoreDoubleWiggle();
 		break;
+	case ACCUMULATE_GRAY_DOUBLE:
+		accumulateGrayDouble();
+		break;
 	}
-
 }
 
 // called periodically throughout autonomous, this pops the top off the
@@ -174,12 +176,17 @@ void AutonomousController::accumulateGray() {
 // goes to/starts in the landfill zone, accumulates gray tote and ends in auto zone
 void AutonomousController::accumulateGrayDouble() {
 //	commandSet.push_back(CMD_FRONT_IN);
+	//Grab first tote
 	commandSet.push_back(CMD_CLOSE);
+	//Maneuver to second gray tote
 	commandSet.push_back(CMD_BACK_OUT);
 	commandSet.push_back(CMD_ROTATE_90);
 	commandSet.push_back(CMD_GRAY_TO_GRAY);
 	commandSet.push_back(CMD_ROTATE_NEG_90);
+	commandSet.push_back(CMD_LIFT);
 	commandSet.push_back(CMD_FRONT_IN);
+	//Stack other tote
+	commandSet.push_back(CMD_TOTE_STACK);
 	commandSet.push_back(CMD_CLOSE);
 	commandSet.push_back(CMD_BACK_OUT);
 	commandSet.push_back(CMD_HALF_ROTATE);

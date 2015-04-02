@@ -12,7 +12,7 @@
 #define AUTO_GRAY_DISTANCE 75 // y: auto zone to landfill tote
 #define GRAY_GRAY_DISTANCE 20 // x: between totes in landfill zone
 #define YELLOW_YELLOW_DISTANCE 78 // x: between yellow auto totes
-#define LIFT_DISTANCE 10 // z: lift distance
+#define LIFT_DISTANCE TOTE_HEIGHT // z: lift distance
 #define TEMPORARY_DRIVE_CONSTANT 50
 #define YELLOW_CAN_DISTANCE 55
 #define BACK_TO_TOTE_DISTANCE 129
@@ -39,6 +39,7 @@ private:
 	std::list<AutoCommand>::iterator comIt;
 	void drive(int dist);
 	void lift();
+	void lower();
 	void drop();
 	void toteScore();
 	void accumulateFromAuto();

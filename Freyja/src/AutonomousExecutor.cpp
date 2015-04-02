@@ -14,9 +14,9 @@
 
 using namespace std;
 
-AutonomousExecutor::AutonomousExecutor(Robot *robotPointer, list<AutoCommand> *commandSet) :
-		udpListener ("4950")
-{
+AutonomousExecutor::AutonomousExecutor(Robot *robotPointer,
+		list<AutoCommand> *commandSet) :
+		udpListener("4950") {
 	this->robot = robotPointer;
 	this->commandSet = commandSet;
 	visDistance = 0;
@@ -29,21 +29,24 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 	cout << "Vision Planar Angle: " << visPlanarAngle << endl;
 	cout << "Vision Rotational Angle: " << visRotationalAngle << endl;
 	cout << "Vision Distance: " << visDistance << endl;
-	switch(command) {
+	switch (command) {
 	case CMD_STOP:
 		break;
 	case CMD_AUTO_DRIVE:
 		//std::cout << "CMD_AUTO_DRIVE start" << std::endl;
 		drive(YELLOW_AUTO_DISTANCE);
-	//	std::cout << "CMD_AUTO_DRIVE end" << std::endl;
+		//	std::cout << "CMD_AUTO_DRIVE end" << std::endl;
 		break;
 	case CMD_LIFT:
 		lift();
 		break;
+	case CMD_LOWER:
+		lower();
+		break;
 	case CMD_DROP:
 		drop();
 		break;
-	// MACRO: picks up a tote, drives and drops it in the correct zone
+		// MACRO: picks up a tote, drives and drops it in the correct zone
 	case CMD_TOTE_SCORE:
 		toteScore();
 		break;
@@ -76,6 +79,7 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 	case CMD_CAN_LIFT:
 		canLift();
 		break;
+
 	case CMD_CLOSE:
 		close();
 		break;
@@ -86,7 +90,7 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 		toteLift();
 		break;
 	case CMD_TOTE_STACK:
-		toteStack(0*TOTE_HEIGHT);
+		toteStack(1 * TOTE_HEIGHT);
 		break;
 	case CMD_VISION_ACCUMULATE:
 		visionAccumulate();
@@ -152,7 +156,7 @@ void AutonomousExecutor::accumulateFromAuto() {
 
 // MACRO: moves from one yellow tote to another with vision
 void AutonomousExecutor::toteToTote(bool isLeft) {
-
+	drive (TOTE_TOTE_DISTANCE);
 }
 
 // MACRO: picks up a can, drives and drops it in the correct zone
@@ -171,7 +175,7 @@ void AutonomousExecutor::canScore() {
 
 // MACRO: moves from one gray tote to another
 void AutonomousExecutor::grayToGray() {
-
+	drive(GRAY_GRAY_DISTANCE);
 }
 
 // BASE_ARG: rotates a given angle
@@ -196,6 +200,10 @@ void AutonomousExecutor::lift() {
 	//Pid version
 	cout << "Lifting arms" << endl;
 	robot->liftDist(LIFT_DISTANCE);
+}
+
+void AutonomousExecutor::lower() {
+	robot->liftDist(-LIFT_DISTANCE);
 }
 
 // BASE: drops whatever is being held
@@ -233,8 +241,9 @@ void AutonomousExecutor::toteLift() {
 void AutonomousExecutor::toteStack(double stackHeight) {
 	cout << "Stacking tote" << endl;
 	std::list<AutoCommand> toteStackSet;
-	toteStackSet.push_back(CMD_OPEN);
-//	toteStackSet.push_back(CMD_LOWER);
+	toteStackSet.push_back(CMD_LIFT);
+	toteStackSet.push_back(CMD_DROP);
+	toteStackSet.push_back(CMD_LOWER);
 //TODO: Want to lower arm to stackHeight....how?
 	toteStackSet.push_back(CMD_TOTE_LIFT);
 
@@ -266,9 +275,9 @@ void AutonomousExecutor::visionAccumulate() {
  */
 bool AutonomousExecutor::isAllIdle() {
 //	std::cout << "Arm state: " << robot->getArmPistonState() << std::endl;
-	return (robot->getDrivetrainState() == Drivetrain::State::IDLE) &&
-			(robot->getLifterState() == Lifter::State::IDLE) &&
-					(robot->getArmPistonState() == Arm::PistonState::IDLE);
+	return (robot->getDrivetrainState() == Drivetrain::State::IDLE)
+			&& (robot->getLifterState() == Lifter::State::IDLE)
+			&& (robot->getArmPistonState() == Arm::PistonState::IDLE);
 }
 
 AutonomousExecutor::~AutonomousExecutor() {
