@@ -52,13 +52,13 @@ void HumanController::update() {
 		robotPointer->toggleArm();
 	}
 	if(operatorJoystick.GetRawButton(3)) {
-		robotPointer->changeWheelState(Accumulator::WheelState::ACCUMULATING);
+		robotPointer->changeWheelState(Accumulator::WheelState::IDLE);
 	}
 	if(operatorJoystick.GetRawButton(4)) {
 		robotPointer->changeWheelState(Accumulator::WheelState::EJECTING);
 	}
 	if(operatorJoystick.GetRawButton(5)) {
-		robotPointer->changeWheelState(Accumulator::WheelState::SPINNING);
+		robotPointer->changeWheelState(Accumulator::WheelState::ACCUMULATING);
 	}
 	if(operatorJoystick.GetRawButton(6)) {
 		robotPointer->changeCompressorState(Arm::CompressorState::OFF);

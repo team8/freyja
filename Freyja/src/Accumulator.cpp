@@ -4,17 +4,12 @@
 
 Accumulator::Accumulator() :
 	solenoid((uint32_t) ACCUMULATOR_SOLENOID_1_PORT_A, ACCUMULATOR_SOLENOID_1_PORT_B),
-	solenoid2((uint32_t) ACCUMULATOR_SOLENOID_2_PORT_A, ACCUMULATOR_SOLENOID_2_PORT_B),
 	leftVic((uint32_t) PORT_ACCUMULATE_LEFT_VIC),
 	rightVic((uint32_t) PORT_ACCUMULATE_RIGHT_VIC)
 {
-setPistonState(PistonState::IDLE);
-setWheelState(WheelState::IDLE);
+wheelState = WheelState::IDLE;
+pistonState = PistonState::IDLE;
 openPiston = true;
-ejectSpeed = 0.1;
-vicSpeed = 0.1;
-leftSpinningSpeed = 0.1;
-rightSpinningSpeed = 0.1;
 }
 
 void Accumulator::setPistonState(PistonState state) {
@@ -44,7 +39,6 @@ void Accumulator::update() {
 	case PistonState::EXTENDING:
 		openPiston = true;
 		solenoid.Set(DoubleSolenoid::Value::kForward);
-		solenoid2.Set(DoubleSolenoid::Value::kForward);
 		if(timer.Get() >= ARM_EXTEND_TIME) {
 			timer.Stop();
 			timer.Reset();
@@ -54,7 +48,6 @@ void Accumulator::update() {
 	case PistonState::RETRACTING:
 		openPiston = false;
 		solenoid.Set(DoubleSolenoid::Value::kReverse);
-		solenoid2.Set(DoubleSolenoid::Value::kReverse);
 		if(timer.Get() >= ARM_EXTEND_TIME) {
 			timer.Stop();
 			timer.Reset();
@@ -63,7 +56,6 @@ void Accumulator::update() {
 		break;
 	case PistonState::SPINNING:
 		solenoid.Set(DoubleSolenoid::Value::kForward);
-		solenoid2.Set(DoubleSolenoid::Value::kReverse);
 		if(timer.Get() >= ARM_EXTEND_TIME) {
 			timer.Stop();
 			timer.Reset();
@@ -72,7 +64,6 @@ void Accumulator::update() {
 		break;
 	case PistonState::IDLE:
 		solenoid.Set(DoubleSolenoid::Value::kOff);
-		solenoid2.Set(DoubleSolenoid::Value::kOff);
 		timer.Stop();
 		timer.Reset();
 		break;
@@ -82,20 +73,20 @@ void Accumulator::update() {
 	}
 	switch(wheelState) {
 	case WheelState::ACCUMULATING:
-		leftVic.Set(vicSpeed);
-		rightVic.Set(-vicSpeed);
+		leftVic.Set(0.5);
+		rightVic.Set(0.5);
 		break;
 	case WheelState::IDLE:
 		leftVic.Set(0);
 		rightVic.Set(0);
 		break;
 	case WheelState::EJECTING:
-		leftVic.Set(-ejectSpeed);
-		rightVic.Set(ejectSpeed);
+		leftVic.Set(-0.5);
+		rightVic.Set(-0.5);
 		break;
 	case WheelState::SPINNING:
-		leftVic.Set(leftSpinningSpeed);
-		rightVic.Set(-rightSpinningSpeed);
+		leftVic.Set(0.5);
+		rightVic.Set(-0.5);
 		break;
 	default:
 		setWheelState(WheelState::IDLE);
@@ -104,6 +95,7 @@ void Accumulator::update() {
 }
 
 void Accumulator::togglePiston() {
+	std::cout << "CALLING TOGGLE PISTON" << std::endl;
 	if(pistonState == PistonState::IDLE) {
 		if(openPiston) {
 			setPistonState(PistonState::EXTENDING);
@@ -124,6 +116,7 @@ void Accumulator::disable() {
 void Accumulator::init() {
 	setPistonState(PistonState::IDLE);
 	setWheelState(WheelState::IDLE);
+	setPistonState(PistonState::EXTENDING);
 }
 
 Accumulator::~Accumulator() {

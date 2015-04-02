@@ -34,7 +34,6 @@ public:
 private:
 	//solenoid for the pivoting action
 	DoubleSolenoid solenoid;
-	DoubleSolenoid solenoid2;
 	double ejectSpeed;
 	double vicSpeed;
 	double leftSpinningSpeed;
