@@ -43,6 +43,9 @@ private:
 	PIDController speedController1, speedController2;
 
 	double targetSpeed;
+	int height;
+	// how many totes high the lifter is currently at, by stroing this,
+	// we can reset the encoders before every PID and this allows us to zero
 };
 
 #endif /* FREYJA_SRC_LIFTER_H_ */

@@ -15,6 +15,7 @@ Lifter::Lifter() :
 {
 	currentLevel = 0;
 	state = IDLE;
+	height = 0;
 
 	controller1.SetOutputRange(-0.5, 0.5);
 	controller2.SetOutputRange(-0.5, 0.5);
@@ -85,12 +86,21 @@ void Lifter::setLevel(double level) {
 	controller1.SetSetpoint(level * TOTE_HEIGHT);
 	controller2.SetSetpoint(level * TOTE_HEIGHT);
 	currentLevel = level;
+	height += level;
 	state = LEVEL_SHIFTING;
 }
 //this function moves the lifter to its lowest point to remove any error.
 void Lifter::zeroing() {
-	state = MOVING;
-	targetSpeed = - 0.2;
+	liftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+	speedController1.Disable();
+	speedController2.Disable();
+
+	liftEncoder.Reset();
+	controller1.SetSetpoint(-height * TOTE_HEIGHT);
+	controller2.SetSetpoint(-height * TOTE_HEIGHT);
+	currentLevel = 0;
+	height = 0;
+	state = LEVEL_SHIFTING;
 }
 
 //void Lifter::setSpeed(double speed) {
