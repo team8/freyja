@@ -38,8 +38,7 @@ void Lifter::init() {
 
 //Operates lifter according to current state
 void Lifter::update() {
-//	std::cout << "Top Limit Switch: " << topLimitSwitch.Get() << std::endl
-//			<< "Bottom Limit Switch: " << botLimitSwitch.Get() << std::endl;
+//	std::cout << "Top Limit Switch: " << topLimitSwitch.Get() << std::endlb
 //	std::cout << "Current lifter level: " << currentLevel << std::endl;
 //	std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
 //	std::cout << "Lift Error: " << controller1.GetError() << std::endl;
@@ -62,7 +61,8 @@ void Lifter::update() {
 		//std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
 		break;
 	case AUTO_LIFTING:
-		if (liftEncoder.GetStopped() && controller1.GetError() < 1) {
+		std::cout << "Lifter Error: " << controller1.GetError() << std:: endl;
+		if (liftEncoder.GetStopped() && std::abs(controller1.GetError()) < 1) {
 			state = IDLE;
 		}
 		if (checkSensorHit(true)) {
@@ -72,7 +72,7 @@ void Lifter::update() {
 		}
 		break;
 	case LEVEL_SHIFTING:
-		if (liftEncoder.GetStopped() && controller1.GetError() < 1) {
+		if (liftEncoder.GetStopped() && std::abs(controller1.GetError()) < 1) {
 			state = IDLE;
 		}
 		if (checkSensorHit(true)) {
@@ -149,13 +149,13 @@ void Lifter::lift(double distance) {
 
 	state = AUTO_LIFTING;
 
-	//Enables pid controllers
-	controller1.Enable();
-	controller2.Enable();
-
 	//Sets controller setpoint to given distance
 	controller1.SetSetpoint(liftEncoder.GetDistance() + distance);
 	controller2.SetSetpoint(liftEncoder.GetDistance() + distance);
+
+	//Enables pid controllers
+	controller1.Enable();
+	controller2.Enable();
 }
 
 // resets the lifter's zero to the current height

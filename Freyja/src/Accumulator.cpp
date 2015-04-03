@@ -32,7 +32,7 @@ void Accumulator::accumulate() {
 
 
 void Accumulator::update() {
-	std::cout << "Piston State: " << (int)pistonState << std::endl;
+	//std::cout << "Piston State: " << (int)pistonState << std::endl;
 	//std::cout << "Wheel State: " << (int)wheelState << std::endl;
 
 

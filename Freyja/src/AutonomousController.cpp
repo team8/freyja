@@ -16,7 +16,7 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 //dial((uint32_t) PORT_AUTO_DIAL)
 {
 	//path = (Path) dial.GetValue();
-	path = DRIVE;
+	path = TEST;
 	//initial command
 	command = CMD_STOP;
 	executing = false;
@@ -208,9 +208,14 @@ void AutonomousController::toteScoreDoubleStraight() {
 
 // special path used for testing
 void AutonomousController::test() {
+	std::cout << "Sdfsdf" << std::endl; //not entering test func
 	//commandSet.push_back(CMD_ACCUMUATE_GRAY);
+	commandSet.push_back(CMD_CLOSE);
 	commandSet.push_back(CMD_LIFT);
+	commandSet.push_back(CMD_AUTO_DRIVE);
 	commandSet.push_back(CMD_LOWER);
+	commandSet.push_back(CMD_OPEN);
+//	commandSet.push_back(CMD_LOWER);
 //	commandSet.push_back(CMD_DRIVE_YELLOW_YELLOW);
 //	commandSet.push_back(CMD_OPEN);
 //	commandSet.push_back(CMD_TOTE_STACK);

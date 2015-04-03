@@ -115,7 +115,7 @@ void Drivetrain::update() {
 		break;
 	case DRIVING_DIST:
 		//Tests if the drivetrain has drived the specified distance and stops if it has
-		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopController.GetError() < 1) {
+		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && std::abs(leftTopController.GetError()) < 1) {
 			state = IDLE;
 		}
 
@@ -125,7 +125,7 @@ void Drivetrain::update() {
 		break;
 	case ROTATING_ANGLE:
 		//If angle is reached, stops rotating
-		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && leftTopGyroController.GetError() < 1) {
+		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && std::abs(leftTopGyroController.GetError()) < 1) {
 			state = IDLE;
 		}
 		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
@@ -145,7 +145,7 @@ void Drivetrain::update() {
 
 //		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
 //		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
-		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
+//		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
 //		std::cout << "Left Top Actual Speed: " << leftTopTalon.Get() << std::endl;
 //		std::cout << "Left Desired Speed: " << -leftSpeed << std::endl;
 //		std::cout << "Right Top Actual Speed: " << rightTopTalon.Get() << std::endl;

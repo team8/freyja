@@ -25,7 +25,7 @@ AutonomousExecutor::AutonomousExecutor(Robot *robotPointer,
 }
 
 void AutonomousExecutor::executeCommand(AutoCommand command) {
-	cout << "AutonomousExecutor::executeCommand(" << command << ")" << endl;
+	cout << "AutonomousExecutor::executeCommand(" << command << ")" << commandSet->size() << endl;
 //	cout << "Vision Planar Angle: " << visPlanarAngle << endl;
 //	cout << "Vision Rotational Angle: " << visRotationalAngle << endl;
 //	cout << "Vision Distance: " << visDistance << endl;
@@ -79,7 +79,6 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 	case CMD_CAN_LIFT:
 		canLift();
 		break;
-
 	case CMD_CLOSE:
 		close();
 		break;
@@ -199,11 +198,11 @@ void AutonomousExecutor::drive(int dist) {
 void AutonomousExecutor::lift() {
 	//Pid version
 	cout << "Lifting arms" << endl;
-	robot->liftDist(LIFT_DISTANCE);
+	robot->liftDist(-LIFT_DISTANCE);
 }
 
 void AutonomousExecutor::lower() {
-	robot->liftDist(-LIFT_DISTANCE);
+	robot->liftDist(LIFT_DISTANCE);
 }
 
 // BASE: drops whatever is being held
@@ -214,13 +213,13 @@ void AutonomousExecutor::drop() {
 // BASE: opens the arms
 void AutonomousExecutor::open() {
 	cout << "Opening arms" << endl;
-	robot->changePistonState(Arm::PistonState::RETRACTING);
+	robot->changePistonState(Arm::PistonState::EXTENDING);
 }
 
 // BASE: closes the arms
 void AutonomousExecutor::close() {
 	cout << "Closing arms" << endl;
-	robot->changePistonState(Arm::PistonState::EXTENDING);
+	robot->changePistonState(Arm::PistonState::RETRACTING);
 }
 
 // MACRO: lifts a tote
