@@ -147,11 +147,12 @@ void Drivetrain::update() {
 		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
 		break;
 	case DRIVING_TELEOP:
-
 		leftSpeed = std::max(std::min(rawDriveInput - rawTurnInput, 0.75), -0.75);
 		rightSpeed = std::max(std::min(rawDriveInput + rawTurnInput, 0.75), -0.75);
-		std::cout << leftSpeed << std::endl;
-		std::cout << rightSpeed << std::endl;
+		std::cout << "RDI: " << rawDriveInput << std::endl;
+		std::cout << "RTI: " << rawTurnInput << std::endl;
+		std::cout << "LS: " << leftSpeed << std::endl;
+		std::cout << "RS: " << rightSpeed << std::endl;
 		/*//Determines the appropriate left and right speed
 		leftSpeed = std::max(
 				std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 0.75),
