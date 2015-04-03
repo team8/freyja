@@ -5,7 +5,8 @@
 Accumulator::Accumulator() :
 	solenoid((uint32_t) ACCUMULATOR_SOLENOID_1_PORT_A, ACCUMULATOR_SOLENOID_1_PORT_B),
 	leftVic((uint32_t) PORT_ACCUMULATE_LEFT_VIC),
-	rightVic((uint32_t) PORT_ACCUMULATE_RIGHT_VIC)
+	rightVic((uint32_t) PORT_ACCUMULATE_RIGHT_VIC),
+	timer(), ejectSpeed(), vicSpeed(), leftSpinningSpeed(), rightSpinningSpeed(), openPiston()
 {
 wheelState = WheelState::IDLE;
 pistonState = PistonState::IDLE;
@@ -32,12 +33,12 @@ void Accumulator::accumulate() {
 
 void Accumulator::update() {
 	std::cout << "Piston State: " << (int)pistonState << std::endl;
-	std::cout << "Wheel State: " << (int)wheelState << std::endl;
+	//std::cout << "Wheel State: " << (int)wheelState << std::endl;
 
 
 	switch(pistonState) {
 	case PistonState::EXTENDING:
-		openPiston = true;
+		openPiston = false;
 		solenoid.Set(DoubleSolenoid::Value::kForward);
 		if(timer.Get() >= ARM_EXTEND_TIME) {
 			timer.Stop();
@@ -46,16 +47,8 @@ void Accumulator::update() {
 		}
 		break;
 	case PistonState::RETRACTING:
-		openPiston = false;
+		openPiston = true;
 		solenoid.Set(DoubleSolenoid::Value::kReverse);
-		if(timer.Get() >= ARM_EXTEND_TIME) {
-			timer.Stop();
-			timer.Reset();
-			pistonState = PistonState::IDLE;
-		}
-		break;
-	case PistonState::SPINNING:
-		solenoid.Set(DoubleSolenoid::Value::kForward);
 		if(timer.Get() >= ARM_EXTEND_TIME) {
 			timer.Stop();
 			timer.Reset();
@@ -99,11 +92,13 @@ void Accumulator::togglePiston() {
 	if(pistonState == PistonState::IDLE) {
 		if(openPiston) {
 			setPistonState(PistonState::EXTENDING);
-			openPiston = false;
+			std::cout << "Extending Accumulator" << std::endl;
+			//openPiston = false;
 		}
 		else {
 			setPistonState(PistonState::RETRACTING);
-			openPiston = true;
+			std::cout << "Retracting Accumulator" << std::endl;
+			//openPiston = true;
 		}
 	}
 }

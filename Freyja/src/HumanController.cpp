@@ -49,10 +49,10 @@ void HumanController::update() {
 		robotPointer->setLifter(operatorJoystick.GetY());
 	}
 	if(operatorJoystick.GetRawButton(1)) {
-		robotPointer->toggleAccumulator();
+		robotPointer->toggleArm();
 	}
 	if(operatorJoystick.GetRawButton(2)) {
-		robotPointer->toggleArm();
+		robotPointer->toggleAccumulator();
 	}
 	if(!operatorJoystick.GetRawButton(3) && !operatorJoystick.GetRawButton(4) && !operatorJoystick.GetRawButton(5)) {
 		robotPointer->changeWheelState(Accumulator::WheelState::IDLE);

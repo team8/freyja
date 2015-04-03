@@ -93,8 +93,8 @@
 #define PORT_ACCUMULATE_LEFT_VIC 7
 #define PORT_ACCUMULATE_RIGHT_VIC 6
 
-#define ACCUMULATOR_SOLENOID_1_PORT_A 0 //random port
-#define ACCUMULATOR_SOLENOID_1_PORT_B 1 //random port
+#define ACCUMULATOR_SOLENOID_1_PORT_A 4
+#define ACCUMULATOR_SOLENOID_1_PORT_B 3
 
 // enums for AutonomousController and AutonomousExecutor
 enum Path {

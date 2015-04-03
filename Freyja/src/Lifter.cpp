@@ -4,7 +4,7 @@ Lifter::Lifter() :
 		victor1((uint32_t) PORT_LIFT_VIC_1), victor2(
 				(uint32_t) PORT_LIFT_VIC_2), liftEncoder(
 				(uint32_t) LIFT_ENCODER_PORT_A, (uint32_t) LIFT_ENCODER_PORT_B,
-				true), digitalInput((uint32_t) LIMIT_SWITCH_TOP), digitalInput2(
+				true), topLimitSwitch((uint32_t) LIMIT_SWITCH_TOP), botLimitSwitch(
 				(uint32_t) LIMIT_SWITCH_BOT),
 
 		controller1(0.3, 0.f, 0.1, &liftEncoder, &victor1), controller2(0.3,
@@ -16,6 +16,7 @@ Lifter::Lifter() :
 	currentLevel = 0;
 	state = IDLE;
 	height = 0;
+	targetSpeed = 0;
 
 	controller1.SetOutputRange(-0.5, 0.5);
 	controller2.SetOutputRange(-0.5, 0.5);
@@ -37,26 +38,25 @@ void Lifter::init() {
 
 //Operates lifter according to current state
 void Lifter::update() {
-	std::cout << "digitalInput.Get(): " << digitalInput.Get() << std::endl
-			<< "digitalInput2.Get(): " << digitalInput2.Get() << std::endl;
+//	std::cout << "Top Limit Switch: " << topLimitSwitch.Get() << std::endl
+//			<< "Bottom Limit Switch: " << botLimitSwitch.Get() << std::endl;
 //	std::cout << "Current lifter level: " << currentLevel << std::endl;
-//	std::cout << "Lift Encoder: " << liftEncoder.PIDGet() << std::endl;
+//	std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
 //	std::cout << "Lift Error: " << controller1.GetError() << std::endl;
-	//std::cout << "Current Lifter state: " << state << std::endl;
+//	std::cout << "Current Lifter state: " << state << std::endl;
 	switch (state) {
 	case MOVING:
-
-		victor1.SetSpeed(-targetSpeed);
-		victor2.SetSpeed(-targetSpeed);
+		victor1.SetSpeed(-targetSpeed * targetSpeed * targetSpeed);
+		victor2.SetSpeed(-targetSpeed * targetSpeed * targetSpeed);
 		if (checkSensorHit(true)) {
 			if (targetSpeed > 0) {
-				victor1.SetSpeed(-.1);
-				victor2.SetSpeed(-.1);
+				victor1.SetSpeed(.1);
+				victor2.SetSpeed(.1);
 			}
 		} else if (checkSensorHit(false)) {
 			if (targetSpeed < 0) {
-				victor1.SetSpeed(.1);
-				victor2.SetSpeed(.1);
+				victor1.SetSpeed(-.1);
+				victor2.SetSpeed(-.1);
 			}
 		}
 		//std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
@@ -65,10 +65,20 @@ void Lifter::update() {
 		if (liftEncoder.GetStopped() && controller1.GetError() < 1) {
 			state = IDLE;
 		}
+		if (checkSensorHit(true)) {
+			state=IDLE;
+		} else if (checkSensorHit(false)) {
+			state=IDLE;
+		}
 		break;
 	case LEVEL_SHIFTING:
 		if (liftEncoder.GetStopped() && controller1.GetError() < 1) {
 			state = IDLE;
+		}
+		if (checkSensorHit(true)) {
+			state=IDLE;
+		} else if (checkSensorHit(false)) {
+			state=IDLE;
 		}
 		break;
 	case IDLE:
@@ -123,11 +133,12 @@ void Lifter::zeroing() {
 
 //Returns whether or not that sensor has been hit
 //Param determines if first or second sensor is checked
-bool Lifter::checkSensorHit(bool firstSensor) {
-	if (firstSensor) {
-		return (digitalInput.Get());
+bool Lifter::checkSensorHit(bool topSensor) {
+	//Limit switches return 1 default, 0 when triggered
+	if (topSensor) {
+		return (!topLimitSwitch.Get());
 	} else {
-		return (digitalInput2.Get());
+		return (!botLimitSwitch.Get());
 	}
 }
 
@@ -154,19 +165,19 @@ void Lifter::resetZero() {
 	currentLevel = 0;
 	liftEncoder.Reset();
 
-	controller1.Reset();
-	controller2.Reset();
+//	controller1.Reset();
+//	controller2.Reset();
 //	speedController1.Reset();
 //	speedController2.Reset();
-	controller1.Disable();
-	controller2.Disable();
+//	controller1.Disable();
+//	controller2.Disable();
 //	speedController1.Disable();
 //	speedController2.Disable();
 }
 
 //Returns a boolean based on if either sensor has been hit
 bool Lifter::checkEitherHit() {
-	return (digitalInput.Get() || digitalInput2.Get());
+	return (!topLimitSwitch.Get() || !botLimitSwitch.Get());
 }
 
 //Gets the current state of the lifter.
@@ -198,15 +209,15 @@ void Lifter::setSpeed(double speed) {
 	targetSpeed = speed;
 
 	//Check top limit switch, only move down
-	if (!checkSensorHit(true)) {
-		targetSpeed = std::min(0.0, speed);
-	}
-	//Check second limit switch, only move up
-	else if (!checkSensorHit(false)) {
-		targetSpeed = std::max(0.0, speed);
-	} else {
-		targetSpeed = speed;
-	}
+//	if (!checkSensorHit(true)) {
+//		targetSpeed = std::min(0.0, speed);
+//	}
+//	//Check second limit switch, only move up
+//	else if (!checkSensorHit(false)) {
+//		targetSpeed = std::max(0.0, speed);
+//	} else {
+//		targetSpeed = speed;
+//	}
 }
 
 //Empty destructor

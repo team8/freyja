@@ -37,8 +37,8 @@ private:
 	VictorSP victor1, victor2;
 	Encoder liftEncoder;
 
-	DigitalInput digitalInput;
-	DigitalInput digitalInput2;
+	DigitalInput topLimitSwitch;
+	DigitalInput botLimitSwitch;
 
 	PIDController controller1, controller2;
 //	PIDController speedController1, speedController2;

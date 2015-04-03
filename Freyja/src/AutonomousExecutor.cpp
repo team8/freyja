@@ -26,9 +26,9 @@ AutonomousExecutor::AutonomousExecutor(Robot *robotPointer,
 
 void AutonomousExecutor::executeCommand(AutoCommand command) {
 	cout << "AutonomousExecutor::executeCommand(" << command << ")" << endl;
-	cout << "Vision Planar Angle: " << visPlanarAngle << endl;
-	cout << "Vision Rotational Angle: " << visRotationalAngle << endl;
-	cout << "Vision Distance: " << visDistance << endl;
+//	cout << "Vision Planar Angle: " << visPlanarAngle << endl;
+//	cout << "Vision Rotational Angle: " << visRotationalAngle << endl;
+//	cout << "Vision Distance: " << visDistance << endl;
 	switch (command) {
 	case CMD_STOP:
 		break;
@@ -156,7 +156,7 @@ void AutonomousExecutor::accumulateFromAuto() {
 
 // MACRO: moves from one yellow tote to another with vision
 void AutonomousExecutor::toteToTote(bool isLeft) {
-	drive (TOTE_TOTE_DISTANCE);
+	drive(YELLOW_YELLOW_DISTANCE);
 }
 
 // MACRO: picks up a can, drives and drops it in the correct zone
@@ -241,8 +241,12 @@ void AutonomousExecutor::toteLift() {
 void AutonomousExecutor::toteStack(double stackHeight) {
 	cout << "Stacking tote" << endl;
 	std::list<AutoCommand> toteStackSet;
-	toteStackSet.push_back(CMD_LIFT);
-	toteStackSet.push_back(CMD_DROP);
+	//Only for chute door
+//	toteStackSet.push_back(CMD_LIFT);
+	toteStackSet.push_back(CMD_OPEN);
+	//PID version
+//	toteStackSet.push_back(CMD_DROP);
+	//YOLO Swag limit switch version
 	toteStackSet.push_back(CMD_LOWER);
 //TODO: Want to lower arm to stackHeight....how?
 	toteStackSet.push_back(CMD_TOTE_LIFT);
@@ -251,6 +255,9 @@ void AutonomousExecutor::toteStack(double stackHeight) {
 	advance(comIt, 2);
 	commandSet->splice(comIt, toteStackSet);
 	commandSet->pop_front();
+	std::cout << "---------------------TOTE STACK DONE------------------" << std::endl;
+	std::cout << "Current front: " << commandSet->front() << std::endl;
+	std::cout << "Current back: " << commandSet->back() << std::endl;
 }
 
 void AutonomousExecutor::visionAccumulate() {

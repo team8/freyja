@@ -13,7 +13,7 @@ used to accumulate totes using spinning arms and a pneumatic pivot arm
 class Accumulator: public Subsys {
 public:
 	enum class PistonState {
-		EXTENDING, RETRACTING, SPINNING, IDLE
+		EXTENDING, RETRACTING, IDLE
 	}; PistonState pistonState;
 
 	enum class WheelState {
@@ -34,13 +34,13 @@ public:
 private:
 	//solenoid for the pivoting action
 	DoubleSolenoid solenoid;
+	Victor leftVic;
+	Victor rightVic;
+	Timer timer;
 	double ejectSpeed;
 	double vicSpeed;
 	double leftSpinningSpeed;
 	double rightSpinningSpeed;
-	Timer timer;
-	Victor leftVic;
-	Victor rightVic;
 	bool openPiston;
 };
 

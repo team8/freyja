@@ -38,6 +38,7 @@ Drivetrain::Drivetrain() :
 	//Initializes the target and rotate speeds to zero
 	targetSpeed = 0;
 	rotateSpeed = 0;
+	rawTargetSpeed = 0;
 	acceleration = 0;
 
 	//Sets the encoder distance per pulses
@@ -144,7 +145,7 @@ void Drivetrain::update() {
 
 //		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
 //		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
-//		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
+		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
 //		std::cout << "Left Top Actual Speed: " << leftTopTalon.Get() << std::endl;
 //		std::cout << "Left Desired Speed: " << -leftSpeed << std::endl;
 //		std::cout << "Right Top Actual Speed: " << rightTopTalon.Get() << std::endl;
