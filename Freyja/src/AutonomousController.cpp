@@ -16,7 +16,7 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 //dial((uint32_t) PORT_AUTO_DIAL)
 {
 	//path = (Path) dial.GetValue();
-	path = ACCUMULATE_GRAY;
+	path = DRIVE;
 	//initial command
 	command = CMD_STOP;
 	executing = false;
@@ -92,7 +92,7 @@ void AutonomousController::update() {
 		if(!commandSet.empty()) {
 			commandSet.pop_front(); // increment - sets the next command run to run
 		} else {
-			std::cout << "commandSet empty" << std::endl;
+//			std::cout << "commandSet empty" << std::endl;
 			executing = false;
 			// turns off the loop
 		}

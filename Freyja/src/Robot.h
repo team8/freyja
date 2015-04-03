@@ -28,6 +28,7 @@ public:
 	void update();
 	void disable();
 
+	void slowCoast(double speedY, double turnX);
 	void move(double targetSpeed, double rotateSpeed);
 	void driveDistance(double distance);
 	void rotateAngle(double angle);
@@ -46,6 +47,7 @@ public:
 	void liftCan();
 	void setLifterLevel(int level);
 	Lifter::State getLifterState();
+	void idleLifter();
 	void zeroLifter();
 	double getLevel();
 	void setLifter(double speed);

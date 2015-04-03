@@ -43,8 +43,12 @@ private:
 	PIDController controller1, controller2;
 //	PIDController speedController1, speedController2;
 
+	//Stores whether or not the lifter was idle the previous update
+	bool isIdle;
+
 	double targetSpeed;
 	int height;
+	double dial;
 	// how many totes high the lifter is currently at, by stroing this,
 	// we can reset the encoders before every PID and this allows us to zero
 };

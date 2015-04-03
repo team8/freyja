@@ -81,7 +81,9 @@ public:
 		//Higher sensititivity goes faster
 		HIGH_SPEED,
 		//break
-		BRAKE
+		BRAKE,
+
+		SLOW_COAST
 	} State;
 
 	//The State variable created for this instance

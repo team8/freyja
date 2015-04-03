@@ -45,43 +45,50 @@ void HumanController::update() {
 	// 9 (Odd Bottom) - Zero Lifter
 	// 10 (Right Lower) - Lower Level
 	// 11 (Right Upper) - Raise Level
-	if(robotPointer->getLifterState() == Lifter::State::MOVING || operatorJoystick.GetY() * operatorJoystick.GetY() > 0.04) {
+	if(robotPointer->getLifterState() == Lifter::State::MOVING || std::abs(operatorJoystick.GetY())  > 0.05) {
 		robotPointer->setLifter(operatorJoystick.GetY());
+	}
+	else if(std::abs(operatorJoystick.GetY()) < 0.05)
+	{
+		robotPointer->idleLifter();
 	}
 	if(operatorJoystick.GetRawButton(1)) {
 		robotPointer->toggleArm();
 	}
-	if(operatorJoystick.GetRawButton(2)) {
+	// ACCUMULATOR CONTROLS
+	if(moveJoystick.GetRawButton(5)) {
 		robotPointer->toggleAccumulator();
 	}
-	if(!operatorJoystick.GetRawButton(3) && !operatorJoystick.GetRawButton(4) && !operatorJoystick.GetRawButton(5)) {
+	if(!moveJoystick.GetRawButton(3) && !moveJoystick.GetRawButton(4) && !moveJoystick.GetRawButton(2)) {
 		robotPointer->changeWheelState(Accumulator::WheelState::IDLE);
 	}
-	if(operatorJoystick.GetRawButton(3)) {
+	if(moveJoystick.GetRawButton(4)) {
 		robotPointer->changeWheelState(Accumulator::WheelState::SPINNING);
 	}
-	if(operatorJoystick.GetRawButton(4)) {
+	if(moveJoystick.GetRawButton(3)) {
 		robotPointer->changeWheelState(Accumulator::WheelState::EJECTING);
 	}
-	if(operatorJoystick.GetRawButton(5)) {
+	if(moveJoystick.GetRawButton(2)) {
 		robotPointer->changeWheelState(Accumulator::WheelState::ACCUMULATING);
 	}
+	//ARM CONTROLS
 	if(operatorJoystick.GetRawButton(6)) {
 		robotPointer->changeCompressorState(Arm::CompressorState::OFF);
 	}
 	if(operatorJoystick.GetRawButton(7)) {
 		robotPointer->changeCompressorState(Arm::CompressorState::ON);
 	}
+	//LIFTER CONTROLS
 	if(operatorJoystick.GetRawButton(8)) {
 		robotPointer->resetLifterZero();
 	}
 	if (operatorJoystick.GetRawButton(9)) {
 		robotPointer -> zeroLifter();
 	}
-	if (operatorJoystick.GetRawButton(10) && robotPointer->getLifterState() != Lifter::State::AUTO_LIFTING) {
+	if (operatorJoystick.GetRawButton(11) && robotPointer->getLifterState() != Lifter::State::AUTO_LIFTING) {
 		robotPointer->liftDist(-TOTE_HEIGHT);
 	}
-	if (operatorJoystick.GetRawButton(11) && robotPointer->getLifterState() != Lifter::State::AUTO_LIFTING) {
+	if (operatorJoystick.GetRawButton(10) && robotPointer->getLifterState() != Lifter::State::AUTO_LIFTING) {
 		robotPointer->liftDist(TOTE_HEIGHT);
 	}
 }

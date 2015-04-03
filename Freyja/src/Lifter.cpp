@@ -18,6 +18,8 @@ Lifter::Lifter() :
 	height = 0;
 	targetSpeed = 0;
 
+	isIdle = true;
+
 	controller1.SetOutputRange(-0.5, 0.5);
 	controller2.SetOutputRange(-0.5, 0.5);
 }
@@ -43,6 +45,11 @@ void Lifter::update() {
 //	std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
 //	std::cout << "Lift Error: " << controller1.GetError() << std::endl;
 //	std::cout << "Current Lifter state: " << state << std::endl;
+
+	if(state != IDLE) {
+		isIdle = false;
+	}
+
 	switch (state) {
 	case MOVING:
 		victor1.SetSpeed(-targetSpeed * targetSpeed * targetSpeed);
@@ -58,10 +65,11 @@ void Lifter::update() {
 				victor2.SetSpeed(-.1);
 			}
 		}
+
 		//std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
 		break;
 	case AUTO_LIFTING:
-		std::cout << "Lifter Error: " << controller1.GetError() << std:: endl;
+//		std::cout << "Lifter Error: " << controller1.GetError() << std:: endl;
 		if (liftEncoder.GetStopped() && std::abs(controller1.GetError()) < 1) {
 			state = IDLE;
 		}
@@ -70,6 +78,7 @@ void Lifter::update() {
 		} else if (checkSensorHit(false)) {
 			state=IDLE;
 		}
+
 		break;
 	case LEVEL_SHIFTING:
 		if (liftEncoder.GetStopped() && std::abs(controller1.GetError()) < 1) {
@@ -82,10 +91,23 @@ void Lifter::update() {
 		}
 		break;
 	case IDLE:
-		victor1.SetSpeed(0);
-		victor2.SetSpeed(0);
-		controller1.Disable();
-		controller2.Disable();
+		if(!isIdle)
+		{
+			isIdle = true;
+			controller1.SetSetpoint(liftEncoder.GetDistance());
+			controller2.SetSetpoint(liftEncoder.GetDistance());
+
+			controller1.Enable();
+			controller2.Enable();
+		}
+
+		std::cout << "IDLE" << std::endl;
+
+//		victor1.SetSpeed(0);
+//		victor2.SetSpeed(0);
+
+//		controller1.Disable();
+//		controller2.Disable();
 		break;
 	}
 }

@@ -25,7 +25,7 @@ AutonomousExecutor::AutonomousExecutor(Robot *robotPointer,
 }
 
 void AutonomousExecutor::executeCommand(AutoCommand command) {
-	cout << "AutonomousExecutor::executeCommand(" << command << ")" << commandSet->size() << endl;
+//	cout << "AutonomousExecutor::executeCommand(" << command << ")" << commandSet->size() << endl;
 //	cout << "Vision Planar Angle: " << visPlanarAngle << endl;
 //	cout << "Vision Rotational Angle: " << visRotationalAngle << endl;
 //	cout << "Vision Distance: " << visDistance << endl;
@@ -129,7 +129,7 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 		break;
 	default:
 		// default states only occurs when illegal command is called
-		std::cout << "default command called in autoexec" << std::endl;
+//		std::cout << "default command called in autoexec" << std::endl;
 		break;
 	}
 }
