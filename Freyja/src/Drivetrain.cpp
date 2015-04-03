@@ -119,8 +119,8 @@ void Drivetrain::update() {
 			state = IDLE;
 		}
 
-		std::cout << "Left Raw: " << leftEncoder.GetRaw() << std::endl;
-		std::cout << "Right Raw: " << rightEncoder.GetRaw() << std::endl;
+		std::cout << "Left: " << leftEncoder.GetDistance() << std::endl;
+		std::cout << "Right: " << rightEncoder.GetDistance() << std::endl;
 
 		break;
 	case ROTATING_ANGLE:

@@ -111,7 +111,7 @@ void Accumulator::disable() {
 void Accumulator::init() {
 	setPistonState(PistonState::IDLE);
 	setWheelState(WheelState::IDLE);
-	setPistonState(PistonState::EXTENDING);
+	setPistonState(PistonState::IDLE);
 }
 
 Accumulator::~Accumulator() {
