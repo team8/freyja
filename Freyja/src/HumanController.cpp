@@ -15,6 +15,8 @@ void HumanController::update() {
 	// 1 (Trigger) - High Speed
 
 	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
+	robotPointer->setDrivetrainRaws(moveJoystick.GetY(), turnJoystick.GetX());
+
 
 	if(moveJoystick.GetRawButton(1)) {
 		robotPointer->changeDrivetrainStateToHighSpeed();
@@ -45,11 +47,10 @@ void HumanController::update() {
 	// 9 (Odd Bottom) - Zero Lifter
 	// 10 (Right Lower) - Lower Level
 	// 11 (Right Upper) - Raise Level
-	if(robotPointer->getLifterState() == Lifter::State::MOVING || std::abs(operatorJoystick.GetY())  > 0.05) {
+	if(robotPointer->getLifterState() == Lifter::State::MOVING || std::abs(operatorJoystick.GetY())  > 0.1) {
 		robotPointer->setLifter(operatorJoystick.GetY());
 	}
-	else if(std::abs(operatorJoystick.GetY()) < 0.05)
-	{
+	if(std::abs(operatorJoystick.GetY()) < 0.05) {
 		robotPointer->idleLifter();
 	}
 	if(operatorJoystick.GetRawButton(1)) {
@@ -65,10 +66,10 @@ void HumanController::update() {
 	if(moveJoystick.GetRawButton(4)) {
 		robotPointer->changeWheelState(Accumulator::WheelState::SPINNING);
 	}
-	if(moveJoystick.GetRawButton(3)) {
+	if(moveJoystick.GetRawButton(2)) {
 		robotPointer->changeWheelState(Accumulator::WheelState::EJECTING);
 	}
-	if(moveJoystick.GetRawButton(2)) {
+	if(moveJoystick.GetRawButton(3)) {
 		robotPointer->changeWheelState(Accumulator::WheelState::ACCUMULATING);
 	}
 	//ARM CONTROLS

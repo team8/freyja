@@ -28,6 +28,7 @@ public:
 	void update();
 	void disable();
 
+	void setDrivetrainRaws(double rawDrive, double rawTurn);
 	void slowCoast(double speedY, double turnX);
 	void move(double targetSpeed, double rotateSpeed);
 	void driveDistance(double distance);

@@ -49,6 +49,7 @@ Drivetrain::Drivetrain() :
 	rawTargetSpeed = 0;
 	acceleration = 0;
 
+
 	//Sets the encoder distance per pulses
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
 	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
@@ -113,6 +114,11 @@ void Drivetrain::disable() {
 	stopControl();
 }
 
+void Drivetrain::setRaws(double driveSpeed, double turnSpeed) {
+	this->rawDriveInput = driveSpeed;
+	this->rawTargetSpeed = turnSpeed;
+}
+
 //Updates the drivetrain based on state machine
 void Drivetrain::update() {
 	//std::cout << "State: " << state << std::endl;
@@ -142,7 +148,11 @@ void Drivetrain::update() {
 		break;
 	case DRIVING_TELEOP:
 
-		//Determines the appropriate left and right speed
+		leftSpeed = std::max(std::min(rawDriveInput - rawTurnInput, 0.75), -0.75);
+		rightSpeed = std::max(std::min(rawDriveInput + rawTurnInput, 0.75), -0.75);
+		std::cout << leftSpeed << std::endl;
+		std::cout << rightSpeed << std::endl;
+		/*//Determines the appropriate left and right speed
 		leftSpeed = std::max(
 				std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 0.75),
 				-0.75);
@@ -150,13 +160,12 @@ void Drivetrain::update() {
 				std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 0.75),
 				-0.75);
 		//Determines the appropriate left and right speed
-
+*/
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(-leftSpeed);
 		leftBottomTalon.Set(-leftSpeed);
 		rightTopTalon.Set(rightSpeed);
 		rightBottomTalon.Set(rightSpeed);
-
 //		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
 //		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
 //		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;

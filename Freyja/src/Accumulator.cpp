@@ -88,16 +88,15 @@ void Accumulator::update() {
 }
 
 void Accumulator::togglePiston() {
-	std::cout << "CALLING TOGGLE PISTON" << std::endl;
 	if(pistonState == PistonState::IDLE) {
 		if(openPiston) {
 			setPistonState(PistonState::EXTENDING);
-			std::cout << "Extending Accumulator" << std::endl;
+//			std::cout << "Extending Accumulator" << std::endl;
 			//openPiston = false;
 		}
 		else {
 			setPistonState(PistonState::RETRACTING);
-			std::cout << "Retracting Accumulator" << std::endl;
+//			std::cout << "Retracting Accumulator" << std::endl;
 			//openPiston = true;
 		}
 	}

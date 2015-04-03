@@ -18,7 +18,7 @@ Lifter::Lifter() :
 	height = 0;
 	targetSpeed = 0;
 
-	isIdle = true;
+	isIdle = false;
 
 	controller1.SetOutputRange(-0.5, 0.5);
 	controller2.SetOutputRange(-0.5, 0.5);
@@ -54,6 +54,7 @@ void Lifter::update() {
 	case MOVING:
 		victor1.SetSpeed(-targetSpeed * targetSpeed * targetSpeed);
 		victor2.SetSpeed(-targetSpeed * targetSpeed * targetSpeed);
+		//Limit switch bounce back
 		if (checkSensorHit(true)) {
 			if (targetSpeed > 0) {
 				victor1.SetSpeed(.1);
@@ -73,6 +74,7 @@ void Lifter::update() {
 		if (liftEncoder.GetStopped() && std::abs(controller1.GetError()) < 1) {
 			state = IDLE;
 		}
+		//Limit switch test
 		if (checkSensorHit(true)) {
 			state=IDLE;
 		} else if (checkSensorHit(false)) {
@@ -81,9 +83,11 @@ void Lifter::update() {
 
 		break;
 	case LEVEL_SHIFTING:
+		//Stop once close enough to final point
 		if (liftEncoder.GetStopped() && std::abs(controller1.GetError()) < 1) {
 			state = IDLE;
 		}
+		//Limit switch test
 		if (checkSensorHit(true)) {
 			state=IDLE;
 		} else if (checkSensorHit(false)) {
@@ -91,18 +95,18 @@ void Lifter::update() {
 		}
 		break;
 	case IDLE:
-		if(!isIdle)
-		{
+		if(!isIdle) {
+			//Sets pid to maintain current height
 			isIdle = true;
+			std::cout << "Activated idle PID" << std::endl;
 			controller1.SetSetpoint(liftEncoder.GetDistance());
 			controller2.SetSetpoint(liftEncoder.GetDistance());
 
 			controller1.Enable();
 			controller2.Enable();
 		}
-
-		std::cout << "IDLE" << std::endl;
-
+		std::cout << "Controller.Get " << controller1.Get() << std::endl;
+		std::cout << "Encoder Get Dist " << liftEncoder.GetDistance() << std::endl;
 //		victor1.SetSpeed(0);
 //		victor2.SetSpeed(0);
 
@@ -110,6 +114,8 @@ void Lifter::update() {
 //		controller2.Disable();
 		break;
 	}
+
+	std::cout << "Lifter State: " << state << std::endl;
 }
 
 //disables everything on lifter
@@ -218,8 +224,8 @@ double Lifter::getLevel() {
 void Lifter::setSpeed(double speed) {
 //	liftEncoder.SetPIDSourceParameter(PIDSource::kRate);
 //
-//	controller1.Disable();
-//	controller2.Disable();
+	controller1.Disable();
+	controller2.Disable();
 //
 //	speedController1.SetSetpoint(speed);
 //	speedController2.SetSetpoint(speed);
@@ -229,6 +235,8 @@ void Lifter::setSpeed(double speed) {
 
 	state = MOVING;
 	targetSpeed = speed;
+
+
 
 	//Check top limit switch, only move down
 //	if (!checkSensorHit(true)) {

@@ -47,6 +47,10 @@ private:
 	PIDController rightTopGyroController;
 	PIDController rightBottomGyroController;
 
+
+	double rawDriveInput;
+	double rawTurnInput;
+
 	//The forward speed of the robot during teleoperated control
 	double targetSpeed;
 	//The rotation speed of the robot during teleoperated control
@@ -99,6 +103,7 @@ public:
 	void stopControl();
 	void stopTalons();
 
+	void setRaws(double driveSpeed, double turnSpeed);
 	void setSpeed(double targetSpeed, double rotateSpeed);
 	void setTargetSpeed(double speed);
 	void setRotateSpeed(double speed);

@@ -13,6 +13,10 @@ void Robot::init() {
 	accumulator.init();
 }
 
+void Robot::setDrivetrainRaws(double rawDrive, double rawTurn) {
+	drivetrain.setRaws(rawDrive, rawTurn);
+}
+
 /** Updates all subsystems */
 void Robot::update() {
 	drivetrain.update();
