@@ -16,7 +16,7 @@ AutonomousController::AutonomousController(Robot *robotPointer) :
 //dial((uint32_t) PORT_AUTO_DIAL)
 {
 	//path = (Path) dial.GetValue();
-	path = TEST;
+	path = ACCUMULATE_GRAY;
 	//initial command
 	command = CMD_STOP;
 	executing = false;
@@ -35,6 +35,9 @@ void AutonomousController::init() {
 		break;
 	case TOTE_SCORE:
 		toteScore();
+		break;
+	case TOTE_SCORE_BACKWARDS:
+		toteScoreBackwards();
 		break;
 	case TOTE_SCORE_DOUBLE_LEFT:
 		toteScoreDoubleLeft();
@@ -120,6 +123,15 @@ void AutonomousController::toteScore() {
 	commandSet.push_back(CMD_STOP);
 }
 
+//Scores a yellow tote starting oriented backwards
+void AutonomousController::toteScoreBackwards() {
+	commandSet.push_back(CMD_CLOSE);
+	commandSet.push_back(CMD_LIFT);
+	commandSet.push_back(CMD_BACK_AUTO_DRIVE);
+	commandSet.push_back(CMD_LOWER);
+	commandSet.push_back(CMD_STOP);
+}
+
 // scores a yellow tote and the one to its left
 void AutonomousController::toteScoreDoubleLeft() {
 	commandSet.push_back(CMD_TOTE_SCORE);
@@ -165,11 +177,10 @@ void AutonomousController::canScore() {
 
 // goes to/starts in the landfill zone, accumulates gray tote and ends in auto zone
 void AutonomousController::accumulateGray() {
-//	commandSet.push_back(CMD_FRONT_IN);
+	commandSet.push_back(CMD_FRONT_IN);
 	commandSet.push_back(CMD_CLOSE);
-	commandSet.push_back(CMD_BACK_OUT);
-	commandSet.push_back(CMD_HALF_ROTATE);
-	commandSet.push_back(CMD_DRIVE_LANDFILL_AUTO);
+	commandSet.push_back(CMD_LIFT);
+	commandSet.push_back(CMD_BACK_AUTO_DRIVE);
 	commandSet.push_back(CMD_STOP);
 }
 
@@ -189,7 +200,7 @@ void AutonomousController::accumulateGrayDouble() {
 	commandSet.push_back(CMD_TOTE_STACK);
 	commandSet.push_back(CMD_CLOSE);
 	commandSet.push_back(CMD_BACK_OUT);
-	commandSet.push_back(CMD_HALF_ROTATE);
+//	commandSet.push_back(CMD_HALF_ROTATE);
 	commandSet.push_back(CMD_DRIVE_LANDFILL_AUTO);
 	commandSet.push_back(CMD_STOP);
 }

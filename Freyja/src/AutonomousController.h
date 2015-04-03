@@ -38,6 +38,7 @@ private:
 	void stop();
 	void drive();
 	void toteScore();
+	void toteScoreBackwards();
 	void toteScoreAccumulate();
 	void toteScoreDoubleLeft();
 	void toteScoreDoubleRight();

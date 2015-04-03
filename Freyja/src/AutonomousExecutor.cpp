@@ -63,7 +63,7 @@ void AutonomousExecutor::executeCommand(AutoCommand command) {
 		canScore();
 		break;
 	case CMD_DRIVE_LANDFILL_AUTO:
-		drive(AUTO_GRAY_DISTANCE);
+		drive(-AUTO_GRAY_DISTANCE);
 		break;
 	case CMD_GRAY_TO_GRAY:
 		grayToGray();
