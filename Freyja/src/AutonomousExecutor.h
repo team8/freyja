@@ -8,7 +8,7 @@
 #define FREYJA_SRC_AUTONOMOUSEXECUTOR_H_
 
 // Distance constants used specifically for autonomous
-#define YELLOW_AUTO_DISTANCE 125 // y: front of yellow tote to auto zone
+#define YELLOW_AUTO_DISTANCE (125 + 12) // y: front of yellow tote to auto zone, extra 12 james requested
 #define AUTO_GRAY_DISTANCE 75 // y: auto zone to landfill tote
 #define GRAY_GRAY_DISTANCE 20 // x: between totes in landfill zone
 #define YELLOW_YELLOW_DISTANCE 78 // x: between yellow auto totes

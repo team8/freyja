@@ -154,17 +154,20 @@ void Drivetrain::update() {
 		std::cout << "LS: " << leftSpeed << std::endl;
 		std::cout << "RS: " << rightSpeed << std::endl;*/
 		//Determines the appropriate left and right speed
-		leftSpeed = std::max(
-				std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 0.75),-0.75);
-		rightSpeed = std::max(
-				std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 0.75),-0.75);
+		leftSpeed =std::max(std::min(rawTargetSpeed *.9 - rotateSpeed * ROTATE_CONSTANT, 0.85),-0.75);
+		rightSpeed =std::max(std::min(rawTargetSpeed * .9 + rotateSpeed * ROTATE_CONSTANT, 0.85),-0.75);
+
+//		leftSpeed = std::max(
+//				std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 0.75),-0.75);
+//		rightSpeed = std::max(
+//				std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 0.75),-0.75);
 		//Determines the appropriate left and right speed
 
 		//Sets talons to left and right speeds
-		leftTopTalon.Set(-leftSpeed);
-		leftBottomTalon.Set(-leftSpeed);
-		rightTopTalon.Set(rightSpeed);
-		rightBottomTalon.Set(rightSpeed);
+		leftTopTalon.Set(-leftSpeed*leftSpeed*leftSpeed);
+		leftBottomTalon.Set(-leftSpeed*leftSpeed*leftSpeed);
+		rightTopTalon.Set(rightSpeed*rightSpeed*rightSpeed);
+		rightBottomTalon.Set(rightSpeed*rightSpeed*rightSpeed);
 //		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
 //		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
 //		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
