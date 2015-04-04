@@ -35,7 +35,7 @@ void AutonomousController::init() {
 		break;
 	case TOTE_SCORE:
 		toteScore();
-		break;;
+		break;
 	case TOTE_SCORE_BACKWARDS:
 		toteScoreBackwards();
 		break;

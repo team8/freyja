@@ -47,6 +47,8 @@ Drivetrain::Drivetrain() :
 	targetSpeed = 0;
 	rotateSpeed = 0;
 	rawTargetSpeed = 0;
+	rawTurnInput = 0;
+	rawDriveInput = 0;
 	acceleration = 0;
 
 
@@ -238,8 +240,8 @@ void Drivetrain::update() {
 		rightBottomTalon.Set(leftTopTalon.Get() * 0.98);
 		break;
 	case SLOW_COAST:
-		int coastSpeedConstant;
-		int coastTurnConstant;
+//		int coastSpeedConstant;
+//		int coastTurnConstant;
 
 //		/*if (targetSpeed < 0 && rotateSpeed < 0) {
 //			leftSpeed = std::max(std::min(0.1 + 0.05 * ROTATE_CONSTANT, 0.75),-0.75);

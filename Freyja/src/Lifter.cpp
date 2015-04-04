@@ -8,7 +8,7 @@ Lifter::Lifter() :
 				(uint32_t) LIMIT_SWITCH_BOT),
 
 		controller1(0.3, 0.f, 0.1, &liftEncoder, &victor1), controller2(0.3,
-				0.f, 0.1, &liftEncoder, &victor2)
+				0.f, 0.1, &liftEncoder, &victor2), dial()
 
 //		speedController1(1.0, 0.f, 1.0, &liftEncoder, &victor1),
 //		speedController2(1.0, 0.f, 1.0, &liftEncoder, &victor2)
@@ -172,8 +172,6 @@ bool Lifter::checkSensorHit(bool topSensor) {
 
 void Lifter::lift(double distance) {
 //	liftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
-//	speedController1.Disable();
-//	speedController2.Disable();
 
 	state = AUTO_LIFTING;
 
