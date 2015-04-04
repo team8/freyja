@@ -70,7 +70,7 @@
 //#define RIGHT_DPP 0.051599
 //#define LEFT_DPP 0.051867
 
-#define LIFTER_DPP 0.019165
+#define LIFTER_DPP 0.02186
 
 #define ARM_EXTEND_TIME 0.4
 

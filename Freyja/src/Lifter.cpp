@@ -71,7 +71,7 @@ void Lifter::update() {
 		break;
 	case AUTO_LIFTING:
 //		std::cout << "Lifter Error: " << controller1.GetError() << std:: endl;
-		if (liftEncoder.GetStopped() && std::abs(controller1.GetError()) < 1) {
+		if (liftEncoder.GetStopped() && std::abs(controller1.GetError()) < 0.5) {
 			state = IDLE;
 		}
 		//Limit switch test
@@ -105,7 +105,7 @@ void Lifter::update() {
 			controller1.Enable();
 			controller2.Enable();
 		}
-		std::cout << "Controller.Get " << controller1.Get() << std::endl;
+//		std::cout << "Controller.Get " << controller1.Get() << std::endl;
 		std::cout << "Encoder Get Dist " << liftEncoder.GetDistance() << std::endl;
 //		victor1.SetSpeed(0);
 //		victor2.SetSpeed(0);
@@ -115,7 +115,7 @@ void Lifter::update() {
 		break;
 	}
 
-	std::cout << "Lifter State: " << state << std::endl;
+//	std::cout << "Lifter State: " << state << std::endl;
 }
 
 //disables everything on lifter
