@@ -118,8 +118,9 @@ void AutonomousController::drive() {
 
 // scores a single yellow tote
 void AutonomousController::toteScore() {
-	commandSet.push_back(CMD_FRONT_IN);
-	commandSet.push_back(CMD_TOTE_SCORE);
+	commandSet.push_back(CMD_CLOSE);
+	commandSet.push_back(CMD_LIFT);
+	commandSet.push_back(CMD_AUTO_DRIVE);
 	commandSet.push_back(CMD_STOP);
 }
 

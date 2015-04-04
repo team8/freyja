@@ -14,8 +14,8 @@ void HumanController::update() {
 	// Coordinate Direction - Driving
 	// 1 (Trigger) - High Speed
 
-//	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
-	robotPointer->setDrivetrainRaws(moveJoystick.GetY(), turnJoystick.GetX());
+	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
+//	robotPointer->setDrivetrainRaws(moveJoystick.GetY(), turnJoystick.GetX());
 
 
 	if(moveJoystick.GetRawButton(1)) {

@@ -147,21 +147,19 @@ void Drivetrain::update() {
 		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
 		break;
 	case DRIVING_TELEOP:
-		leftSpeed = std::max(std::min(rawDriveInput - rawTurnInput, 0.75), -0.75);
+/*		leftSpeed = std::max(std::min(rawDriveInput - rawTurnInput, 0.75), -0.75);
 		rightSpeed = std::max(std::min(rawDriveInput + rawTurnInput, 0.75), -0.75);
 		std::cout << "RDI: " << rawDriveInput << std::endl;
 		std::cout << "RTI: " << rawTurnInput << std::endl;
 		std::cout << "LS: " << leftSpeed << std::endl;
-		std::cout << "RS: " << rightSpeed << std::endl;
-		/*//Determines the appropriate left and right speed
-		leftSpeed = std::max(
-				std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 0.75),
-				-0.75);
-		rightSpeed = std::max(
-				std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 0.75),
-				-0.75);
+		std::cout << "RS: " << rightSpeed << std::endl;*/
 		//Determines the appropriate left and right speed
-*/
+		leftSpeed = std::max(
+				std::min(targetSpeed - rotateSpeed * ROTATE_CONSTANT, 0.75),-0.75);
+		rightSpeed = std::max(
+				std::min(targetSpeed + rotateSpeed * ROTATE_CONSTANT, 0.75),-0.75);
+		//Determines the appropriate left and right speed
+
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(-leftSpeed);
 		leftBottomTalon.Set(-leftSpeed);
@@ -194,18 +192,8 @@ void Drivetrain::update() {
 
 	case PRECISION_TRIGGER:
 		//Determines the appropriate left and right speed
-		leftSpeed =
-				std::max(
-						std::min(
-								rawTargetSpeed * LOW_DPI
-										- rotateSpeed * ROTATE_CONSTANT, 1.0),
-						-1.0);
-		rightSpeed =
-				std::max(
-						std::min(
-								rawTargetSpeed * LOW_DPI
-										+ rotateSpeed * ROTATE_CONSTANT, 1.0),
-						-1.0);
+		leftSpeed =std::max(std::min(rawTargetSpeed * LOW_DPI- rotateSpeed * ROTATE_CONSTANT, 0.75),-0.75);
+		rightSpeed =std::max(std::min(rawTargetSpeed * LOW_DPI+ rotateSpeed * ROTATE_CONSTANT, 0.75),-0.75);
 
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(-leftSpeed);
@@ -229,11 +217,9 @@ void Drivetrain::update() {
 	case HIGH_SPEED:
 		//Determines the appropriate left and right speed
 		leftSpeed = std::max(
-				std::min(targetSpeed * HIGH_DPI - rotateSpeed * ROTATE_CONSTANT,
-						1.0), -1.0);
+				std::min(targetSpeed * HIGH_DPI - rotateSpeed * ROTATE_CONSTANT,1.0), -1.0);
 		rightSpeed = std::max(
-				std::min(targetSpeed * HIGH_DPI + rotateSpeed * ROTATE_CONSTANT,
-						1.0), -1.0);
+				std::min(targetSpeed * HIGH_DPI + rotateSpeed * ROTATE_CONSTANT,1.0), -1.0);
 
 		//Sets talons to left and right speeds
 		leftTopTalon.Set(-leftSpeed);
