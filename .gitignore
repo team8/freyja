@@ -11,6 +11,9 @@
 build.properties
 build.xml
 
+# FRC Deploy #
+sysProps.xml
+
 # Mac OS X folder config#
 .DS_Store
 .DS_Store/
