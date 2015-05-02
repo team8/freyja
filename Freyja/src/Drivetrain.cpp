@@ -236,8 +236,8 @@ void Drivetrain::update() {
 	case BRAKE:
 		leftTopTalon.Set(leftTopTalon.Get() * 0.98);
 		leftBottomTalon.Set(leftTopTalon.Get() * 0.98);
-		rightTopTalon.Set(leftTopTalon.Get() * 0.98);
-		rightBottomTalon.Set(leftTopTalon.Get() * 0.98);
+		rightTopTalon.Set(rightTopTalon.Get() * 0.98);
+		rightBottomTalon.Set(rightTopTalon.Get() * 0.98);
 		break;
 	case SLOW_COAST:
 //		int coastSpeedConstant;
