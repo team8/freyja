@@ -21,6 +21,12 @@ void HumanController::update() {
 	if(moveJoystick.GetRawButton(1)) {
 		robotPointer->changeDrivetrainStateToHighSpeed();
 	}
+	if(moveJoystick.GetRawButton(6)) {
+		robotPointer->changeDrivetrainStateToBrake();
+	}
+	if(moveJoystick.GetRawButton(7)) {
+		robotPointer->changeDrivetrainStateToBrake();
+	}
 
 	// Turn Stick
 	// 1 (Trigger) - Precision
@@ -86,10 +92,10 @@ void HumanController::update() {
 	if (operatorJoystick.GetRawButton(9)) {
 		robotPointer -> zeroLifter();
 	}
-	if (operatorJoystick.GetRawButton(11) && robotPointer->getLifterState() != Lifter::State::AUTO_LIFTING) {
-		robotPointer->liftDist(-TOTE_HEIGHT);
+	if(operatorJoystick.GetRawButton(10)) {
+		robotPointer->changeDrivetrainStateToBrake();
 	}
-	if (operatorJoystick.GetRawButton(10) && robotPointer->getLifterState() != Lifter::State::AUTO_LIFTING) {
-		robotPointer->liftDist(TOTE_HEIGHT);
+	if(operatorJoystick.GetRawButton(11)) {
+		robotPointer->changeDrivetrainStateToBrake();
 	}
 }

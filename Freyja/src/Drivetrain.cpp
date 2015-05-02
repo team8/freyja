@@ -166,10 +166,10 @@ void Drivetrain::update() {
 		//Determines the appropriate left and right speed
 
 		//Sets talons to left and right speeds
-		leftTopTalon.Set(-leftSpeed*leftSpeed*leftSpeed);
-		leftBottomTalon.Set(-leftSpeed*leftSpeed*leftSpeed);
-		rightTopTalon.Set(rightSpeed*rightSpeed*rightSpeed);
-		rightBottomTalon.Set(rightSpeed*rightSpeed*rightSpeed);
+		leftTopTalon.Set(-leftSpeed);
+		leftBottomTalon.Set(-leftSpeed);
+		rightTopTalon.Set(rightSpeed);
+		rightBottomTalon.Set(rightSpeed);
 //		std::cout << "Left Encoder: " << leftEncoder.GetDistance() << std::endl;
 //		std::cout << "Right Encoder: " << rightEncoder.GetDistance() << std::endl;
 //		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
@@ -234,10 +234,11 @@ void Drivetrain::update() {
 		break;
 
 	case BRAKE:
-		leftTopTalon.Set(leftTopTalon.Get() * 0.98);
-		leftBottomTalon.Set(leftTopTalon.Get() * 0.98);
-		rightTopTalon.Set(rightTopTalon.Get() * 0.98);
-		rightBottomTalon.Set(rightTopTalon.Get() * 0.98);
+		std::cout << "in break state" << std::endl;
+		leftTopTalon.Set(leftTopTalon.Get() * 0.9);
+		leftBottomTalon.Set(leftTopTalon.Get() * 0.9);
+		rightTopTalon.Set(rightTopTalon.Get() * 0.9);
+		rightBottomTalon.Set(rightTopTalon.Get() * 0.9);
 		break;
 	case SLOW_COAST:
 //		int coastSpeedConstant;
@@ -358,6 +359,8 @@ void Drivetrain::setRotateSpeed(double speed) {
 
 //Rotates the given angle
 void Drivetrain::rotateAngle(double angle) {
+	std::cout << "INVALID GRYO STATE CHANGE" << std::endl;
+
 
 	stopControl();
 

@@ -40,7 +40,8 @@ void Lifter::init() {
 
 //Operates lifter according to current state
 void Lifter::update() {
-//	std::cout << "Top Limit Switch: " << topLimitSwitch.Get() << std::endlb
+	std::cout << "Top Limit Switch: " << topLimitSwitch.Get() << std::endl;
+	std::cout << "Bottom Limit Switch: " << botLimitSwitch.Get() << std::endl;
 //	std::cout << "Current lifter level: " << currentLevel << std::endl;
 //	std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
 //	std::cout << "Lift Error: " << controller1.GetError() << std::endl;
@@ -106,7 +107,7 @@ void Lifter::update() {
 			controller2.Enable();
 		}
 //		std::cout << "Controller.Get " << controller1.Get() << std::endl;
-		std::cout << "Encoder Get Dist " << liftEncoder.GetDistance() << std::endl;
+		//std::cout << "Encoder Get Dist " << liftEncoder.GetDistance() << std::endl;
 //		victor1.SetSpeed(0);
 //		victor2.SetSpeed(0);
 
