@@ -56,7 +56,7 @@ void Lifter::update() {
 		victor1.SetSpeed(-targetSpeed * targetSpeed * targetSpeed);
 		victor2.SetSpeed(-targetSpeed * targetSpeed * targetSpeed);
 		//Limit switch bounce back
-		if (checkSensorHit(true)) {
+/*		if (checkSensorHit(true)) {
 			if (targetSpeed > 0) {
 				victor1.SetSpeed(.1);
 				victor2.SetSpeed(.1);
@@ -66,7 +66,7 @@ void Lifter::update() {
 				victor1.SetSpeed(-.1);
 				victor2.SetSpeed(-.1);
 			}
-		}
+		}*/
 
 		//std::cout << "Lift Encoder: " << liftEncoder.GetDistance() << std::endl;
 		break;
