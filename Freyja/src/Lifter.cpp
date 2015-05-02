@@ -100,11 +100,11 @@ void Lifter::update() {
 			//Sets pid to maintain current height
 			isIdle = true;
 			std::cout << "Activated idle PID" << std::endl;
-			controller1.SetSetpoint(liftEncoder.GetDistance());
-			controller2.SetSetpoint(liftEncoder.GetDistance());
+		//	controller1.SetSetpoint(liftEncoder.GetDistance());
+		//	controller2.SetSetpoint(liftEncoder.GetDistance());
 
-			controller1.Enable();
-			controller2.Enable();
+		//	controller1.Enable();
+			//controller2.Enable();
 		}
 //		std::cout << "Controller.Get " << controller1.Get() << std::endl;
 		//std::cout << "Encoder Get Dist " << liftEncoder.GetDistance() << std::endl;
