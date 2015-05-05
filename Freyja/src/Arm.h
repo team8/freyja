@@ -35,10 +35,14 @@ public:
 	void init();
 	void update();
 	void disable();
+	void toggleArm();
+	Arm::PistonState getPistonState();
 private:
 	Compressor compressor;
 	DoubleSolenoid solenoid1;
 	//DoubleSolenoid solenoid2;
+	Timer timer;
+	bool pistonOpen;
 
 	CompressorState compressorState;
 	PistonState pistonState;

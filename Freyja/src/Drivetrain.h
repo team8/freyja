@@ -47,10 +47,16 @@ private:
 	PIDController rightTopGyroController;
 	PIDController rightBottomGyroController;
 
+
+	double rawDriveInput;
+	double rawTurnInput;
+
 	//The forward speed of the robot during teleoperated control
 	double targetSpeed;
 	//The rotation speed of the robot during teleoperated control
 	double rotateSpeed;
+	//The raw forward speed to be used in high precision mode
+	double rawTargetSpeed;
 
 	// The value returned by the Y-axis of the driver stick
 	double acceleration;
@@ -77,7 +83,11 @@ public:
 		//Go max speed backwards
 		THROTTLE,
 		//Higher sensititivity goes faster
-		HIGH_SPEED
+		HIGH_SPEED,
+		//break
+		BRAKE,
+
+		SLOW_COAST
 	} State;
 
 	//The State variable created for this instance
@@ -93,6 +103,7 @@ public:
 	void stopControl();
 	void stopTalons();
 
+	void setRaws(double driveSpeed, double turnSpeed);
 	void setSpeed(double targetSpeed, double rotateSpeed);
 	void setTargetSpeed(double speed);
 	void setRotateSpeed(double speed);
@@ -103,6 +114,7 @@ public:
 	void setStateTrigger();
 	void setStateThrottle();
 	void setStateHighSpeed();
+	void setStateBrake();
 	State getState();
 };
 

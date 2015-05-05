@@ -19,12 +19,14 @@ public:
 	double getDistance();
 	void lift(double distance);
 	void setLevel(double level);
+	void setState(double speed);
 	void zeroing();
+	void resetZero();
 	double getLevel();
 	double currentLevel;
 
 	enum State {
-		MOVING, AUTO_LIFTING, IDLE
+		MOVING, AUTO_LIFTING, LEVEL_SHIFTING, IDLE
 	} state;
 
 	State getState();
@@ -32,14 +34,23 @@ public:
 	void setSpeed(double speed);
 
 private:
-	VictorSP victor;
+	VictorSP victor1, victor2;
 	Encoder liftEncoder;
 
-	DigitalInput digitalInput;
-	DigitalInput digitalInput2;
+	DigitalInput topLimitSwitch;
+	DigitalInput botLimitSwitch;
 
-	PIDController controller;
+	PIDController controller1, controller2;
+//	PIDController speedController1, speedController2;
+
+	//Stores whether or not the lifter was idle the previous update
+	bool isIdle;
+
 	double targetSpeed;
+	int height;
+	double dial;
+	// how many totes high the lifter is currently at, by stroing this,
+	// we can reset the encoders before every PID and this allows us to zero
 };
 
 #endif /* FREYJA_SRC_LIFTER_H_ */

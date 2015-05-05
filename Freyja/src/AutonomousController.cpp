@@ -1,6 +1,6 @@
 /*
- * Version 11
- * 2/17/15
+ * Version 12
+ * 3/23/15
  * Jonathan Zwiebel and Nihar Mitra
  */
 
@@ -12,15 +12,14 @@ using namespace std;
 
 // DIAL CURRENTLY COMMENTED OUT
 AutonomousController::AutonomousController(Robot *robotPointer) :
-		executor(robotPointer, &commandSet), udpListener { "4950" }
+		executor(robotPointer, &commandSet)
 //dial((uint32_t) PORT_AUTO_DIAL)
 {
 	//path = (Path) dial.GetValue();
-	path = DRIVE;
+	path = STOP;
+	//initial command
 	command = CMD_STOP;
 	executing = false;
-	distance = 0;
-	angle = 0;
 	robotPointer->init();
 }
 
@@ -37,6 +36,9 @@ void AutonomousController::init() {
 	case TOTE_SCORE:
 		toteScore();
 		break;
+	case TOTE_SCORE_BACKWARDS:
+		toteScoreBackwards();
+		break;
 	case TOTE_SCORE_DOUBLE_LEFT:
 		toteScoreDoubleLeft();
 		break;
@@ -51,6 +53,15 @@ void AutonomousController::init() {
 		break;
 	case TEST:
 		test();
+		break;
+	case TOTE_SCORE_DOUBLE_STRAIGHT:
+		toteScoreDoubleStraight();
+		break;
+	case TOTE_SCORE_DOUBLE_WIGGLE:
+		toteScoreDoubleWiggle();
+		break;
+	case ACCUMULATE_GRAY_DOUBLE:
+		accumulateGrayDouble();
 		break;
 	}
 }
@@ -71,8 +82,6 @@ void AutonomousController::update() {
 //			std::cout << "distance: " << distance << "    angle: " << angle << std::endl;
 //	}
 
-	std::cout << "executing: " << executing << std::endl;
-
 	// loops only when there is no command currently running
 	if(executor.isAllIdle() && !executing) {
 		std::cout << commandSet.front() << std::endl;
@@ -81,17 +90,15 @@ void AutonomousController::update() {
 		executor.executeCommand(command); // execute - runs the command
 		// conditional to prevent null reference error
 		if(!commandSet.empty()) {
-			std::cout << "pop pop" << endl;
 			commandSet.pop_front(); // increment - sets the next command run to run
 		} else {
-			std::cout << "commandSet empty" << std::endl;
+//			std::cout << "commandSet empty" << std::endl;
 			executing = false;
 			// turns off the loop
 		}
 	}
 	// checks if everything is idle, meaning nothing is running
 	else if(executor.isAllIdle()) {
-		cout << "all idle, executing to true" << endl;
 		executing = false;
 	}
 }
@@ -111,7 +118,18 @@ void AutonomousController::drive() {
 
 // scores a single yellow tote
 void AutonomousController::toteScore() {
-	commandSet.push_back(CMD_TOTE_SCORE);
+	commandSet.push_back(CMD_CLOSE);
+	commandSet.push_back(CMD_LIFT);
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_STOP);
+}
+
+//Scores a yellow tote starting oriented backwards
+void AutonomousController::toteScoreBackwards() {
+	commandSet.push_back(CMD_CLOSE);
+	commandSet.push_back(CMD_LIFT);
+	commandSet.push_back(CMD_BACK_AUTO_DRIVE);
+	commandSet.push_back(CMD_LOWER);
 	commandSet.push_back(CMD_STOP);
 }
 
@@ -135,25 +153,84 @@ void AutonomousController::toteScoreDoubleRight() {
 	commandSet.push_back(CMD_STOP);
 }
 
+// like double right but wiggles the can and doesn't turn too close
+void AutonomousController::toteScoreDoubleWiggle() {
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_BACK_TO_TOTE_DRIVE);
+	commandSet.push_back(CMD_ROTATE_90);
+	commandSet.push_back(CMD_DRIVE_YELLOW_CAN);
+	commandSet.push_back(CMD_ROTATE_NEG_90);
+	commandSet.push_back(CMD_FRONT_IN);
+	commandSet.push_back(CMD_BACK_OUT);
+	commandSet.push_back(CMD_ROTATE_90);
+	commandSet.push_back(CMD_FRONT_IN);
+	commandSet.push_back(CMD_FRONT_IN);
+	commandSet.push_back(CMD_ROTATE_NEG_90);
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_STOP);
+}
+
 // scores an auto can on our side
 void AutonomousController::canScore() {
 	commandSet.push_back(CMD_CAN_SCORE);
 	commandSet.push_back(CMD_STOP);
 }
 
-// goes to the landfill zone, accumulates gray totes and ends in auto zone
+// goes to/starts in the landfill zone, accumulates gray tote and ends in auto zone
 void AutonomousController::accumulateGray() {
-	commandSet.push_back(CMD_LANDFILL_DRIVE);
+	commandSet.push_back(CMD_FRONT_IN);
+	commandSet.push_back(CMD_CLOSE);
+	commandSet.push_back(CMD_LIFT);
+	commandSet.push_back(CMD_BACK_AUTO_DRIVE);
+	commandSet.push_back(CMD_STOP);
+}
+
+// goes to/starts in the landfill zone, accumulates gray tote and ends in auto zone
+void AutonomousController::accumulateGrayDouble() {
+//	commandSet.push_back(CMD_FRONT_IN);
+	//Grab first tote
+	commandSet.push_back(CMD_CLOSE);
+	//Maneuver to second gray tote
+	commandSet.push_back(CMD_BACK_OUT);
+	commandSet.push_back(CMD_ROTATE_90);
 	commandSet.push_back(CMD_GRAY_TO_GRAY);
-	commandSet.push_back(CMD_GRAY_TO_GRAY);
-	commandSet.push_back(CMD_HALF_ROTATE);
+	commandSet.push_back(CMD_ROTATE_NEG_90);
+	commandSet.push_back(CMD_LIFT);
+	commandSet.push_back(CMD_FRONT_IN);
+	//Stack other tote
+	commandSet.push_back(CMD_TOTE_STACK);
+	commandSet.push_back(CMD_CLOSE);
+	commandSet.push_back(CMD_BACK_OUT);
+//	commandSet.push_back(CMD_HALF_ROTATE);
 	commandSet.push_back(CMD_DRIVE_LANDFILL_AUTO);
+	commandSet.push_back(CMD_STOP);
+}
+
+
+// gets a tote, lifts and then pushes the second tote to get 2 in the auto zone
+void AutonomousController::toteScoreDoubleStraight() {
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_BACK_AUTO_DRIVE);
+	commandSet.push_back(CMD_ROTATE_90);
+	commandSet.push_back(CMD_DRIVE_YELLOW_YELLOW);
+	commandSet.push_back(CMD_ROTATE_NEG_90);
+	commandSet.push_back(CMD_AUTO_DRIVE);
 	commandSet.push_back(CMD_STOP);
 }
 
 // special path used for testing
 void AutonomousController::test() {
-	commandSet.push_back(CMD_TOTE_SCORE);
+	std::cout << "Sdfsdf" << std::endl; //not entering test func
+	//commandSet.push_back(CMD_ACCUMUATE_GRAY);
+	commandSet.push_back(CMD_CLOSE);
+	commandSet.push_back(CMD_LIFT);
+	commandSet.push_back(CMD_AUTO_DRIVE);
+	commandSet.push_back(CMD_LOWER);
+	commandSet.push_back(CMD_OPEN);
+//	commandSet.push_back(CMD_LOWER);
+//	commandSet.push_back(CMD_DRIVE_YELLOW_YELLOW);
+//	commandSet.push_back(CMD_OPEN);
+//	commandSet.push_back(CMD_TOTE_STACK);
 	commandSet.push_back(CMD_STOP);
 }
 

@@ -10,52 +10,92 @@ HumanController::HumanController(Robot *robotPointer) :
 }
 
 void HumanController::update() {
-	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
+	// Move Stick
+	// Coordinate Direction - Driving
+	// 1 (Trigger) - High Speed
 
-/*	if(moveJoystick.GetRawButton(2)) {
-		robotPointer->driveDistance(100);
-	}
-	if(moveJoystick.GetRawButton(3)) {
-		robotPointer->rotateAngle(90);
-	}
-	if(moveJoystick.GetRawButton(4)) {
-		robotPointer->rotateAngle(180);
-	}*/
+	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
+//	robotPointer->setDrivetrainRaws(moveJoystick.GetY(), turnJoystick.GetX());
+
 
 	if(moveJoystick.GetRawButton(1)) {
 		robotPointer->changeDrivetrainStateToHighSpeed();
 	}
+	if(moveJoystick.GetRawButton(6)) {
+		robotPointer->changeDrivetrainStateToBrake();
+	}
+	if(moveJoystick.GetRawButton(7)) {
+		robotPointer->changeDrivetrainStateToBrake();
+	}
+
+	// Turn Stick
+	// 1 (Trigger) - Precision
+	// 2 (Brake) - Brakes, not functional
 	if(turnJoystick.GetRawButton(1)) {
 		robotPointer->changeDrivetrainStateToPRECISION_TRIGGER();
 	}
-	if(operatorJoystick.GetRawButton(2)) {
-		robotPointer->changePistonState(Arm::PistonState::EXTENDING);
+	if(turnJoystick.GetRawButton(2)) {
+		robotPointer->changeDrivetrainStateToBrake();
+	}
+
+
+	// Operator Stick
+	//
+	// Lifter Controls
+	// Y-Axis - Lifter
+	// 1 (Trigger) - Toggle Accumulator
+	// 2 (Large Center) - Toggle Arm
+	// 3 (Small Center) - The spin
+	// 4 (Left Top) - Accumulate
+	// 5 (Right Top - Eject
+	// 6 (Left Upper) - Stop Compressing
+	// 7 (Left Lower) - Start Compressing
+	// 9 (Odd Bottom) - Zero Lifter
+	// 10 (Right Lower) - Lower Level
+	// 11 (Right Upper) - Raise Level
+	if(robotPointer->getLifterState() == Lifter::State::MOVING || std::abs(operatorJoystick.GetY())  > 0.1) {
+		robotPointer->setLifter(operatorJoystick.GetY());
+	}
+	if(std::abs(operatorJoystick.GetY()) < 0.05) {
+		robotPointer->idleLifter();
 	}
 	if(operatorJoystick.GetRawButton(1)) {
-		robotPointer->changePistonState(Arm::PistonState::RETRACTING);
+		robotPointer->toggleArm();
 	}
+	// ACCUMULATOR CONTROLS
+	if(moveJoystick.GetRawButton(5)) {
+		robotPointer->toggleAccumulator();
+	}
+	if(!moveJoystick.GetRawButton(3) && !moveJoystick.GetRawButton(4) && !moveJoystick.GetRawButton(2)) {
+		robotPointer->changeWheelState(Accumulator::WheelState::IDLE);
+	}
+	if(moveJoystick.GetRawButton(4)) {
+		robotPointer->changeWheelState(Accumulator::WheelState::SPINNING);
+	}
+	if(moveJoystick.GetRawButton(2)) {
+		robotPointer->changeWheelState(Accumulator::WheelState::EJECTING);
+	}
+	if(moveJoystick.GetRawButton(3)) {
+		robotPointer->changeWheelState(Accumulator::WheelState::ACCUMULATING);
+	}
+	//ARM CONTROLS
 	if(operatorJoystick.GetRawButton(6)) {
 		robotPointer->changeCompressorState(Arm::CompressorState::OFF);
 	}
 	if(operatorJoystick.GetRawButton(7)) {
 		robotPointer->changeCompressorState(Arm::CompressorState::ON);
-
 	}
-
-	//Lifter Controls
-
-	//this moves the lifter up by one level
-	/*	if (operatorJoystick.GetRawButton(7)) {
-	 robotPointer->setLifterLevel(robotPointer->getLevel() + 1);
-	 }
-	 //this moves the lifter down by one level
-	 if (operatorJoystick.GetRawButton(8)) {
-	 robotPointer->setLifterLevel(robotPointer->getLevel() - 1);
-	 }
-	 //this moves the lifter to the lowest level
-	 if (operatorJoystick.GetRawButton(10)) {
-	 robotPointer -> zeroLifter();
-	 }*/
-
-	robotPointer->setLifter(operatorJoystick.GetY());
+	//LIFTER CONTROLS
+	if(operatorJoystick.GetRawButton(8)) {
+		robotPointer->resetLifterZero();
+	}
+	if (operatorJoystick.GetRawButton(9)) {
+		robotPointer -> zeroLifter();
+	}
+	if(operatorJoystick.GetRawButton(10)) {
+		robotPointer->changeDrivetrainStateToBrake();
+	}
+	if(operatorJoystick.GetRawButton(11)) {
+		robotPointer->changeDrivetrainStateToBrake();
+	}
 }

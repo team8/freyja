@@ -2,7 +2,7 @@
 /** Robot constructor, initializes robot and subsystems */
 Robot::Robot() :
 		//Initializes drivetrain, arm, and lifter
-		drivetrain(), arm(), lifter() {
+		drivetrain(), arm(), lifter(), accumulator() {
 }
 
 /** Initializes subsystems */
@@ -10,6 +10,11 @@ void Robot::init() {
 	drivetrain.init();
 	arm.init();
 	lifter.init();
+	accumulator.init();
+}
+
+void Robot::setDrivetrainRaws(double rawDrive, double rawTurn) {
+	drivetrain.setRaws(rawDrive, rawTurn);
 }
 
 /** Updates all subsystems */
@@ -17,6 +22,7 @@ void Robot::update() {
 	drivetrain.update();
 	arm.update();
 	lifter.update();
+	accumulator.update();
 	//disables lifter if either sensor is hit
 //	if(lifter.checkEitherHit()) {
 //		lifter.disable();
@@ -28,6 +34,12 @@ void Robot::disable() {
 	drivetrain.disable();
 	arm.disable();
 	lifter.disable();
+	accumulator.disable();
+}
+
+
+void Robot::slowCoast(double speedY, double turnX) {
+	drivetrain.setSpeed(speedY, turnX);
 }
 
 /** Moves the robot according to an acceleration to move at, and
@@ -68,6 +80,10 @@ void Robot::changeDrivetrainStateToHighSpeed() {
 	drivetrain.setStateHighSpeed();
 }
 
+void Robot::changeDrivetrainStateToBrake() {
+	drivetrain.setStateBrake();
+}
+
 Drivetrain::State Robot::getDrivetrainState() {
 	return drivetrain.getState();
 }
@@ -76,9 +92,13 @@ Lifter::State Robot::getLifterState() {
 	return lifter.getState();
 }
 
+Arm::PistonState Robot::getArmPistonState() {
+	return arm.getPistonState();
+}
+
 /** Sets the lifter level */
 void Robot::setLifterLevel(int level) {
-	lifter.setSpeed(level);
+	lifter.setLevel(level);
 }
 /** Returns the level of the lifter */
 double Robot::getLevel() {
@@ -101,4 +121,32 @@ void Robot::liftCan() {
 
 void Robot::setLifter(double speed) {
 	lifter.setSpeed(speed);
+}
+
+void Robot::liftDist(double dist) {
+	lifter.lift(dist);
+}
+
+void Robot::toggleAccumulator() {
+	accumulator.togglePiston();
+}
+
+void Robot::toggleArm() {
+	arm.toggleArm();
+}
+
+void Robot::changeWheelState(Accumulator::WheelState state) {
+	accumulator.setWheelState(state);
+}
+
+void Robot::eject(){
+	accumulator.eject();	
+}
+
+void Robot::resetLifterZero() {
+	lifter.zeroing();
+}
+
+void Robot::idleLifter() {
+	lifter.state = Lifter::IDLE;
 }
