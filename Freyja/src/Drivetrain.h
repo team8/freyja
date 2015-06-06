@@ -35,11 +35,6 @@ private:
 	PIDController rightTopController;
 	PIDController rightBottomController;
 
-//	PIDController leftTopTurn;
-//	PIDController leftBottomTurn;
-//	PIDController rightTopTurn;
-//	PIDController rightBottomTurn;
-
 	//The PID Controllers of the drivetrin's rotation, cotrol loops allowing the rotation of a desired angle
 	PIDController leftTopGyroController;
 	PIDController leftBottomGyroController;
@@ -47,41 +42,24 @@ private:
 	PIDController rightTopGyroController;
 	PIDController rightBottomGyroController;
 
-
-	double rawDriveInput;
-	double rawTurnInput;
-
 	//The forward speed of the robot during teleoperated control
 	double targetSpeed;
 	//The rotation speed of the robot during teleoperated control
 	double rotateSpeed;
-	//The raw forward speed to be used in high precision mode
-	double rawTargetSpeed;
-
-	// The value returned by the Y-axis of the driver stick
-	double acceleration;
-
-	double leftSpeed;
-	double rightSpeed;
-
-	double drivingSetpoint;
 
 public:
 	//An enum type definition for the state the robot is in
 	typedef enum State {
 		//A state in which the drivetrain is not moving and is ready to receive commands
 		IDLE,
-		//A state in which the robot is driving a specified distance through pid control
+		//A state in which the robot is driving a specified distance through PID control
 		DRIVING_DIST,
-		//A state in which the robot is rotating a specified angle through pid control
+		//A state in which the robot is rotating a specified angle through PID control
 		ROTATING_ANGLE,
 		//A state in which the talon speed is set through teleop commands
 		DRIVING_TELEOP,
 		//A state in which the turning speed is lowered for higher precision
 		PRECISION_TRIGGER,
-		//A state in which the talons are set to 0
-		//Go max speed backwards
-		THROTTLE,
 		//Higher sensititivity goes faster
 		HIGH_SPEED,
 		//break
@@ -103,7 +81,6 @@ public:
 	void stopControl();
 	void stopTalons();
 
-	void setRaws(double driveSpeed, double turnSpeed);
 	void setSpeed(double targetSpeed, double rotateSpeed);
 	void setTargetSpeed(double speed);
 	void setRotateSpeed(double speed);
@@ -112,7 +89,6 @@ public:
 	void driveDistance(double distance);
 
 	void setStateTrigger();
-	void setStateThrottle();
 	void setStateHighSpeed();
 	void setStateBrake();
 	State getState();

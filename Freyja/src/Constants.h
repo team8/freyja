@@ -79,6 +79,9 @@
 
 // Constants used for fine tuning steering
 // assumes 200 updates per second
+#define STANDARD_FORWARD_CONSTANT 0.9
+#define MAXIMUM_ACCELERATION 0.3
+
 #define ACCELERATION_CONSTANT 0.0063
 #define SPEED_DECAY_CONSTANT 0.95
 #define SPEED_DECAY_RANGE 0.1
@@ -87,7 +90,7 @@
 #define LOW_DPI 0.75
 #define ROTATE_CONSTANT 0.8
 #define ACCELERATION_REVERSE_CONSTANT 0.060
-#define BRAKING_CONSTANT 0.60
+#define BRAKING_CONSTANT 0.80
 
 //Constants for Accumulator
 #define PORT_ACCUMULATE_LEFT_VIC 7

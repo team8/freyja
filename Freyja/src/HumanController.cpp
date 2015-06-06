@@ -15,8 +15,6 @@ void HumanController::update() {
 	// 1 (Trigger) - High Speed
 
 	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
-//	robotPointer->setDrivetrainRaws(moveJoystick.GetY(), turnJoystick.GetX());
-
 
 	if(moveJoystick.GetRawButton(1)) {
 		robotPointer->changeDrivetrainStateToHighSpeed();
@@ -37,7 +35,6 @@ void HumanController::update() {
 	if(turnJoystick.GetRawButton(2)) {
 		robotPointer->changeDrivetrainStateToBrake();
 	}
-
 
 	// Operator Stick
 	//
