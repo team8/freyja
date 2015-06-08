@@ -33,11 +33,6 @@ void Robot::disable() {
 	accumulator.disable();
 }
 
-
-void Robot::slowCoast(double speedY, double turnX) {
-	drivetrain.setSpeed(speedY, turnX);
-}
-
 /** Moves the robot according to an acceleration to move at, and
  * a rotateSpeed to turn by */
 void Robot::move(double acceleration, double rotateSpeed) {
