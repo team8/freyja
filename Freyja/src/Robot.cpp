@@ -13,10 +13,6 @@ void Robot::init() {
 	accumulator.init();
 }
 
-void Robot::setDrivetrainRaws(double rawDrive, double rawTurn) {
-	drivetrain.setRaws(rawDrive, rawTurn);
-}
-
 /** Updates all subsystems */
 void Robot::update() {
 	drivetrain.update();
@@ -68,16 +64,8 @@ void Robot::rotateAngle(double angle) {
 	drivetrain.rotateAngle(angle);
 }
 
-void Robot::changeDrivetrainStateToPRECISION_TRIGGER() {
+void Robot::changeDrivetrainStateToTrigger() {
 	drivetrain.setStateTrigger();
-}
-
-void Robot::changeDrivetrainStateToThrottle() {
-	drivetrain.setStateThrottle();
-}
-
-void Robot::changeDrivetrainStateToHighSpeed() {
-	drivetrain.setStateHighSpeed();
 }
 
 void Robot::changeDrivetrainStateToBrake() {

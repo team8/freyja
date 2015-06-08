@@ -83,9 +83,12 @@ void Drivetrain::update() {
 
 	switch (state) {
 	case IDLE:
+	{
 		stopControl();
 		break;
+	}
 	case DRIVING_DIST:
+	{
 		//Tests if the drivetrain has drived the specified distance and stops if it has
 		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && std::abs(leftTopController.GetError()) < 1) {
 			state = IDLE;
@@ -95,7 +98,9 @@ void Drivetrain::update() {
 		std::cout << "Right: " << rightEncoder.GetDistance() << std::endl;
 
 		break;
+	}
 	case ROTATING_ANGLE:
+	{
 		//If angle is reached, stops rotating
 		if (leftEncoder.GetStopped() && rightEncoder.GetStopped() && std::abs(leftTopGyroController.GetError()) < 1) {
 			state = IDLE;
@@ -103,11 +108,12 @@ void Drivetrain::update() {
 		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
 
 		break;
+	}
 	case DRIVING_TELEOP:
 	{
 		//Determines the appropriate left and right speed
-		double leftSpeed = std::max(std::min(targetSpeed * STANDARD_FORWARD_CONSTANT - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
-		double rightSpeed = std::max(std::min(targetSpeed * STANDARD_FORWARD_CONSTANT + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+		double leftSpeed = std::max(std::min(targetSpeed * FORWARD_CONSTANT - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+		double rightSpeed = std::max(std::min(targetSpeed * FORWARD_CONSTANT + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
 
 		double trueLeftSpeed = -std::pow(leftSpeed, 3);
 		double trueRightSpeed = std::pow(rightSpeed, 3);
@@ -136,27 +142,20 @@ void Drivetrain::update() {
 		rightBottomTalon.Set(rightSpeed);
 		break;
 	}
-	case HIGH_SPEED:
+	case BRAKE:
 	{
-		//Determines the appropriate left and right speed
-		double leftSpeed = std::max(std::min(targetSpeed * HIGH_DPI - rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
-		double rightSpeed = std::max(std::min(targetSpeed * HIGH_DPI + rotateSpeed * ROTATE_CONSTANT, 1.0), -1.0);
+		double leftSpeed = 0;
+		double rightSpeed = 0;
 
-		//Sets talons to left and right speeds
-		leftTopTalon.Set(-leftSpeed);
-		leftBottomTalon.Set(-leftSpeed);
-		rightTopTalon.Set(rightSpeed);
-		rightBottomTalon.Set(rightSpeed);
+		double leftDiff = std::max(std::min(leftSpeed - leftTopTalon.Get(), BREAK_ACCELERATION), -BREAK_ACCELERATION);
+		double rightDiff = std::max(std::min(rightSpeed - rightTopTalon.Get(), BREAK_ACCELERATION), -BREAK_ACCELERATION);
+
+		leftTopTalon.Set(leftTopTalon.Get() + leftDiff);
+		leftBottomTalon.Set(leftTopTalon.Get() + leftDiff);
+		rightTopTalon.Set(rightTopTalon.Get() + rightDiff);
+		rightBottomTalon.Set(rightTopTalon.Get() + rightDiff);
 		break;
 	}
-	case BRAKE:
-		leftTopTalon.Set(leftTopTalon.Get() * 0.9);
-		leftBottomTalon.Set(leftTopTalon.Get() * 0.9);
-		rightTopTalon.Set(rightTopTalon.Get() * 0.9);
-		rightBottomTalon.Set(rightTopTalon.Get() * 0.9);
-		break;
-	case SLOW_COAST:
-		break;
 	}
 }
 
@@ -253,11 +252,6 @@ void Drivetrain::driveDistance(double distance) {
 //Turns on precision trigger
 void Drivetrain::setStateTrigger() {
 	state = PRECISION_TRIGGER;
-}
-
-//Start high dpi
-void Drivetrain::setStateHighSpeed() {
-	state = HIGH_SPEED;
 }
 
 void Drivetrain::setStateBrake() {

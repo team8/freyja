@@ -60,12 +60,8 @@ public:
 		DRIVING_TELEOP,
 		//A state in which the turning speed is lowered for higher precision
 		PRECISION_TRIGGER,
-		//Higher sensititivity goes faster
-		HIGH_SPEED,
 		//break
-		BRAKE,
-
-		SLOW_COAST
+		BRAKE
 	} State;
 
 	//The State variable created for this instance
@@ -89,7 +85,6 @@ public:
 	void driveDistance(double distance);
 
 	void setStateTrigger();
-	void setStateHighSpeed();
 	void setStateBrake();
 	State getState();
 };

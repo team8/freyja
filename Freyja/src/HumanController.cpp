@@ -16,9 +16,6 @@ void HumanController::update() {
 
 	robotPointer->move(moveJoystick.GetY(), turnJoystick.GetX());
 
-	if(moveJoystick.GetRawButton(1)) {
-		robotPointer->changeDrivetrainStateToHighSpeed();
-	}
 	if(moveJoystick.GetRawButton(6)) {
 		robotPointer->changeDrivetrainStateToBrake();
 	}
@@ -30,7 +27,7 @@ void HumanController::update() {
 	// 1 (Trigger) - Precision
 	// 2 (Brake) - Brakes, not functional
 	if(turnJoystick.GetRawButton(1)) {
-		robotPointer->changeDrivetrainStateToPRECISION_TRIGGER();
+		robotPointer->changeDrivetrainStateToTrigger();
 	}
 	if(turnJoystick.GetRawButton(2)) {
 		robotPointer->changeDrivetrainStateToBrake();
