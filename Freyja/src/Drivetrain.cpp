@@ -23,10 +23,8 @@ Drivetrain::Drivetrain() :
 //		rightTopTurn(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &rightEncoder, &rightTopTalon),
 //		rightBottomTurn(LEFT_PROPORTIONAL, LEFT_INTEGRAL, LEFT_DERIVATIVE, &rightEncoder, &rightBottomTalon),
 
-		leftTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTalon),
-		leftBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTalon),
-		rightTopGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTalon),
-		rightBottomGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTalon),
+		leftGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTalon),
+		rightGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTalon),
 
 		//Initializes various instance variables
 		leftSpeed(), rightSpeed(), drivingSetpoint() {
@@ -51,10 +49,8 @@ Drivetrain::Drivetrain() :
 	leftController.SetOutputRange(-0.9, 0.9);
 	rightController.SetOutputRange(-0.9, 0.9);
 
-	leftTopGyroController.SetOutputRange(-0.7, 0.7);
-	rightTopGyroController.SetOutputRange(-0.7, 0.7);
-	leftBottomGyroController.SetOutputRange(-0.7, 0.7);
-	rightBottomGyroController.SetOutputRange(-0.7, 0.7);
+	leftGyroController.SetOutputRange(-0.7, 0.7);
+	rightGyroController.SetOutputRange(-0.7, 0.7);
 
 //	leftTopTurn.SetInputRange(-9999, 9999);
 //	leftBottomTurn.SetInputRange(-9999, 9999);
@@ -126,7 +122,7 @@ void Drivetrain::update() {
 	case ROTATING_ANGLE:
 		//If angle is reached, stops rotating
 		if (leftEncoder.GetStopped() && rightEncoder.GetStopped()
-				&& std::abs(leftTopGyroController.GetError()) < 1) {
+				&& std::abs(leftGyroController.GetError()) < 1) {
 			state = IDLE;
 		}
 		std::cout << "Gyro: " << gyro.GetAngle() << std::endl;
@@ -265,10 +261,8 @@ void Drivetrain::stopControl() {
 	leftController.Disable();
 	rightController.Disable();
 
-	leftTopGyroController.Disable();
-	rightTopGyroController.Disable();
-	leftBottomGyroController.Disable();
-	rightBottomGyroController.Disable();
+	leftGyroController.Disable();
+	rightGyroController.Disable();
 }
 
 //Stops all drivetrain motion
@@ -320,15 +314,11 @@ void Drivetrain::rotateAngle(double angle) {
 
 	gyro.Reset();
 
-	leftTopGyroController.SetSetpoint(angle);
-	leftBottomGyroController.SetSetpoint(angle);
-	rightTopGyroController.SetSetpoint(angle);
-	rightBottomGyroController.SetSetpoint(angle);
+	leftGyroController.SetSetpoint(angle);
+	rightGyroController.SetSetpoint(angle);
 
-	leftTopGyroController.Enable();
-	leftBottomGyroController.Enable();
-	rightTopGyroController.Enable();
-	rightBottomGyroController.Enable();
+	leftGyroController.Enable();
+	rightGyroController.Enable();
 
 	//Resets encoders
 //	leftEncoder.Reset();
