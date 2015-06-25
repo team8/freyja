@@ -14,12 +14,8 @@
 class Drivetrain: public Subsys {
 private:
 	//The robot's left talons, or speed controllers
-	TalonSRX leftTopTalon;
-	TalonSRX leftBottomTalon;
-
-	//The robot's right talons, or speed controllers
-	TalonSRX rightTopTalon;
-	TalonSRX rightBottomTalon;
+	TalonSRX leftTalon;
+	TalonSRX rightTalon;
 
 	//The two encoders, or distance sensors, of the drivetrain
 	Encoder leftEncoder;
@@ -29,11 +25,9 @@ private:
 	Gyro gyro;
 
 	//The PID Controllers of the drivetrain, control loops allowing highly precise and efficient movement
-	PIDController leftTopController;
-	PIDController leftBottomController;
+	PIDController leftController;
+	PIDController rightController;
 
-	PIDController rightTopController;
-	PIDController rightBottomController;
 
 //	PIDController leftTopTurn;
 //	PIDController leftBottomTurn;

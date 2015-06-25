@@ -2,10 +2,8 @@
 #define CONSTANTS_H
 
 //ports for drive train talons
-#define PORT_DRIVE_VIC_LEFT_FRONT 2
-#define PORT_DRIVE_VIC_LEFT_BACK 3
-#define PORT_DRIVE_VIC_RIGHT_FRONT 0
-#define PORT_DRIVE_VIC_RIGHT_BACK 1
+#define PORT_DRIVE_VIC_LEFT 2
+#define PORT_DRIVE_VIC_RIGHT 1
 
 //Joystick ports
 #define PORT_SPEED 1
@@ -60,8 +58,11 @@
 #define PID_ASSISTED_TIME_CONSTANT 50
 
 //Distance per pulse for drivetrain
-#define RIGHT_DPP 0.018258776354
-#define LEFT_DPP 0.012808296080
+//#define RIGHT_DPP 0.018258776354
+//#define LEFT_DPP 0.012808296080
+
+#define RIGHT_DPP 1
+#define LEFT_DPP 1
 
 //Murphy
 //#define RIGHT_DPP 0.01294599
