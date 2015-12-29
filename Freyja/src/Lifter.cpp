@@ -1,5 +1,7 @@
 #include "Lifter.h"
 #include <iostream>
+// Lifter comment done in downstream branch
+
 Lifter::Lifter() :
 		victor1((uint32_t) PORT_LIFT_VIC_1), victor2(
 				(uint32_t) PORT_LIFT_VIC_2), liftEncoder(
