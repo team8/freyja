@@ -1,6 +1,8 @@
 #include "Arm.h"
 #include "Constants.h"
 
+// A second comment
+
 Arm::Arm() :
 //Compressor which initializes the compressor with no arguments, and gives the solenoids their ports
 		compressor(), solenoid1((uint32_t) SOLENOID_1_PORT_A,
