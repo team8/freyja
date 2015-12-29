@@ -5,6 +5,8 @@ Robot::Robot() :
 		drivetrain(), arm(), lifter(), accumulator() {
 }
 
+// I am a sample comment that should not be here
+
 /** Initializes subsystems */
 void Robot::init() {
 	drivetrain.init();
