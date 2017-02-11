@@ -146,4 +146,13 @@ enum AutoCommand {
 	CMD_VISION_DRIVE
 };
 
+//Light Starting/Ending Ports
+
+#define PORT_ENABLED_START 0
+#define PORT_ENABLED_END 8
+#define PORT_DISABLED_START 9
+#define PORT_DISABLED_END 17
+#define PORT_AUTONOMOUS_START 18
+#define PORT_ENABLED_END 26
+
 #endif /* CONSTANTS_H */
